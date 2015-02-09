@@ -30,9 +30,20 @@ Plugin 'vim-scripts/ctags.vim'
 Plugin 'vim-scripts/matchit.zip'
 Plugin 'vim-scripts/tComment'
 
-if filereadable(expand("~/.vimrc.bundles.local"))
-  source ~/.vimrc.bundles.local
-endif
+" Mine
+Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'scrooloose/nerdtree'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'mattn/webapi-vim'
+Plugin 'mattn/gist-vim'
+Plugin 'rking/ag.vim'
+Plugin 'bling/vim-airline'
+Plugin 'ervandew/supertab'
+Plugin 'terryma/vim-multiple-cursors'
+Plugin 'pangloss/vim-javascript'
+" Plugin 'jiangmiao/auto-pairs'
+" Plugin 'tpope/vim-vinegar'
+" Plugin 'tpope/vim-dispatch'
 
 call vundle#end()
 filetype on

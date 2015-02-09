@@ -1,5 +1,6 @@
--- Official docs: http://www.postgresql.org/docs/9.3/static/app-psql.html
--- Unofficial docs: http://robots.thoughtbot.com/improving-the-command-line-postgres-experience
+-- official docs: http://www.postgresql.org/docs/9.3/static/app-psql.html
+-- Unofficial docs:
+http://robots.thoughtbot.com/improving-the-command-line-postgres-experience
 
 -- Don't display the "helpful" message on startup.
 \set QUIET 1
@@ -26,3 +27,4 @@
 -- file that users can override with their custom dotfiles. To set your own
 -- personal settings, place your own file in ~/.psqlrc.local
 \i ~/.psqlrc.local
+

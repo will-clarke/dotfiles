@@ -18,8 +18,9 @@
   pr = !gh pull-request
   st = status
   up = !git fetch origin && git rebase origin/master
+  update-from = "!f() { git fetch $1 --prune; git merge --ff-only $1/$2 || git rebase --preserve-merges $1/$2; }; f"
 [core]
-  excludesfile = ~/.gitignore
+	excludesfile = /Users/wmmc/.gitignore_global
   autocrlf = input
 [merge]
   ff = only
@@ -29,3 +30,12 @@
   prune = true
 [include]
   path = ~/.gitconfig.local
+[user]
+	name = William
+	email = wmmclarke@gmail.com
+[credential]
+	helper = osxkeychain
+[url "ssh://git@github.com/"]
+	insteadOf = https://github.com/
+[github]
+	user = wmmc

@@ -96,5 +96,23 @@ _load_settings() {
 }
 _load_settings "$HOME/.zsh/configs"
 
-# Local config
-[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
+stty -ixon
+
+alias gco="git checkout"
+alias gs="git status"
+alias gd='git diff'
+alias ga='git add'
+
+alias gc='git commit'
+alias gl='git log'
+
+alias gp='git pull'
+
+alias be='bundle exec'
+alias fr='foreman run'
+
+
+export PATH="$HOME/.bin:$PATH"
+export BUN="$HOME/.vimrc.bundles.local"
+export VL="$HOME/.vimrc.local"
+eval "$(rbenv init - zsh --no-rehash)"
