@@ -98,18 +98,6 @@ _load_settings "$HOME/.zsh/configs"
 
 stty -ixon
 
-alias gco="git checkout"
-alias gs="git status"
-alias gd='git diff'
-alias ga='git add'
-
-alias gc='git commit'
-alias gl='git log'
-
-alias gp='git pull'
-
-alias be='bundle exec'
-alias fr='foreman run'
 
 
 export PATH="$HOME/.bin:$PATH"

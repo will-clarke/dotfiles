@@ -98,12 +98,16 @@ nnoremap <Left> :echoe "Use h"<CR>
 nnoremap <Right> :echoe "Use l"<CR>
 nnoremap <Up> :echoe "Use k"<CR>
 nnoremap <Down> :echoe "Use j"<CR>
+
 " vim-rspec mappings
-nnoremap <Leader>t :call RunCurrentSpecFile()<CR>
-nnoremap <Leader>s :call RunNearestSpec()<CR>
-nnoremap <Leader>l :call RunLastSpec()<CR>
+nnoremap <Leader>rt :call RunCurrentSpecFile()<CR>
+nnoremap <Leader>rs :call RunNearestSpec()<CR>
+nnoremap <Leader>rl :call RunLastSpec()<CR>
+nnoremap <Leader>ra :call RunAllSpecs()<CR>
+
 " Run commands that require an interactive shell
-nnoremap <Leader>r :RunInInteractiveShell<space>
+" nnoremap <Leader>r :RunInInteractiveShell<space>
+
 " Treat <li> and <p> tags like the block tags they are
 let g:html_indent_tags = 'li\|p'
 " Open new split panes to right and bottom, which feels more natural
@@ -114,6 +118,7 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
+
 " configure syntastic syntax checking to check on open as well as save
 let g:syntastic_check_on_open=1
 let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
@@ -138,9 +143,6 @@ set backspace=2
 
 noremap <Leader>n :NERDTreeFind<CR>
 noremap <Leader>m :NERDTreeToggle<CR>
-
-" Thoughtbot vim:
-map <Leader>a :call RunAllSpecs()<CR>
 
 set nowrap
 
@@ -243,10 +245,11 @@ noremap <silent> <leader>b :ls<CR>
 nnoremap <A-a> <C-a>
 nnoremap <A-x> <C-x>
 
-noremap <leader>ve :execute "edit " . $VL<CR>
-noremap <leader>vb :execute "edit " . $BUN<CR>
-noremap <leader>vs :execute "source " . $VL<CR>
-
+noremap <leader>vv :execute "edit " . "~/.vimrc"<CR>
+noremap <leader>vt :execute "edit " . "~/.tmux.conf"<CR>
+noremap <leader>vb :execute "edit " . "~/.vimrc.bundles"<CR>
+noremap <leader>vr :execute "source " . "~/.vimrc"<CR>
+noremap <leader>vs :execute "source " . "~/.vimrc"<CR>
 
 " This is to highlight the line in Insert Mode
 " autocmd InsertEnter,InsertLeave * set cul!
@@ -261,7 +264,7 @@ vnoremap <F6> y:%s/\<<C-r>"\>/<C-r>"/gc<Left><Left><Left>
 
 " Emacs - style
 inoremap <C-e> <C-o>$
-inoremap <C-a> <C-o>0
+inoremap <C-a> <C-o>_
 
 nnoremap <leader>b :buffers<CR>:buffer<Space>
 
@@ -291,7 +294,7 @@ runtime macros/matchit.vim
 
 set nofoldenable " Say no to code folding...
 
-set relativenumber
+" set relativenumber
 
 let g:fuzzy_ignore = "*.png;*.PNG;*.JPG;*.jpg;*.GIF;*.gif;vendor/**;coverage/**;tmp/**;rdoc/**"
 

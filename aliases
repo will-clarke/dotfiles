@@ -16,9 +16,19 @@ alias v="$VISUAL"
 
 # git
 alias gci="git pull --rebase && rake && git push"
+alias gco="git checkout"
+alias gs="git status"
+alias gd='git diff'
+alias ga='git add'
+alias gc='git commit'
+alias gl='git log'
+alias gp='git pull'
+alias gconflict='git diff --name-only --diff-filter=U'
+
 
 # Bundler
 alias b="bundle"
+alias be='bundle exec'
 
 # Tests and Specs
 alias t="ruby -I test"
@@ -28,9 +38,7 @@ alias migrate="rake db:migrate db:rollback && rake db:migrate"
 alias m="migrate"
 alias rk="rake"
 alias s="rspec"
+alias fr="foreman run rails console"
 
 # Pretty print the path
 alias path="echo $PATH | tr -s ':' '\n'"
-
-# Include custom aliases
-[[ -f ~/.aliases.local ]] && source ~/.aliases.local
