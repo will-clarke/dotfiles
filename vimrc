@@ -161,12 +161,19 @@ noremap <silent><C-e> :CtrlP<CR>
 function! ToggleBackground()
   let &background = ( &background == "dark"? "light" : "dark" )
 endfunction
+
 syntax enable
 set background=dark
 colorscheme solarized
 
 noremap <f2> :call ToggleBackground()<CR>
 nnoremap <F6> :buffers<CR>:buffer<Space>
+
+" map <F4> <Plug>(xmpfilter-mark)
+" map <F5> <Plug>(xmpfilter-run)
+"
+" imap <F4> <Plug>(xmpfilter-mark)
+" imap <F5> <Plug>(xmpfilter-run)
 
 " set clipboard=unnamed
 noremap <leader>y :.w !pbcopy<CR><CR>
