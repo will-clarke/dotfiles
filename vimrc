@@ -156,7 +156,7 @@ noremap  <silent> <C-s> :update<CR><ESC>
 vnoremap <silent> <C-s> <C-C>:update<CR><ESC>
 inoremap <silent> <C-s> <C-O>:update<CR><ESC>
 
-noremap <silent><C-e> :CtrlP<CR>
+noremap <silent><leader>a :CtrlP<CR>
 
 function! ToggleBackground()
   let &background = ( &background == "dark"? "light" : "dark" )
@@ -258,3 +258,42 @@ let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
 " Prepare a :substitute command using the current word or the selected text:
 nnoremap <F6> yiw:%s/\<<C-r>"\>/<C-r>"/gc<Left><Left><Left>
 vnoremap <F6> y:%s/\<<C-r>"\>/<C-r>"/gc<Left><Left><Left>
+
+" Emacs - style
+inoremap <C-e> <C-o>$
+inoremap <C-a> <C-o>0
+
+nnoremap <leader>b :buffers<CR>:buffer<Space>
+
+" Markdown
+
+noremap <leader>md :!open -a 'Marked 2' %<cr><cr>
+
+" automatically rebalance windows on vim resize
+autocmd VimResized * :wincmd =
+
+" zoom a vim pane, <C-w>= to re-balance
+nnoremap <leader>- :wincmd _<cr>:wincmd \|<cr>
+nnoremap <leader>= :wincmd =<cr>
+
+" Binding.pry
+nmap <leader>bp orequire 'pry'; binding.pry<esc>^
+
+
+nnoremap å <C-a>
+nnoremap ≈ <C-x>
+
+set timeoutlen=500
+
+
+" Enable built-in matchit plugin
+runtime macros/matchit.vim
+
+set nofoldenable " Say no to code folding...
+
+set relativenumber
+
+let g:fuzzy_ignore = "*.png;*.PNG;*.JPG;*.jpg;*.GIF;*.gif;vendor/**;coverage/**;tmp/**;rdoc/**"
+
+" Release Ctrl P for searching 
+let g:ctrlp_map = '<c-:>'

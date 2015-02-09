@@ -45,5 +45,15 @@ Plugin 'pangloss/vim-javascript'
 " Plugin 'tpope/vim-vinegar'
 " Plugin 'tpope/vim-dispatch'
 
+Plugin 'ryanss/vim-hackernews'
+Plugin 'koron/nyancat-vim'
+
+" nelstrom's plugin depends on kana's
+Plugin 'kana/vim-textobj-user'
+Plugin 'nelstrom/vim-textobj-rubyblock'
+
+" Snippets
+Plugin 'SirVer/ultisnips'
+
 call vundle#end()
 filetype on
