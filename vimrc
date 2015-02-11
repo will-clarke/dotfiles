@@ -313,3 +313,6 @@ let g:fuzzy_ignore = "*.png;*.PNG;*.JPG;*.jpg;*.GIF;*.gif;vendor/**;coverage/**;
 " let g:ctrlp_map = <c-:>
 
 set hidden " Lets you 'hide' buffers
+
+let g:UltiSnipsEditSplit="vertical"
+let g:UltiSnipsSnippetDirectories=[$HOME.'/.vim-snippets']
