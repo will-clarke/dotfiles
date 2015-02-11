@@ -28,13 +28,13 @@ class Installer
         backup [src]
         puts "#{dest} exists. Backed up & linked."
         begin
-        FileUtils.rm_rf(destination)
+          FileUtils.rm_rf(destination)
         rescue => e
           p "ERROR: #{e}"
         end
       end
 
-        link(source, destination)
+      link(source, destination)
     end
   end
 
@@ -51,17 +51,28 @@ class Installer
         original_file += '/.'
       end
       backup_destination = File.expand_path(File.join("#{backup_folder.first}", "#{file}"))
+      possibly_create_directory backup_destination
       FileUtils.cp_r original_file, backup_destination if File.exists? file
     end
   end
 
   def dotfiles
-    Dir['*'] - ['Rakefile', 'README.md']
+    Dir["**/*"].select{|i| File.file? i} - ['Rakefile', 'README.md']
   end
 
   def link(source, destination)
+    possibly_create_directory destination
     FileUtils.ln_s(source, destination)
   end
+
+  def possibly_create_directory filename
+    directory = File.dirname filename
+    unless File.directory? directory
+      p "Creating new directory: #{directory}"
+      FileUtils.mkdir_p directory
+    end
+  end
+
 end
 
 desc 'Install'
