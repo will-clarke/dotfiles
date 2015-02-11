@@ -44,3 +44,4 @@ Thumbs.db
 b025.dump
 .sass-cache
 config/initializers/carrier_wave.rb
+tags
