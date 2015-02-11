@@ -26,11 +26,14 @@ class Installer
 
       if File.exist?(destination)
         backup [src]
-        puts "#{dest} exists. Backed up & overwritten."
-        # FileUtils.rm(destination)
+        puts "#{dest} exists. Backed up & linked."
+        begin
+        FileUtils.rm_rf(destination)
+        rescue => e
+          p "ERROR: #{e}"
+        end
       end
 
-        puts "Linking #{dest}"
         link(source, destination)
     end
   end
@@ -44,6 +47,9 @@ class Installer
   def backup(file_names=dotfiles)
     file_names.each do | file |
       original_file = File.expand_path( "~/.#{file}" )
+      if File.directory? original_file
+        original_file += '/.'
+      end
       backup_destination = File.expand_path(File.join("#{backup_folder.first}", "#{file}"))
       FileUtils.cp_r original_file, backup_destination if File.exists? file
     end
@@ -71,6 +77,7 @@ end
 desc 'Update dotfiles repository.'
 task :update do
   system 'git pull'
+  Installer.new.install
 end
 
 desc 'Overwrite'
