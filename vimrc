@@ -27,7 +27,7 @@ set autowrite     " Automatically :write before running commands
 
 set incsearch     " Highlight while searching
 set hlsearch      " Hightlight all matches after search pattern
-nmap <leader>h :nohlsearch<cr>
+nnoremap <leader>h :nohlsearch<cr>
 set ignorecase
 set smartcase
 
@@ -119,7 +119,7 @@ inoremap <S-Tab> <c-n>
 let g:Tlist_Ctags_Cmd="ctags --exclude='*.js'"
 
 " Index ctags from any project, including those outside Rails
-map <Leader>ct :!ctags -R .<CR>
+nnoremap <Leader>ct :!ctags -R .<CR>
 
 " Switch between the last two files
 nnoremap <leader><leader> <c-^>
@@ -314,6 +314,10 @@ let g:fuzzy_ignore = "*.png;*.PNG;*.JPG;*.jpg;*.GIF;*.gif;vendor/**;coverage/**;
 
 " set hidden " Lets you 'hide' buffers
 
+
 let g:UltiSnipsEditSplit="vertical"
 let g:UltiSnipsSnippetsDir="~/.vim-snippets"
 nnoremap <leader>s :UltiSnipsEdit 
+
+" Useful search for merge Conflicts:
+nnoremap <leader>c /[/=/</>]\{4,}<cr>

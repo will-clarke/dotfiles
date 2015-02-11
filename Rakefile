@@ -78,7 +78,7 @@ desc 'Update dotfiles repository.'
 task :update do
   system 'git pull'
   system 'vim +PluginInstall! +qallpry'
-  Installer.new.install
+  Installer.new.overwrite
 end
 
 desc 'Overwrite'
