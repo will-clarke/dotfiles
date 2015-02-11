@@ -25,6 +25,12 @@ set incsearch     " do incremental searching
 set laststatus=2  " Always display the status line
 set autowrite     " Automatically :write before running commands
 
+set incsearch     " Highlight while searching
+set hlsearch      " Hightlight all matches after search pattern
+nmap <leader>h :nohlsearch<cr>
+set ignorecase
+set smartcase
+
 " Switch syntax highlighting on, when the terminal has colors
 " Also switch on highlighting the last used search pattern.
 if (&t_Co > 2 || has("gui_running")) && !exists("syntax_on")
@@ -43,9 +49,9 @@ augroup vimrcEx
   " Don't do it for commit messages, when the position is invalid, or when
   " inside an event handler (happens when dropping a file on gvim).
   autocmd BufReadPost *
-    \ if &ft != 'gitcommit' && line("'\"") > 0 && line("'\"") <= line("$") |
-    \   exe "normal g`\"" |
-    \ endif
+        \ if &ft != 'gitcommit' && line("'\"") > 0 && line("'\"") <= line("$") |
+        \   exe "normal g`\"" |
+        \ endif
   " Cucumber navigation commands
   autocmd User Rails Rnavcommand step features/step_definitions -glob=**/* -suffix=_steps.rb
   autocmd User Rails Rnavcommand config config -glob=**/* -suffix=.rb -default=routes
@@ -90,7 +96,7 @@ highlight Folded  guibg=#0A0A0A guifg=#9090D0
 set textwidth=80
 set colorcolumn=+1
 
-" Numbers
+" Line Numbers
 set number
 set numberwidth=5
 
@@ -99,12 +105,12 @@ set numberwidth=5
 " will use completion if not at beginning
 set wildmode=list:longest,list:full
 function! InsertTabWrapper()
-    let col = col('.') - 1
-    if !col || getline('.')[col - 1] !~ '\k'
-        return "\<tab>"
-    else
-        return "\<c-p>"
-    endif
+  let col = col('.') - 1
+  if !col || getline('.')[col - 1] !~ '\k'
+    return "\<tab>"
+  else
+    return "\<c-p>"
+  endif
 endfunction
 inoremap <Tab> <c-r>=InsertTabWrapper()<cr>
 inoremap <S-Tab> <c-n>
@@ -252,9 +258,18 @@ noremap <leader>vs :execute "source " . "~/.vimrc"<CR>
 " This is to highlight the line in Insert Mode
 " autocmd InsertEnter,InsertLeave * set cul!
 
+
 " Change cursor depending on the Mode
-let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
-let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+function! InTmuxSession()
+  return $TMUX != ''
+endfunction
+if InTmuxSession()
+  let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+  let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+else
+  let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+  let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+endif
 
 " Prepare a :substitute command using the current word or the selected text:
 nnoremap <F6> yiw:%s/\<<C-r>"\>/<C-r>"/gc<Left><Left><Left>
@@ -275,7 +290,7 @@ autocmd VimResized * :wincmd =
 " zoom a vim pane, <C-w>= to re-balance
 nnoremap <leader>- :wincmd _<cr>:wincmd \|<cr>
 nnoremap <leader>= :wincmd =<cr>
-
+"
 " Binding.pry
 nmap <leader>bp orequire 'pry'; binding.pry<esc>^
 
@@ -284,7 +299,6 @@ nnoremap å <C-a>
 nnoremap ≈ <C-x>
 
 set timeoutlen=500
-
 
 " Enable built-in matchit plugin
 runtime macros/matchit.vim
@@ -296,4 +310,6 @@ set nofoldenable " Say no to code folding...
 let g:fuzzy_ignore = "*.png;*.PNG;*.JPG;*.jpg;*.GIF;*.gif;vendor/**;coverage/**;tmp/**;rdoc/**"
 
 " Release Ctrl P for searching
-let g:ctrlp_map = '<c-:>'
+" let g:ctrlp_map = <c-:>
+
+set hidden " Lets you 'hide' buffers
