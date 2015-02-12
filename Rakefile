@@ -27,7 +27,7 @@ class Installer
   def overwrite
     dotfiles.each do |name|
 
-      if File.exist? destination(name)
+      if File.exist? destination(name) && File.file?(destination(name))
         backup [destination(name)]
         p "#{destination(name)} exists. Backed up & linked."
 
@@ -50,19 +50,19 @@ class Installer
 
   def backup(file_names=dotfiles)
     file_names.each do | name |
-      file_path = File.join backup_folder.first.to_s, destination(name)
+      file_path = File.join backup_folder.first.to_s, name
+      begin
       FileUtils.cp_r destination(name), file_path if File.exists? destination(name)
+      rescue => e
+        p e
+        require 'pry'; binding.pry
+      end
     end
   end
 
   def convert_files_to_repo_path files
     array = files.class == Array ? files : [files]
     array.map{|i| i.split('.')[1..-1].join('.')}.map{|i| repo i}
-  end
-
-  def convert_files_to_dotfiles_path files
-    array = files.class == Array ? files : [files]
-    array.map{|i| i.split('dotfiles')[1..-1].join('dotfiles')}.map{|i| destination i}
   end
 
   def source_to_repo
