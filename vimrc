@@ -180,7 +180,8 @@ noremap  <silent> <C-s> :update<CR><ESC>
 vnoremap <silent> <C-s> <C-C>:update<CR><ESC>
 inoremap <silent> <C-s> <C-O>:update<CR><ESC>
 
-noremap <silent><leader>a :CtrlP<CR>
+" Find file in directory
+noremap <silent><leader>f :CtrlP<CR>
 
 function! ToggleBackground()
   let &background = ( &background == "dark"? "light" : "dark" )
@@ -322,3 +323,14 @@ nnoremap <leader>s :UltiSnipsEdit
 
 " Useful search for merge Conflicts:
 nnoremap <leader>c /[/=/</>]\{4,}<cr>
+
+" For wordwrap (to navigate by outputted lines rather than lines)
+nmap j gj
+nmap k gk
+
+" Copy entire document (& return to same line)
+nmap <leader>a mmggvG<leader>y'm
+
+" Persistent undo
+" set undofile
+" set undodir=~/.vim/undo
