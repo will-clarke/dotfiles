@@ -59,11 +59,10 @@ class Installer
       ensure_folder_has_been_created destination file_path
       begin
       FileUtils.cp destination(name), file_path if File.exists? destination(name)
-      p 'SUCCESS!'
+      p "Backed up #{destination name}"
       rescue => e
-        p "Couldn't move #{name}"
-        p "Permissions error?"
-        # require 'pry'; binding.pry
+        p "Couldn't move #{name}."
+        # p "Permissions error?"
       end
     end
   end
