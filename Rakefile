@@ -48,23 +48,31 @@ class Installer
     FileUtils.mkdir_p( File.expand_path file_path)
   end
 
-  def ensure_folder_has_been_created path
-    directory = path.split('/')[0..-2].join('/')
+  def ensure_folder_has_been_created path, dir=false
+    # require 'pry'; binding.pry if dir
+    if dir
+      directory = path
+    else
+      directory = path.split('/')[0..-2].join('/') + '/'
+    end
     FileUtils.mkdir_p repo(directory)
   end
 
   def backup(file_names=dotfiles)
     file_names.each do | name |
       file_path = File.join backup_folder.first.to_s, name
-      ensure_folder_has_been_created destination file_path
+      ensure_folder_has_been_created file_path, File.directory?(destination(name))
       begin
-      FileUtils.cp destination(name), file_path if File.exists? destination(name)
-      p "Backed up #{destination name}"
+        unless File.directory? destination(name)
+          FileUtils.cp destination(name), file_path if File.exists? destination(name)
+          p "Backed up #{destination name}"
+        end
       rescue => e
         p "Couldn't move #{name}."
         # p "Permissions error?"
       end
     end
+    p "Backed up Everything to #{backup_folder.first}"
   end
 
   def convert_files_to_repo_path files
