@@ -38,7 +38,7 @@ class Installer
         end
       end
 
-      link(repo, destination)
+      link(repo(name), destination(name))
     end
   end
 
@@ -87,6 +87,7 @@ class Installer
       files = files_to_upload_to_repo.select{|i| File.file? i}
       files.each do |dotfiles_file|
         unless File.symlink? dotfiles_file
+          p "Copying from #{dotfiles_file}"
           FileUtils.cp_r dotfiles_file, convert_files_to_repo_path(dotfiles_file)[0] if File.exists? dotfiles_file
         end
       end
@@ -98,7 +99,6 @@ class Installer
   end
 
   def link(repo, destination)
-    p 'LINKING'
     if File.symlink? repo
       p 'OMG. symlink'
     end
