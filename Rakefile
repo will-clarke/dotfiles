@@ -43,19 +43,27 @@ class Installer
   end
 
   def backup_folder
-    time = Time.now.strftime "%y-%m-%d--%R"
+    time = Time.now.strftime "%y-%m-%d---%H-%M"
     file_path = File.join( '~' , '.dotfiles-backup', time )
     FileUtils.mkdir_p( File.expand_path file_path)
+  end
+
+  def ensure_folder_has_been_created path
+    directory = path.split('/')[0..-2].join('/')
+    FileUtils.mkdir_p repo(directory)
   end
 
   def backup(file_names=dotfiles)
     file_names.each do | name |
       file_path = File.join backup_folder.first.to_s, name
+      ensure_folder_has_been_created destination file_path
       begin
-      FileUtils.cp_r destination(name), file_path if File.exists? destination(name)
+      FileUtils.cp destination(name), file_path if File.exists? destination(name)
+      p 'SUCCESS!'
       rescue => e
-        p e
-        require 'pry'; binding.pry
+        p "Couldn't move #{name}"
+        p "Permissions error?"
+        # require 'pry'; binding.pry
       end
     end
   end
@@ -88,14 +96,15 @@ class Installer
       files.each do |dotfiles_file|
         unless File.symlink? dotfiles_file
           p "Copying from #{dotfiles_file}"
-          FileUtils.cp_r dotfiles_file, convert_files_to_repo_path(dotfiles_file)[0] if File.exists? dotfiles_file
+          FileUtils.cp dotfiles_file, convert_files_to_repo_path(dotfiles_file)[0] if File.exists? dotfiles_file
         end
       end
     end
   end
 
   def dotfiles
-    Dir['*'] - ['Rakefile', 'README.md']
+    files = Dir['*'] + Dir['**/*'] - ['Rakefile', 'README.md']
+    files.select{|i| i !~ EXCLUDED_FILES}
   end
 
   def link(repo, destination)
