@@ -44,6 +44,7 @@ Plugin 'pangloss/vim-javascript'
 " Plugin 'jiangmiao/auto-pairs'
 " Plugin 'tpope/vim-vinegar'
 " Plugin 'tpope/vim-dispatch'
+Plugin 'junegunn/goyo.vim'
 
 Plugin 'ryanss/vim-hackernews'
 Plugin 'koron/nyancat-vim'

@@ -1,8 +1,145 @@
-snippet comment
-#####${0/./#/}#####
-### $0 ###
-#####${0/./#/}#####
-endsnippet
+snippet ###
+	###################################
+snippet enc
+	# encoding: utf-8
 
-snippet omg
-				omg
+snippet #!
+	#!/usr/bin/env ruby
+	# encoding: utf-8
+
+snippet if
+	if ${1:condition}
+		${0}
+	end
+
+snippet ife
+	if ${1:condition}
+		${2}
+	else
+		${0}
+	end
+
+snippet eif
+	elsif ${1:condition}
+		${0}
+
+snippet ifee
+	if ${1:condition}
+		$2
+	elsif ${3:condition}
+		$4
+	else
+		$0
+	end
+
+snippet rw
+	attr_accessor :${0:attr_names}
+
+snippet ea
+	each { |${1:e}| ${0} }
+snippet ead
+	each do |${1:e}|
+		${0}
+	end
+snippet eab
+	each_byte { |${1:byte}| ${0} }
+snippet eac- each_char { |chr| .. }
+	each_char { |${1:chr}| ${0} }
+snippet eac- each_cons(..) { |group| .. }
+	each_cons(${1:2}) { |${2:group}| ${0} }
+snippet eai
+	each_index { |${1:i}| ${0} }
+snippet eaid
+	each_index do |${1:i}|
+		${0}
+	end
+snippet eak
+	each_key { |${1:key}| ${0} }
+snippet eakd
+	each_key do |${1:key}|
+		${0}
+	end
+snippet eal
+	each_line { |${1:line}| ${0} }
+snippet eald
+	each_line do |${1:line}|
+		${0}
+	end
+snippet eap
+	each_pair { |${1:name}, ${2:val}| ${0} }
+snippet eapd
+	each_pair do |${1:name}, ${2:val}|
+		${0}
+	end
+snippet eas-
+	each_slice(${1:2}) { |${2:group}| ${0} }
+snippet easd-
+	each_slice(${1:2}) do |${2:group}|
+		${0}
+	end
+snippet eav
+	each_value { |${1:val}| ${0} }
+snippet eavd
+	each_value do |${1:val}|
+		${0}
+	end
+snippet eawi
+	each_with_index { |${1:e}, ${2:i}| ${0} }
+snippet eawid
+	each_with_index do |${1:e}, ${2:i}|
+		${0}
+	end
+snippet eawo
+	each_with_object(${1:init}) { |${2:e}, ${3:var}| ${0} }
+snippet eawod
+	each_with_object(${1:init}) do |${2:e}, ${3:var}|
+		${0}
+	end
+snippet reve
+	reverse_each { |${1:e}| ${0} }
+snippet reved
+	reverse_each do |${1:e}|
+		${0}
+	end
+snippet inj
+	inject(${1:init}) { |${2:mem}, ${3:var}| ${0} }
+snippet injd
+	inject(${1:init}) do |${2:mem}, ${3:var}|
+		${0}
+	end
+snippet red
+	reduce(${1:init}) { |${2:mem}, ${3:var}| ${0} }
+snippet redd
+	reduce(${1:init}) do |${2:mem}, ${3:var}|
+		${0}
+	end
+snippet map
+	map { |${1:e}| ${0} }
+snippet mapd
+	map do |${1:e}|
+		${0}
+	end
+snippet mapwi-
+	enum_with_index.map { |${1:e}, ${2:i}| ${0} }
+snippet sor
+	sort { |a, b| ${0} }
+snippet sorb
+	sort_by { |${1:e}| ${0} }
+snippet ran
+	sort_by { rand }
+snippet all
+	all? { |${1:e}| ${0} }
+snippet any
+	any? { |${1:e}| ${0} }
+##########################
+#     Rspec snippets     #
+##########################
+snippet desc
+	describe ${1:`substitute(substitute(vim_snippets#Filename(), '_spec$', '', ''), '\(_\|^\)\(.\)', '\u\2', 'g')`} do
+		${0}
+	end
+snippet descm
+	describe '${1:#method}' do
+		${0:pending 'Not implemented'}
+	end
+

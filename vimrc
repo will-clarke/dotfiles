@@ -103,17 +103,17 @@ set numberwidth=5
 " Tab completion
 " will insert tab at beginning of line,
 " will use completion if not at beginning
-" set wildmode=list:longest,list:full
-" function! InsertTabWrapper()
-"   let col = col('.') - 1
-"   if !col || getline('.')[col - 1] !~ '\k'
-"     return "\<tab>"
-"   else
-"     return "\<c-p>"
-"   endif
-" endfunction
-" inoremap <Tab> <c-r>=InsertTabWrapper()<cr>
-" inoremap <S-Tab> <c-n>
+set wildmode=list:longest,list:full
+function! InsertTabWrapper()
+  let col = col('.') - 1
+  if !col || getline('.')[col - 1] !~ '\k'
+    return "\<tab>"
+  else
+    return "\<c-p>"
+  endif
+endfunction
+inoremap <Tab> <c-r>=InsertTabWrapper()<cr>
+inoremap <S-Tab> <c-n>
 
 " Exclude Javascript files in :Rtags via rails.vim due to warnings when parsing
 let g:Tlist_Ctags_Cmd="ctags --exclude='*.js'"
@@ -189,7 +189,10 @@ endfunction
 
 syntax enable
 set background=dark
-colorscheme solarized
+
+if !isdirectory(expand("~/.vim/bundle/vim-colors-solarized\.vim"))
+  colorscheme solarized
+endif
 
 noremap <f2> :call ToggleBackground()<CR>
 nnoremap <F6> :buffers<CR>:buffer<Space>
@@ -334,3 +337,63 @@ nmap <leader>a mmggvG<leader>y'm
 " Persistent undo
 " set undofile
 " set undodir=~/.vim/undo
+
+if !isdirectory(expand("~/.vim/bundle/Vundle\.vim"))
+    !git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
+    echoe "Cloning Vundle!"
+endif
+
+set indentkeys-=0#            " do not break indent on #
+set cinkeys-=0#
+
+  " vertical paragraph-movement
+nmap <C-K> {
+nmap <C-J> }
+
+
+nnoremap <leader>_ :Goyo<CR>
+
+" function! s:goyo_enter()
+"   silent !tmux set status off
+"   set noshowmode
+"   set noshowcmd
+"   set scrolloff=999
+"   Limelight
+"   " ...
+" endfunction
+"
+" function! s:goyo_leave()
+"   silent !tmux set status on
+"   set showmode
+"   set showcmd
+"   set scrolloff=5
+"   Limelight!
+"   " ...
+" endfunction
+" autocmd! User GoyoEnter
+" autocmd! User GoyoLeave
+" autocmd  User GoyoEnter nested call <SID>goyo_enter()
+" autocmd  User GoyoLeave nested call <SID>goyo_leave()
+
+function! s:goyo_enter()
+  if has('gui_running')
+    set fullscreen
+    set background=light
+    set linespace=7
+  elseif exists('$TMUX')
+    silent !tmux set status off
+  endif
+endfunction
+
+function! s:goyo_leave()
+  if has('gui_running')
+    set nofullscreen
+    set background=dark
+    set linespace=0
+  elseif exists('$TMUX')
+    silent !tmux set status on
+  endif
+endfunction
+
+autocmd User GoyoEnter nested call <SID>goyo_enter()
+autocmd User GoyoLeave nested call <SID>goyo_leave()
