@@ -130,15 +130,6 @@ nnoremap <Right> :echoe "Use l"<CR>
 nnoremap <Up> :echoe "Use k"<CR>
 nnoremap <Down> :echoe "Use j"<CR>
 
-" vim-rspec mappings
-nnoremap <Leader>rt :call RunCurrentSpecFile()<CR>
-nnoremap <Leader>rs :call RunNearestSpec()<CR>
-nnoremap <Leader>rl :call RunLastSpec()<CR>
-nnoremap <Leader>ra :call RunAllSpecs()<CR>
-
-" Run commands that require an interactive shell
-" nnoremap <Leader>r :RunInInteractiveShell<space>
-
 " Treat <li> and <p> tags like the block tags they are
 let g:html_indent_tags = 'li\|p'
 
@@ -361,22 +352,25 @@ function! s:goyo_leave()
   endif
 endfunction
 
-"  Vim Tmux Runner (Vtr):
-"  Mapping      |   Command
-"  -----------------------------
-"  <leader>rr   |   VtrResizeRunner<cr>
-"  <leader>ror  |   VtrReorientRunner<cr>
-"  <leader>sc   |   VtrSendCommandToRunner<cr>
-"  <leader>sl   |   VtrSendLineToRunner<cr>
-"  <leader>sv   |   VtrSendSelectedToRunner<cr>
-"  <leader>or   |   VtrOpenRunner<cr>
-"  <leader>kr   |   VtrKillRunner<cr>
-"  <leader>fr   |   VtrFocusRunner<cr>
-"  <leader>dr   |   VtrDetachRunner<cr>
-"  <leader>ar   |   VtrReattachRunner<cr>
-"  <leader>cr   |   VtrClearRunner<cr>
-"  <leader>fc   |   VtrFlushCommand<cr>
-noremap <leader>osr :VtrOpenRunner {'orientation': 'h', 'percentage': 50}<cr>
+"  vim tmux Runner (Vtr):
+
+noremap <leader>ra :VtrAttachToPane<cr>
+noremap <leader>rc :VtrClearRunner<cr>
+noremap <leader>rd :VtrDetachRunner<cr>
+noremap <leader>rf :VtrFlushCommand<cr>
+noremap <leader>rf :VtrFocusRunner<cr>
+noremap <leader>rk :VtrKillRunner<cr>
+noremap <leader>ro :VtrOpenRunner<cr>
+noremap <leader>rra :VtrReattachRunner<cr>
+noremap <leader>rc :VtrSendCommandToRunner<cr>
+noremap <leader>rl :VtrSendLinesToRunner<cr>
+vnoremap <leader>rl :VtrSendLinesToRunner<cr>
+
+
+"runner new:
+noremap <leader>rn :VtrOpenRunner {'orientation': 'h', 'percentage': 50}<cr>
+noremap <leader>rp :VtrOpenRunner {'orientation': 'h', 'percentage': 50, 'cmd': 'pry'}<cr>
+" vmap <leader>rl :VtrSendSelectedToRunner<cr>
 let g:VtrUseVtrMaps = 1
 let g:spec_runner_dispatcher = 'call VtrSendCommand("{command}")'
 " let g:rspec_command = "!rspec --drb {spec}"
