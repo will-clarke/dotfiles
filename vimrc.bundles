@@ -56,5 +56,7 @@ Plugin 'nelstrom/vim-textobj-rubyblock'
 " Snippets
 Plugin 'SirVer/ultisnips'
 
+Plugin 'christoomey/vim-tmux-runner'
+" Plugin 'gabebw/vim-spec-runner'
 call vundle#end()
 filetype on

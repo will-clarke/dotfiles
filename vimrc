@@ -230,10 +230,6 @@ let g:multi_cursor_prev_key='<C-p>'
 let g:multi_cursor_skip_key='<C-x>'
 let g:multi_cursor_quit_key='<Esc>'
 
-" let g:rspec_command = "Dispatch rspec {spec}"
-" let g:rspec_runner = "os_x_iterm"
-let g:rspec_command = "! foreman run rspec --drb {spec}"
-
 " gx to open links
 let g:netrw_browsex_viewer="google-chrome"
 
@@ -332,7 +328,7 @@ nmap j gj
 nmap k gk
 
 " Copy entire document (& return to same line)
-nmap <leader>a mmggvG<leader>y'm
+nmap <leader>a mmggVG
 
 " Persistent undo
 " set undofile
@@ -347,53 +343,48 @@ set indentkeys-=0#            " do not break indent on #
 set cinkeys-=0#
 
   " vertical paragraph-movement
-nmap <C-K> {
-nmap <C-J> }
+" nmap <C-K> {
+" nmap <C-J> }
 
 
-nnoremap <leader>_ :Goyo<CR>
-
-" function! s:goyo_enter()
-"   silent !tmux set status off
-"   set noshowmode
-"   set noshowcmd
-"   set scrolloff=999
-"   Limelight
-"   " ...
-" endfunction
-"
-" function! s:goyo_leave()
-"   silent !tmux set status on
-"   set showmode
-"   set showcmd
-"   set scrolloff=5
-"   Limelight!
-"   " ...
-" endfunction
-" autocmd! User GoyoEnter
-" autocmd! User GoyoLeave
-" autocmd  User GoyoEnter nested call <SID>goyo_enter()
-" autocmd  User GoyoLeave nested call <SID>goyo_leave()
+nnoremap <leader>go :Goyo<CR>
 
 function! s:goyo_enter()
-  if has('gui_running')
-    set fullscreen
-    set background=light
-    set linespace=7
-  elseif exists('$TMUX')
+  if exists('$TMUX')
     silent !tmux set status off
   endif
 endfunction
 
 function! s:goyo_leave()
-  if has('gui_running')
-    set nofullscreen
-    set background=dark
-    set linespace=0
-  elseif exists('$TMUX')
+  if exists('$TMUX')
     silent !tmux set status on
   endif
 endfunction
 
-autocmd User GoyoEnter nested call <SID>goyo_enter()
-autocmd User GoyoLeave nested call <SID>goyo_leave()
+"  Vim Tmux Runner (Vtr):
+"  Mapping      |   Command
+"  -----------------------------
+"  <leader>rr   |   VtrResizeRunner<cr>
+"  <leader>ror  |   VtrReorientRunner<cr>
+"  <leader>sc   |   VtrSendCommandToRunner<cr>
+"  <leader>sl   |   VtrSendLineToRunner<cr>
+"  <leader>sv   |   VtrSendSelectedToRunner<cr>
+"  <leader>or   |   VtrOpenRunner<cr>
+"  <leader>kr   |   VtrKillRunner<cr>
+"  <leader>fr   |   VtrFocusRunner<cr>
+"  <leader>dr   |   VtrDetachRunner<cr>
+"  <leader>ar   |   VtrReattachRunner<cr>
+"  <leader>cr   |   VtrClearRunner<cr>
+"  <leader>fc   |   VtrFlushCommand<cr>
+noremap <leader>osr :VtrOpenRunner {'orientation': 'h', 'percentage': 50}<cr>
+let g:VtrUseVtrMaps = 1
+let g:spec_runner_dispatcher = 'call VtrSendCommand("{command}")'
+" let g:rspec_command = "!rspec --drb {spec}"
+let g:rspec_command = 'call VtrSendCommand("rspec --drb {spec}")'
+
+" RSpec.vim mappings
+noremap <Leader>t :call RunCurrentSpecFile()<CR>
+noremap <Leader>s :call RunNearestSpec()<CR>
+noremap <Leader>l :call RunLastSpec()<CR>
+noremap <Leader>a :call RunAllSpecs()<CR>
+let g:rspec_runner = "os_x_iterm"
