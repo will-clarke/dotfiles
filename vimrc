@@ -369,7 +369,8 @@ vnoremap <leader>rl :VtrSendLinesToRunner<cr>
 
 "runner new:
 noremap <leader>rn :VtrOpenRunner {'orientation': 'h', 'percentage': 50}<cr>
-noremap <leader>rp :VtrOpenRunner {'orientation': 'h', 'percentage': 50, 'cmd': 'pry'}<cr>
+noremap <leader>rt :VtrOpenRunner {'orientation': 'v', 'percentage': 20}<cr>
+noremap <leader>rp :VtrOpenRunner {'orientation': 'h', 'percentage'p 50, 'cmd': 'pry'}<cr>
 " vmap <leader>rl :VtrSendSelectedToRunner<cr>
 let g:VtrUseVtrMaps = 1
 let g:spec_runner_dispatcher = 'call VtrSendCommand("{command}")'
