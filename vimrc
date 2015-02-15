@@ -370,7 +370,7 @@ vnoremap <leader>rl :VtrSendLinesToRunner<cr>
 "runner new:
 noremap <leader>rn :VtrOpenRunner {'orientation': 'h', 'percentage': 50}<cr>
 noremap <leader>rt :VtrOpenRunner {'orientation': 'v', 'percentage': 20}<cr>
-noremap <leader>rp :VtrOpenRunner {'orientation': 'h', 'percentage'p 50, 'cmd': 'pry'}<cr>
+noremap <leader>rp :VtrOpenRunner {'orientation': 'h', 'percentage': 50, 'cmd': 'pry'}<cr>
 " vmap <leader>rl :VtrSendSelectedToRunner<cr>
 let g:VtrUseVtrMaps = 1
 let g:spec_runner_dispatcher = 'call VtrSendCommand("{command}")'
@@ -381,5 +381,5 @@ let g:rspec_command = 'call VtrSendCommand("rspec --drb {spec}")'
 noremap <Leader>t :call RunCurrentSpecFile()<CR>
 noremap <Leader>s :call RunNearestSpec()<CR>
 noremap <Leader>l :call RunLastSpec()<CR>
-noremap <Leader>a :call RunAllSpecs()<CR>
+noremap <Leader>q :call RunAllSpecs()<CR>
 let g:rspec_runner = "os_x_iterm"
