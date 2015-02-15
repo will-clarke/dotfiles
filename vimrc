@@ -223,6 +223,7 @@ noremap <leader>gv :Rview<CR>
 noremap <leader>gm :Rmodel<CR>
 noremap <leader>gr :e config/routes.rb<CR>
 noremap <leader>gs :Rschema<CR>
+noremap <leader>ga :A<CR>
 
 noremap <silent> <leader>o :bp<CR> " \p previous buffer
 noremap <silent> <leader>i :bn<CR> " \n next buffer
@@ -298,7 +299,8 @@ let g:UltiSnipsEditSplit="vertical"
 let g:UltiSnipsSnippetsDir="~/.vim/snippets"
 let g:UltiSnipsSnippetDirectories=["~/.vim/snippets"]
 
-nnoremap <leader>s :UltiSnipsEdit 
+nnoremap <leader>u :UltiSnipsEdit 
+nnoremap <leader>us :UltiSnipsEdit<cr>
 
 " Useful search for merge Conflicts:
 nnoremap <leader>c /[/=/</>]\{4,}<cr>
@@ -351,7 +353,7 @@ noremap <leader>rt :VtrOpenRunner {'orientation': 'v', 'percentage': 20}<cr>
 noremap <leader>rp :VtrOpenRunner {'orientation': 'h', 'percentage': 50, 'cmd': 'pry'}<cr>
 
 let g:spec_runner_dispatcher = 'call VtrSendCommand("{command}")'
-let g:rspec_command = 'call VtrSendCommand("rspec --drb {spec}")'
+let g:rspec_command = 'call VtrSendCommand("rspec {spec}")'
 " let g:rspec_command = "!rspec --drb {spec}"
 
 " RSpec.vim mappings
@@ -372,6 +374,6 @@ function! HandleURL()
   endif
 endfunction
 
-noremap <silent> <Leader>e :call HandleURL ()<CR>
+noremap <silent> <Leader>ec :call HandleURL ()<CR>
 noremap <silent> <leader>em :!open -a 'Marked 2' %<cr><cr>
 noremap <silent> <leader>ef :!open -a 'Google Chrome' %<cr><cr>
