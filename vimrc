@@ -21,7 +21,6 @@ set noswapfile    " http://robots.thoughtbot.com/post/18739402579/global-gitigno
 set history=50
 set ruler         " show the cursor position all the time
 set showcmd       " display incomplete commands
-set incsearch     " do incremental searching
 set laststatus=2  " Always display the status line
 set autowrite     " Automatically :write before running commands
 
@@ -137,12 +136,6 @@ let g:html_indent_tags = 'li\|p'
 set splitbelow
 set splitright
 
-" Quicker window movement
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-h> <C-w>h
-nnoremap <C-l> <C-w>l
-
 " configure syntastic syntax checking to check on open as well as save
 let g:syntastic_check_on_open=1
 let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
@@ -249,7 +242,6 @@ noremap <leader>vs :execute "source " . "~/.vimrc"<CR>
 " This is to highlight the line in Insert Mode
 " autocmd InsertEnter,InsertLeave * set cul!
 
-
 " Change cursor depending on the Mode
 function! InTmuxSession()
   return $TMUX != ''
@@ -271,9 +263,6 @@ inoremap <C-e> <C-o>$
 inoremap <C-a> <C-o>_
 
 nnoremap <leader>b :buffers<CR>:buffer<Space>
-
-" Markdown
-noremap <leader>md :!open -a 'Marked 2' %<cr><cr>
 
 " automatically rebalance windows on vim resize
 autocmd VimResized * :wincmd =
@@ -333,11 +322,6 @@ endif
 set indentkeys-=0#            " do not break indent on #
 set cinkeys-=0#
 
-  " vertical paragraph-movement
-" nmap <C-K> {
-" nmap <C-J> }
-
-
 nnoremap <leader>go :Goyo<CR>
 
 function! s:goyo_enter()
@@ -353,29 +337,22 @@ function! s:goyo_leave()
 endfunction
 
 "  vim tmux Runner (Vtr):
-
 noremap <leader>ra :VtrAttachToPane<cr>
-noremap <leader>rc :VtrClearRunner<cr>
-noremap <leader>rd :VtrDetachRunner<cr>
-noremap <leader>rf :VtrFlushCommand<cr>
+noremap <leader>rc :VtrSendCommandToRunner 
 noremap <leader>rf :VtrFocusRunner<cr>
 noremap <leader>rk :VtrKillRunner<cr>
-noremap <leader>ro :VtrOpenRunner<cr>
-noremap <leader>rra :VtrReattachRunner<cr>
-noremap <leader>rc :VtrSendCommandToRunner<cr>
 noremap <leader>rl :VtrSendLinesToRunner<cr>
+noremap <leader>rr :VtrFlushCommand<cr> "reset
 vnoremap <leader>rl :VtrSendLinesToRunner<cr>
-
-
-"runner new:
-noremap <leader>rn :VtrOpenRunner {'orientation': 'h', 'percentage': 50}<cr>
+"Runner new:
+noremap <leader>ro :VtrOpenRunner<cr>
+noremap <leader>rn :VtrOpenRunner {'orientation': 'h', 'percentage': 35}<cr>
 noremap <leader>rt :VtrOpenRunner {'orientation': 'v', 'percentage': 20}<cr>
 noremap <leader>rp :VtrOpenRunner {'orientation': 'h', 'percentage': 50, 'cmd': 'pry'}<cr>
-" vmap <leader>rl :VtrSendSelectedToRunner<cr>
-let g:VtrUseVtrMaps = 1
+
 let g:spec_runner_dispatcher = 'call VtrSendCommand("{command}")'
-" let g:rspec_command = "!rspec --drb {spec}"
 let g:rspec_command = 'call VtrSendCommand("rspec --drb {spec}")'
+" let g:rspec_command = "!rspec --drb {spec}"
 
 " RSpec.vim mappings
 noremap <Leader>t :call RunCurrentSpecFile()<CR>
@@ -383,3 +360,18 @@ noremap <Leader>s :call RunNearestSpec()<CR>
 noremap <Leader>l :call RunLastSpec()<CR>
 noremap <Leader>q :call RunAllSpecs()<CR>
 let g:rspec_runner = "os_x_iterm"
+
+" Open file in Browser
+function! HandleURL()
+  let s:uri = matchstr(getline("."), '[a-z]*:\/\/[^ >,;]*')
+  echo s:uri
+  if s:uri != ""
+    exec ":!open -a 'Google Chrome' '".s:uri."'"
+  else
+    echo "No URI found in line."
+  endif
+endfunction
+
+noremap <silent> <Leader>e :call HandleURL ()<CR>
+noremap <silent> <leader>em :!open -a 'Marked 2' %<cr><cr>
+noremap <silent> <leader>ef :!open -a 'Google Chrome' %<cr><cr>
