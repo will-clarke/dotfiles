@@ -220,7 +220,9 @@ let g:netrw_browsex_viewer="google-chrome"
 " Rails Vim Shortcuts
 noremap <leader>gc :Rcontroller<CR>
 noremap <leader>gv :Rview<CR>
-noremap <leader>gm :Rmodel<CR>
+noremap <leader>gm :Rmigration<CR>
+noremap <leader>gmd :Rmodel<CR>
+noremap <leader>gmg :Rmigration<CR>
 noremap <leader>gr :e config/routes.rb<CR>
 noremap <leader>gs :Rschema<CR>
 noremap <leader>ga :A<CR>
