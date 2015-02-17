@@ -219,6 +219,7 @@ let g:netrw_browsex_viewer="google-chrome"
 
 " Rails Vim Shortcuts
 noremap <leader>gc :Rcontroller<CR>
+noremap <leader>gg :e Gemfile<CR>
 noremap <leader>gv :Rview<CR>
 noremap <leader>gm :Rmigration<CR>
 noremap <leader>gmd :Rmodel<CR>
@@ -355,7 +356,7 @@ noremap <leader>rt :VtrOpenRunner {'orientation': 'v', 'percentage': 20}<cr>
 noremap <leader>rp :VtrOpenRunner {'orientation': 'h', 'percentage': 50, 'cmd': 'pry'}<cr>
 
 let g:spec_runner_dispatcher = 'call VtrSendCommand("{command}")'
-let g:rspec_command = 'call VtrSendCommand("rspec {spec}")'
+let g:rspec_command = 'call VtrSendCommand("rspec --drb {spec}")'
 " let g:rspec_command = "!rspec --drb {spec}"
 
 " RSpec.vim mappings
