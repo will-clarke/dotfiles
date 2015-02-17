@@ -218,15 +218,15 @@ let g:multi_cursor_quit_key='<Esc>'
 let g:netrw_browsex_viewer="google-chrome"
 
 " Rails Vim Shortcuts
-noremap <leader>gc :Rcontroller<CR>
-noremap <leader>gg :e Gemfile<CR>
-noremap <leader>gv :Rview<CR>
-noremap <leader>gm :Rmigration<CR>
-noremap <leader>gmd :Rmodel<CR>
-noremap <leader>gmg :Rmigration<CR>
-noremap <leader>gr :e config/routes.rb<CR>
-noremap <leader>gs :Rschema<CR>
-noremap <leader>ga :A<CR>
+noremap <leader>rc :Rcontroller<CR>
+noremap <leader>rg :e Gemfile<CR>
+noremap <leader>rv :Rview<CR>
+noremap <leader>rm :Rmigration<CR>
+noremap <leader>rmd :Rmodel<CR>
+noremap <leader>rmg :Rmigration<CR>
+noremap <leader>rr :e config/routes.rb<CR>
+noremap <leader>rs :Rschema<CR>
+noremap <leader>ra :A<CR>
 
 noremap <silent> <leader>o :bp<CR> " \p previous buffer
 noremap <silent> <leader>i :bn<CR> " \n next buffer
@@ -341,19 +341,18 @@ function! s:goyo_leave()
   endif
 endfunction
 
-"  vim tmux Runner (Vtr):
-noremap <leader>ra :VtrAttachToPane<cr>
-noremap <leader>rc :VtrSendCommandToRunner 
-noremap <leader>rf :VtrFocusRunner<cr>
-noremap <leader>rk :VtrKillRunner<cr>
-noremap <leader>rl :VtrSendLinesToRunner<cr>
-noremap <leader>rr :VtrFlushCommand<cr> "reset
-vnoremap <leader>rl :VtrSendLinesToRunner<cr>
-"Runner new:
-noremap <leader>ro :VtrOpenRunner<cr>
-noremap <leader>rn :VtrOpenRunner {'orientation': 'h', 'percentage': 35}<cr>
-noremap <leader>rt :VtrOpenRunner {'orientation': 'v', 'percentage': 20}<cr>
-noremap <leader>rp :VtrOpenRunner {'orientation': 'h', 'percentage': 50, 'cmd': 'pry'}<cr>
+"  vim tmux Runner - which is Kool
+noremap <leader>ka :VtrAttachToPane<cr>
+noremap <leader>kc :VtrSendCommandToRunner 
+noremap <leader>kf :VtrFocusRunner<cr>
+noremap <leader>kk :VtrKillRunner<cr>
+noremap <leader>kl :VtrSendLinesToRunner<cr>
+noremap <leader>kr :VtrFlushCommand<cr> "reset
+vnoremap <leader>kl :VtrSendLinesToRunner<cr>
+noremap <leader>ko :VtrOpenRunner<cr>
+noremap <leader>kn :VtrOpenRunner {'orientation': 'h', 'percentage': 35}<cr>
+noremap <leader>kt :VtrOpenRunner {'orientation': 'v', 'percentage': 20}<cr>
+noremap <leader>kp :VtrOpenRunner {'orientation': 'h', 'percentage': 50, 'cmd': 'pry'}<cr>
 
 let g:spec_runner_dispatcher = 'call VtrSendCommand("{command}")'
 let g:rspec_command = 'call VtrSendCommand("rspec --drb {spec}")'
@@ -380,3 +379,25 @@ endfunction
 noremap <silent> <Leader>ec :call HandleURL ()<CR>
 noremap <silent> <leader>em :!open -a 'Marked 2' %<cr><cr>
 noremap <silent> <leader>ef :!open -a 'Google Chrome' %<cr><cr>
+
+
+
+let g:jekyll_path = "~/Dropbox/Ruby/wmmc.github.io"
+noremap <Leader>jb  :JekyllBuild<CR>
+noremap <Leader>jn  :JekyllPost<CR>
+noremap <Leader>jl  :JekyllList<CR>
+let g:jekyll_post_suffix = "md"
+let g:jekyll_prompt_tags = "true"
+
+noremap <leader>gc :Gcommit<CR>
+noremap <leader>gs :Gstatus<CR>
+noremap <leader>gw :Gwrite<CR>
+noremap <leader>gl :Glog<CR>
+noremap <leader>gd :Gdiff<CR>
+noremap <leader>ge :Gedit
+noremap <leader>gm :Gmove
+noremap <leader>gb :Gbrowse
+noremap <leader>gr :Gread "like gco filename
+
+
+noremap <leader>cd :cd %:p:h<cr>
