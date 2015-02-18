@@ -1,4 +1,4 @@
-ompiled source #
+# compiled source #
 ###################
 *.com
 *.class
@@ -47,3 +47,7 @@ config/initializers/carrier_wave.rb
 tags
 vim/bundle/
 vim/bundle
+secrets.yml
+
+app/consumers/cache_pricing_consumer.rb
+cache_pricing_consumer.rb

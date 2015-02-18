@@ -359,10 +359,10 @@ let g:rspec_command = 'call VtrSendCommand("rspec --drb {spec}")'
 " let g:rspec_command = "!rspec --drb {spec}"
 
 " RSpec.vim mappings
-noremap <Leader>t :call RunCurrentSpecFile()<CR>
-noremap <Leader>s :call RunNearestSpec()<CR>
-noremap <Leader>l :call RunLastSpec()<CR>
-noremap <Leader>q :call RunAllSpecs()<CR>
+noremap <Leader>tf :call RunCurrentSpecFile()<CR>
+noremap <Leader>tn :call RunNearestSpec()<CR>
+noremap <Leader>tl :call RunLastSpec()<CR>
+noremap <Leader>ta :call RunAllSpecs()<CR>
 let g:rspec_runner = "os_x_iterm"
 
 " Open file in Browser
