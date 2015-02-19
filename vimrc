@@ -157,8 +157,8 @@ ca w!!  w !sudo tee "%"
 
 inoremap <silent> <C-q> <ESC>:q<CR><ESC>
 nnoremap <silent> <C-q> :q<CR>
-inoremap <silent> <C-q><C-q><C-q> <ESC>:q!<CR><ESC>
-nnoremap <silent> <C-q><C-q><C-q> :q!<CR>
+inoremap <silent> <C-q><C-q> <ESC>:q!<CR><ESC>
+nnoremap <silent> <C-q><C-q> :q!<CR>
 
 noremap  <silent> <C-s> :update<CR><ESC>
 vnoremap <silent> <C-s> <C-C>:update<CR><ESC>
@@ -231,7 +231,7 @@ noremap <leader>ra :A<CR>
 noremap <silent> <leader>o :bp<CR> " \p previous buffer
 noremap <silent> <leader>i :bn<CR> " \n next buffer
 noremap <silent> <leader>d :bd<CR> " \d delete buffer
-noremap <silent> <leader>b :ls<CR>
+noremap <silent> <leader>b :CtrlPBuffer<cr>
 
 " incremental up or down numbers
 nnoremap <A-a> <C-a>
@@ -265,8 +265,6 @@ vnoremap <F6> y:%s/\<<C-r>"\>/<C-r>"/gc<Left><Left><Left>
 " Emacs - style
 inoremap <C-e> <C-o>$
 inoremap <C-a> <C-o>_
-
-nnoremap <leader>b :buffers<CR>:buffer<Space>
 
 " automatically rebalance windows on vim resize
 autocmd VimResized * :wincmd =
@@ -316,8 +314,8 @@ nmap k gk
 nmap <leader>a mmggVG
 
 " Persistent undo
-" set undofile
-" set undodir=~/.vim/undo
+set undofile
+set undodir=~/.vim/undo
 
 if !isdirectory(expand("~/.vim/bundle/Vundle\.vim"))
     !git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
