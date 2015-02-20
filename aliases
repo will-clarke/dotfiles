@@ -38,7 +38,9 @@ alias migrate="rake db:migrate db:rollback && rake db:migrate"
 alias m="migrate"
 alias rk="rake"
 alias s="rspec"
-alias fr="foreman run rails console"
+alias fr="foreman run"
+alias frc="foreman run rails console"
+alias be="bundle exec"
 
 # Pretty print the path
 alias path="echo $PATH | tr -s ':' '\n'"

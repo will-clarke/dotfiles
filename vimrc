@@ -228,8 +228,10 @@ noremap <leader>rr :e config/routes.rb<CR>
 noremap <leader>rs :Rschema<CR>
 noremap <leader>ra :A<CR>
 
-noremap <silent> <leader>o :bp<CR> " \p previous buffer
-noremap <silent> <leader>i :bn<CR> " \n next buffer
+" noremap <silent> <leader>o :bp<CR> " \p previous buffer
+" noremap <silent> <leader>i :bn<CR> " \n next buffer
+noremap <silent> <leader>o :BufSurfBack<CR>
+noremap <silent> <leader>i :BufSurfForward<CR>
 noremap <silent> <leader>d :bd<CR> " \d delete buffer
 noremap <silent> <leader>b :CtrlPBuffer<cr>
 
@@ -275,6 +277,7 @@ nnoremap <leader>= :wincmd =<cr>
 "
 " Binding.pry
 nmap <leader>bp orequire 'pry'; binding.pry<esc>^
+nmap <leader>br orequire 'pry-remote'; binding.remote_pry<esc>^
 
 
 nnoremap å <C-a>
