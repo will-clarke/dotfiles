@@ -321,7 +321,7 @@ set undofile
 set undodir=~/.vim/undo
 
 if !isdirectory(expand("~/.vim/bundle/Vundle\.vim"))
-    !git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
+    !git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
     echoe "Cloning Vundle!"
 endif
 
