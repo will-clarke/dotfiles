@@ -44,3 +44,6 @@ alias be="bundle exec"
 
 # Pretty print the path
 alias path="echo $PATH | tr -s ':' '\n'"
+
+# Python
+alias p3="python3"
