@@ -232,7 +232,7 @@ noremap <leader>ra :A<CR>
 " noremap <silent> <leader>i :bn<CR> " \n next buffer
 noremap <silent> <leader>o :BufSurfBack<CR>
 noremap <silent> <leader>i :BufSurfForward<CR>
-noremap <silent> <leader>d :bd<CR> " \d delete buffer
+noremap <silent> <leader>d :bwipeout<CR>
 noremap <silent> <leader>b :CtrlPBuffer<cr>
 
 " incremental up or down numbers
@@ -380,8 +380,6 @@ endfunction
 noremap <silent> <Leader>ec :call HandleURL ()<CR>
 noremap <silent> <leader>em :!open -a 'Marked 2' %<cr><cr>
 noremap <silent> <leader>ef :!open -a 'Google Chrome' %<cr><cr>
-
-
 
 let g:jekyll_path = "~/Dropbox/Ruby/wmmc.github.io"
 noremap <Leader>jb  :JekyllBuild<CR>
