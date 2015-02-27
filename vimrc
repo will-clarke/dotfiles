@@ -197,7 +197,7 @@ noremap <leader>p :set paste<cr>:r !pbpaste<cr>:set nopaste<cr>
 let g:gist_clip_command = 'pbcopy'
 
 " bind K to grep word under cursor
-nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR><CR>
 
 " bind \ (backward slash) to grep shortcut
 " command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
@@ -362,6 +362,7 @@ let g:rspec_command = 'call VtrSendCommand("rspec --drb {spec}")'
 " RSpec.vim mappings
 noremap <Leader>tf :call RunCurrentSpecFile()<CR>
 noremap <Leader>tn :call RunNearestSpec()<CR>
+noremap <Leader>; :call RunNearestSpec()<CR>
 noremap <Leader>tl :call RunLastSpec()<CR>
 noremap <Leader>ta :call RunAllSpecs()<CR>
 let g:rspec_runner = "os_x_iterm"
@@ -400,3 +401,4 @@ noremap <leader>gr :Gread "like gco filename
 
 
 noremap <leader>cd :cd %:p:h<cr>
+noremap ! :!
