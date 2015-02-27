@@ -402,3 +402,9 @@ noremap <leader>gr :Gread "like gco filename
 
 noremap <leader>cd :cd %:p:h<cr>
 noremap ! :!
+
+" inoremap <silent> <c-h> <esc>:TmuxNavigateLeft<cr>
+" inoremap <silent> <c-j> <esc>:TmuxNavigateDown<cr>
+" inoremap <silent> <c-k> <esc>:TmuxNavigateUp<cr>
+inoremap <silent> <c-l> <esc>:TmuxNavigateRight<cr>
+" inoremap <silent> <c-\> <esc>:TmuxNavigatePrevious<cr>
