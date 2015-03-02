@@ -1,7 +1,7 @@
 # ~/.tmuxinator/snaptrip.yml
 
 name: snaptrip
-root: ~/Desktop/snaptrip
+root: ~/Desktop/snap-trip
 
 # Optional tmux socket
 # socket_name: foo
@@ -24,7 +24,7 @@ windows:
       panes:
         -
         -
-  - foreman: foreman start -c web=1,worker=3
+  - foreman: foreman start -c web=1,worker=1
   - logs: tail -f log/development.log
   - redis: redis-server
   - elastic: elasticsearch --config=/usr/local/opt/elasticsearch/config/elasticsearch.yml
