@@ -229,10 +229,10 @@ noremap <leader>rsh :e spec/spec_helper.rb<CR>
 noremap <leader>rs sRschema<CR>
 noremap <leader>ra :A<CR>
 
-" noremap <silent> <leader>o :bp<CR> " \p previous buffer
-" noremap <silent> <leader>i :bn<CR> " \n next buffer
-noremap <silent> <leader>o :BufSurfBack<CR>
-noremap <silent> <leader>i :BufSurfForward<CR>
+noremap <silent> <leader>o :bp<CR> " \p previous buffer
+noremap <silent> <leader>i :bn<CR> " \n next buffer
+" noremap <silent> <leader>o :BufSurfBack<CR>
+" noremap <silent> <leader>i :BufSurfForward<CR>
 noremap <silent> <leader>d :bwipeout<CR>
 noremap <silent> <leader>b :CtrlPBuffer<cr>
 
