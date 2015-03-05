@@ -42,6 +42,16 @@ alias fr="foreman run"
 alias frc="foreman run rails console"
 alias be="bundle exec"
 
+# Zeus is awesome
+alias zr="zeus rake"
+alias zrun="zeus runner"
+alias zc="zeus console"
+alias zs="zeus server"
+alias zg="zeus generate"
+# alias zr="zeus destroy
+alias zd="zeus dbconsole"
+alias zt="zeus test"
+
 # Pretty print the path
 alias path="echo $PATH | tr -s ':' '\n'"
 
