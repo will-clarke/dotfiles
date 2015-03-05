@@ -225,7 +225,8 @@ noremap <leader>rm :Rmigration<CR>
 noremap <leader>rmd :Rmodel<CR>
 noremap <leader>rmg :Rmigration<CR>
 noremap <leader>rr :e config/routes.rb<CR>
-noremap <leader>rs :Rschema<CR>
+noremap <leader>rsh :e spec/spec_helper.rb<CR>
+noremap <leader>rs sRschema<CR>
 noremap <leader>ra :A<CR>
 
 " noremap <silent> <leader>o :bp<CR> " \p previous buffer
@@ -408,3 +409,7 @@ noremap ! :!
 " inoremap <silent> <c-k> <esc>:TmuxNavigateUp<cr>
 inoremap <silent> <c-l> <esc>:TmuxNavigateRight<cr>
 " inoremap <silent> <c-\> <esc>:TmuxNavigatePrevious<cr>
+
+" let g:UltiSnipsExpandTrigger="<tab>"
+" let g:UltiSnipsJumpForwardTrigger="<tab>"
+" let g:UltiSnipsJumpBackwardTrigger="<s-tab>"

@@ -1,5 +1,6 @@
 snippet ###
 	###################################
+
 snippet enc
 	# encoding: utf-8
 
@@ -131,18 +132,13 @@ snippet all
 	all? { |${1:e}| ${0} }
 snippet any
 	any? { |${1:e}| ${0} }
-##########################
-#     Rspec snippets     #
-##########################
 snippet desc
-	describe '$1' do
-		$0
+	describe '${1}' do
+	  ${0}
 	end
-
 snippet descm
 	describe '${1:#method}' do
-		${0:pending 'Not implemented'}
+	  ${2:pending 'Not implemented'}
 	end
-
 snippet expect
-	expect( $1 ).to $2
+	expect( ${1} ).to {$1}

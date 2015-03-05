@@ -1,15 +1,4 @@
-snippet spech
-	require 'spec_helper'
-
-snippet desc
-	describe $1 do
-		$0
-	end
-
-snippet it
-	it "$1" do
-		$0
-	end
-
 snippet p
-	p "$1 -- #{$1}"
+	p "${1}: #{$1}"
+snippet t
+	<tag>${VISUAL:inside text/should/is/g}</tag>
