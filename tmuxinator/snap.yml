@@ -28,4 +28,4 @@ windows:
   - logs: tail -f log/development.log
   - redis: redis-server
   - elastic: elasticsearch --config=/usr/local/opt/elasticsearch/config/elasticsearch.yml
-  - zeus: foreman run bundle exec zeus
+  - zeus: zeus start

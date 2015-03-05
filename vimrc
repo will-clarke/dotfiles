@@ -357,7 +357,7 @@ noremap <leader>kt :VtrOpenRunner {'orientation': 'v', 'percentage': 20}<cr>
 noremap <leader>kp :VtrOpenRunner {'orientation': 'h', 'percentage': 50, 'cmd': 'pry'}<cr>
 
 let g:spec_runner_dispatcher = 'call VtrSendCommand("{command}")'
-let g:rspec_command = 'call VtrSendCommand("rspec --drb {spec}")'
+let g:rspec_command = 'call VtrSendCommand("zeus rspec {spec}")'
 " let g:rspec_command = "!rspec --drb {spec}"
 
 " RSpec.vim mappings
