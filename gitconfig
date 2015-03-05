@@ -19,8 +19,9 @@
   st = status
   up = !git fetch origin && git rebase origin/master
   update-from = "!f() { git fetch $1 --prune; git merge --ff-only $1/$2 || git rebase --preserve-merges $1/$2; }; f"
+  ignored = !git ls-files -v | grep "^[[:lower:]]"
 [core]
-	excludesfile = /Users/wmmc/.gitignore_global
+	excludesfile = ~/.gitignore_global
   autocrlf = input
 [merge]
   ff = only
