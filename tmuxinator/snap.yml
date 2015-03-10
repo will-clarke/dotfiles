@@ -27,11 +27,12 @@ windows:
   - server:
     - sleep 5
     - zeus s
+  - worker: bundle exec rake resque:work
   - logs: tail -f log/development.log
   - processes:
       layout: tiled
       panes:
         -  redis-server
-        -  bundle exec rake resque:work
+        -
         -  elasticsearch --config=/usr/local/opt/elasticsearch/config/elasticsearch.yml
         -  zeus start
