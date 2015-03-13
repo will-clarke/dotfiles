@@ -414,7 +414,6 @@ inoremap <silent> <c-l> <esc>:TmuxNavigateRight<cr>
 " let g:UltiSnipsJumpForwardTrigger="<tab>"
 " let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
-
 " Close all the buffers
 map <leader>bd :1,1000 bd!<cr>
 
