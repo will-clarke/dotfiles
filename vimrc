@@ -430,3 +430,10 @@ map <leader>bd :1,1000 bd!<cr>
 map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
 
 noremap <leader>q :A<CR>
+
+
+" move to beginning/end of line
+nnoremap B ^
+nnoremap E $
+
+nnoremap <leader>u :GundoToggle<CR>
