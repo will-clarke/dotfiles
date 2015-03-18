@@ -38,7 +38,17 @@ class Object
   end
   alias_method :interesting_methods, :im
 end
-#
+
+def time &block
+  require 'benchmark'
+  result = nil
+  timing = Benchmark.measure do
+    result = block.()
+  end
+  puts "It took: #{timing}"
+  result
+end
+
 # # === EDITOR ===
 # Pry.editor = 'vi'
 #
