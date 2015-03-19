@@ -417,7 +417,7 @@ inoremap <silent> <c-l> <esc>:TmuxNavigateRight<cr>
 " let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
 " Close all the buffers
-map <leader>bd :1,1000 bd!<cr>
+nnoremap <leader>bd :1,1000 bd!<cr>
 
 " Useful mappings for managing tabs
 " map <leader>tn :tabnew<cr>
