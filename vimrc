@@ -32,7 +32,7 @@ set smartcase
 
 " Switch syntax highlighting on, when the terminal has colors
 " Also switch on highlighting the last used search pattern.
-if (&t_Co > 2 || has("gui_running")) && !exists("syntax_on")
+if (&t_Co > 2 || has("gui_running")) && !exists("syntaxon")
   syntax on
 endif
 
@@ -364,7 +364,7 @@ let g:rspec_command = 'call VtrSendCommand("zeus rspec {spec}")'
 
 " RSpec.vim mappings
 noremap <Leader>tf :call RunCurrentSpecFile()<CR>
-noremap <Leader>tn :call RunNearestSpec()<CR>
+" noremap <Leader>tn :call RunNearestSpec()<CR>
 noremap <Leader>; :call RunNearestSpec()<CR>
 noremap <Leader>tl :call RunLastSpec()<CR>
 noremap <Leader>ta :call RunAllSpecs()<CR>
@@ -420,10 +420,10 @@ inoremap <silent> <c-l> <esc>:TmuxNavigateRight<cr>
 nnoremap <leader>bd :1,1000 bd!<cr>
 
 " Useful mappings for managing tabs
-" map <leader>tn :tabnew<cr>
-" map <leader>to :tabonly<cr>
-" map <leader>tc :tabclose<cr>
-" map <leader>tm :tabmove
+nnoremap <leader>tn :tabnew<cr>
+nnoremap <leader>to :tabonly<cr>
+nnoremap <leader>tc :tabclose<cr>
+nnoremap <leader>tm :tabmove
 
 " Opens a new tab with the current buffer's path
 " Super useful when editing files in the same directory
@@ -437,3 +437,21 @@ nnoremap B ^
 nnoremap E $
 
 nnoremap <leader>u :GundoToggle<CR>
+
+" Easier vertical movement
+set so=7
+
+" Don't redraw when executing macros
+set lazyredraw
+
+" Visual mode pressing * or # searches for the current selection
+vnoremap <silent> * :call VisualSelection('f', '')<CR>
+vnoremap <silent> # :call VisualSelection('b', '')<CR>
+
+" Pressing ,ss will toggle and untoggle spell checking
+map <leader>ss :setlocal spell!<cr>
+" Shortcuts using <leader>
+map <leader>sn ]s
+map <leader>sp [s
+map <leader>sa zg
+map <leader>s? z=
