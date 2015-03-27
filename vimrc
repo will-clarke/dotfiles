@@ -385,7 +385,7 @@ noremap <silent> <Leader>ec :call HandleURL ()<CR>
 noremap <silent> <leader>em :!open -a 'Marked 2' %<cr><cr>
 noremap <silent> <leader>ef :!open -a 'Google Chrome' %<cr><cr>
 
-let g:jekyll_path = "~/Dropbox/Ruby/wmmc.github.io"
+let g:jekyll_path = "~/Dropbox/dev/ruby/blog"
 noremap <Leader>jb  :JekyllBuild<CR>
 noremap <Leader>jn  :JekyllPost<CR>
 noremap <Leader>jl  :JekyllList<CR>
