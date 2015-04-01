@@ -64,4 +64,5 @@ alias path="echo $PATH | tr -s ':' '\n'"
 alias p3="python3"
 
 # Lazy
-alias alias="~/.alias"
+alias alias="~/.aliases"
+alias aliases="~/.aliases"
