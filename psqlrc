@@ -1,6 +1,6 @@
 -- official docs: http://www.postgresql.org/docs/9.3/static/app-psql.html
 -- Unofficial docs:
-http://robots.thoughtbot.com/improving-the-command-line-postgres-experience
+-- http://robots.thoughtbot.com/improving-the-command-line-postgres-experience
 
 -- Don't display the "helpful" message on startup.
 \set QUIET 1
