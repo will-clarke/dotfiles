@@ -27,7 +27,9 @@ alias gc='git commit'
 alias gl='git log'
 alias gp='git pull'
 alias gconflict='git diff --name-only --diff-filter=U'
-alias vgs='vim `git status --porcelain | sed -ne 's/.* //p'`'
+# alias vgs='vim `git status --porcelain | sed -ne 's/.* //p'`'
+alias vgc='vim `gconflict` -c "Gdiff"'
+alias vgm='vim `gconflict` -c "Gdiff"'
 
 
 # Bundler
@@ -66,3 +68,7 @@ alias p3="python3"
 # Lazy
 alias aliases="v ~/.aliases"
 alias vimrc="v ~/.vimrc"
+alias dotfiles="v ~/dotfiles"
+
+alias ruby="cd ~/Dropbox/dev/ruby"
+alias todo="v ~/Dropbox/Apps/UpWord\ Notes/"
