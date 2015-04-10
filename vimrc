@@ -345,12 +345,14 @@ function! s:goyo_leave()
   endif
 endfunction
 
-"  vim tmux Runner - which is Kool
+"  vim tmux Runner
 noremap <leader>ka :VtrAttachToPane<cr>
 noremap <leader>kc :VtrSendCommandToRunner 
-noremap <leader>kf :VtrFocusRunner<cr>
+noremap <leader>kh :VtrFocusRunner<cr>
+noremap <leader>kd :VtrSendFile<cr> "doc
 noremap <leader>kk :VtrKillRunner<cr>
 noremap <leader>kl :VtrSendLinesToRunner<cr>
+noremap <leader>kf mmggVG :VtrSendLinesToRunner<cr>`m
 noremap <leader>kr :VtrFlushCommand<cr> "reset
 vnoremap <leader>kl :VtrSendLinesToRunner<cr>
 noremap <leader>ko :VtrOpenRunner<cr>
@@ -455,3 +457,5 @@ map <leader>sn ]s
 map <leader>sp [s
 map <leader>sa zg
 map <leader>s? z=
+
+nnoremap <leader>w `m
