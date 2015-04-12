@@ -37,7 +37,7 @@ alias b="bundle"
 alias be='bundle exec'
 
 # Tests and Specs
-alias t="ruby -I test"
+alias test="ruby -I test"
 
 # Rails
 alias migrate="rake db:migrate db:rollback && rake db:migrate"

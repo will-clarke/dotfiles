@@ -16,9 +16,9 @@ autoload -U compinit
 compinit
 
 # load custom executable functions
-# for function in ~/.zsh/functions/*; do
-#   source $function
-# done
+for function in ~/.zsh/functions/*; do
+  source $function
+done
 
 # makes color constants available
 autoload -U colors

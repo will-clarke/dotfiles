@@ -349,7 +349,8 @@ endfunction
 noremap <leader>ka :VtrAttachToPane<cr>
 noremap <leader>kc :VtrSendCommandToRunner 
 noremap <leader>kh :VtrFocusRunner<cr>
-noremap <leader>kd :VtrSendFile<cr> "doc
+"doc
+noremap <leader>kd :VtrSendFile<cr>
 noremap <leader>kk :VtrKillRunner<cr>
 noremap <leader>kl :VtrSendLinesToRunner<cr>
 noremap <leader>kf mmggVG :VtrSendLinesToRunner<cr>`m
