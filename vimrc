@@ -460,3 +460,4 @@ map <leader>sa zg
 map <leader>s? z=
 
 nnoremap <leader>w `m
+nnoremap <leader>json :%!python -m json.tool<cr>

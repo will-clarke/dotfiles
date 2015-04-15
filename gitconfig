@@ -36,7 +36,7 @@
 	email = wmmclarke@gmail.com
 [credential]
 	helper = osxkeychain
-#[url "ssh://git@github.com/"]
-#	insteadOf = https://github.com/
+[url "ssh://git@github.com/"]
+	insteadOf = https://github.com/
 [github]
 	user = wmmc

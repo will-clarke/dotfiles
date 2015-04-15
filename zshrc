@@ -99,9 +99,7 @@ bindkey -s "^T" "^[Isudo ^[A" # "t" for "toughguy"
 # _load_settings "$HOME/.zsh/configs"
 #
 stty -ixon
-#
-#
-#
+
 export PATH="$HOME/.bin:$PATH"
 export BUN="$HOME/.vimrc.bundles.local"
 export VL="$HOME/.vimrc.local"
