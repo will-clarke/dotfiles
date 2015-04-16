@@ -30,6 +30,8 @@ alias gconflict='git diff --name-only --diff-filter=U'
 # alias vgs='vim `git status --porcelain | sed -ne 's/.* //p'`'
 alias vgc='vim `gconflict` -c "Gdiff"'
 alias vgm='vim `gconflict` -c "Gdiff"'
+alias ga.='git add .'
+alias gstash='git stash show -p stash@{0}'
 
 
 # Bundler
