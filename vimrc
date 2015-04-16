@@ -220,16 +220,19 @@ let g:multi_cursor_quit_key='<Esc>'
 let g:netrw_browsex_viewer="google-chrome"
 
 " Rails Vim Shortcuts
-noremap <leader>rc :Rcontroller<CR>
-noremap <leader>rg :e Gemfile<CR>
-noremap <leader>rv :Rview<CR>
-noremap <leader>rm :Rmigration<CR>
-noremap <leader>rmd :Rmodel<CR>
-noremap <leader>rmg :Rmigration<CR>
-noremap <leader>rr :e config/routes.rb<CR>
-noremap <leader>rsh :e spec/spec_helper.rb<CR>
-noremap <leader>rs sRschema<CR>
-noremap <leader>ra :A<CR>
+
+if RailsDetect()
+  noremap <leader>rc :Rcontroller<CR>
+  noremap <leader>rg :e Gemfile<CR>
+  noremap <leader>rv :Rview<CR>
+  noremap <leader>rm :Rmigration<CR>
+  noremap <leader>rmd :Rmodel<CR>
+  noremap <leader>rmg :Rmigration<CR>
+  noremap <leader>rr :e config/routes.rb<CR>
+  noremap <leader>rsh :e spec/spec_helper.rb<CR>
+  noremap <leader>rs sRschema<CR>
+  noremap <leader>ra :A<CR>
+endif
 
 noremap <silent> <leader>o :bp<CR> " \p previous buffer
 noremap <silent> <leader>i :bn<CR> " \n next buffer
@@ -324,8 +327,8 @@ set undofile
 set undodir=~/.vim/undo
 
 if !isdirectory(expand("~/.vim/bundle/Vundle\.vim"))
-    !git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-    echoe "Cloning Vundle!"
+  !git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+  echoe "Cloning Vundle!"
 endif
 
 set indentkeys-=0#            " do not break indent on #
@@ -362,7 +365,13 @@ noremap <leader>kt :VtrOpenRunner {'orientation': 'v', 'percentage': 20}<cr>
 noremap <leader>kp :VtrOpenRunner {'orientation': 'h', 'percentage': 50, 'cmd': 'pry'}<cr>
 
 let g:spec_runner_dispatcher = 'call VtrSendCommand("{command}")'
-let g:rspec_command = 'call VtrSendCommand("zeus rspec {spec}")'
+
+if RailsDetect()
+  let g:rspec_command = 'call VtrSendCommand("zeus rspec {spec}")'
+else
+  let g:rspec_command = 'call VtrSendCommand("bundle exec rspec {spec}")'
+endif
+
 " let g:rspec_command = "!rspec --drb {spec}"
 
 " RSpec.vim mappings
