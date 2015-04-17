@@ -220,19 +220,16 @@ let g:multi_cursor_quit_key='<Esc>'
 let g:netrw_browsex_viewer="google-chrome"
 
 " Rails Vim Shortcuts
-
-if RailsDetect()
-  noremap <leader>rc :Rcontroller<CR>
-  noremap <leader>rg :e Gemfile<CR>
-  noremap <leader>rv :Rview<CR>
-  noremap <leader>rm :Rmigration<CR>
-  noremap <leader>rmd :Rmodel<CR>
-  noremap <leader>rmg :Rmigration<CR>
-  noremap <leader>rr :e config/routes.rb<CR>
-  noremap <leader>rsh :e spec/spec_helper.rb<CR>
-  noremap <leader>rs sRschema<CR>
-  noremap <leader>ra :A<CR>
-endif
+noremap <leader>rc :Rcontroller<CR>
+noremap <leader>rg :e Gemfile<CR>
+noremap <leader>rv :Rview<CR>
+noremap <leader>rm :Rmigration<CR>
+noremap <leader>rmd :Rmodel<CR>
+noremap <leader>rmg :Rmigration<CR>
+noremap <leader>rr :e config/routes.rb<CR>
+noremap <leader>rsh :e spec/spec_helper.rb<CR>
+noremap <leader>rs sRschema<CR>
+noremap <leader>ra :A<CR>
 
 noremap <silent> <leader>o :bp<CR> " \p previous buffer
 noremap <silent> <leader>i :bn<CR> " \n next buffer
@@ -366,7 +363,7 @@ noremap <leader>kp :VtrOpenRunner {'orientation': 'h', 'percentage': 50, 'cmd': 
 
 let g:spec_runner_dispatcher = 'call VtrSendCommand("{command}")'
 
-if RailsDetect()
+if exists('g:loaded_rails')
   let g:rspec_command = 'call VtrSendCommand("zeus rspec {spec}")'
 else
   let g:rspec_command = 'call VtrSendCommand("bundle exec rspec {spec}")'
