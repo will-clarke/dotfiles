@@ -470,3 +470,16 @@ map <leader>s? z=
 
 nnoremap <leader>w `m
 nnoremap <leader>json :%!python -m json.tool<cr>
+
+let g:projectionist_heuristics = {
+      \  "*": {
+      \     "spec/*_spec.rb": {
+      \       "type": "test",
+      \       "alternate": "lib/{}.rb"
+      \     },
+      \     "lib/*.rb": {
+      \       "type": "source",
+      \       "alternate": "spec/{}_spec.rb"
+      \     }
+      \   }
+      \ }

@@ -63,6 +63,9 @@ Plugin 'csexton/jekyll.vim'
 " Plugin 'ton/vim-bufsurf' "remembers buffer history for navigation
 " Plugin 'Lokaltog/vim-easymotion'
 Plugin 'sjl/gundo.vim'
+Plugin 'tpope/vim-projectionist'
+Plugin 'tpope/vim-rake'
+Plugin 'ecomba/vim-ruby-refactoring'
 
 call vundle#end()
 filetype on
