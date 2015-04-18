@@ -1,4 +1,4 @@
-" main {{{
+" init {{{
 let mapleader = " "
 
 set ttymouse=xterm2
@@ -7,7 +7,6 @@ set mouse=a
 noremap ; :
 
 imap jk <ESC>
-
 noremap ; :
 noremap : ;
 
@@ -31,6 +30,9 @@ set autowrite     " Automatically :write before running commands
 
 set timeoutlen=500
 
+set indentkeys-=0#            " do not break indent on #
+set cinkeys-=0#
+
 " Enable built-in matchit plugin
 runtime macros/matchit.vim
 
@@ -45,10 +47,32 @@ if filereadable(expand("~/.vimrc.bundles"))
 endif
 
 filetype plugin indent on
-" }}}
 
-" test {{{
+" Easier vertical movement
+set so=7
+
+" Don't redraw when executing macros
+set lazyredraw
+
+" Treat <li> and <p> tags like the block tags they are
+let g:html_indent_tags = 'li\|p'
+
+" Open new split panes to right and bottom, which feels more natural
+set splitbelow
+set splitright
+
 set foldmethod=marker " foldlevel=0
+
+" Always use vertical diffs
+set diffopt+=vertical
+
+set nowrap
+set noeol
+
+if !isdirectory(expand("~/.vim/bundle/Vundle\.vim"))
+  !git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+  echoe "Cloning Vundle!"
+endif
 " }}}
 " folding {{{
 nnoremap <leader>' za
@@ -95,6 +119,9 @@ nnoremap <leader>to :tabonly<cr>
 nnoremap <leader>tc :tabclose<cr>
 nnoremap <leader>tm :tabmove
 
+" Opens a new tab with the current buffer's path
+" Super useful when editing files in the same directory
+map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
 " }}}
 " search {{{
 " Visual mode pressing * or # searches for the current selection
@@ -178,32 +205,15 @@ let g:Tlist_Ctags_Cmd="ctags --exclude='*.js'"
 " Index ctags from any project, including those outside Rails
 nnoremap <Leader>ct :!ctags -R .<CR>
 " }}}
-
-
-" Treat <li> and <p> tags like the block tags they are
-let g:html_indent_tags = 'li\|p'
-
-" Open new split panes to right and bottom, which feels more natural
-set splitbelow
-set splitright
-
 " syntastic {{{
 " configure syntastic syntax checking to check on open as well as save
 let g:syntastic_check_on_open=1
 let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
 " }}}
-
-
-" Always use vertical diffs
-set diffopt+=vertical
-
 " NERD {{{
 noremap <Leader>n :NERDTreeFind<CR>
 noremap <Leader>m :NERDTreeToggle<CR>
 " }}}
-
-set nowrap
-
 " save / quit {{{
 " To remember how to force save if you have an E212 error message
 ca w!!  w !sudo tee "%"
@@ -217,18 +227,13 @@ noremap  <silent> <C-s> :update<CR><ESC>
 vnoremap <silent> <C-s> <C-C>:update<CR><ESC>
 inoremap <silent> <C-s> <C-O>:update<CR><ESC>
 " }}}
-
-" Find file in directory
-noremap <silent><leader>f :CtrlP<CR>
-
-
 " inline code running {{{
 " map <F4> <Plug>(xmpfilter-mark)
 " map <F5> <Plug>(xmpfilter-run)
 "
 " imap <F4> <Plug>(xmpfilter-mark)
 " imap <F5> <Plug>(xmpfilter-run)
-}}}
+" }}}
 " clipboard {{{
 " set clipboard=unnamed
 noremap <leader>y :.w !pbcopy<CR><CR>
@@ -239,28 +244,12 @@ noremap <leader>p :set paste<cr>:r !pbpaste<cr>:set nopaste<cr>
 
 let g:gist_clip_command = 'pbcopy'
 " }}}
-
-" bind K to grep word under cursor
-nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR><CR>
-
-" bind \ (backward slash) to grep shortcut
-" command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
-
-nnoremap \ :Ag<SPACE>
-
-" For Nerd commenter
-" filetype plugin on
-
-set noeol
-
 " multicursors {{{
 let g:multi_cursor_next_key='<C-n>'
 let g:multi_cursor_prev_key='<C-p>'
 let g:multi_cursor_skip_key='<C-x>'
 let g:multi_cursor_quit_key='<Esc>'
 " }}}
-
-
 " rails {{{
 " Rails Vim Shortcuts
 noremap <leader>rc :Rcontroller<CR>
@@ -273,8 +262,20 @@ noremap <leader>rr :e config/routes.rb<CR>
 noremap <leader>rsh :e spec/spec_helper.rb<CR>
 noremap <leader>rs sRschema<CR>
 noremap <leader>ra :A<CR>
-" }}}
 
+let g:projectionist_heuristics = {
+      \  "*": {
+      \     "spec/*_spec.rb": {
+      \       "type": "test",
+      \       "alternate": "lib/{}.rb"
+      \     },
+      \     "lib/*.rb": {
+      \       "type": "source",
+      \       "alternate": "spec/{}_spec.rb"
+      \     }
+      \   }
+      \ }
+" }}}
 " buffers {{{
 noremap <silent> <leader>o :bp<CR> " \p previous buffer
 noremap <silent> <leader>i :bn<CR> " \n next buffer
@@ -283,17 +284,13 @@ noremap <silent> <leader>i :bn<CR> " \n next buffer
 noremap <silent> <leader>d :bwipeout<CR>
 noremap <silent> <leader>b :CtrlPBuffer<cr>
 " }}}
-
-
 " vimrc {{{
 noremap <leader>vv :execute "edit " . "~/.vimrc"<CR>
 noremap <leader>vt :execute "edit " . "~/.tmux.conf"<CR>
 noremap <leader>vb :execute "edit " . "~/.vimrc.bundles"<CR>
 noremap <leader>vr :execute "source " . "~/.vimrc"<CR>
 noremap <leader>vs :execute "source " . "~/.vimrc"<CR>
-}}}
-
-
+" }}}
 " nifty shortcuts {{{
 
 " Useful search for merge Conflicts:
@@ -321,24 +318,46 @@ nnoremap <A-x> <C-x>
 nnoremap <leader>w `m
 nnoremap <leader>json :%!python -m json.tool<cr>
 
+" Find file in directory
+noremap <silent><leader>f :CtrlP<CR>
+
 " zoom a vim pane, <C-w>= to re-balance
 nnoremap <leader>- :wincmd _<cr>:wincmd \|<cr>
 nnoremap <leader>= :wincmd =<cr>
+
+" bind K to grep word under cursor
+nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR><CR>
+nnoremap \ :Ag<SPACE>
+
+noremap <leader>cd :cd %:p:h<cr>
+noremap ! :!
+
+" Close all the buffers
+nnoremap <leader>bd :1,1000 bd!<cr>
+
+noremap <leader>q :A<CR>
+
+
+" move to beginning/end of line
+nnoremap B ^
+nnoremap E $
 " }}}
-
-
-"
 " Binding.pry {{{
 nmap <leader>bp orequire 'pry'; binding.pry<esc>^
 nmap <leader>br orequire 'pry-remote'; binding.remote_pry<esc>^
 " }}}
-
 " potentially dodgy options {{{
 " set nofoldenable " Say no to code folding...
 " set relativenumber
 " set hidden " Lets you 'hide' buffers
 " autocmd InsertEnter,InsertLeave * set cul!
-"}}}
+"
+" bind \ (backward slash) to grep shortcut
+" command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
+"
+" For Nerd commenter
+" filetype plugin on
+" }}}
 " snippets {{{
 let g:UltiSnipsEditSplit="vertical"
 let g:UltiSnipsSnippetsDir="~/.vim/snippets"
@@ -347,22 +366,12 @@ let g:UltiSnipsSnippetDirectories=["~/.vim/snippets"]
 nnoremap <leader>u :UltiSnipsEdit 
 nnoremap <leader>us :UltiSnipsEdit<cr>
 " }}}
-
 " undo {{{
 " Persistent undo
 set undofile
 set undodir=~/.vim/undo
+nnoremap <leader>u :GundoToggle<CR>
 " }}}
-
-if !isdirectory(expand("~/.vim/bundle/Vundle\.vim"))
-  !git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-  echoe "Cloning Vundle!"
-endif
-
-set indentkeys-=0#            " do not break indent on #
-set cinkeys-=0#
-
-
 " goyo {{{
 nnoremap <leader>go :Goyo<CR>
 
@@ -377,7 +386,7 @@ function! s:goyo_leave()
     silent !tmux set status on
   endif
 endfunction
-}}}
+" }}}
 "  vim tmux Runner {{{
 noremap <leader>ka :VtrAttachToPane<cr>
 noremap <leader>kc :VtrSendCommandToRunner 
@@ -451,34 +460,6 @@ noremap <leader>gm :Gmove
 noremap <leader>gb :Gbrowse
 noremap <leader>gr :Gread "like gco filename
 " }}}
-
-
-noremap <leader>cd :cd %:p:h<cr>
-noremap ! :!
-
-" Close all the buffers
-nnoremap <leader>bd :1,1000 bd!<cr>
-
-
-" Opens a new tab with the current buffer's path
-" Super useful when editing files in the same directory
-map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
-
-noremap <leader>q :A<CR>
-
-
-" move to beginning/end of line
-nnoremap B ^
-nnoremap E $
-
-nnoremap <leader>u :GundoToggle<CR>
-
-" Easier vertical movement
-set so=7
-
-" Don't redraw when executing macros
-set lazyredraw
-
 " spelling {{{
 " Pressing ,ss will toggle and untoggle spell checking
 map <leader>ss :setlocal spell!<cr>
@@ -491,17 +472,3 @@ map <leader>s? z=
 " Dropbox or kept in Git and managed outside of thoughtbot/dotfiles using rcm.
 set spellfile=$HOME/.vim-spell-en.utf-7.add
 " }}}
-
-
-let g:projectionist_heuristics = {
-      \  "*": {
-      \     "spec/*_spec.rb": {
-      \       "type": "test",
-      \       "alternate": "lib/{}.rb"
-      \     },
-      \     "lib/*.rb": {
-      \       "type": "source",
-      \       "alternate": "spec/{}_spec.rb"
-      \     }
-      \   }
-      \ }
