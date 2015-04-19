@@ -170,6 +170,17 @@ if !isdirectory(expand("~/.vim/bundle/vim-colors-solarized\.vim"))
 endif
 
 noremap <f2> :call ToggleBackground()<CR>
+
+
+
+function! StripWhitespace ()
+  exec ':%s/ \+$//gc'
+endfunction
+
+function! RemoveMultipleBlankLines()
+  exec '%s/^\(\s*\n\)\+/\r'
+endfunction
+
 " tmux {{{
 " Change cursor depending on the Mode
 function! InTmuxSession()
@@ -472,3 +483,18 @@ map <leader>s? z=
 " Dropbox or kept in Git and managed outside of thoughtbot/dotfiles using rcm.
 set spellfile=$HOME/.vim-spell-en.utf-7.add
 " }}}
+" relative numbers {{{
+function! ToggleNuMode()
+  if(&rnu =n 1)
+    set nornu
+  else
+    set rnu
+  endif
+endfunction
+" set nu
+nnoremap <leader>rn :call ToggleNuMode()<CR>
+" }}}
+" Hacky way of getting <c-h> working on neovim:
+ if has('nvim')
+     nmap <BS> <C-W>h
+ endif
