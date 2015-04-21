@@ -334,7 +334,7 @@ noremap <silent><leader>f :CtrlP<CR>
 
 " zoom a vim pane, <C-w>= to re-balance
 nnoremap <leader>- :wincmd _<cr>:wincmd \|<cr>
-nnoremap <leader>= :wincmd =<cr>
+" nnoremap <leader>= :wincmd =<cr>
 
 " bind K to grep word under cursor
 nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR><CR>
@@ -498,3 +498,5 @@ nnoremap <leader>rn :call ToggleNuMode()<CR>
  if has('nvim')
      nmap <BS> <C-W>h
  endif
+
+nnoremap <leader>= mmgg=G`m
