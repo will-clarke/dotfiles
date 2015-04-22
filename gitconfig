@@ -1,5 +1,10 @@
 #[init]
 #  templatedir = ~/.git_template
+[advice]
+  pushNonFastForward = false
+  statusHints = false
+  commitBeforeMerge = false
+  detachedHead = false
 [push]
   default = current
 [color]
