@@ -33,7 +33,7 @@ windows:
   - processes:
       layout: tiled
       panes:
-        -  redis-server
+        -  zeus start
         -
         -  elasticsearch --config=/usr/local/opt/elasticsearch/config/elasticsearch.yml
-        -  zeus start
+        -  redis-server
