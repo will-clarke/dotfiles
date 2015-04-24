@@ -172,11 +172,6 @@ endif
 noremap <f2> :call ToggleBackground()<CR>
 
 
-
-function! StripWhitespace ()
-  exec ':%s/ \+$//gc'
-endfunction
-
 function! RemoveMultipleBlankLines()
   exec '%s/^\(\s*\n\)\+/\r'
 endfunction
@@ -224,6 +219,8 @@ let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
 " NERD {{{
 noremap <Leader>n :NERDTreeFind<CR>
 noremap <Leader>m :NERDTreeToggle<CR>
+let NERDTreeShowHidden = 1
+let NERDTreeIgnore=['\.vim$', '\~$', '\.zeus\.sock', '.DS_Store']
 " }}}
 " save / quit {{{
 " To remember how to force save if you have an E212 error message
@@ -399,8 +396,8 @@ function! s:goyo_leave()
 endfunction
 " }}}
 "  vim tmux Runner {{{
-noremap <leader>ka :VtrAttachToPane<cr>
-noremap <leader>kc :VtrSendCommandToRunner 
+noremap <leader>ka :VtrAttachToPane<cr>:execute "source " . "~/.vimrc"<CR>
+noremap <leader>kc :VtrSendCommandToRunner
 noremap <leader>kh :VtrFocusRunner<cr>
 "doc
 noremap <leader>kd :VtrSendFile<cr>
@@ -500,3 +497,44 @@ nnoremap <leader>rn :call ToggleNuMode()<CR>
  endif
 
 nnoremap <leader>= mmgg=G`m
+"rot13 = g?
+
+" Ignore whitespace in DIFFs
+set diffopt+=iwhite
+
+" Escape/unescape HTML
+function! HtmlEscape()
+  silent s/&/\&amp;/eg
+  silent s/</\&lt;/eg
+  silent s/>/\&gt;/eg
+endfunction
+ 
+function! HtmlUnEscape()
+  silent s/&lt;/</eg
+  silent s/&gt;/>/eg
+  silent s/&amp;/\&/eg
+endfunction
+" Escape/Unescape of HTML entities
+noremap <leader>he :call HtmlEscape()<CR>
+noremap <leader>hue :call HtmlUnEscape()<CR>
+
+" Remove trailing whitespaces at the end of a line
+function! <SID>StripTrailingWhitespaces()
+  "Preparation: save last search, and cursor position.
+  let _s=@/
+  let l = line(".")
+  let c = col(".")
+  "Do the business:
+  %s/\s\+$//e
+  "Clean up: restore previous search history, and cursor position
+  let @/=_s
+  call cursor(l, c)
+  :retab<CR>
+endfunction
+
+function! StripWhitespace ()
+  exec ':%s/ \+$//gc'
+endfunction
+
+" Strip whitespace when saving a file
+autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
