@@ -53,3 +53,5 @@ cache_pricing_consumer.rb
 vim/undo/
 vim/.netrwhist
 zeus.json
+vim/bundle*
+vim/bundle/*
