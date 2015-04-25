@@ -371,7 +371,7 @@ let g:UltiSnipsEditSplit="vertical"
 let g:UltiSnipsSnippetsDir="~/.vim/snippets"
 let g:UltiSnipsSnippetDirectories=["~/.vim/snippets"]
 
-nnoremap <leader>u :UltiSnipsEdit 
+nnoremap <leader>u :UltiSnipsEdit
 nnoremap <leader>us :UltiSnipsEdit<cr>
 " }}}
 " undo {{{
@@ -396,7 +396,7 @@ function! s:goyo_leave()
 endfunction
 " }}}
 "  vim tmux Runner {{{
-noremap <leader>ka :VtrAttachToPane<cr>:execute "source " . "~/.vimrc"<CR>
+noremap <leader>ka :execute "source " . "~/.vimrc"<CR>:VtrAttachToPane<cr>
 noremap <leader>kc :VtrSendCommandToRunner
 noremap <leader>kh :VtrFocusRunner<cr>
 "doc
@@ -508,7 +508,7 @@ function! HtmlEscape()
   silent s/</\&lt;/eg
   silent s/>/\&gt;/eg
 endfunction
- 
+
 function! HtmlUnEscape()
   silent s/&lt;/</eg
   silent s/&gt;/>/eg

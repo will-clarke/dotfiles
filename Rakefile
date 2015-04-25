@@ -18,8 +18,8 @@ class Installer
         p "Linking #{destination(name)}"
         link(repo(name), destination(name))
       end
-
     end
+    link_zprofile_from_dropbox
   end
 
   def backup(file_names=dotfiles)
@@ -57,6 +57,15 @@ class Installer
     dotfiles.each do |file|
       backup [destination(file)]
       FileUtils.rm_rf destination file
+    end
+  end
+
+  def link_zprofile_from_dropbox
+    dropbox_route = '/Users/wmmc/Dropbox/Dev/zprofile'
+    zprofile = '/Users/wmmc/.zprofile'
+    if File.exists?(dropbox_route) && !File.exists?(zprofile)
+      p 'Linking ~/.zprofile from dropbox'
+      FileUtils.ln_s(dropbox_route, zprofile)
     end
   end
 
