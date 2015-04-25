@@ -163,7 +163,13 @@ function! ToggleBackground()
 endfunction
 
 syntax enable
-set background=dark
+
+let tmux_colour = readfile('/Users/wmmc/.vim/tmux_colour')
+if tmux_colour == ['light']
+  set background=light
+else
+  set background=dark
+endif
 
 if !isdirectory(expand("~/.vim/bundle/vim-colors-solarized\.vim"))
   colorscheme solarized

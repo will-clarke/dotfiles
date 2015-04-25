@@ -19,6 +19,7 @@ tell application "iTerm"
 
     if fg_color is {28873, 33398, 33872} then
       -- Solarized Light Theme
+      do shell script "echo light > ~/.vim/tmux_colour"
       set foreground color to {21074, 26471, 28270}
       set background color to {64842, 62778, 56626}
       set bold color to {18134, 23373, 25098}
@@ -28,6 +29,7 @@ tell application "iTerm"
       set cursor_text color to {60037, 58326, 52284}
     else
       -- Solarized Dark Theme
+      do shell script "echo dark > ~/.vim/tmux_colour"
       set foreground color to {28873, 33398, 33872}
       set background color to {0, 7722, 9941}
       set bold color to {33153, 37008, 37008}

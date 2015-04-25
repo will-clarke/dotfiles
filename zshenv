@@ -13,5 +13,8 @@ fi
 # mkdir .git/safe in the root of repositories you trust
 export PATH=".git/safe/../../bin:$PATH"
 
+# make vim dark by default
+echo dark > ~/.vim/tmux_colour
+
 # Local config
 [[ -f ~/.zshenv.local ]] && source ~/.zshenv.local
