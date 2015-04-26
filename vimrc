@@ -419,7 +419,7 @@ noremap <leader>kp :VtrOpenRunner {'orientation': 'h', 'percentage': 50, 'cmd': 
 
 let g:spec_runner_dispatcher = 'call VtrSendCommand("{command}")'
 
-if exists('g:loaded_rails')
+if RailsDetect()
   let g:rspec_command = 'call VtrSendCommand("zeus rspec {spec}")'
 else
   let g:rspec_command = 'call VtrSendCommand("bundle exec rspec {spec}")'
