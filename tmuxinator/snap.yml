@@ -21,19 +21,19 @@ root: ~/Desktop/snap-trip
 
 windows:
   - editor:
-    layout: main-vertical
-    panes:
-      -
-      - fortune | cowsay -f $(ls /usr/local/Cellar/cowsay/3.03/share/cows | gsort -R | head -n 1)
+      layout: main-vertical
+      panes:
+        -
+        - fortune | cowsay -f $(ls /usr/local/Cellar/cowsay/3.03/share/cows | gsort -R | head -n 1)
   - server:
     - sleep 5
     - zeus s
   - worker:
     - bundle exec rake resque:work
   - processes:
-    layout: tiled
-    panes:
-      -  zeus start
-      -
-      -  elasticsearch --config=/usr/local/opt/elasticsearch/config/elasticsearch.yml
-      -  redis-server
+      layout: tiled
+      panes:
+        -  zeus start
+        -
+        -  elasticsearch --config=/usr/local/opt/elasticsearch/config/elasticsearch.yml
+        -  redis-server
