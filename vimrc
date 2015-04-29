@@ -67,7 +67,8 @@ set foldmethod=marker " foldlevel=0
 set diffopt+=vertical
 
 set nowrap
-set noeol
+" end of line
+" set noeol
 
 if !isdirectory(expand("~/.vim/bundle/Vundle\.vim"))
   !git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
@@ -334,6 +335,7 @@ nnoremap <leader>json :%!python -m json.tool<cr>
 
 " Find file in directory
 noremap <silent><leader>f :CtrlP<CR>
+noremap <silent>' :CtrlPMixed<CR>
 
 " zoom a vim pane, <C-w>= to re-balance
 nnoremap <leader>- :wincmd _<cr>:wincmd \|<cr>
