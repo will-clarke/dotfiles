@@ -458,7 +458,7 @@ noremap <silent> <leader>em :!open -a 'Marked 2' %<cr><cr>
 noremap <silent> <leader>ef :!open -a 'Google Chrome' %<cr><cr>
 " }}}
 " jekyll {{{
-let g:jekyll_path = "~/Dropbox/dev/ruby/blog"
+let g:jekyll_path = "~/Dropbox/dev/blog"
 noremap <Leader>jb  :JekyllBuild<CR>
 noremap <Leader>jn  :JekyllPost<CR>
 noremap <Leader>jl  :JekyllList<CR>
