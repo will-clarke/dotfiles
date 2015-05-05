@@ -66,6 +66,7 @@ Plugin 'sjl/gundo.vim'
 Plugin 'tpope/vim-projectionist'
 Plugin 'tpope/vim-rake'
 Plugin 'ecomba/vim-ruby-refactoring'
+Plugin 'godlygeek/tabular'
 
 call vundle#end()
 filetype on
