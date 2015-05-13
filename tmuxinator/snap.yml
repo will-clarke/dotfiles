@@ -29,7 +29,8 @@ windows:
     - sleep 5
     - zeus s
   - worker:
-    - bundle exec rake resque:work
+    - sleep 5
+    - zeus rake resque:work
   - processes:
       layout: tiled
       panes:
