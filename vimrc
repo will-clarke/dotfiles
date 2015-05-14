@@ -341,7 +341,8 @@ nmap <leader>a mmggVG
 nnoremap <F6> yiw:%s/\<<C-r>"\>/<C-r>"/gc<Left><Left><Left>
 vnoremap <F6> y:%s/\<<C-r>"\>/<C-r>"/gc<Left><Left><Left>
 " Switch between the last two files
-nnoremap <leader><leader> <c-^>
+" nnoremap <leader><leader> <c-^>
+nnoremap <leader><leader> :call RunCurrentSpecFile()<CR>
 " Emacs - style
 inoremap <C-e> <C-o>$
 inoremap <C-a> <C-o>_
