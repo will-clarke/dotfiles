@@ -399,6 +399,14 @@ let g:UltiSnipsEditSplit="vertical"
 let g:UltiSnipsSnippetsDir="~/.vim/snippets"
 let g:UltiSnipsSnippetDirectories=["~/.vim/snippets"]
 
+let g:UltiSnipsExpandTrigger="<c-j>"
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+" let g:UltiSnipsExpandTrigger="<tab>"
+" let g:UltiSnipsListSnippets="<c-tab>"
+" let g:UltiSnipsJumpForwardTrigger="<c-j>"
+" let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+
 nnoremap <leader>u :UltiSnipsEdit
 nnoremap <leader>us :UltiSnipsEdit<cr>
 " }}}
@@ -570,3 +578,27 @@ endfunction
 
 " Strip whitespace when saving a file
 autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
+
+
+
+
+"
+" let g:UltiSnipsJumpForwardTrigger="<tab>"
+" let g:UltiSnipsJumpBackwardTrigger="<S-tab>"
+" let g:UltiSnipsExpandTrigger="<nop>"
+" let g:ulti_expand_or_jump_res = 0
+" function! <SID>ExpandSnippetOrReturn()
+"   let snippet = UltiSnips#ExpandSnippetOrJump()
+"   if g:ulti_expand_or_jump_res > 0
+"     return snippet
+"   else
+"     return "\<C-Y>"
+"   endif
+" endfunction
+" imap <expr> <CR> pumvisible() ? "<C-R>=<SID>ExpandSnippetOrReturn()<CR>" : "\<CR>"
+
+nnoremap <leader>tb= Tabularize /=<cr>
+"This will tabularize in the character under cursor
+nnoremap <leader>tbc xP:Tabularize /<C-R>-<CR>
+"This will tabularize in character set which was visually selected
+vnoremap <leader>tb xP:Tabularize /<C-R>-<CR>
