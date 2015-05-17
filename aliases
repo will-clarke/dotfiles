@@ -74,6 +74,5 @@ alias aliases="v ~/.aliases"
 alias vimrc="v ~/.vimrc"
 alias dotfiles="cd ~/dotfiles"
 
-alias ruby="cd ~/Dropbox/dev/ruby"
 alias todolist="v ~/Dropbox/Apps/UpWord\ Notes/"
 alias todo="v ~/Dropbox/Apps/UpWord\ Notes/todo.txt"
