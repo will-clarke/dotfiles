@@ -214,7 +214,7 @@ inoremap <S-Tab> <c-n>
 " }}}
 " ctags {{{
 " Exclude Javascript files in :Rtags via rails.vim due to warnings when parsing
-let g:Tlist_Ctags_Cmd="ctags --exclude='*.js'"
+let g:Tlist_Ctags_Cmd="ctags --exclude='*.js' --exclude='.public/*' --exclude='.vendor/*'"
 " Index ctags from any project, including those outside Rails
 nnoremap <Leader>ct :!ctags -R .<CR>
 " }}}
@@ -513,6 +513,10 @@ noremap <leader>gr :Gread "like gco filename
 " Pressing ,ss will toggle and untoggle spell checking
 map <leader>ss :setlocal spell!<cr>
 " Shortcuts using <leader>
+" ]s : Next spell error
+" [s : Previous spell error
+" zg : Ignore error
+" z= : change error word to List
 map <leader>sn ]s
 map <leader>sp [s
 map <leader>sa zg

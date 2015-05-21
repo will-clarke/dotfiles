@@ -109,3 +109,10 @@ eval "$(rbenv init - zsh --no-rehash)"
 function hiddenOn() {defaults write com.apple.finder AppleShowAllFiles NO; killall Finder /System/Library/CoreServices/Finder.app}
 function hiddenOff() {defaults write com.apple.finder AppleShowAllFiles YES; killall Finder /System/Library/CoreServices/Finder.app}
 function manp() { ps=`mktemp -t manpageXXXX`.ps ; man -t $@ > "$ps" ; open "$ps" ; }
+function stopwatch(){
+    date1=`date +%s`;
+    while true; do
+        echo -ne "$(date -jf "%s" $((`date +%s` - $date1)) +%H:%M:%S)\r";
+        sleep 0.1
+    done
+}
