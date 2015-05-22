@@ -324,6 +324,7 @@ noremap <leader>vv :execute "edit " . "~/.vimrc"<CR>
 noremap <leader>vt :execute "edit " . "~/.tmux.conf"<CR>
 noremap <leader>vb :execute "edit " . "~/.vimrc.bundles"<CR>
 noremap <leader>vr :execute "source " . "~/.vimrc"<CR>
+noremap <leader>vi :execute "edit" . "~/.vim"<CR>
 noremap <leader>vs :execute "source " . "~/.vimrc"<CR>
 " }}}
 " nifty shortcuts {{{
