@@ -227,7 +227,8 @@ let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
 noremap <Leader>n :NERDTreeFind<CR>
 noremap <Leader>m :NERDTreeToggle<CR>
 let NERDTreeShowHidden = 1
-let NERDTreeIgnore=['\.vim$', '\~$', '\.zeus\.sock', '.DS_Store']
+let NERDTreeIgnore=['\~$', '\.zeus\.sock', '.DS_Store']
+" removed '\.vim$',
 " }}}
 " save / quit {{{
 " To remember how to force save if you have an E212 error message
@@ -608,3 +609,5 @@ nnoremap <leader>tb= Tabularize /=<cr>
 nnoremap <leader>tbc xP:Tabularize /<C-R>-<CR>
 "This will tabularize in character set which was visually selected
 vnoremap <leader>tb xP:Tabularize /<C-R>-<CR>
+
+nnoremap <leader>b_ :call ToggleBackground()<CR>

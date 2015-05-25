@@ -69,6 +69,7 @@ Plugin 'ecomba/vim-ruby-refactoring'
 Plugin 'godlygeek/tabular'
 
 Plugin 'wting/rust.vim'
+Plugin 'vim-scripts/YankRing.vim'
 
 call vundle#end()
 filetype on
