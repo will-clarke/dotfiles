@@ -611,3 +611,4 @@ nnoremap <leader>tbc xP:Tabularize /<C-R>-<CR>
 vnoremap <leader>tb xP:Tabularize /<C-R>-<CR>
 
 nnoremap <leader>b_ :call ToggleBackground()<CR>
+nnoremap <c-_> :TComment<CR>
