@@ -52,7 +52,7 @@ filetype plugin indent on
 set so=7
 
 " Don't redraw when executing macros
-set lazyredraw
+" set lazyredraw
 
 " Treat <li> and <p> tags like the block tags they are
 let g:html_indent_tags = 'li\|p'
@@ -346,8 +346,11 @@ vnoremap <F6> y:%s/\<<C-r>"\>/<C-r>"/gc<Left><Left><Left>
 " nnoremap <leader><leader> <c-^>
 nnoremap <leader><leader> :call RunCurrentSpecFile()<CR>
 " Emacs - style
+
 inoremap <C-e> <C-o>$
+vnoremap <C-e> $
 inoremap <C-a> <C-o>_
+vnoremap <C-a> _
 
 " incremental up or down numbers
 nnoremap <A-a> <C-a>
