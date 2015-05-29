@@ -349,8 +349,12 @@ nnoremap <leader><leader> :call RunCurrentSpecFile()<CR>
 
 inoremap <C-e> <C-o>$
 vnoremap <C-e> $
+" NB. This is overwriting default vim behaviour
+nnoremap <C-e> $
+
 inoremap <C-a> <C-o>_
 vnoremap <C-a> _
+nnoremap <C-a> _
 
 " incremental up or down numbers
 nnoremap <A-a> <C-a>
@@ -615,3 +619,9 @@ vnoremap <leader>tb xP:Tabularize /<C-R>-<CR>
 
 nnoremap <leader>b_ :call ToggleBackground()<CR>
 nnoremap <c-_> :TComment<CR>
+
+nnoremap å <C-a>
+noremap ≈ <C-x>
+
+nmap π <Plug>yankstack_substitute_older_paste
+nmap ø <Plug>yankstack_substitute_newer_paste
