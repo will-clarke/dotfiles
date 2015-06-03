@@ -625,3 +625,13 @@ noremap ≈ <C-x>
 
 nmap π <Plug>yankstack_substitute_older_paste
 nmap ø <Plug>yankstack_substitute_newer_paste
+
+
+vnoremap <silent> s //e<C-r>=&selection=='exclusive'?'+1':''<CR><CR>
+    \:<C-u>call histdel('search',-1)<Bar>let @/=histget('search',-1)<CR>gv
+omap s :normal vs<CR>
+
+nnoremap <CR> G
+nnoremap <BS> gg
+
+noremap gV `[v`]
