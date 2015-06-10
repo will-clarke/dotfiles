@@ -149,7 +149,7 @@ highlight NonText guibg=#060606
 highlight Folded  guibg=#0A0A0A guifg=#9090D0
 
 " Make it obvious where 80 characters is
-set textwidth=80
+" set textwidth=80
 set colorcolumn=+1
 
 " Line Numbers
@@ -216,7 +216,7 @@ inoremap <S-Tab> <c-n>
 " Exclude Javascript files in :Rtags via rails.vim due to warnings when parsing
 let g:Tlist_Ctags_Cmd="ctags --exclude='*.js' --exclude='.public/*' --exclude='.vendor/*'"
 " Index ctags from any project, including those outside Rails
-nnoremap <Leader>ct :!ctags -R .<CR>
+nnoremap <Leader>ct :!ctags -R --languages=ruby --exclude=.git --exclude=log --exclude='*.js' --exclude='.public/*' --exclude='.vendor/*' . $(bundle list --paths)<CR>
 " }}}
 " syntastic {{{
 " configure syntastic syntax checking to check on open as well as save
@@ -508,13 +508,24 @@ let g:jekyll_post_suffix = "md"
 let g:jekyll_prompt_tags = "true"
 " }}}
 " git {{{
-noremap <leader>gc :Gcommit<CR>
-noremap <leader>gs :Gstatus<CR>
-noremap <leader>gw :Gwrite<CR>
+" fugitive git bindings
+nnoremap <space>ga :Git add %:p<CR><CR>
+nnoremap <space>gs :Gstatus<CR>
+nnoremap <space>gc :Gcommit -v -q<CR>
+nnoremap <space>gt :Gcommit -v -q %:p<CR>
+nnoremap <space>gd :Gdiff<CR>
+nnoremap <space>ge :Gedit<CR>
+nnoremap <space>gr :Gread<CR>
+nnoremap <space>gw :Gwrite<CR><CR>
+" nnoremap <space>gl :silent! Glog<CR>:bot copen<CR>
+nnoremap <space>gp :Ggrep<Space>
+" nnoremap <space>gm :Gmove<Space>
+nnoremap <space>gb :Git branch<Space>
+nnoremap <space>gco :Git checkout<Space>
+" nnoremap <space>gps :Dispatch! git push<CR>
+" nnoremap <space>gpl :Dispatch! git pull<CR>
 noremap <leader>gl :Glog<CR>
-noremap <leader>gd :Gdiff<CR>
-noremap <leader>ge :Gedit
-noremap <leader>gm :Gmove
+noremap <leader>gm :Gmove<space>
 noremap <leader>gb :Gbrowse
 noremap <leader>gr :Gread "like gco filename
 " }}}
@@ -631,7 +642,7 @@ vnoremap <silent> s //e<C-r>=&selection=='exclusive'?'+1':''<CR><CR>
     \:<C-u>call histdel('search',-1)<Bar>let @/=histget('search',-1)<CR>gv
 omap s :normal vs<CR>
 
-nnoremap <CR> G
-nnoremap <BS> gg
+" nnoremap <CR> G
+" nnoremap <BS> gg
 
 noremap gV `[v`]
