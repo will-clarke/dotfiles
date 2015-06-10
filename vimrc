@@ -321,7 +321,8 @@ noremap <silent> <leader>d :bwipeout<CR>
 noremap <silent> <leader>b :CtrlPBuffer<cr>
 " }}}
 " vimrc {{{
-noremap <leader>vv :execute "edit " . "~/.vimrc"<CR>
+noremap <leader>vv :execute 'e ' . resolve(expand($MYVIMRC))<CR>
+" noremap <leader>vv :execute "edit " . "~/.vimrc"<CR>
 noremap <leader>vt :execute "edit " . "~/.tmux.conf"<CR>
 noremap <leader>vb :execute "edit " . "~/.vimrc.bundles"<CR>
 noremap <leader>vr :execute "source " . "~/.vimrc"<CR>
@@ -390,7 +391,7 @@ nnoremap E $
 " }}}
 " Binding.pry {{{
 nmap <leader>bp orequire 'pry'; binding.pry<esc>^
-nmap <leader>br orequire 'pry-remote'; binding.remote_pry<esc>^
+" nmap <leader>br orequire 'pry-remote'; binding.remote_pry<esc>^
 " }}}
 " potentially dodgy options {{{
 " set nofoldenable " Say no to code folding...
@@ -646,3 +647,5 @@ omap s :normal vs<CR>
 " nnoremap <BS> gg
 
 noremap gV `[v`]
+
+nmap <leader>br Obegin<esc>jorescue => e<cr>end<esc>kk
