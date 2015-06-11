@@ -648,4 +648,4 @@ omap s :normal vs<CR>
 
 noremap gV `[v`]
 
-nmap <leader>br Obegin<esc>jorescue => e<cr>end<esc>kk
+nmap <leader>br Obegin<esc>jorescue => e<cr>require 'pry'; binding.pry<cr>end<esc>kk
