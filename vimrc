@@ -520,6 +520,8 @@ nnoremap <space>gr :Gread<CR>
 nnoremap <space>gw :Gwrite<CR><CR>
 " nnoremap <space>gl :silent! Glog<CR>:bot copen<CR>
 nnoremap <space>gp :Ggrep<Space>
+nnoremap <space>gpush :Gpush<cr>
+nnoremap <space>gpull :Gpull<cr>
 " nnoremap <space>gm :Gmove<Space>
 nnoremap <space>gb :Git branch<Space>
 nnoremap <space>gco :Git checkout<Space>
