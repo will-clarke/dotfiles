@@ -527,7 +527,8 @@ nnoremap <space>gco :Git checkout<Space>
 " nnoremap <space>gpl :Dispatch! git pull<CR>
 noremap <leader>gl :Glog<CR>
 noremap <leader>gm :Gmove<space>
-noremap <leader>gb :Gbrowse
+" noremap <leader>gb :Gbrowse
+noremap <leader>gb :Gblame
 noremap <leader>gr :Gread "like gco filename
 " }}}
 " spelling {{{
