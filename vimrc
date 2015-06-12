@@ -530,7 +530,7 @@ nnoremap <space>gco :Git checkout<Space>
 noremap <leader>gl :Glog<CR>
 noremap <leader>gm :Gmove<space>
 " noremap <leader>gb :Gbrowse
-noremap <leader>gb :Gblame
+noremap <leader>gb :Gblame<cr>
 noremap <leader>gr :Gread "like gco filename
 " }}}
 " spelling {{{
