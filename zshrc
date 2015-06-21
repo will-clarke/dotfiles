@@ -106,6 +106,7 @@ export VL="$HOME/.vimrc.local"
 eval "$(rbenv init - zsh --no-rehash)"
 . ~/.bin/z
 
+function nyancat() {telnet nyancat.dakko.us}
 function hiddenOn() {defaults write com.apple.finder AppleShowAllFiles NO; killall Finder /System/Library/CoreServices/Finder.app}
 function hiddenOff() {defaults write com.apple.finder AppleShowAllFiles YES; killall Finder /System/Library/CoreServices/Finder.app}
 function manp() { ps=`mktemp -t manpageXXXX`.ps ; man -t $@ > "$ps" ; open "$ps" ; }
