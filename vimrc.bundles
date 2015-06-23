@@ -69,6 +69,7 @@ Plugin 'ecomba/vim-ruby-refactoring'
 Plugin 'godlygeek/tabular'
 
 Plugin 'wting/rust.vim'
+Plugin 'phildawes/racer'
 " Plugin 'vim-scripts/YankRing.vim'
 Plugin 'maxbrunsfeld/vim-yankstack'
 
