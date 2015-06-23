@@ -24,17 +24,17 @@ windows:
       layout: main-vertical
       panes:
         -
-        - fortune | cowsay -f $(ls /usr/local/Cellar/cowsay/3.03/share/cows | gsort -R | head -n 1)
+        - fortune | cowsay -f $(ls /usr/local/Cellar/cowsay/3.03/share/cows | gsort -R | head -n 1) | lolcat
   - server:
     - sleep 5
     - zeus s
   - worker:
     - sleep 5
-    - zeus rake resque:work
+    - zeus rake resque:work | lolcat
   - processes:
       layout: tiled
       panes:
         -  zeus start
         -
-        -  elasticsearch --config=/usr/local/opt/elasticsearch/config/elasticsearch.yml
-        -  redis-server
+        -  elasticsearch --config=/usr/local/opt/elasticsearch/config/elasticsearch.yml | lolcat
+        -  redis-server | lolcat
