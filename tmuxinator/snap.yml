@@ -27,7 +27,7 @@ windows:
         - fortune | cowsay -f $(ls /usr/local/Cellar/cowsay/3.03/share/cows | gsort -R | head -n 1) | lolcat
   - server:
     - sleep 5
-    - zeus s
+    - zeus s | lolcat
   - worker:
     - sleep 5
     - zeus rake resque:work | lolcat

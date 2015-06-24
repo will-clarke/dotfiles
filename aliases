@@ -20,6 +20,7 @@ alias gci="git pull --rebase && rake && git push"
 alias gco="git checkout"
 alias gs="git status"
 alias gd='git diff'
+alias gdh='git diff HEAD^'
 alias gdc='git diff --cached'
 alias gcm='git commit -m "'
 alias ga='git add'

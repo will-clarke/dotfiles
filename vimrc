@@ -418,6 +418,8 @@ let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 " let g:UltiSnipsJumpForwardTrigger="<c-j>"
 " let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 " Complete UltiSnip snippets with <tab>
+
+" TODO
 function! g:UltiSnips_Complete()
     call UltiSnips#ExpandSnippet()
     if g:ulti_expand_res == 0
@@ -426,7 +428,8 @@ function! g:UltiSnips_Complete()
         else
             call UltiSnips#JumpForwards()
             if g:ulti_jump_forwards_res == 0
-               return "\<TAB>"
+               " return "\<TAB>"
+               return InsertTabWrapper()
             endif
         endif
     endif
