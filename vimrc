@@ -185,32 +185,32 @@ endfunction
 
 " tmux {{{
 " Change cursor depending on the Mode
-function! InTmuxSession()
-  return $TMUX != ''
-endfunction
-if InTmuxSession()
-  let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
-  let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
-else
-  let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-  let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-endif
+" function! InTmuxSession()
+"   return $TMUX != ''
+" endfunction
+" if InTmuxSession()
+"   let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+"   let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+" else
+"   let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+"   let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+" endif
 " }}}
 " }}}
 " tab completion {{{
 " will insert tab at beginning of line,
 " will use completion if not at beginning
-set wildmode=list:longest,list:full
-function! InsertTabWrapper()
-  let col = col('.') - 1
-  if !col || getline('.')[col - 1] !~ '\k'
-    return "\<tab>"
-  else
-    return "\<c-p>"
-  endif
-endfunction
-inoremap <Tab> <c-r>=InsertTabWrapper()<cr>
-inoremap <S-Tab> <c-n>
+" set wildmode=list:longest,list:full
+" function! InsertTabWrapper()
+"   let col = col('.') - 1
+"   if !col || getline('.')[col - 1] !~ '\k'
+"     return "\<tab>"
+"   else
+"     return "\<c-p>"
+"   endif
+" endfunction
+" inoremap <Tab> <c-r>=InsertTabWrapper()<cr>
+" inoremap <S-Tab> <c-n>
 " }}}
 " ctags {{{
 " Exclude Javascript files in :Rtags via rails.vim due to warnings when parsing
@@ -419,26 +419,26 @@ let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 " let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 " Complete UltiSnip snippets with <tab>
 
-" TODO
-function! g:UltiSnips_Complete()
-    call UltiSnips#ExpandSnippet()
-    if g:ulti_expand_res == 0
-        if pumvisible()
-            return "\<C-n>"
-        else
-            call UltiSnips#JumpForwards()
-            if g:ulti_jump_forwards_res == 0
-               " return "\<TAB>"
-               return InsertTabWrapper()
-            endif
-        endif
-    endif
-    return ""
-endfunction
+" TODO tab completion
+" function! g:UltiSnips_Complete()
+"     call UltiSnips#ExpandSnippet()
+"     if g:ulti_expand_res == 0
+"         if pumvisible()
+"             return "\<C-n>"
+"         else
+"             call UltiSnips#JumpForwards()
+"             if g:ulti_jump_forwards_res == 0
+"                " return "\<TAB>"
+"                return InsertTabWrapper()
+"             endif
+"         endif
+"     endif
+"     return ""
+" endfunction
 
-au BufEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
+" au BufEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
+" let g:UltiSnipsExpandTrigger="<tab>"
+" let g:UltiSnipsJumpForwardTrigger="<tab>"
 
 nnoremap <leader>u :UltiSnipsEdit
 nnoremap <leader>us :UltiSnipsEdit<cr>
@@ -674,3 +674,7 @@ omap s :normal vs<CR>
 noremap gV `[v`]
 
 nmap <leader>br Obegin<esc>jorescue => e<cr>require 'pry'; binding.pry<cr>end<esc>kk
+
+" Rust Racer:
+" In insert mode use C-x-C-o to search for completions
+" In normal mode type 'gd' to go to a definition

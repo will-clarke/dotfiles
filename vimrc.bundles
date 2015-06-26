@@ -68,9 +68,8 @@ Plugin 'tpope/vim-rake'
 Plugin 'ecomba/vim-ruby-refactoring'
 Plugin 'godlygeek/tabular'
 
-Plugin 'wting/rust.vim'
+Plugin 'rust-lang/rust.vim'
 Plugin 'phildawes/racer'
-" Plugin 'vim-scripts/YankRing.vim'
 Plugin 'maxbrunsfeld/vim-yankstack'
 
 call vundle#end()

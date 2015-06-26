@@ -129,3 +129,8 @@ fancy-ctrl-z () {
 }
 zle -N fancy-ctrl-z
 bindkey '^Z' fancy-ctrl-z
+
+# rust:
+# export DYLD_LIBRARY_PATH=/usr/local/lib/rustlib/x86_64-apple-darwin/lib
+# export RUST_SRC_PATH=/usr/local/Cellar/rust/1.0.0-beta
+# export RUST_SRC_PATH=$HOME/rust/src #should be default now..
