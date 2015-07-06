@@ -410,9 +410,9 @@ let g:UltiSnipsEditSplit="vertical"
 let g:UltiSnipsSnippetsDir="~/.vim/snippets"
 let g:UltiSnipsSnippetDirectories=["~/.vim/snippets"]
 
-let g:UltiSnipsExpandTrigger="<c-j>"
-let g:UltiSnipsJumpForwardTrigger="<c-j>"
-let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+" let g:UltiSnipsExpandTrigger="<c-j>"
+" let g:UltiSnipsJumpForwardTrigger="<c-j>"
+" let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 " let g:UltiSnipsExpandTrigger="<tab>"
 " let g:UltiSnipsListSnippets="<c-tab>"
 " let g:UltiSnipsJumpForwardTrigger="<c-j>"
@@ -593,6 +593,7 @@ nnoremap <leader>= mmgg=G`m
 " Ignore whitespace in DIFFs
 set diffopt+=iwhite
 
+" html processing {{{
 " Escape/unescape HTML
 function! HtmlEscape()
   silent s/&/\&amp;/eg
@@ -608,7 +609,9 @@ endfunction
 " Escape/Unescape of HTML entities
 noremap <leader>he :call HtmlEscape()<CR>
 noremap <leader>hue :call HtmlUnEscape()<CR>
+" }}}
 
+" strip whitespace {{{
 " Remove trailing whitespaces at the end of a line
 function! <SID>StripTrailingWhitespaces()
   "Preparation: save last search, and cursor position.
@@ -629,11 +632,8 @@ endfunction
 
 " Strip whitespace when saving a file
 autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
+" }}}
 
-
-
-
-"
 " let g:UltiSnipsJumpForwardTrigger="<tab>"
 " let g:UltiSnipsJumpBackwardTrigger="<S-tab>"
 " let g:UltiSnipsExpandTrigger="<nop>"
@@ -648,11 +648,13 @@ autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
 " endfunction
 " imap <expr> <CR> pumvisible() ? "<C-R>=<SID>ExpandSnippetOrReturn()<CR>" : "\<CR>"
 
+" tabularize {{{
 nnoremap <leader>tb= Tabularize /=<cr>
 "This will tabularize in the character under cursor
 nnoremap <leader>tbc xP:Tabularize /<C-R>-<CR>
 "This will tabularize in character set which was visually selected
 vnoremap <leader>tb xP:Tabularize /<C-R>-<CR>
+" }}}
 
 nnoremap <leader>b_ :call ToggleBackground()<CR>
 nnoremap <c-_> :TComment<CR>
