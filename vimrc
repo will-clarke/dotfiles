@@ -76,7 +76,7 @@ if !isdirectory(expand("~/.vim/bundle/Vundle\.vim"))
 endif
 " }}}
 " folding {{{
-nnoremap <leader>' za
+nnoremap <leader>\ za
 " }}}
 " autocmd {{{
 augroup vimrcEx
@@ -499,6 +499,7 @@ inoremap <silent> <c-l> <esc>:TmuxNavigateRight<cr>
 noremap <Leader>tf :call RunCurrentSpecFile()<CR>
 " noremap <Leader>tn :call RunNearestSpec()<CR>
 noremap <Leader>; :call RunNearestSpec()<CR>
+noremap <Leader>' :call RunLastSpec()<CR>
 noremap <Leader>tl :call RunLastSpec()<CR>
 noremap <Leader>ta :call RunAllSpecs()<CR>
 let g:rspec_runner = "os_x_iterm"

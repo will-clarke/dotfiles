@@ -6,7 +6,7 @@
 *.exe
 *.o
 *.so
- 
+
 # Packages #
 ############
 # it's better to unpack these files and commit the raw source
@@ -19,13 +19,13 @@
 *.rar
 *.tar
 *.zip
- 
+
 # Logs and databases #
 ######################
 *.log
 *.sql
 *.sqlite
- 
+
 # OS generated files #
 ######################
 .DS_Store
@@ -48,6 +48,7 @@ config/initializers/geocoder.rb
 tags
 secrets.yml
 
+spec/spec_helper.rb
 app/consumers/cache_pricing_consumer.rb
 cache_pricing_consumer.rb
 vim/undo/
