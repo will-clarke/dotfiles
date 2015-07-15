@@ -19,7 +19,7 @@ class Installer
         link(repo(name), destination(name))
       end
     end
-    link_zprofile_from_dropbox
+    link_secrets_from_dropbox
   end
 
   def backup(file_names=dotfiles)
@@ -44,7 +44,7 @@ class Installer
   end
 
   def dotfiles
-    Dir['*'] - ['Rakefile', 'README.md']
+    Dir['*'] - ['Rakefile', 'README.md', 'setup_script_from_thoughtbot']
   end
 
   def link(repo, destination)
@@ -60,12 +60,12 @@ class Installer
     end
   end
 
-  def link_zprofile_from_dropbox
-    dropbox_route = '/Users/wmmc/Dropbox/Dev/zprofile'
-    zprofile = '/Users/wmmc/.zprofile'
-    if File.exists?(dropbox_route) && !File.exists?(zprofile)
-      p 'Linking ~/.zprofile from dropbox'
-      FileUtils.ln_s(dropbox_route, zprofile)
+  def link_secrets_from_dropbox
+    dropbox_route = '/Users/wmmc/Dropbox/Dev/secrets'
+    secrets = '/Users/wmmc/.secrets'
+    if File.exists?(dropbox_route) && !File.exists?(secrets)
+      p 'Linking ~/.secrets from dropbox'
+      FileUtils.ln_s(dropbox_route, secrets)
     end
   end
 
