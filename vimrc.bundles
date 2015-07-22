@@ -6,17 +6,11 @@ filetype off
 set rtp+=~/.vim/bundle/Vundle.vim/
 call vundle#begin()
 
-" Let Vundle manage Vundle
 Plugin 'gmarik/Vundle.vim'
 
-" Define bundles via Github repos
-Plugin 'christoomey/vim-run-interactive'
-Plugin 'croaky/vim-colors-github'
-Plugin 'kchmck/vim-coffee-script'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'pbrisbin/vim-mkdir'
 Plugin 'scrooloose/syntastic'
-Plugin 'slim-template/vim-slim'
 Plugin 'thoughtbot/vim-rspec'
 Plugin 'tpope/vim-bundler'
 Plugin 'tpope/vim-endwise'
@@ -24,53 +18,42 @@ Plugin 'tpope/vim-eunuch'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-rails'
 Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-projectionist'
+Plugin 'tpope/vim-rake'
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'vim-scripts/ctags.vim'
 Plugin 'vim-scripts/matchit.zip'
-Plugin 'vim-scripts/tComment'
-
-" Mine
 Plugin 'christoomey/vim-tmux-navigator'
-Plugin 'scrooloose/nerdtree'
+Plugin 'christoomey/vim-tmux-runner'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'mattn/webapi-vim'
 Plugin 'mattn/gist-vim'
 Plugin 'rking/ag.vim'
 Plugin 'bling/vim-airline'
-Plugin 'ervandew/supertab'
-Plugin 'terryma/vim-multiple-cursors'
+
 Plugin 'pangloss/vim-javascript'
-" Plugin 'jiangmiao/auto-pairs'
-" Plugin 'tpope/vim-vinegar'
-" Plugin 'tpope/vim-dispatch'
-Plugin 'junegunn/goyo.vim'
 
 Plugin 'ryanss/vim-hackernews'
-Plugin 'koron/nyancat-vim'
 
-" nelstrom's plugin depends on kana's
 Plugin 'kana/vim-textobj-user'
 Plugin 'nelstrom/vim-textobj-rubyblock'
-
-" Snippets
 Plugin 'SirVer/ultisnips'
-
-Plugin 'christoomey/vim-tmux-runner'
-
 Plugin 'csexton/jekyll.vim'
-" Plugin 'gabebw/vim-spec-runner'
-" Plugin 'ton/vim-bufsurf' "remembers buffer history for navigation
-" Plugin 'Lokaltog/vim-easymotion'
 Plugin 'sjl/gundo.vim'
-Plugin 'tpope/vim-projectionist'
-Plugin 'tpope/vim-rake'
 Plugin 'ecomba/vim-ruby-refactoring'
 Plugin 'godlygeek/tabular'
 
+" Rust
 Plugin 'rust-lang/rust.vim'
 Plugin 'phildawes/racer'
-Plugin 'maxbrunsfeld/vim-yankstack'
 
+Plugin 'maxbrunsfeld/vim-yankstack'
+" Plugin 'ervandew/supertab'
+
+Plugin 'scrooloose/nerdtree'
+Plugin 'shougo/vimfiler.vim'
+Plugin 'shougo/unite.vim'
 call vundle#end()
 filetype on

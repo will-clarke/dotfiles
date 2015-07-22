@@ -401,9 +401,6 @@ nmap <leader>bp orequire 'pry'; binding.pry<esc>^
 "
 " bind \ (backward slash) to grep shortcut
 " command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
-"
-" For Nerd commenter
-" filetype plugin on
 " }}}
 " snippets {{{
 let g:UltiSnipsEditSplit="vertical"
@@ -658,7 +655,6 @@ vnoremap <leader>tb xP:Tabularize /<C-R>-<CR>
 " }}}
 
 nnoremap <leader>b_ :call ToggleBackground()<CR>
-nnoremap <c-_> :TComment<CR>
 
 nnoremap å <C-a>
 noremap ≈ <C-x>
