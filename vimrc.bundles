@@ -55,5 +55,7 @@ Plugin 'maxbrunsfeld/vim-yankstack'
 Plugin 'scrooloose/nerdtree'
 Plugin 'shougo/vimfiler.vim'
 Plugin 'shougo/unite.vim'
+Plugin 'shougo/vimproc.vim'
+Plugin 'Valloric/YouCompleteMe'
 call vundle#end()
 filetype on

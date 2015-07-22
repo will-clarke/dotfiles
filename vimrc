@@ -1,7 +1,10 @@
 " init {{{
 let mapleader = " "
 
-set ttymouse=xterm2
+if !has('nvim')
+    set ttymouse=xterm2
+endif
+
 set mouse=a
 
 noremap ; :
@@ -582,7 +585,7 @@ nnoremap <leader>rn :call ToggleNuMode()<CR>
 " }}}
 " Hacky way of getting <c-h> working on neovim:
 if has('nvim')
-  nmap <BS> <C-W>h
+  nnoremap <bs> :<c-u>TmuxNavigateLeft<cr>
 endif
 
 nnoremap <leader>= mmgg=G`m
