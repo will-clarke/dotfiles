@@ -47,7 +47,7 @@ Plugin 'godlygeek/tabular'
 
 " Rust
 Plugin 'rust-lang/rust.vim'
-Plugin 'phildawes/racer'
+" Plugin 'phildawes/racer' " Too much effort to install...
 
 Plugin 'maxbrunsfeld/vim-yankstack'
 " Plugin 'ervandew/supertab'
@@ -56,6 +56,8 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'shougo/vimfiler.vim'
 Plugin 'shougo/unite.vim'
 Plugin 'shougo/vimproc.vim'
+Plugin 'shougo/neobundle.vim'
 Plugin 'Valloric/YouCompleteMe'
+
 call vundle#end()
 filetype on

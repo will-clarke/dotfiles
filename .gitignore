@@ -1,0 +1,5 @@
+nvim/.cache
+nvim/bundle
+!nvim/bundle/neobundle.vim
+vim/.cache
+vim/bundle
