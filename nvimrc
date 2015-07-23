@@ -1,8 +1,6 @@
 let g:dotvim_settings = {}
 let g:dotvim_settings.version = 1
 
-let mapleader = " "
-
 inoremap <silent> <C-q> <ESC>:q<CR><ESC>
 nnoremap <silent> <C-q> :q<CR>
 inoremap <silent> <C-q><C-q> <ESC>:q!<CR><ESC>
