@@ -1,5 +1,6 @@
 nvim/.cache
 nvim/bundle
+nvim/.netrwhist
 !nvim/bundle/neobundle.vim
 vim/.cache
 vim/bundle
