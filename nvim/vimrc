@@ -239,8 +239,8 @@
     call EnsureExists(&directory)
   "}}}
 
-  let mapleader = ","
-  let g:mapleader = ","
+  let mapleader = " "
+  let g:mapleader = " "
 "}}}
 
 " ui configuration {{{
