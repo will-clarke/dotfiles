@@ -3,20 +3,6 @@ let g:dotvim_settings.version = 1
 
 let g:dotvim_settings.plugin_groups_include = ['ruby']
 
-inoremap <silent> <C-q> <ESC>:q<CR><ESC>
-nnoremap <silent> <C-q> :q<CR>
-inoremap <silent> <C-q><C-q> <ESC>:q!<CR><ESC>
-nnoremap <silent> <C-q><C-q> :q!<CR>
-
-noremap ; :
-
-noremap  <silent> <C-s> :update<CR><ESC>
-vnoremap <silent> <C-s> <C-C>:update<CR><ESC>
-inoremap <silent> <C-s> <C-O>:update<CR><ESC>
-
-noremap <leader>p :set paste<cr>:r !pbpaste<cr>:set nopaste<cr>
-
-set relativenumber
 
 " vim: fdm=marker ts=2 sts=2 sw=2 fdl=0
 
@@ -168,11 +154,12 @@ set relativenumber
   set ttyfast                                         "assume fast terminal connection
   set viewoptions=folds,options,cursor,unix,slash     "unix/windows compatibility
   set encoding=utf-8                                  "set encoding for text
-  if exists('$TMUX')
-    set clipboard=
-  else
-    set clipboard=unnamed                             "sync with OS clipboard
-  endif
+  " if exists('$TMUX')
+  "   set clipboard=
+  " else
+  "   set clipboard=unnamed                             "sync with OS clipboard
+  " endif
+  set clipboard=unnamed                             "sync with OS clipboard
   set hidden                                          "allow buffer switching without saving
   set autoread                                        "auto reload if file saved externally
   set fileformats+=mac                                "add mac to auto-detection of file format line endings
@@ -209,8 +196,8 @@ set relativenumber
   set linebreak
   let &showbreak='↪ '
 
-  set scrolloff=1                                     "always show content after scroll
-  set scrolljump=5                                    "minimum number of lines to scroll
+  set scrolloff=5                                     "always show content after scroll
+  " set scrolljump=5                                    "minimum number of lines to scroll
   set display+=lastline
   set wildmenu                                        "show list for autocomplete
   set wildmode=list:full
@@ -262,6 +249,9 @@ set relativenumber
   let mapleader = " "
   let g:mapleader = " "
 "}}}
+" my stuff {{{
+NeoBundle 'Shougo/vimfiler.vim'
+" }}}
 
 " ui configuration {{{
   set showmatch                                       "automatically highlight matching braces/brackets/etc.
@@ -531,17 +521,17 @@ set relativenumber
       let g:undotree_SetFocusWhenToggle=1
       nnoremap <silent> <F5> :UndotreeToggle<CR>
     "}}}
-    NeoBundleLazy 'rking/ag.vim', {'autoload':{'commands': 'Ag'}} "{{{
-      nnoremap \ :Ag<SPACE>
-      if executable('ag')
-        " Use Ag over Grep
-        set grepprg=ag\ --nogroup\ --nocolor
-        " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-        let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-        " ag is fast enough that CtrlP doesn't need to cache
-        let g:ctrlp_use_caching = 0
-      endif
-    "}}}
+    " NeoBundle 'rking/ag.vim', {'autoload':{'commands': 'Ag'}} "{{{
+    "   nnoremap \ :Ag<SPACE>
+    "   if executable('ag')
+    "     " Use Ag over Grep
+    "     set grepprg=ag\ --nogroup\ --nocolor
+    "     " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+    "     let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+    "     " ag is fast enough that CtrlP doesn't need to cache
+    "     let g:ctrlp_use_caching = 0
+    "   endif
+    " "}}}
     NeoBundleLazy 'EasyGrep', {'autoload':{'commands':'GrepOptions'}} "{{{
       let g:EasyGrepRecursive=1
       let g:EasyGrepAllOptionsInExplorer=1
@@ -619,6 +609,10 @@ set relativenumber
         nmap <buffer> Q <plug>(unite_exit)
         nmap <buffer> <esc> <plug>(unite_exit)
         imap <buffer> <esc> <plug>(unite_exit)
+        imap <buffer> <c-j> <Plug>(unite_insert_leave)
+        imap <buffer> <c-k> <Plug>(unite_insert_leave)
+        nmap <buffer> <c-j> <Plug>(unite_loop_cursor_down)
+        nmap <buffer> <c-k> <Plug>(unite_loop_cursor_up)
       endfunction
       autocmd FileType unite call s:unite_settings()
 
@@ -766,13 +760,17 @@ set relativenumber
   nnoremap <up> :tabnext<CR>
   nnoremap <down> :tabprev<CR>
 
+  " buffer navigation
+  nnoremap <Leader>h :bprev<CR>
+  nnoremap <Leader>l :bnext<CR>
+  nnoremap <Leader>d :call CloseWindowOrKillBuffer()<cr>
+
   " smash escape
   inoremap jk <esc>
   inoremap kj <esc>
 
-  " change cursor position in insert mode
-  inoremap <C-h> <left>
-  inoremap <C-l> <right>
+  "  make <c-h> work with tmux
+  nnoremap <bs> :<c-u>TmuxNavigateLeft<cr>
 
   inoremap <C-u> <C-g>u<C-u>
 
@@ -859,7 +857,7 @@ set relativenumber
   endif
 
   " general
-  nmap <leader>l :set list! list?<cr>
+  " nmap <leader>l :set list! list?<cr>
   nnoremap <BS> :set hlsearch! hlsearch?<cr>
 
   map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
@@ -910,6 +908,24 @@ set relativenumber
     let g:kolor_underlined=1
   "}}}
 "}}}
+"
+inoremap <silent> <C-q> <ESC>:q<CR><ESC>
+nnoremap <silent> <C-q> :q<CR>
+inoremap <silent> <C-q><C-q> <ESC>:q!<CR><ESC>
+nnoremap <silent> <C-q><C-q> :q!<CR>
+
+nnoremap <Leader>vv :e ~/.nvimrc<CR>
+
+noremap ; :
+
+noremap  <silent> <C-s> :update<CR><ESC>
+vnoremap <silent> <C-s> <C-C>:update<CR><ESC>
+inoremap <silent> <C-s> <C-O>:update<CR><ESC>
+
+noremap <leader>p :set paste<cr>:r !pbpaste<cr>:set nopaste<cr>
+
+" set relativenumber
+set nowrap
 
 " finish loading {{{
   if exists('g:dotvim_settings.disabled_plugins')
