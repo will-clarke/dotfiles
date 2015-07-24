@@ -250,7 +250,56 @@ let g:dotvim_settings.plugin_groups_include = ['ruby']
   let g:mapleader = " "
 "}}}
 " my stuff {{{
-NeoBundle 'Shougo/vimfiler.vim'
+  NeoBundle 'thoughtbot/vim-rspec' "{{{
+    function! RailsDetect(...) abort
+      if exists('b:rails_root')
+        return 1
+      endif
+      let fn = fnamemodify(a:0 ? a:1 : expand('%'), ':p')
+      if fn =~# ':[\/]\{2\}'
+        return 0
+      endif
+      if !isdirectory(fn)
+        let fn = fnamemodify(fn, ':h')
+      endif
+      let file = findfile('config/environment.rb', escape(fn, ', ').';')
+      if !empty(file) && isdirectory(fnamemodify(file, ':p:h:h') . '/app')
+        let b:rails_root = fnamemodify(file, ':p:h:h')
+        return 1
+      endif
+    endfunction
+
+    " let g:rspec_command = "Dispatch rspec {spec}"
+    map <Leader>r :call RunCurrentSpecFile()<CR>
+    if exists("*RailsDetect") && RailsDetect()
+      let g:rspec_command = 'call VtrSendCommand("zeus rspec {spec}")'
+      " let g:rspec_command = "Dispatch zeus rspec {spec}"
+    else
+      if filereadable("Gemfile")
+        let g:rspec_command = 'call VtrSendCommand("bundle exec rspec {spec}")'
+        " let g:rspec_command = "Dispatch bundle exec rspec {spec}"
+      else
+        let g:rspec_command = 'call VtrSendCommand("rspec {spec}")'
+        " let g:rspec_command = "Dispatch rspec {spec}"
+      endif
+    endif
+  "}}}
+  NeoBundle 'christoomey/vim-tmux-runner' "{{{
+    " noremap <leader>ka :execute "source " . "~/.nvimrc"<CR>:VtrAttachToPane<cr>
+    noremap <leader>ka :VtrAttachToPane<cr>
+    noremap <leader>kl :VtrSendLinesToRunner<cr>
+    vnoremap <leader>kl :VtrSendLinesToRunner<cr>
+    noremap <leader>kf :VtrSendFile<cr>
+    " noremap <leader>ks mmggVG :VtrSendLinesToRunner<cr>`m
+    " noremap <leader>kc :VtrSendCommandToRunner
+    " noremap <leader>kh :VtrFocusRunner<cr>
+    " noremap <leader>kk :VtrKillRunner<cr>
+    " noremap <leader>kr :VtrFlushCommand<cr> "reset
+    " noremap <leader>ko :VtrOpenRunner<cr>
+  " }}}
+  NeoBundle 'Shougo/vimfiler.vim' "{{{
+    let g:vimfiler_as_default_explorer = 1
+  " }}}
 " }}}
 
 " ui configuration {{{
@@ -431,7 +480,7 @@ NeoBundle 'Shougo/vimfiler.vim'
       nnoremap <silent> <leader>gc :Gcommit<CR>
       nnoremap <silent> <leader>gb :Gblame<CR>
       nnoremap <silent> <leader>gl :Glog<CR>
-      nnoremap <silent> <leader>gp :Git push<CR>
+      nnoremap <silent> <leader>gpush :Git push<CR>
       nnoremap <silent> <leader>gw :Gwrite<CR>
       nnoremap <silent> <leader>gr :Gremove<CR>
       autocmd BufReadPost fugitive://* set bufhidden=delete
@@ -917,6 +966,7 @@ nnoremap <silent> <C-q><C-q> :q!<CR>
 nnoremap <Leader>vv :e ~/.nvimrc<CR>
 
 noremap ; :
+noremap : ;
 
 noremap  <silent> <C-s> :update<CR><ESC>
 vnoremap <silent> <C-s> <C-C>:update<CR><ESC>
