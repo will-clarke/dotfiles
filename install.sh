@@ -180,6 +180,7 @@ brew_install_or_upgrade 'caskroom/cask/brew-cask'
 cask() {
   brew cask install "$1"
 }
+
 cask 'google-chrome'
 cask '1password'
 cask 'flux'

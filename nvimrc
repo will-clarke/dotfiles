@@ -889,9 +889,6 @@ let g:dotvim_settings.plugin_groups_include = ['ruby']
   map <leader>tn :tabnew<CR>
   map <leader>tc :tabclose<CR>
 
-  " make Y consistent with C and D. See :help Y.
-  nnoremap Y y$
-
   " hide annoying quit message
   nnoremap <C-c> <C-c>:echo<cr>
 
