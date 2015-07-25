@@ -374,8 +374,8 @@ NeoBundle 'tpope/vim-speeddating'
 NeoBundle 'thinca/vim-visualstar'
 NeoBundle 'tomtom/tcomment_vim'
 NeoBundle 'terryma/vim-expand-region' "{{{
-map K <Plug>(expand_region_expand)
-map J <Plug>(expand_region_shrink)
+vmap K <Plug>(expand_region_expand)
+vmap J <Plug>(expand_region_shrink)
 "}}}
 NeoBundle 'terryma/vim-multiple-cursors'
 NeoBundle 'chrisbra/NrrwRgn'
@@ -574,6 +574,7 @@ let g:syntastic_style_warning_symbol = '≈'
 "}}}
 NeoBundleLazy 'mattn/gist-vim', { 'depends': 'mattn/webapi-vim', 'autoload': { 'commands': 'Gist' } } "{{{
 let g:gist_post_private=1
+let g:gist_clip_command = 'pbcopy'
 let g:gist_show_privates=1
 "}}}
 NeoBundleLazy 'Shougo/vimshell.vim', {'autoload':{'commands':[ 'VimShell', 'VimShellInteractive' ]}} "{{{
@@ -725,19 +726,11 @@ autocmd FileType vim setlocal fdm=indent keywordprg=:help
 "}}}
 
 " color schemes {{{
-NeoBundle 'altercation/vim-colors-solarized' "{{{
-let g:solarized_termcolors=256
-let g:solarized_termtrans=1
-"}}}
+" NeoBundle 'altercation/vim-colors-solarized' "{{{
+" let g:solarized_termcolors=256
+" let g:solarized_termtrans=1
+" "}}}
 NeoBundle 'nanotech/jellybeans.vim'
-NeoBundle 'tomasr/molokai'
-NeoBundle 'chriskempson/vim-tomorrow-theme'
-NeoBundle 'chriskempson/base16-vim'
-NeoBundle 'w0ng/vim-hybrid'
-NeoBundle 'sjl/badwolf'
-NeoBundle 'zeis/vim-kolor' "{{{
-let g:kolor_underlined=1
-"}}}
 "}}}
 
 " my bits {{{
@@ -806,6 +799,7 @@ inoremap <silent> <C-s> <C-O>:update<CR><ESC>
 " }}}
 
 nnoremap <Leader>vv :e ~/.nvimrc<CR>
+nnoremap <Leader>vs :source ~/.nvimrc<CR>
 
 noremap ; :
 noremap : ;
@@ -813,7 +807,12 @@ noremap : ;
 noremap <leader>a mmggVGy`m
 noremap <leader>ad ggVG"_d
 
+" Copy / Paste OSX
 noremap <leader>p :set paste<cr>:r !pbpaste<cr>:set nopaste<cr>
+" Doesn't quite work...:
+" inoremap <C-v> <Esc>:set paste<CR><C-r>+<CR>:set nopaste<CR>
+nnoremap <silent><leader>c :.w !pbcopy<CR><CR>
+vnoremap <silent><leader>c y:call system("pbcopy", getreg("\""))<CR>
 
 "  make <c-h> work with tmux
 nnoremap <bs> :<c-u>TmuxNavigateLeft<cr>
@@ -822,7 +821,6 @@ nnoremap - :set hlsearch! hlsearch?<cr>
 set nowrap
 
 " Potentailly free leaders:
-" C
 " I?
 " JK
 " M
