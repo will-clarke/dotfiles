@@ -1,5 +1,5 @@
 # use vim as the visual editor
-export VISUAL=vim
+export VISUAL=nvim
 export EDITOR=$VISUAL
 
 # ensure dotfiles bin directory is loaded first
@@ -9,12 +9,3 @@ export PATH="$HOME/.bin:/usr/local/sbin:$PATH"
 if which rbenv &>/dev/null ; then
   eval "$(rbenv init - --no-rehash)"
 fi
-
-# mkdir .git/safe in the root of repositories you trust
-export PATH=".git/safe/../../bin:$PATH"
-
-# make vim dark by default
-echo dark > ~/.vim/tmux_colour
-
-# Local config
-[[ -f ~/.zshenv.local ]] && source ~/.zshenv.local

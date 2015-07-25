@@ -10,8 +10,12 @@ if has('lua')
   let s:settings.autocomplete_method = 'neocomplete'
 elseif filereadable(expand("~/.nvim/bundle/YouCompleteMe/python/ycm/youcompleteme.py"))
   let s:settings.autocomplete_method = 'ycm'
+else
+  NeoBundle 'Valloric/YouCompleteMe', {
+        \ 'build' : {
+        \     'mac' : './install.sh --clang-completer --system-libclang --omnisharp-completer',
+  }
 endif
-echo s:settings.autocomplete_method
 " }}}
 
 " setup & neobundle {{{
@@ -322,7 +326,7 @@ nnoremap <silent> <leader>gV :Gitv!<CR>
 " autocomplete {{{
 NeoBundle 'honza/vim-snippets'
 if s:settings.autocomplete_method == 'ycm' "{{{
-  NeoBundle 'Valloric/YouCompleteMe', {'vim_version':'7.3.584'} "{{{
+  NeoBundle 'Valloric/YouCompleteMe' "{{{
   let g:ycm_complete_in_comments_and_strings=1
   let g:ycm_key_list_select_completion=['<C-n>', '<Down>']
   let g:ycm_key_list_previous_completion=['<C-p>', '<Up>']
