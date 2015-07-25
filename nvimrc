@@ -6,6 +6,15 @@ let s:settings.max_column = 79
 let s:settings.autocomplete_method = 'neocomplcache'
 let s:settings.enable_cursorcolumn = 0
 let s:settings.colorscheme = 'jellybeans'
+" }}}
+
+" setup & neobundle {{{
+set nocompatible
+set all& "reset everything to their defaults
+set rtp+=~/.nvim/bundle/neobundle.vim
+call neobundle#begin(expand('~/.nvim/bundle/'))
+NeoBundleFetch 'Shougo/neobundle.vim'
+
 if has('lua')
   let s:settings.autocomplete_method = 'neocomplete'
 elseif filereadable(expand("~/.nvim/bundle/YouCompleteMe/python/ycm/youcompleteme.py"))
@@ -14,21 +23,14 @@ else
   NeoBundle 'Valloric/YouCompleteMe', {
         \ 'build' : {
         \     'mac' : './install.sh --clang-completer --system-libclang --omnisharp-completer',
-  }
+        \    },
+        \ }
 endif
-" }}}
-
-" setup & neobundle {{{
-set nocompatible
-set all& "reset everything to their defaults
-set rtp+=~/.vim/bundle/neobundle.vim
-call neobundle#begin(expand('~/.nvim/bundle/'))
-NeoBundleFetch 'Shougo/neobundle.vim'
 "}}}
 
 " functions {{{
 function! s:get_cache_dir(suffix) "{{{
-  return resolve(expand('~/.vim/.cache' . '/' . a:suffix))
+  return resolve(expand('~/.nvim/.cache' . '/' . a:suffix))
 endfunction "}}}
 function! Source(begin, end) "{{{
   let lines = getline(a:begin, a:end)
@@ -165,7 +167,7 @@ let &backupdir = s:get_cache_dir('backup')
 let &directory = s:get_cache_dir('swap')
 set noswapfile
 
-call EnsureExists('~/.vim/.cache')
+call EnsureExists('~/.nvim/.cache')
 call EnsureExists(&undodir)
 call EnsureExists(&backupdir)
 call EnsureExists(&directory)
@@ -336,12 +338,12 @@ if s:settings.autocomplete_method == 'ycm' "{{{
   let g:UltiSnipsExpandTrigger="<tab>"
   let g:UltiSnipsJumpForwardTrigger="<tab>"
   let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-  let g:UltiSnipsSnippetsDir='~/.vim/snippets'
+  let g:UltiSnipsSnippetsDir='~/.nvim/snippets'
   "}}}
 else
   NeoBundle 'Shougo/neosnippet-snippets'
   NeoBundle 'Shougo/neosnippet.vim' "{{{
-  let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets,~/.vim/snippets'
+  let g:neosnippet#snippets_directory='~/.nvim/bundle/vim-snippets/snippets,~/.nvim/snippets'
   let g:neosnippet#enable_snipmate_compatibility=1
 
   imap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : (pumvisible() ? "\<C-n>" : "\<TAB>")
@@ -578,7 +580,7 @@ NeoBundleLazy 'Shougo/vimshell.vim', {'autoload':{'commands':[ 'VimShell', 'VimS
 let g:vimshell_editor_command='vim'
 let g:vimshell_right_prompt='getcwd()'
 let g:vimshell_data_directory=s:get_cache_dir('vimshell')
-let g:vimshell_vimshrc_path='~/.vim/vimshrc'
+let g:vimshell_vimshrc_path='~/.nvim/vimshrc'
 
 nnoremap <leader>c :VimShell -split<cr>
 nnoremap <leader>cc :VimShell -split<cr>

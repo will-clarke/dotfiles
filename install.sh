@@ -199,5 +199,22 @@ cask 'vlc'
 cask 'xcode'
 cask 'disk-inventory-x'
 
-brew cleanup 
+brew cleanup
 brew cask cleanup
+
+fancy_echo 'Almost there.. now just installing neobundle for neovim'
+
+BUNDLE_DIR=~/.nvim/bundle
+INSTALL_DIR=$BUNDLE_DIR/neobundle.vim
+
+if [ -e $INSTALL_DIR ]; then
+  echo "$INSTALL_DIR already exists! Congrats!!!"
+  exit 1
+fi
+
+# make bundle dir and fetch neobundle
+echo "Begin fetching NeoBundle..."
+mkdir -p $BUNDLE_DIR
+git clone https://github.com/Shougo/neobundle.vim $INSTALL_DIR
+echo "Done. :D"
+

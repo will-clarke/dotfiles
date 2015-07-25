@@ -1,7 +1,7 @@
 require 'fileutils'
 
 class Installer
-  EXCLUDED_FILES = ['Rakefile', 'README.md', 'setup_script_from_thoughtbot', 'install.sh']
+  EXCLUDED_FILES = ['Rakefile', 'readme.md', 'setup_script_from_thoughtbot', 'install.sh']
 
   def repo name
     File.expand_path name

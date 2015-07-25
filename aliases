@@ -19,6 +19,7 @@ alias rmrf="rm -rf"
 # git
 alias gci="git pull --rebase && rake && git push"
 alias gco="git checkout"
+alias gr="git reset"
 alias gs="git status"
 alias gd='git diff'
 alias gdh='git diff HEAD^'
