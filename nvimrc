@@ -369,7 +369,10 @@ NeoBundle 'tpope/vim-endwise'
 NeoBundle 'tpope/vim-speeddating'
 NeoBundle 'thinca/vim-visualstar'
 NeoBundle 'tomtom/tcomment_vim'
-NeoBundle 'terryma/vim-expand-region'
+NeoBundle 'terryma/vim-expand-region' "{{{
+  map K <Plug>(expand_region_expand)
+  map J <Plug>(expand_region_shrink)
+"}}}
 NeoBundle 'terryma/vim-multiple-cursors'
 NeoBundle 'chrisbra/NrrwRgn'
 NeoBundleLazy 'godlygeek/tabular', {'autoload':{'commands':'Tabularize'}} "{{{
@@ -607,9 +610,6 @@ nnoremap <Leader>d :call CloseWindowOrKillBuffer()<cr>
 inoremap jk <esc>
 inoremap kj <esc>
 
-"  make <c-h> work with tmux
-nnoremap <bs> :<c-u>TmuxNavigateLeft<cr>
-
 inoremap <C-u> <C-g>u<C-u>
 
 if mapcheck('<space>/') == ''
@@ -693,7 +693,6 @@ endif
 
 " general
 " nmap <leader>l :set list! list?<cr>
-nnoremap <BS> :set hlsearch! hlsearch?<cr>
 
 map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
       \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
@@ -737,7 +736,7 @@ let g:kolor_underlined=1
 "}}}
 "}}}
 
-" my functions{{{
+" my bits {{{
 
 NeoBundle 'thoughtbot/vim-rspec' "{{{
 function! RailsDetect(...) abort
@@ -806,9 +805,16 @@ nnoremap <Leader>vv :e ~/.nvimrc<CR>
 
 noremap ; :
 noremap : ;
+nnoremap _ ^
+noremap <leader>a :call Preserve("ggVG")
+noremap <leader>ad ggVG"_d
 
 noremap <leader>p :set paste<cr>:r !pbpaste<cr>:set nopaste<cr>
 
+"  make <c-h> work with tmux
+nnoremap <bs> :<c-u>TmuxNavigateLeft<cr>
+
+nnoremap - :set hlsearch! hlsearch?<cr>
 " set relativenumber
 set nowrap
 " }}}
@@ -819,6 +825,7 @@ call neobundle#end()
 filetype plugin indent on
 syntax enable
 exec 'colorscheme jellybeans'
+colorscheme jellybeans
 
 NeoBundleCheck
 "}}}
