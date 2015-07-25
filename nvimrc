@@ -1,18 +1,17 @@
-" vim: fdm=marker ts=2 sts=2 sw=2 fdl=0
-
 " Init {{{
 " initialize default settings
 let s:settings = {}
 let s:settings.default_indent = 2
-let s:settings.max_column = 120
+let s:settings.max_column = 79
 let s:settings.autocomplete_method = 'neocomplcache'
 let s:settings.enable_cursorcolumn = 0
 let s:settings.colorscheme = 'jellybeans'
 if has('lua')
   let s:settings.autocomplete_method = 'neocomplete'
-elseif filereadable(expand("~/.vim/bundle/YouCompleteMe/python/ycm_core.*"))
+elseif filereadable(expand("~/.nvim/bundle/YouCompleteMe/python/ycm/youcompleteme.py"))
   let s:settings.autocomplete_method = 'ycm'
 endif
+echo s:settings.autocomplete_method
 " }}}
 
 " setup & neobundle {{{
@@ -81,12 +80,11 @@ set history=1000                                    "number of command lines to 
 set ttyfast                                         "assume fast terminal connection
 set viewoptions=folds,options,cursor,unix,slash     "unix/windows compatibility
 set encoding=utf-8                                  "set encoding for text
-" if exists('$TMUX')
-"   set clipboard=
-" else
-"   set clipboard=unnamed                             "sync with OS clipboard
-" endif
-set clipboard=unnamed                             "sync with OS clipboard
+if exists('$TMUX')
+  set clipboard=
+else
+  set clipboard=unnamed                             "sync with OS clipboard
+endif
 set hidden                                          "allow buffer switching without saving
 set autoread                                        "auto reload if file saved externally
 set fileformats+=mac                                "add mac to auto-detection of file format line endings
@@ -370,8 +368,8 @@ NeoBundle 'tpope/vim-speeddating'
 NeoBundle 'thinca/vim-visualstar'
 NeoBundle 'tomtom/tcomment_vim'
 NeoBundle 'terryma/vim-expand-region' "{{{
-  map K <Plug>(expand_region_expand)
-  map J <Plug>(expand_region_shrink)
+map K <Plug>(expand_region_expand)
+map J <Plug>(expand_region_shrink)
 "}}}
 NeoBundle 'terryma/vim-multiple-cursors'
 NeoBundle 'chrisbra/NrrwRgn'
@@ -805,8 +803,8 @@ nnoremap <Leader>vv :e ~/.nvimrc<CR>
 
 noremap ; :
 noremap : ;
-nnoremap _ ^
-noremap <leader>a :call Preserve("ggVG")
+
+noremap <leader>a mmggVGy`m
 noremap <leader>ad ggVG"_d
 
 noremap <leader>p :set paste<cr>:r !pbpaste<cr>:set nopaste<cr>
@@ -815,8 +813,22 @@ noremap <leader>p :set paste<cr>:r !pbpaste<cr>:set nopaste<cr>
 nnoremap <bs> :<c-u>TmuxNavigateLeft<cr>
 
 nnoremap - :set hlsearch! hlsearch?<cr>
-" set relativenumber
 set nowrap
+
+" Potentailly free leaders:
+" C
+" I?
+" JK
+" M
+" N?
+" O
+" P?
+" Q
+" R
+" U
+" X
+" Y
+" Z
 " }}}
 
 " finish loading {{{
