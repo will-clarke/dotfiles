@@ -288,8 +288,8 @@ NeoBundleLazy 'othree/javascript-libraries-syntax.vim', {'autoload':{'filetypes'
 "}}}
 
 " ruby {{{
-NeoBundle 'tpope/vim-rails'
-NeoBundle 'tpope/vim-bundler'
+NeoBundle 'tpope/vim-rails', {'autoload':{'filetypes':['ruby']}}
+NeoBundle 'tpope/vim-bundler', {'autoload':{'filetypes':['ruby']}}
 "}}}
 
 " python - lazy{{{
@@ -382,7 +382,7 @@ vmap K <Plug>(expand_region_expand)
 vmap J <Plug>(expand_region_shrink)
 "}}}
 NeoBundle 'terryma/vim-multiple-cursors'
-NeoBundle 'chrisbra/NrrwRgn'
+" NeoBundleLazy 'chrisbra/NrrwRgn', {'autoload':{'commands':'NR'}}
 NeoBundleLazy 'godlygeek/tabular', {'autoload':{'commands':'Tabularize'}} "{{{
 nmap <Leader>a& :Tabularize /&<CR>
 vmap <Leader>a& :Tabularize /&<CR>
@@ -398,9 +398,9 @@ nmap <Leader>a<Bar> :Tabularize /<Bar><CR>
 vmap <Leader>a<Bar> :Tabularize /<Bar><CR>
 "}}}
 NeoBundle 'jiangmiao/auto-pairs'
-NeoBundle 'justinmk/vim-sneak' "{{{
-let g:sneak#streak = 1
-"}}}
+" NeoBundle 'justinmk/vim-sneak' "{{{
+" let g:sneak#streak = 1
+" "}}}
 "}}}
 
 " navigation {{{
@@ -440,6 +440,7 @@ endif
 
 nmap \ [ctrlp]
 nnoremap [ctrlp] <nop>
+nnoremap [ctrlp][ctrlp] :CtrlP<CR>
 
 nnoremap [ctrlp]t :CtrlPBufTag<cr>
 nnoremap [ctrlp]T :CtrlPTag<cr>
