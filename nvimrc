@@ -302,9 +302,13 @@ let g:jedi#popup_on_dot=0
 "}}}
 
 " git {{{
-NeoBundle 'mhinz/vim-signify' "{{{
-let g:signify_update_on_bufenter=0
+NeoBundleLazy 'airblade/vim-gitgutter', {'autoload':{'commands':'GitGutterEnable'}} "{{{
+nnoremap <leader>ge :GitGutterEnable<CR>
+nnoremap <leader>gg :GitGutterToggle<CR>
 "}}}
+" NeoBundle 'mhinz/vim-signify' "{{{
+" let g:signify_update_on_bufenter=0
+" "}}}
 if executable('hg')
   NeoBundle 'bitbucket:ludovicchabant/vim-lawrencium'
 endif
@@ -539,12 +543,12 @@ let g:indent_guides_color_change_percent=3
 "}}}
 "}}}
 
-" text objects{{{
-NeoBundle 'kana/vim-textobj-user'
-NeoBundle 'kana/vim-textobj-indent'
-NeoBundle 'kana/vim-textobj-entire'
-NeoBundle 'lucapette/vim-textobj-underscore'
-"}}}
+" " text objects{{{
+" NeoBundle 'kana/vim-textobj-user'
+" NeoBundle 'kana/vim-textobj-indent'
+" NeoBundle 'kana/vim-textobj-entire'
+" NeoBundle 'lucapette/vim-textobj-underscore'
+" "}}}
 
 " misc {{{
 if exists('$TMUX')
@@ -557,9 +561,6 @@ if executable('redcarpet') && executable('instant-markdown-d')
   NeoBundleLazy 'suan/vim-instant-markdown', {'autoload':{'filetypes':['markdown']}}
 endif
 NeoBundleLazy 'guns/xterm-color-table.vim', {'autoload':{'commands':'XtermColorTable'}}
-NeoBundle 'chrisbra/vim_faq'
-NeoBundle 'vimwiki'
-NeoBundle 'bufkill.vim'
 NeoBundle 'mhinz/vim-startify' "{{{
 let g:startify_session_dir = s:get_cache_dir('sessions')
 let g:startify_change_to_vcs_root = 1
