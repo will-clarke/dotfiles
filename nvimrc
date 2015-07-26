@@ -336,7 +336,6 @@ if s:settings.autocomplete_method == 'ycm' "{{{
   let g:ycm_complete_in_comments_and_strings=1
   let g:ycm_key_list_select_completion=['<C-n>', '<Down>']
   let g:ycm_key_list_previous_completion=['<C-p>', '<Up>']
-  let g:ycm_filetype_blacklist={'unite': 1}
   "}}}
   NeoBundle 'SirVer/ultisnips' "{{{
   let g:UltiSnipsExpandTrigger="<tab>"
@@ -414,12 +413,12 @@ let g:undotree_SplitLocation='botright'
 let g:undotree_SetFocusWhenToggle=1
 nnoremap <silent> <F5> :UndotreeToggle<CR>
 "}}}
-NeoBundleLazy 'EasyGrep', {'autoload':{'commands':'GrepOptions'}} "{{{
-let g:EasyGrepRecursive=1
-let g:EasyGrepAllOptionsInExplorer=1
-let g:EasyGrepCommand=1
-nnoremap <leader>vo :GrepOptions<cr>
-"}}}
+" NeoBundleLazy 'EasyGrep', {'autoload':{'commands':'GrepOptions'}} "{{{
+" let g:EasyGrepRecursive=1
+" let g:EasyGrepAllOptionsInExplorer=1
+" let g:EasyGrepCommand=1
+" nnoremap <leader>vo :GrepOptions<cr>
+" "}}}
 NeoBundle 'ctrlpvim/ctrlp.vim', { 'depends': 'tacahiroy/ctrlp-funky' } "{{{
 let g:ctrlp_clear_cache_on_exit=1
 let g:ctrlp_max_height=40
@@ -458,80 +457,12 @@ let NERDTreeIgnore=['\.git','\.hg']
 let NERDTreeBookmarksFile=s:get_cache_dir('NERDTreeBookmarks')
 nnoremap <F2> :NERDTreeToggle<CR>
 nnoremap <F3> :NERDTreeFind<CR>
+nnoremap <leader>n :NERDTreeToggle<CR>
+nnoremap <leader>m :NERDTreeToggle<CR>
 "}}}
 NeoBundleLazy 'majutsushi/tagbar', {'autoload':{'commands':'TagbarToggle'}} "{{{
+nnoremap <leader>m :NERDTreeFind<CR>
 nnoremap <silent> <F9> :TagbarToggle<CR>
-"}}}
-"}}}
-
-" Unite {{{
-NeoBundle 'Shougo/unite.vim' "{{{
-let bundle = neobundle#get('unite.vim')
-function! bundle.hooks.on_source(bundle)
-  call unite#filters#matcher_default#use(['matcher_fuzzy'])
-  call unite#filters#sorter_default#use(['sorter_rank'])
-  call unite#custom#profile('default', 'context', {
-        \ 'start_insert': 1
-        \ })
-endfunction
-
-let g:unite_data_directory=s:get_cache_dir('unite')
-let g:unite_source_history_yank_enable=1
-let g:unite_source_rec_max_cache_files=5000
-
-if executable('ag')
-  let g:unite_source_grep_command='ag'
-  let g:unite_source_grep_default_opts='--nocolor --line-numbers --nogroup -S -C4'
-  let g:unite_source_grep_recursive_opt=''
-elseif executable('ack')
-  let g:unite_source_grep_command='ack'
-  let g:unite_source_grep_default_opts='--no-heading --no-color -C4'
-  let g:unite_source_grep_recursive_opt=''
-endif
-
-function! s:unite_settings()
-  nmap <buffer> Q <plug>(unite_exit)
-  nmap <buffer> <esc> <plug>(unite_exit)
-  imap <buffer> <esc> <plug>(unite_exit)
-  imap <buffer> <c-j> <Plug>(unite_insert_leave)
-  imap <buffer> <c-k> <Plug>(unite_insert_leave)
-  nmap <buffer> <c-j> <Plug>(unite_loop_cursor_down)
-  nmap <buffer> <c-k> <Plug>(unite_loop_cursor_up)
-endfunction
-autocmd FileType unite call s:unite_settings()
-
-nmap <space> [unite]
-nnoremap [unite] <nop>
-
-nnoremap <silent> [unite]<space> :<C-u>Unite -toggle -auto-resize -buffer-name=mixed file_rec/async:! buffer file_mru bookmark<cr><c-u>
-nnoremap <silent> [unite]f :<C-u>Unite -toggle -auto-resize -buffer-name=files file_rec/async:!<cr><c-u>
-nnoremap <silent> [unite]e :<C-u>Unite -buffer-name=recent file_mru<cr>
-nnoremap <silent> [unite]y :<C-u>Unite -buffer-name=yanks history/yank<cr>
-nnoremap <silent> [unite]l :<C-u>Unite -auto-resize -buffer-name=line line<cr>
-nnoremap <silent> [unite]b :<C-u>Unite -auto-resize -buffer-name=buffers buffer file_mru<cr>
-nnoremap <silent> [unite]/ :<C-u>Unite -no-quit -buffer-name=search grep:.<cr>
-nnoremap <silent> [unite]m :<C-u>Unite -auto-resize -buffer-name=mappings mapping<cr>
-nnoremap <silent> [unite]s :<C-u>Unite -quick-match buffer<cr>
-"}}}
-NeoBundleLazy 'Shougo/neomru.vim', {'autoload':{'unite_sources':'file_mru'}}
-NeoBundleLazy 'osyo-manga/unite-airline_themes', {'autoload':{'unite_sources':'airline_themes'}} "{{{
-nnoremap <silent> [unite]a :<C-u>Unite -winheight=10 -auto-preview -buffer-name=airline_themes airline_themes<cr>
-"}}}
-NeoBundleLazy 'ujihisa/unite-colorscheme', {'autoload':{'unite_sources':'colorscheme'}} "{{{
-nnoremap <silent> [unite]c :<C-u>Unite -winheight=10 -auto-preview -buffer-name=colorschemes colorscheme<cr>
-"}}}
-NeoBundleLazy 'tsukkee/unite-tag', {'autoload':{'unite_sources':['tag','tag/file']}} "{{{
-nnoremap <silent> [unite]t :<C-u>Unite -auto-resize -buffer-name=tag tag tag/file<cr>
-"}}}
-NeoBundleLazy 'Shougo/unite-outline', {'autoload':{'unite_sources':'outline'}} "{{{
-nnoremap <silent> [unite]o :<C-u>Unite -auto-resize -buffer-name=outline outline<cr>
-"}}}
-NeoBundleLazy 'Shougo/unite-help', {'autoload':{'unite_sources':'help'}} "{{{
-nnoremap <silent> [unite]h :<C-u>Unite -auto-resize -buffer-name=help help<cr>
-"}}}
-NeoBundleLazy 'Shougo/junkfile.vim', {'autoload':{'commands':'JunkfileOpen','unite_sources':['junkfile','junkfile/new']}} "{{{
-let g:junkfile#directory=s:get_cache_dir('junk')
-nnoremap <silent> [unite]j :<C-u>Unite -auto-resize -buffer-name=junk junkfile junkfile/new<cr>
 "}}}
 "}}}
 
@@ -555,8 +486,11 @@ let g:indent_guides_color_change_percent=3
 if exists('$TMUX')
   NeoBundle 'christoomey/vim-tmux-navigator'
 endif
-NeoBundle 'kana/vim-vspec'
-NeoBundleLazy 'tpope/vim-scriptease', {'autoload':{'filetypes':['vim']}}
+
+NeoBundle 'maxbrunsfeld/vim-yankstack'
+nmap π <Plug>yankstack_substitute_older_paste
+nmap ∏ <Plug>yankstack_substitute_newer_paste
+
 NeoBundleLazy 'tpope/vim-markdown', {'autoload':{'filetypes':['markdown']}}
 if executable('redcarpet') && executable('instant-markdown-d')
   NeoBundleLazy 'suan/vim-instant-markdown', {'autoload':{'filetypes':['markdown']}}
@@ -574,29 +508,12 @@ let g:syntastic_style_error_symbol = '✠'
 let g:syntastic_warning_symbol = '∆'
 let g:syntastic_style_warning_symbol = '≈'
 "}}}
+"
 NeoBundleLazy 'mattn/gist-vim', { 'depends': 'mattn/webapi-vim', 'autoload': { 'commands': 'Gist' } } "{{{
 let g:gist_post_private=1
 let g:gist_clip_command = 'pbcopy'
 let g:gist_show_privates=1
 "}}}
-NeoBundleLazy 'Shougo/vimshell.vim', {'autoload':{'commands':[ 'VimShell', 'VimShellInteractive' ]}} "{{{
-let g:vimshell_editor_command='vim'
-let g:vimshell_right_prompt='getcwd()'
-let g:vimshell_data_directory=s:get_cache_dir('vimshell')
-let g:vimshell_vimshrc_path='~/.nvim/vimshrc'
-
-nnoremap <leader>c :VimShell -split<cr>
-nnoremap <leader>cc :VimShell -split<cr>
-nnoremap <leader>cn :VimShellInteractive node<cr>
-nnoremap <leader>cl :VimShellInteractive lua<cr>
-nnoremap <leader>cr :VimShellInteractive irb<cr>
-nnoremap <leader>cp :VimShellInteractive python<cr>
-"}}}
-NeoBundleLazy 'zhaocai/GoldenView.Vim', {'autoload':{'mappings':['<Plug>ToggleGoldenViewAutoResize']}} "{{{
-let g:goldenview__enable_default_mapping=0
-nmap <F4> <Plug>ToggleGoldenViewAutoResize
-"}}}
-nnoremap <leader>nbu :Unite neobundle/update -vertical -no-start-insert<cr>
 "}}}
 
 " mappings {{{
