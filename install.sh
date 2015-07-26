@@ -218,3 +218,7 @@ mkdir -p $BUNDLE_DIR
 git clone https://github.com/Shougo/neobundle.vim $INSTALL_DIR
 echo "Done. :D"
 
+echo "Installing spacemacs"
+brew tap railwaycat/emacsmacport
+brew install emacs-mac --with-spacemacs-icon
+ 
