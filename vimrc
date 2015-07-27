@@ -671,6 +671,7 @@ omap s :normal vs<CR>
 noremap gV `[v`]
 
 nmap <leader>br Obegin<esc>jorescue => e<cr>require 'pry'; binding.pry<cr>end<esc>kk
+let g:airline_theme='molokai'
 
 " Rust Racer:
 " In insert mode use C-x-C-o to search for completions
