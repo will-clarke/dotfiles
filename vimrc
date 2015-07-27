@@ -170,8 +170,8 @@ syntax enable
 
 set background=dark
 
-if !isdirectory(expand("~/.vim/bundle/vim-colors-solarized\.vim"))
-  colorscheme solarized
+if !isdirectory(expand("~/.vim/bundle/jellybeans.vim"))
+  colorscheme jellybeans
 endif
 
 noremap <f2> :call ToggleBackground()<CR>
