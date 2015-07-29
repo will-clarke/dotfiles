@@ -18,6 +18,7 @@
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
      ruby
+     html
      auto-completion
      better-defaults
      emacs-lisp
