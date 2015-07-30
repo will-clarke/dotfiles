@@ -110,7 +110,11 @@ export PATH="$HOME/.bin:$PATH"
 export BUN="$HOME/.vimrc.bundles.local"
 export VL="$HOME/.vimrc.local"
 eval "$(rbenv init - zsh --no-rehash)"
+
+if [ -f ~/.bin/z ]
+then
 . ~/.bin/z
+fi
 
 function nyancat() {telnet nyancat.dakko.us}
 function hiddenOn() {defaults write com.apple.finder AppleShowAllFiles NO; killall Finder /System/Library/CoreServices/Finder.app}
@@ -140,7 +144,10 @@ bindkey '^Z' fancy-ctrl-z
 # export DYLD_LIBRARY_PATH=/usr/local/lib/rustlib/x86_64-apple-darwin/lib
 # export RUST_SRC_PATH=/usr/local/Cellar/rust/1.0.0-beta
 # export RUST_SRC_PATH=$HOME/rust/src #should be default now..
+if [ -f /usr/local/Cellar/todo-txt/2.10/etc/bash_completion.d/todo_completion ]
+then
 source /usr/local/Cellar/todo-txt/2.10/etc/bash_completion.d/todo_completion complete -F _todo t
+fi
 
 if [ -f ~/.ssh/id_rsa ] && [ -f ~/.ssh/id_rsa.pub ]; then
   export SSH_KEYS=1
