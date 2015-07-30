@@ -5,11 +5,14 @@
 Install
 -------
 
-1. `git clone git://github.com/thoughtbot/dotfiles.git`
-2. `cd ~/dotfiles`
-3. `rake install`
+** For the brave: **
+curl https://raw.githubusercontent.com/wmmc/dotfiles/master/install.sh | sudo sh
 
-If you're feeling adventurous, you could `rake overwrite`. 
+todo
+script to install git and clone the repo into dotfiles
+rake install`
+
+If you're feeling adventurous, you could `rake overwrite`.
 This backs up everything first...
 
 Vim
