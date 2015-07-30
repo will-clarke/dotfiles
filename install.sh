@@ -214,11 +214,22 @@ fi
 
 # make bundle dir and fetch neobundle
 echo "Begin fetching NeoBundle..."
-mkdir -p $BUNDLE_DIR
-git clone https://github.com/Shougo/neobundle.vim $INSTALL_DIR
-echo "Done. :D"
+mkdir -p ~/nvim/bundle
+git clone https://github.com/Shougo/neobundle.vim ~/nvim/bundle/neobundle.vim
 
 echo "Installing spacemacs"
 brew tap railwaycat/emacsmacport
 brew install emacs-mac --with-spacemacs-icon
- 
+git clone --recursive https://github.com/syl20bnr/spacemacs ~/.emacs.d
+
+# echo "make sure emacs is up to date"
+# cd ~/emacs.d
+# git pull --rebase
+# git submodule sync; git submodule update
+# cd ~
+
+if [[ -f ~/.ssh/id_rsa && -f ~/.ssh/id_rsa.pub]]
+export SSH_KEYS=true
+fi
+
+

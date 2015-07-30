@@ -26,20 +26,21 @@
   update-from = "!f() { git fetch $1 --prune; git merge --ff-only $1/$2 || git rebase --preserve-merges $1/$2; }; f"
   ignored = !git ls-files -v | grep "^[[:lower:]]"
 [core]
-	excludesfile = ~/.gitignore_global
+  excludesfile = ~/.gitignore_global
   autocrlf = input
 [merge]
   ff = only
 [fetch]
   prune = true
-[include]
-  path = ~/.gitconfig.local
 [user]
-	name = William
-	email = wmmclarke@gmail.com
+  name = William
+  email = wmmclarke@gmail.com
 [credential]
-	helper = osxkeychain
+  helper = osxkeychain
+# [url "if [[ $SSH_KEY -eq 1]]; then URL='ssh://git@github.com/'; else URL='https://github.com/'; fi; $ED"]
+# insteadOf = https://github.com/
 [url "ssh://git@github.com/"]
-	insteadOf = https://github.com/
+  insteadOf = "echo lolz; if [[ $SSH_KEY -eq 1]]; echo omg; URL='https://github.com/'; fi; $URL"
+# editor = "if [[ $IS_REMOTE -eq 1 ]]; then ED='vim'; else ED='subl -n -w'; fi; $ED"
 [github]
-	user = wmmc
+  user = wmmc
