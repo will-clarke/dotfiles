@@ -1,6 +1,9 @@
 ;; -*- mode: emacs-lisp -*-
 ;; This file is loaded by Spacemacs at startup.
 ;; It must be stored in your home directory.
+
+
+(setq vc-follow-symlinks t)
 (defun dotspacemacs/layers ()
   "Configuration Layers declaration."
   (setq-default
@@ -24,11 +27,12 @@
      emacs-lisp
      git
      markdown
+     osx
      org
      (shell :variables
             shell-default-height 30
             shell-default-position 'bottom)
-     syntax-checking
+     ;;  syntax-checking
      version-control
      )
    ;; List of additional packages that will be installed without being
@@ -118,10 +122,10 @@ before layers configuration."
    dotspacemacs-loading-progress-bar t
    ;; If non nil the frame is fullscreen when Emacs starts up.
    ;; (Emacs 24.4+ only)
-   dotspacemacs-fullscreen-at-startup nil
+   dotspacemacs-fullscreen-at-startup t
    ;; If non nil `spacemacs/toggle-fullscreen' will not use native fullscreen.
    ;; Use to disable fullscreen animations in OSX."
-   dotspacemacs-fullscreen-use-non-native nil
+   dotspacemacs-fullscreen-use-non-native t
    ;; If non nil the frame is maximized when Emacs starts up.
    ;; Takes effect only if `dotspacemacs-fullscreen-at-startup' is nil.
    ;; (Emacs 24.4+ only)
@@ -154,11 +158,15 @@ before layers configuration."
    ;; specified with an installed package.
    ;; Not used for now.
    dotspacemacs-default-package-repository nil
-   )
+)
   ;; User initialization goes here
   )
 
 (defun dotspacemacs/config ()
+  (setq mac-option-key-is-meta nil)
+  (setq mac-command-key-is-meta t)
+  (setq mac-command-modifier 'meta)
+  (setq mac-option-modifier nil)
   "Configuration function.
  This function is called at the very end of Spacemacs initialization after
 layers configuration."
