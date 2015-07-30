@@ -9,7 +9,9 @@ Install
 curl https://raw.githubusercontent.com/wmmc/dotfiles/master/install.sh | sudo sh
 
 todo
+install seil with cl to remap caps locks permamently.
 script to install git and clone the repo into dotfiles
+install zsh
 rake install`
 
 If you're feeling adventurous, you could `rake overwrite`.

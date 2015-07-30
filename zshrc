@@ -142,6 +142,6 @@ bindkey '^Z' fancy-ctrl-z
 # export RUST_SRC_PATH=$HOME/rust/src #should be default now..
 source /usr/local/Cellar/todo-txt/2.10/etc/bash_completion.d/todo_completion complete -F _todo t
 
-if [[ -f ~/.ssh/id_rsa && -f ~/.ssh/id_rsa.pub]]
-export SSH_KEYS=1
+if [ -f ~/.ssh/id_rsa ] && [ -f ~/.ssh/id_rsa.pub ]; then
+  export SSH_KEYS=1
 fi
