@@ -80,3 +80,6 @@ alias dotfiles="cd ~/dotfiles"
 # alias todolist="v ~/Dropbox/Apps/UpWord\ Notes/"
 # alias todo="v ~/Dropbox/Apps/UpWord\ Notes/todo.txt"
 alias t='/usr/local/Cellar/todo-txt/2.10/bin/todo.sh -d $HOME/Dropbox/todo/todo.cfg'
+# emacs
+alias e='open -a /Applications/Emacs.app $1'
+alias ec='/Applications/Emacs.app/Contents/MacOS/bin/emacsclient'

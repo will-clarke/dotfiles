@@ -219,6 +219,7 @@ git clone https://github.com/Shougo/neobundle.vim ~/nvim/bundle/neobundle.vim
 echo "Installing spacemacs"
 brew tap railwaycat/emacsmacport
 brew install emacs-mac --with-spacemacs-icon
+brew linkapps emacs-mac
 git clone --recursive https://github.com/syl20bnr/spacemacs ~/.emacs.d
 
 # echo "make sure emacs is up to date"
