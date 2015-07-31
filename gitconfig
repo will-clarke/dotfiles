@@ -40,7 +40,7 @@
 # [url "if [[ $SSH_KEY -eq 1]]; then URL='ssh://git@github.com/'; else URL='https://github.com/'; fi; $ED"]
 # insteadOf = https://github.com/
 [url "ssh://git@github.com/"]
-  insteadOf = "echo lolz; if [[ $SSH_KEY -eq 1]]; echo omg; URL='https://github.com/'; fi; $URL"
+  insteadOf = $SSH_KEY
 # editor = "if [[ $IS_REMOTE -eq 1 ]]; then ED='vim'; else ED='subl -n -w'; fi; $ED"
 [github]
   user = wmmc

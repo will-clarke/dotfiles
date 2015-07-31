@@ -150,5 +150,7 @@ source /usr/local/Cellar/todo-txt/2.10/etc/bash_completion.d/todo_completion com
 fi
 
 if [ -f ~/.ssh/id_rsa ] && [ -f ~/.ssh/id_rsa.pub ]; then
-  export SSH_KEYS=1
+  export SSH_KEYS=https://github.com/
+else
+  export SSH_KEYS=NULL
 fi
