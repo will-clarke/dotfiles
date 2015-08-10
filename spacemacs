@@ -29,6 +29,7 @@
      markdown
      osx
      org
+     perspectives
      (shell :variables
             shell-default-height 30
             shell-default-position 'bottom)
@@ -230,6 +231,7 @@ before layers configuration."
       (echo "Snaptrip's booting up! :D")
       (switch-to-buffer original-buffer)
       ))
+  (global-set-key "\C-e" 'end-of-line)
   (setq mac-option-key-is-meta nil)
   (setq mac-command-key-is-meta t)
   (setq mac-command-modifier 'meta)
