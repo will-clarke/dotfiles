@@ -2,8 +2,7 @@ set completion-ignore-case on
 set show-all-if-ambiguous on
 set show-all-if-unmodified on
 
-set editing-mode vi
-set keymap vi-insert
+set editing-mode emacs
 
 "\C-p": previous-history
 "\C-n": next-history
