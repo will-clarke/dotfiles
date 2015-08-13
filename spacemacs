@@ -232,10 +232,24 @@ before layers configuration."
       (switch-to-buffer original-buffer)
       ))
   (global-set-key "\C-e" 'end-of-line)
-  (setq mac-option-key-is-meta nil)
-  (setq mac-command-key-is-meta t)
-  (setq mac-command-modifier 'meta)
-  (setq mac-option-modifier nil)
+  (add-hook 'before-save-hook 'delete-trailing-whitespace)
+  (setq tab-width 2)
+                                        ; Disable Alt-[0-9], since my keyboard kinda needs Alt-3 for the hash key.
+  (define-key window-numbering-keymap "\M-0" nil)
+  (define-key window-numbering-keymap "\M-1" nil)
+  (define-key window-numbering-keymap "\M-2" nil)
+  (define-key window-numbering-keymap "\M-3" nil)
+  (define-key window-numbering-keymap "\M-4" nil)
+  (define-key window-numbering-keymap "\M-5" nil)
+  (define-key window-numbering-keymap "\M-6" nil)
+  (define-key window-numbering-keymap "\M-7" nil)
+  (define-key window-numbering-keymap "\M-8" nil)
+  (define-key window-numbering-keymap "\M-9" nil)
+                                        ; Actually allow typing #
+  (global-set-key (kbd "M-3") `(lambda () (interactive) (insert "#"))
+)
+
+
   "Configuration function.
  This function is called at the very end of Spacemacs initialization after
 layers configuration."
