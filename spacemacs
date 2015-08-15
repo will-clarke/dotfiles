@@ -3,7 +3,6 @@
 ;; It must be stored in your home directory.
 
 
-(setq vc-follow-symlinks t)
 (defun dotspacemacs/layers ()
   "Configuration Layers declaration."
   (setq-default
@@ -56,8 +55,9 @@
    ;; packages then consider to create a layer, you can also put the
    ;; configuration in `dotspacemacs/config'.
    dotspacemacs-additional-packages '(soft-charcoal-theme
-                                      sanityinc-tomorrow-bright
-                                      xs
+                                      twittering-mode
+                                      color-theme-sanityinc-tomorrow
+
                                       )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
@@ -98,6 +98,7 @@ before layers configuration."
    dotspacemacs-themes '(solarized-light
                          soft-charcoal
                          sanityinc-tomorrow-bright
+
                          )
                          ;; solarized-dark
                          ;; spacemacs-light
@@ -114,19 +115,10 @@ before layers configuration."
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
-   ;; The leader key
    dotspacemacs-leader-key "SPC"
-   ;; The leader key accessible in `emacs state' and `insert state'
    dotspacemacs-emacs-leader-key "M-m"
-   ;; Major mode leader key is a shortcut key which is the equivalent of
-   ;; pressing `<leader> m`. Set it to `nil` to disable it.
    dotspacemacs-major-mode-leader-key ","
-   ;; Major mode leader key accessible in `emacs state' and `insert state'
    dotspacemacs-major-mode-emacs-leader-key "C-M-m"
-   ;; The command key used for Evil commands (ex-commands) and
-   ;; Emacs commands (M-x).
-   ;; By default the command key is `:' so ex-commands are executed like in Vim
-   ;; with `:' and Emacs commands are executed with `<leader> :'.
    dotspacemacs-command-key ":"
    ;; Location where to auto-save files. Possible values are `original' to
    ;; auto-save the file in-place, `cache' to auto-save the file to another
@@ -179,10 +171,7 @@ before layers configuration."
    dotspacemacs-persistent-server t
    ;; List of search tool executable names. Spacemacs uses the first installed
    ;; tool of the list. Supported tools are `ag', `pt', `ack' and `grep'.
-   dotspacemacs-search-tools '("ag" "pt" "ack" "grep")
-   ;; The default package repository used if no explicit repository has been
-   ;; specified with an installed package.
-   ;; Not used for now.
+   dotspacemacs-search-tools '("ag" "ack" "grep")
    dotspacemacs-default-package-repository nil
 )
   ;; User initialization goes here
@@ -191,6 +180,7 @@ before layers configuration."
 (defun dotspacemacs/config ()
   ;; (require 'ruby-hash-syntax)
 
+  (setq vc-follow-symlinks t)
   (setq mac-option-modifier 'super)
   (setq mac-command-modifier 'meta)
 
@@ -199,8 +189,8 @@ before layers configuration."
   (setq system-time-locale "en_GB" )
 
   ;; get c-h working
-  ;; (set-keyboard-coding-system nil)
-  ;; (setq mac-pass-command-to-system nil)
+  (set-keyboard-coding-system nil)
+  (setq mac-pass-command-to-system nil)
 
   ;; Another vairable
   (setq helm-echo-input-in-header-line nil)
