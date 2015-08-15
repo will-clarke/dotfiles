@@ -57,6 +57,8 @@
    dotspacemacs-additional-packages '(soft-charcoal-theme
                                       twittering-mode
                                       color-theme-sanityinc-tomorrow
+                                      sx
+                                      google-this
 
                                       )
    ;; A list of packages and/or extensions that will not be install and loaded.
@@ -183,6 +185,8 @@ before layers configuration."
   (setq vc-follow-symlinks t)
   (setq mac-option-modifier 'super)
   (setq mac-command-modifier 'meta)
+
+  (setq twittering-use-master-password t)
 
   ;; (package-install ())
   (prefer-coding-system 'utf-8)

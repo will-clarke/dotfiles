@@ -146,6 +146,7 @@ brew_install_or_upgrade 'heroku-toolbelt'
 
 # me
 brew_install_or_upgrade 'caskroom/cask/brew-cask'
+brew_install_or_upgrade 'gpg'
 
 cask() {
   brew cask install "$1"
