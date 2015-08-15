@@ -1,3 +1,20 @@
+if [ -f ~/.secrets/secrets ]
+then
+  source ~/.secrets/secrets
+fi
+
+# use vim as the visual editor
+export VISUAL=vim
+export EDITOR=$VISUAL
+
+# ensure dotfiles bin directory is loaded first
+export PATH="$HOME/.bin:/usr/local/sbin:$PATH"
+
+# load rbenv if available
+if which rbenv &>/dev/null ; then
+  eval "$(rbenv init - --no-rehash)"
+fi
+
 source ~/.zsh/git-prompt/gitstatus.sh
 ZSH_THEME_GIT_PROMPT_CACHE=""
 
@@ -49,11 +66,11 @@ setopt extendedglob
 # Allow [ or ] whereever you want
 unsetopt nomatch
 
-# vi mode
-bindkey -v
-bindkey "^F" vi-cmd-mode
-bindkey jj vi-cmd-mode
-bindkey jk vi-cmd-mode
+# # vi mode
+# bindkey -v
+# bindkey "^F" vi-cmd-mode
+# bindkey jj vi-cmd-mode
+# bindkey jk vi-cmd-mode
 
 # handy keybindings
 bindkey "^A" beginning-of-line

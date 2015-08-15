@@ -20,37 +20,45 @@
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     ruby
+     (ruby :variables
+           ruby-version-manager 'rbenv
+           ruby-enable-ruby-on-rails-support t)
      html
      auto-completion
      better-defaults
      emacs-lisp
-     git
+     (git :variables
+          git-magit-status-fullscreen t
+          git-enable-github-support t
+          git-gutter-use-fringe t)
      markdown
      osx
      org
      perspectives
-     (shell :variables
-            shell-default-height 30
-            shell-default-position 'bottom)
-     shell-scripts
-     ;;  syntax-checking
+     shell
+     ;; (shell :variables
+     ;;        ;; shell-default-term-shell "bin/zsh"
+     ;;        shell-default-height 30
+     ;;        shell-default-position 'bottom)
+     syntax-checking
      version-control
 
-     chrome
      dash
      eyebrowse
      games
      github
      emoji
      gtags
-     gnus
+     xkcd
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages then consider to create a layer, you can also put the
    ;; configuration in `dotspacemacs/config'.
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages '(soft-charcoal-theme
+                                      sanityinc-tomorrow-bright
+                                      xs
+                                      )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
@@ -64,6 +72,7 @@ This function is called at the very startup of Spacemacs initialization
 before layers configuration."
   ;; This setq-default sexp is an exhaustive list of all the supported
   ;; spacemacs settings.
+
   (setq-default
    ;; for ruby-version-manager
    ruby-version-manager 'rbenv
@@ -87,12 +96,15 @@ before layers configuration."
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(solarized-light
-                         solarized-dark
-                         spacemacs-light
-                         spacemacs-dark
-                         leuven
-                         monokai
-                         zenburn)
+                         soft-charcoal
+                         sanityinc-tomorrow-bright
+                         )
+                         ;; solarized-dark
+                         ;; spacemacs-light
+                         ;; spacemacs-dark
+                         ;; leuven
+                         ;; monokai
+                         ;; zenburn)
    ;; If non nil the cursor color matches the state color.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
@@ -164,7 +176,7 @@ before layers configuration."
    ;; `current' or `nil'. Default is `all'
    dotspacemacs-highlight-delimiters 'all
    ;; If non nil advises quit functions to keep server open when quitting.
-   dotspacemacs-persistent-server nil
+   dotspacemacs-persistent-server t
    ;; List of search tool executable names. Spacemacs uses the first installed
    ;; tool of the list. Supported tools are `ag', `pt', `ack' and `grep'.
    dotspacemacs-search-tools '("ag" "pt" "ack" "grep")
@@ -177,6 +189,31 @@ before layers configuration."
   )
 
 (defun dotspacemacs/config ()
+  ;; (require 'ruby-hash-syntax)
+
+  (setq mac-option-modifier 'super)
+  (setq mac-command-modifier 'meta)
+
+  ;; (package-install ())
+  (prefer-coding-system 'utf-8)
+  (setq system-time-locale "en_GB" )
+
+  ;; get c-h working
+  ;; (set-keyboard-coding-system nil)
+  ;; (setq mac-pass-command-to-system nil)
+
+  ;; Another vairable
+  (setq helm-echo-input-in-header-line nil)
+
+  ;; Don’t ask me when close emacs with process is running
+  (defadvice save-buffers-kill-emacs (around no-query-kill-emacs activate)
+    "Prevent annoying \"Active processes exist\" query when you quit Emacs."
+    (flet ((process-list ())) ad-do-it))
+
+  ;; Don’t ask me when kill process buffer
+  (setq kill-buffer-query-functions
+        (remq 'process-kill-buffer-query-function
+              kill-buffer-query-functions))
 
   (defun snaptrip-start ()
     "Start all the right processes for snaptrip"
@@ -231,24 +268,27 @@ before layers configuration."
       (echo "Snaptrip's booting up! :D")
       (switch-to-buffer original-buffer)
       ))
-  (global-set-key "\C-e" 'end-of-line)
-  (add-hook 'before-save-hook 'delete-trailing-whitespace)
-  (setq tab-width 2)
-                                        ; Disable Alt-[0-9], since my keyboard kinda needs Alt-3 for the hash key.
-  (define-key window-numbering-keymap "\M-0" nil)
-  (define-key window-numbering-keymap "\M-1" nil)
-  (define-key window-numbering-keymap "\M-2" nil)
-  (define-key window-numbering-keymap "\M-3" nil)
-  (define-key window-numbering-keymap "\M-4" nil)
-  (define-key window-numbering-keymap "\M-5" nil)
-  (define-key window-numbering-keymap "\M-6" nil)
-  (define-key window-numbering-keymap "\M-7" nil)
-  (define-key window-numbering-keymap "\M-8" nil)
-  (define-key window-numbering-keymap "\M-9" nil)
-                                        ; Actually allow typing #
-  (global-set-key (kbd "M-3") `(lambda () (interactive) (insert "#"))
-)
 
+      (define-key evil-insert-state-map "\C-e" 'end-of-line)
+      (define-key evil-visual-state-map "\C-e" 'end-of-line)
+      (define-key evil-normal-state-map "\C-e" 'end-of-line)
+
+      (add-hook 'before-save-hook 'delete-trailing-whitespace)
+
+      (setq tab-width 2)
+
+      ;; (define-key window-numbering-keymap "\M-0" nil)
+      ;; (define-key window-numbering-keymap "\M-1" nil)
+      ;; (define-key window-numbering-keymap "\M-2" nil)
+      ;; (define-key window-numbering-keymap "\M-3" nil)
+      ;; (define-key window-numbering-keymap "\M-4" nil)
+      ;; (define-key window-numbering-keymap "\M-5" nil)
+      ;; (define-key window-numbering-keymap "\M-6" nil)
+      ;; (define-key window-numbering-keymap "\M-7" nil)
+      ;; (define-key window-numbering-keymap "\M-8" nil)
+      ;; (define-key window-numbering-keymap "\M-9" nil)
+                                              ; Actually allow typing #
+      (global-set-key (kbd "s-3") `(lambda () (interactive) (insert "#")))
 
   "Configuration function.
  This function is called at the very end of Spacemacs initialization after
@@ -257,3 +297,25 @@ layers configuration."
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(ahs-case-fold-search nil)
+ '(ahs-default-range (quote ahs-range-whole-buffer))
+ '(ahs-idle-interval 0.25)
+ '(ahs-idle-timer 0 t)
+ '(ahs-inhibit-face-list nil)
+ '(custom-safe-themes
+   (quote
+    ("62408b3adcd05f887b6357e5bd9221652984a389e9b015f87bbc596aba62ba48" default)))
+ '(fancy-battery-mode t)
+ '(ring-bell-function (quote ignore) t))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(company-tooltip-common ((t (:inherit company-tooltip :weight bold :underline nil))))
+ '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :weight bold :underline nil)))))

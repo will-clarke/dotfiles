@@ -1,13 +1,13 @@
-set completion-ignore-case on
-set show-all-if-ambiguous on
-set show-all-if-unmodified on
+# set completion-ignore-case on
+# set show-all-if-ambiguous on
+# set show-all-if-unmodified on
 
-set editing-mode emacs
+# set editing-mode emacs
 
-"\C-p": previous-history
-"\C-n": next-history
-"\C-a":beginning-of-line
-"\C-e":end-of-line
+# "\C-p": previous-history
+# "\C-n": next-history
+# "\C-a":beginning-of-line
+# "\C-e":end-of-line
 
-"\e.": yank-last-arg
-"\e_": yank-last-arg
+# "\e.": yank-last-arg
+# "\e_": yank-last-arg

@@ -6,7 +6,7 @@ Install
 -------
 
 ** For the brave: **
-curl https://raw.githubusercontent.com/wmmc/dotfiles/master/install.sh | sudo sh
+    curl https://raw.githubusercontent.com/wmmc/dotfiles/master/install.sh | sudo sh
 
 todo
 install seil with cl to remap caps locks permamently.

@@ -983,13 +983,13 @@
 	<key>HotKeyTogglesWindow</key>
 	<false/>
 	<key>Hotkey</key>
-	<true/>
+	<false/>
 	<key>HotkeyChar</key>
-	<integer>32</integer>
+	<integer>27</integer>
 	<key>HotkeyCode</key>
-	<integer>49</integer>
+	<integer>53</integer>
 	<key>HotkeyModifiers</key>
-	<integer>262401</integer>
+	<integer>256</integer>
 	<key>IRMemory</key>
 	<integer>4</integer>
 	<key>JobName</key>
@@ -1047,11 +1047,11 @@
 	<key>NSWindow Frame NSFontPanel</key>
 	<string>368 167 698 502 0 0 1440 877 </string>
 	<key>NSWindow Frame Preferences</key>
-	<string>75 353 924 485 0 0 1440 877 </string>
+	<string>100 346 924 485 0 0 1440 877 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>99 294 592 584 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 0 1440 900 0 0 1440 877 </string>
+	<string>0 19 1435 858 0 0 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>722 -5 780 826 0 0 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
@@ -1781,7 +1781,7 @@
 	<key>NoSyncTimeOfLastPromo</key>
 	<real>453578193.52679402</real>
 	<key>NoSyncTimeOfLastPromoDownload</key>
-	<real>460031246.88325101</real>
+	<real>461238457.38477898</real>
 	<key>OnlyWhenMoreTabs</key>
 	<true/>
 	<key>OpenArrangementAtStartup</key>
@@ -1846,7 +1846,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2015-07-31T10:26:44Z</date>
+	<date>2015-08-14T09:51:14Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Show Toolbelt</key>

@@ -1,13 +1,17 @@
 require 'fileutils'
 
+# Installs / Uninstalls / Backs Up all dotfiles
 class Installer
-  EXCLUDED_FILES = ['Rakefile', 'readme.md', 'setup_script_from_thoughtbot', 'install.sh']
+  EXCLUDED_FILES = [
+    'Rakefile', 'readme.md', 'README.md',
+    'setup_script_from_thoughtbot', 'install.sh'
+  ]
 
-  def repo name
+  def repo(name)
     File.expand_path name
   end
 
-  def destination name
+  def destination(name)
     File.expand_path "~/.#{name}"
   end
 
@@ -23,23 +27,29 @@ class Installer
     link_secrets_from_dropbox
   end
 
-  def backup(file_names=dotfiles)
-    file_names.each do | name |
-      file_path = File.join backup_folder.first.to_s, name
-      ensure_folder_has_been_created file_path, File.directory?(destination(name))
+  def backup(file_names = dotfiles)
+    file_names.each do |name|
+      create_backup_folder name
       unless File.directory? destination(name)
-        FileUtils.cp destination(name), file_path if File.exists? destination(name)
+        file_exists = File.exist? destination(name)
+        FileUtils.cp destination(name), file_path if file_exists
       end
     end
   end
 
-  def backup_folder
-    time = Time.now.strftime "%y-%m-%d---%H-%M"
-    file_path = File.join( '~' , '.dotfiles-backup', time )
-    FileUtils.mkdir_p( File.expand_path file_path)
+  def create_backup_folder(name)
+    file_path = File.join backup_folder.first.to_s, name
+    directory = File.directory?(destination(name))
+    ensure_folder_has_been_created file_path, directory
   end
 
-  def ensure_folder_has_been_created path, dir=false
+  def backup_folder
+    time = Time.now.strftime '%y-%m-%d---%H-%M'
+    file_path = File.join('~', '.dotfiles-backup', time)
+    FileUtils.mkdir_p(File.expand_path file_path)
+  end
+
+  def ensure_folder_has_been_created(path, dir = false)
     directory = dir ? path : path.split('/')[0..-2].join('/') + '/'
     FileUtils.mkdir_p repo(directory)
   end
@@ -49,9 +59,7 @@ class Installer
   end
 
   def link(repo, destination)
-    unless File.symlink? repo
-      FileUtils.ln_s(repo, destination)
-    end
+    FileUtils.ln_s(repo, destination) unless File.symlink? repo
   end
 
   def uninstall
@@ -64,10 +72,10 @@ class Installer
   def link_secrets_from_dropbox
     dropbox_route = '/Users/wmmc/Dropbox/Dev/secrets'
     secrets = '/Users/wmmc/.secrets'
-    if File.exists?(dropbox_route) && !File.exists?(secrets)
-      p 'Linking ~/.secrets from dropbox'
-      FileUtils.ln_s(dropbox_route, secrets)
-    end
+    return unless Dir.exist?(dropbox_route)
+    return if Dir.exist?(secrets)
+    p 'Linking ~/.secrets from dropbox'
+    FileUtils.ln_s(dropbox_route, secrets)
   end
 
   def overwrite
@@ -75,7 +83,6 @@ class Installer
     uninstall
     install
   end
-
 end
 
 desc 'Install'
@@ -92,7 +99,6 @@ desc 'Update / Overwrite dotfiles repository.'
 task :update do
   system 'git pull'
   Installer.new.overwrite
-  # system 'git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim'
   system 'vim +PluginInstall! +qall'
   p 'Update completed successfully!'
 end

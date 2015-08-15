@@ -8,7 +8,7 @@ Pry.commands.alias_command 'ep', 'exit-program' rescue nil
 
 Pry.config.color = true
 
-Pry.config.theme = "solarized"
+Pry.config.theme = "solarized" unless ENV["INSIDE_EMACS"]
 
 # === CONVENIENCE METHODS ===
 # Stolen from https://gist.github.com/807492

@@ -1,5 +1,3 @@
-#[init]
-#  templatedir = ~/.git_template
 [advice]
   pushNonFastForward = false
   statusHints = false
@@ -28,6 +26,7 @@
 [core]
   excludesfile = ~/.gitignore_global
   autocrlf = input
+	editor = emacs
 [merge]
   ff = only
 [fetch]
@@ -42,5 +41,5 @@
 [url "ssh://git@github.com/"]
   insteadOf = $SSH_KEY
 # editor = "if [[ $IS_REMOTE -eq 1 ]]; then ED='vim'; else ED='subl -n -w'; fi; $ED"
-[github]
-  user = wmmc
+[include]
+  path = /Users/wmmc/.secrets/gitconfig

@@ -1,7 +1,7 @@
 (setq osx-packages
   '(
     pbcopy
-    reveal-in-finder
+    reveal-in-osx-finder
     ))
 
 (if (and (system-is-mac) (executable-find "gls")) 
@@ -16,7 +16,7 @@
     :if (and (system-is-mac)(not (display-graphic-p))) 
     :init (turn-on-pbcopy)))
 
-(defun osx/init-reveal-in-finder ()
-  (use-package reveal-in-finder
+(defun osx/init-reveal-in-osx-finder ()
+  (use-package reveal-in-osx-finder
     :if (system-is-mac)
-    :commands reveal-in-finder))
+    :commands reveal-in-osx-finder))
