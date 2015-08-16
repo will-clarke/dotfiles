@@ -202,3 +202,5 @@ git clone --recursive https://github.com/syl20bnr/spacemacs ~/.emacs.d
 if [[ -f ~/.ssh/id_rsa && -f ~/.ssh/id_rsa.pub]]
 export SSH_KEYS=true
 fi
+
+brew install homebrew/emacs/gnugo-emacs

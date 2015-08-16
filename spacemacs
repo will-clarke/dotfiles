@@ -35,10 +35,6 @@
      org
      perspectives
      shell
-     ;; (shell :variables
-     ;;        ;; shell-default-term-shell "bin/zsh"
-     ;;        shell-default-height 30
-     ;;        shell-default-position 'bottom)
      syntax-checking
      version-control
 
@@ -55,12 +51,14 @@
    ;; packages then consider to create a layer, you can also put the
    ;; configuration in `dotspacemacs/config'.
    dotspacemacs-additional-packages '(soft-charcoal-theme
-                                      twittering-mode
                                       color-theme-sanityinc-tomorrow
+                                      twittering-mode
                                       sx
-                                      google-this
+                                      gnugo
+                                      evil-rails
 
                                       )
+
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
@@ -186,7 +184,23 @@ before layers configuration."
   (setq mac-option-modifier 'super)
   (setq mac-command-modifier 'meta)
 
+
+  ;; (eval-after-load 'gnugo
+  ;;   '(define-key evil-normal-state-map "\C-m" nil)
+  ;;   ;; '(define-key gnugo-board-mode-map (kbd "RET") 'gnugo-move)
+  ;;   )
+
+  ;; (eval-after-load 'gnugo
+  ;;   '(define-key gnugo-board-mode-map "\C-m" 'gnugo-move)
+  ;;   ;; '(local-set-key (kbd "RET") 'gnugo-move)
+  ;;   ;; '(global-set-key (kbd "RET") 'gnugo-move)
+  ;;   )
+
+
   (setq twittering-use-master-password t)
+
+  (evil-declare-key 'motion gnugo-board-mode-map (kbd "<return>") 'gnugo-move)
+  (evil-declare-key 'motion gnugo-board-mode-map (kbd "RET") 'gnugo-move)
 
   ;; (package-install ())
   (prefer-coding-system 'utf-8)
@@ -195,6 +209,9 @@ before layers configuration."
   ;; get c-h working
   (set-keyboard-coding-system nil)
   (setq mac-pass-command-to-system nil)
+
+  ;; enable autocomplete
+  (auto-complete-mode t)
 
   ;; Another vairable
   (setq helm-echo-input-in-header-line nil)
