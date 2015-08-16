@@ -1,0 +1,27 @@
+[general]
+# ui = ttyui
+# accounts = wmmc, snaptrip
+accounts = Gmail
+pythonfile = ~/.offlineimap/config.py
+fsync = False
+
+[Account Gmail]
+localrepository = Gmail-Local
+remoterepository = Gmail-Remote
+status_backend = sqlite
+
+[Repository Gmail-Local]
+type = Maildir
+localfolders = ~/.mail/wmmclarke
+nametrans = local_folder_to_gmail_folder
+
+[Repository Gmail-Remote]
+maxconnections = 1
+type = Gmail
+remoteuser = wmmclarke@gmail.com
+remotepasseval = get_keychain_pass(account='wmmclarke@gmail.com', server='accounts.google.com')
+realdelete = no
+nametrans = gmail_folder_to_local_folder
+folderfilter = should_include_folder
+scert_fingerprint=f3043dd689a2e7dddfbef82703a6c65ea9b634c1
+slcacertfile = ~/.offlineimap/cacert.pem

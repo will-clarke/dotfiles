@@ -45,6 +45,10 @@
      emoji
      gtags
      xkcd
+
+     mu4e
+     offlineimap
+
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -201,6 +205,59 @@ before layers configuration."
 
   (evil-declare-key 'motion gnugo-board-mode-map (kbd "<return>") 'gnugo-move)
   (evil-declare-key 'motion gnugo-board-mode-map (kbd "RET") 'gnugo-move)
+
+  (evil-declare-key 'motion gnugo-board-mode-map (kbd "q") 'gnugo-quit)
+
+
+
+
+  ;; EMAIL!
+  (setq mu4e-account-alist
+        '(("gmail"
+           ;; Under each account, set the account-specific variables you want.
+           (mu4e-sent-messages-behavior delete)
+           (mu4e-sent-folder "/gmail/[Gmail]/.Sent Mail")
+           (mu4e-drafts-folder "/gmail/[Gmail]/.Drafts")
+           (user-mail-address "wmmclarke@gmail.com")
+           (user-full-name "William"))
+          ("snaptrip"
+           (mu4e-sent-messages-behavior sent)
+           (mu4e-sent-folder "/snaptrip/Sent Items")
+           (mu4e-drafts-folder "/snaptrip/Drafts")
+           (user-mail-address "will.clarke@snaptrip.com")
+           (user-full-name "Will Clarke"))))
+  (mu4e/mail-account-reset)
+
+;;; Set up some common mu4e variables
+  (setq mu4e-maildir "~/.mail"
+        mu4e-trash-folder "/Trash"
+        mu4e-refile-folder "/Archive"
+        mu4e-get-mail-command "mbsync -a"
+        mu4e-update-interval nil
+        mu4e-compose-signature-auto-include nil
+        mu4e-view-show-images t
+        mu4e-view-show-addresses t)
+
+;;; Mail directory shortcuts
+  (setq mu4e-maildir-shortcuts
+        '(("/gmail/INBOX" . ?g)
+          ("/snaptrip/INBOX" . ?s)))
+
+;;; Bookmarks
+  (setq mu4e-bookmarks
+        `(("flag:unread AND NOT flag:trashed" "Unread messages" ?u)
+          ("date:today..now" "Today's messages" ?t)
+          ("date:7d..now" "Last 7 days" ?w)
+          ("mime:image/*" "Messages with images" ?p)
+          (,(mapconcat 'identity
+                       (mapcar
+                        (lambda (maildir)
+                          (concat "maildir:" (car maildir)))
+                        mu4e-maildir-shortcuts) " OR ")
+           "All inboxes" ?i)))
+
+
+
 
   ;; (package-install ())
   (prefer-coding-system 'utf-8)
