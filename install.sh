@@ -204,3 +204,6 @@ export SSH_KEYS=true
 fi
 
 brew install homebrew/emacs/gnugo-emacs
+
+brew install offlineimap
+brew install gnutls

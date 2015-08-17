@@ -22,7 +22,7 @@ def gmail_folder_to_local_folder(folder):
 def should_include_folder(folder):
     return folder in INCLUDED_FOLDERS
 
-def get_secret_vars(name)
+def get_secret_vars(name):
     return os.environ[name.upper()]
 
 # remotepasseval = get_secret_vars('wmmclarke_gmail_app')

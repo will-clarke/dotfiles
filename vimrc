@@ -673,6 +673,10 @@ noremap gV `[v`]
 nmap <leader>br Obegin<esc>jorescue => e<cr>require 'pry'; binding.pry<cr>end<esc>kk
 let g:airline_theme='molokai'
 
+noremap  <leader>fs :update<CR><ESC>
+vnoremap <leader>fs <C-C>:update<CR><ESC>
+inoremap <leader>fs <C-O>:update<CR><ESC>
+
 " Rust Racer:
 " In insert mode use C-x-C-o to search for completions
 " In normal mode type 'gd' to go to a definition

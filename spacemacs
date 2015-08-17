@@ -216,27 +216,42 @@ before layers configuration."
         '(("gmail"
            ;; Under each account, set the account-specific variables you want.
            (mu4e-sent-messages-behavior delete)
-           (mu4e-sent-folder "/gmail/[Gmail]/.Sent Mail")
-           (mu4e-drafts-folder "/gmail/[Gmail]/.Drafts")
+           (mu4e-sent-folder "/wmmclarke/sent")
+           (mu4e-drafts-folder "/wmmclarke/drafts")
+           ;; (mu4e-sent-folder "/gmail/[Gmail]/.Sent Mail")
+           ;; (mu4e-drafts-folder "/gmail/[Gmail]/.Drafts")
            (user-mail-address "wmmclarke@gmail.com")
            (user-full-name "William"))
           ("snaptrip"
            (mu4e-sent-messages-behavior sent)
-           (mu4e-sent-folder "/snaptrip/Sent Items")
-           (mu4e-drafts-folder "/snaptrip/Drafts")
+           (mu4e-sent-folder "/snaptrip/sents")
+           (mu4e-drafts-folder "/snaptrip/drafts")
            (user-mail-address "will.clarke@snaptrip.com")
            (user-full-name "Will Clarke"))))
   (mu4e/mail-account-reset)
 
+  (require 'smtpmail)
+  (require 'starttls)
 ;;; Set up some common mu4e variables
-  (setq mu4e-maildir "~/.mail"
-        mu4e-trash-folder "/Trash"
-        mu4e-refile-folder "/Archive"
-        mu4e-get-mail-command "mbsync -a"
+  (setq
+        mu4e-maildir "~/.mail"
+        mu4e-trash-folder "/trash"
+        mu4e-refile-folder "/archive"
+        mu4e-get-mail-command "offlineimapg"
         mu4e-update-interval nil
         mu4e-compose-signature-auto-include nil
         mu4e-view-show-images t
-        mu4e-view-show-addresses t)
+        mu4e-view-show-addresses t
+
+        message-send-mail-function 'smtpmail-send-it
+        smtpmail-stream-type 'starttls
+        smtpmail-default-smtp-server "smtp.gmail.com"
+        smtpmail-smtp-server "smtp.gmail.com"
+        smtpmail-smtp-service 587
+
+        ;; smtpmail-smtp-user "calum0macrae@gmail.com"
+        ;; (setq starttls-extra-arguments '("--x509cafile" "/usr/pkg/share/ncat/ca-bundle.crt"))
+        )
 
 ;;; Mail directory shortcuts
   (setq mu4e-maildir-shortcuts
@@ -379,7 +394,8 @@ layers configuration."
    (quote
     ("62408b3adcd05f887b6357e5bd9221652984a389e9b015f87bbc596aba62ba48" default)))
  '(fancy-battery-mode t)
- '(ring-bell-function (quote ignore) t))
+ '(ring-bell-function (quote ignore) t)
+ '(send-mail-function (quote smtpmail-send-it)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

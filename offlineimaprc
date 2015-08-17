@@ -1,21 +1,20 @@
 [general]
 # ui = ttyui
-# accounts = wmmc, snaptrip
-accounts = Gmail
+accounts = wmmclarke, snaptrip
 pythonfile = ~/.offlineimap/offlineimap.py
 fsync = False
 
-[Account Gmail]
-localrepository = Gmail-Local
-remoterepository = Gmail-Remote
+[Account wmmclarke]
+localrepository = wmmclarke-Local
+remoterepository = wmmclarke-Remote
 status_backend = sqlite
 
-[Repository Gmail-Local]
+[Repository wmmclarke-Local]
 type = Maildir
 localfolders = ~/.mail/wmmclarke
 nametrans = local_folder_to_gmail_folder
 
-[Repository Gmail-Remote]
+[Repository wmmclarke-Remote]
 maxconnections = 1
 type = Gmail
 remoteuser = wmmclarke@gmail.com
@@ -25,5 +24,26 @@ realdelete = no
 nametrans = gmail_folder_to_local_folder
 folderfilter = should_include_folder
 # scert_fingerprint=f3043dd689a2e7dddfbef82703a6c65ea9b634c1
+slcacertfile = ~/.offlineimap/cacert.cert
+cert_fingerprint = 59fe7b688d13a10f3c533ad1b3763a00565e73a6
+
+[Account snaptrip]
+localrepository = snaptrip-Local
+remoterepository = snaptrip-Remote
+status_backend = sqlite
+
+[Repository snaptrip-Local]
+type = Maildir
+localfolders = ~/.mail/snaptrip
+nametrans = local_folder_to_gmail_folder
+
+[Repository snaptrip-Remote]
+maxconnections = 1
+type = Gmail
+remoteuser = will.clarke@snaptrip.comg
+remotepasseval = get_secret_vars('snaptrip_app')
+realdelete = no
+nametrans = gmail_folder_to_local_folder
+folderfilter = should_include_folder
 slcacertfile = ~/.offlineimap/cacert.cert
 cert_fingerprint = 59fe7b688d13a10f3c533ad1b3763a00565e73a6
