@@ -1,6 +1,7 @@
 nvim/.cache
 nvim/bundle
 nvim/.netrwhist
+
 !nvim/bundle/neobundle.vim
 vim/.cache
 vim/bundle
@@ -10,9 +11,9 @@ offlineimap/*
 
 # Way of only selecting one nested dir:
 # - ignore dir -- except dir / file. etc..
-emacs.d/*
-!emacs.d/contrib
-emacs.d/contrib/*
-!emacs.d/contrib/!email
-emacs.d/contrib/!email/*
-!emacs.d/contrib/!email/mu4e
+# emacs.d/*
+# !emacs.d/contrib
+# emacs.d/contrib/*
+# !emacs.d/contrib/!email
+# emacs.d/contrib/!email/*
+# !emacs.d/contrib/!email/mu4e
