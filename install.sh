@@ -207,3 +207,4 @@ brew install homebrew/emacs/gnugo-emacs
 
 brew install offlineimap
 brew install gnutls
+brew install w3m

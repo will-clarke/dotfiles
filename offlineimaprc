@@ -40,7 +40,7 @@ nametrans = local_folder_to_gmail_folder
 [Repository snaptrip-Remote]
 maxconnections = 1
 type = Gmail
-remoteuser = will.clarke@snaptrip.comg
+remoteuser = will.clarke@snaptrip.com
 remotepasseval = get_secret_vars('snaptrip_app')
 realdelete = no
 nametrans = gmail_folder_to_local_folder

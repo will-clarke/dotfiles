@@ -60,6 +60,7 @@
                                       sx
                                       gnugo
                                       evil-rails
+                                      w3m
 
                                       )
 
@@ -242,6 +243,11 @@ before layers configuration."
         mu4e-compose-signature-auto-include nil
         mu4e-view-show-images t
         mu4e-view-show-addresses t
+
+        mu4e-html2text-command "w3m -dump -T text/html"
+        mu4e-view-prefer-html t
+        mu4e-use-fancy-chars t
+
 
         message-send-mail-function 'smtpmail-send-it
         smtpmail-stream-type 'starttls
