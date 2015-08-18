@@ -40,3 +40,11 @@ def get_keychain_pass(account=None, server=None):
     outtext = [l for l in output.splitlines()
                if l.startswith('password: ')][0]
     return re.match(r'password: "(.*)"', outtext).group(1)
+
+
+def get_password(name):
+    try:
+        output = subprocess.check_output(["pass", name])
+        return output.split("\n")[0]
+    except subprocess.CalledProcessError:
+        return None

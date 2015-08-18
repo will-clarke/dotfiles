@@ -18,13 +18,11 @@ nametrans = local_folder_to_gmail_folder
 maxconnections = 1
 type = Gmail
 remoteuser = wmmclarke@gmail.com
-# remotepasseval = get_keychain_pass(account='wmmclarke@gmail.com', server='accounts.google.com')
-remotepasseval = get_secret_vars('wmmclarke_gmail_app')
+remotepasseval = get_password("email/wmmclarke@gmail.com-app")
 realdelete = no
 nametrans = gmail_folder_to_local_folder
 folderfilter = should_include_folder
-# scert_fingerprint=f3043dd689a2e7dddfbef82703a6c65ea9b634c1
-slcacertfile = ~/.offlineimap/cacert.cert
+sslcacertfile = ~/.offlineimap/cacert.cert
 cert_fingerprint = 59fe7b688d13a10f3c533ad1b3763a00565e73a6
 
 [Account snaptrip]
@@ -41,9 +39,8 @@ nametrans = local_folder_to_gmail_folder
 maxconnections = 1
 type = Gmail
 remoteuser = will.clarke@snaptrip.com
-remotepasseval = get_secret_vars('snaptrip_app')
+remotepasseval = get_password("email/will.clarke@snaptrip.com")
 realdelete = no
 nametrans = gmail_folder_to_local_folder
 folderfilter = should_include_folder
-slcacertfile = ~/.offlineimap/cacert.cert
-cert_fingerprint = 59fe7b688d13a10f3c533ad1b3763a00565e73a6
+sslcacertfile = ~/.offlineimap/cacert.cert

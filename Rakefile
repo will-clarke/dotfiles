@@ -70,12 +70,35 @@ class Installer
   end
 
   def link_secrets_from_dropbox
-    dropbox_route = '/Users/wmmc/Dropbox/Dev/secrets'
-    secrets = '/Users/wmmc/.secrets'
-    return unless Dir.exist?(dropbox_route)
-    return if Dir.exist?(secrets)
-    p 'Linking ~/.secrets from dropbox'
-    FileUtils.ln_s(dropbox_route, secrets)
+    dropbox_location = ENV['HOME'] + '/Dropbox/dev/secrets'
+    fail 'Dropbox not linked' unless Dir.exist?(dropbox_location)
+
+    directories, files = Pathname.new(dropbox_location)
+      .children.group_by { |f| f.directory? }
+      .sort_by { |k,v| k ? 0 : 1 }
+      .map{|f| f[1].map {|i| i.to_s } }
+
+    directories.each do |directory|
+      name = directory.split('/').last
+      local_path = ENV['HOME'] + '/.' + name
+      if Dir.exist?(local_path)
+        p "Secret Directory ~/.#{name} already exists"
+      else
+        FileUtils.ln_s(directory, local_path)
+        p "Linking Secret Directory #{name}"
+      end
+    end
+
+    files.reject { |i| i.match(/DS_Store|gitconfig/) }.each do |file|
+      name = file.split('/').last
+      local_path = ENV['HOME'] + '/.' + name
+      if File.exist?(local_path)
+        p "Secret File ~/.#{name} already exists"
+      else
+        FileUtils.ln_s(file, local_path)
+        p "Linking Secret File #{name}"
+      end
+    end
   end
 
   def overwrite

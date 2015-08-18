@@ -238,7 +238,7 @@ before layers configuration."
         mu4e-maildir "~/.mail"
         mu4e-trash-folder "/trash"
         mu4e-refile-folder "/archive"
-        mu4e-get-mail-command "offlineimapg"
+        mu4e-get-mail-command "offlineimap"
         mu4e-update-interval nil
         mu4e-compose-signature-auto-include nil
         mu4e-view-show-images t
