@@ -1,0 +1,114 @@
+Create Both
+Expunge Both
+SyncState *
+
+################################################################################
+##   Gmail                                                                    ##
+################################################################################
+
+
+IMAPAccount gmail
+Host imap.gmail.com
+User wmmclarke@gmail.com
+PassCmd "gpg --passphrase \"`security find-generic-password -a megalolz -s megalolz -w`\"  -d ~/.password-store/email/wmmclarke@gmail.com-app.gpg"
+UseIMAPS yes
+CertificateFile ~/.certificates/Equifax.crt
+
+IMAPStore gmail-remote
+Account gmail
+
+MaildirStore gmail-local
+Path ~/.mail/gmail/
+Inbox ~/.mail/gmail/Inbox
+
+Channel gmail-Inbox
+Master :gmail-remote:[Gmail]/Inbox
+Slave :gmail-local:Inbox
+
+Channel gmail-Drafts
+Master :gmail-remote:[Gmail]/Drafts
+Slave :gmail-local:Drafts
+
+Channel gmail-Sent
+Master ":gmail-remote:[Gmail]/Sent Mail"
+Slave :gmail-local:Sent
+
+Channel gmail-Trash
+Master :gmail-remote:[Gmail]/Trash
+Slave :gmail-local:Trash
+
+Channel gmail-Archive
+Master ":gmail-remote:[Gmail]/All Mail"
+Slave :gmail-local:Archive
+
+Channel gmail-Later
+Master :gmail-remote:[Mailbox]/Later
+Slave :gmail-local:Later
+
+Group gmail
+Channel gmail-Inbox
+Channel gmail-Drafts
+Channel gmail-Sent
+Channel gmail-Trash
+Channel gmail-Archive
+Channel gmail-Later
+
+
+################################################################################
+##   snaptrip                                                                 ##
+################################################################################
+
+IMAPAccount snaptrip
+Host imap.gmail.com
+User will.clarke@snaptrip.com
+PassCmd "gpg --passphrase \"`security find-generic-password -a megalolz -s megalolz -w`\"  -d ~/.password-store/email/will.clarke@snaptrip.com.gpg"
+UseIMAPS yes
+CertificateFile ~/.certificates/Equifax.crt
+
+IMAPStore snaptrip-remote
+Account snaptrip
+
+MaildirStore snaptrip-local
+Path ~/.mail/snaptrip/
+Inbox ~/.mail/snaptrip/Inbox
+
+Channel snaptrip-Inbox
+Master :snaptrip-remote:[Gmail]/Inbox
+Slave :snaptrip-local:Inbox
+
+Channel snaptrip-Drafts
+Master :snaptrip-remote:[Gmail]/Drafts
+Slave :snaptrip-local:Drafts
+
+Channel snaptrip-Sent
+Master ":snaptrip-remote:[Gmail]/Sent Mail"
+Slave :snaptrip-local:Sent
+
+Channel snaptrip-Trash
+Master :snaptrip-remote:[Gmail]/Trash
+Slave :snaptrip-local:Trash
+
+Channel snaptrip-Archive
+Master ":snaptrip-remote:[Gmail]/All Mail"
+Slave :snaptrip-local:Archive
+
+Channel snaptrip-Later
+Master :snaptrip-remote:[Mailbox]/Later
+Slave :snaptrip-local:Later
+
+
+Group snaptrip
+Channel snaptrip-Inbox
+Channel snaptrip-Drafts
+Channel snaptrip-Sent
+Channel snaptrip-Trash
+Channel snaptrip-Archive
+Channel snaptrip-Later
+
+##################
+# Inboxes        #
+##################
+
+Group Inboxes
+Channel gmail-Inbox
+Channel snaptrip-Inbox

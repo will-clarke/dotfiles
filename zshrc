@@ -1,6 +1,6 @@
-if [ -f ~/.secrets/secrets ]
+if [ -f ~/.secrets ]
 then
-  source ~/.secrets/secrets
+  source ~/.secrets
 fi
 
 # use vim as the visual editor

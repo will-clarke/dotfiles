@@ -61,6 +61,7 @@
                                       gnugo
                                       evil-rails
                                       w3m
+                                      ;; auth-password-store
 
                                       )
 
@@ -215,18 +216,21 @@ before layers configuration."
   ;; EMAIL!
   (setq mu4e-account-alist
         '(("gmail"
-           ;; Under each account, set the account-specific variables you want.
            (mu4e-sent-messages-behavior delete)
-           (mu4e-sent-folder "/wmmclarke/sent")
-           (mu4e-drafts-folder "/wmmclarke/drafts")
-           ;; (mu4e-sent-folder "/gmail/[Gmail]/.Sent Mail")
-           ;; (mu4e-drafts-folder "/gmail/[Gmail]/.Drafts")
+           (mu4e-sent-folder "/gmail/Sent")
+           (mu4e-refile-folder  "/gmail/Archive")
+           (mu4e-trash-folder  "/gmail/Trash")
+           (mu4e-follow-up-folder  "/gmail/Later")
+           (mu4e-drafts-folder "/gmail/Drafts")
            (user-mail-address "wmmclarke@gmail.com")
            (user-full-name "William"))
           ("snaptrip"
-           (mu4e-sent-messages-behavior sent)
-           (mu4e-sent-folder "/snaptrip/sents")
-           (mu4e-drafts-folder "/snaptrip/drafts")
+           (mu4e-sent-messages-behavior delete)
+           (mu4e-sent-folder "/snaptrip/Sent")
+           (mu4e-refile-folder  "/snaptrip/Archive")
+           (mu4e-trash-folder  "/snaptrip/Trash")
+           (mu4e-follow-up-folder  "/snaptrip/Later")
+           (mu4e-drafts-folder "/snaptrip/Drafts")
            (user-mail-address "will.clarke@snaptrip.com")
            (user-full-name "Will Clarke"))))
   (mu4e/mail-account-reset)
@@ -238,8 +242,10 @@ before layers configuration."
         mu4e-maildir "~/.mail"
         mu4e-trash-folder "/trash"
         mu4e-refile-folder "/archive"
-        mu4e-get-mail-command "offlineimap"
-        mu4e-update-interval nil
+
+        mu4e-get-mail-command "mbsync -a"
+        ;; 900 second = 15 minutes
+        mu4e-update-interval 900
         mu4e-compose-signature-auto-include nil
         mu4e-view-show-images t
         mu4e-view-show-addresses t
@@ -261,8 +267,13 @@ before layers configuration."
 
 ;;; Mail directory shortcuts
   (setq mu4e-maildir-shortcuts
-        '(("/gmail/INBOX" . ?g)
-          ("/snaptrip/INBOX" . ?s)))
+          '(("/gmail/Inbox" . ?g)
+            ("/snaptrip/Inbox" . ?s)
+            ("/gmail/Inbox" . ?i)))
+
+  (when (fboundp 'imagemagick-register-types)
+    (imagemagick-register-types))
+
 
 ;;; Bookmarks
   (setq mu4e-bookmarks

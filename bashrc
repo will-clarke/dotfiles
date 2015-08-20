@@ -1,8 +1,8 @@
 source ~/.aliases
 
-if [ -f ~/.secrets/secrets ]
+if [ -f ~/.secrets]
 then
-  source ~/.secrets/secrets
+  source ~/.secrets
 fi
 
 source /usr/local/etc/bash_completion.d/password-store

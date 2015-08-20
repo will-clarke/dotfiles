@@ -209,5 +209,10 @@ brew install offlineimap
 brew install gnutls
 brew install w3m
 
+brew install msmtp
+brew install isync
+brew install openssl
+brew link openssl --force
+
 
 brew install pass

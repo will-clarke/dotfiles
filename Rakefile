@@ -1,4 +1,5 @@
 require 'fileutils'
+require 'pathname'
 
 # Installs / Uninstalls / Backs Up all dotfiles
 class Installer
@@ -73,7 +74,7 @@ class Installer
     dropbox_location = ENV['HOME'] + '/Dropbox/dev/secrets'
     fail 'Dropbox not linked' unless Dir.exist?(dropbox_location)
 
-    directories, files = Pathname.new(dropbox_location)
+    directories, files = ::Pathname.new(dropbox_location)
       .children.group_by { |f| f.directory? }
       .sort_by { |k,v| k ? 0 : 1 }
       .map{|f| f[1].map {|i| i.to_s } }

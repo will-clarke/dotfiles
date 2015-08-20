@@ -23,7 +23,7 @@
   (use-package mu4e
     :init
     (progn
-      (evil-leader/set-key "a M" 'mu4e)
+      (evil-leader/set-key "a m" 'mu4e)
       (global-set-key (kbd "C-x m") 'mu4e-compose-new))
     :config
     (progn
