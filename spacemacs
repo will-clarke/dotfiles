@@ -269,7 +269,8 @@ before layers configuration."
   (setq mu4e-maildir-shortcuts
           '(("/gmail/Inbox" . ?g)
             ("/snaptrip/Inbox" . ?s)
-            ("/gmail/Inbox" . ?i)))
+            ("/snaptrip/Later" . ?w)
+            ("/gmail/Later" . ?l)))
 
   (when (fboundp 'imagemagick-register-types)
     (imagemagick-register-types))
@@ -279,6 +280,8 @@ before layers configuration."
   (setq mu4e-bookmarks
         `(("flag:unread AND NOT flag:trashed" "Unread messages" ?u)
           ("date:today..now" "Today's messages" ?t)
+          ("date:today..now AND maildir:/snaptrip/Archive" "Snaptrip Today" ?s)
+          ("date:today..now AND maildir:/gmail/Archive" "Gmail Today" ?g)
           ("date:7d..now" "Last 7 days" ?w)
           ("mime:image/*" "Messages with images" ?p)
           (,(mapconcat 'identity

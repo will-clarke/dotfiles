@@ -22,7 +22,7 @@ Path ~/.mail/gmail/
 Inbox ~/.mail/gmail/Inbox
 
 Channel gmail-Inbox
-Master :gmail-remote:[Gmail]/Inbox
+Master :gmail-remote:Inbox
 Slave :gmail-local:Inbox
 
 Channel gmail-Drafts
@@ -73,7 +73,7 @@ Path ~/.mail/snaptrip/
 Inbox ~/.mail/snaptrip/Inbox
 
 Channel snaptrip-Inbox
-Master :snaptrip-remote:[Gmail]/Inbox
+Master :snaptrip-remote:Inbox
 Slave :snaptrip-local:Inbox
 
 Channel snaptrip-Drafts
