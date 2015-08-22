@@ -243,7 +243,7 @@ before layers configuration."
         mu4e-trash-folder "/trash"
         mu4e-refile-folder "/archive"
 
-        mu4e-get-mail-command "mbsync -a"
+        mu4e-get-mail-command "mbsync Inboxes; mbsync -a"
         ;; 900 second = 15 minutes
         mu4e-update-interval 900
         mu4e-compose-signature-auto-include nil
