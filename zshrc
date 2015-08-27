@@ -15,21 +15,7 @@ if which rbenv &>/dev/null ; then
   eval "$(rbenv init - --no-rehash)"
 fi
 
-source ~/.zsh/git-prompt/gitstatus.sh
-ZSH_THEME_GIT_PROMPT_CACHE=""
-
-# modify the prompt to contain git branch name if applicable
-git_prompt_info() {
-  ref=$(git symbolic-ref HEAD 2> /dev/null)
-  if [[ -n $ref ]]; then
-    echo " %{$fg_bold[magenta]%}${ref#refs/heads/}%{$reset_color%}"
-  fi
-}
-setopt promptsubst
-# export PS1='${SSH_CONNECTION+"%{$fg_bold[green]%}%n@%m:"}%{$fg_bold[blue]%}%c%{$reset_color%}$(git_prompt_info) %# '
-export PS1='${SSH_CONNECTION+"%{$fg_bold[green]%}%n@%m:"}%{$fg_bold[blue]%}%c%{$reset_color%}$(git_super_status) %# '
-
-
+export PS1="%~ $  "
 
 # load our own completion functions
 fpath=(~/.zsh/completion $fpath)
@@ -161,10 +147,6 @@ bindkey '^Z' fancy-ctrl-z
 # export DYLD_LIBRARY_PATH=/usr/local/lib/rustlib/x86_64-apple-darwin/lib
 # export RUST_SRC_PATH=/usr/local/Cellar/rust/1.0.0-beta
 # export RUST_SRC_PATH=$HOME/rust/src #should be default now..
-if [ -f /usr/local/Cellar/todo-txt/2.10/etc/bash_completion.d/todo_completion ]
-then
-source /usr/local/Cellar/todo-txt/2.10/etc/bash_completion.d/todo_completion complete -F _todo t
-fi
 
 if [ -f ~/.ssh/id_rsa ] && [ -f ~/.ssh/id_rsa.pub ]; then
   export SSH_KEYS=https://github.com/
