@@ -34,7 +34,11 @@
      osx
      org
      perspectives
-     shell
+     (shell :variables
+            shell-default-term-shell "/bin/bash"
+            shell-default-shell 'shell
+            shell-default-position 'bottom
+            shell-default-height 50)
      syntax-checking
      version-control
 
@@ -45,9 +49,9 @@
      emoji
      gtags
      xkcd
+     scala
 
      mu4e
-     offlineimap
 
      )
    ;; List of additional packages that will be installed without being
