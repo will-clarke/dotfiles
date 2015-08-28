@@ -188,36 +188,22 @@ before layers configuration."
   )
 
 (defun dotspacemacs/config ()
-  ;; (require 'ruby-hash-syntax)
 
+  ;; Mac
   (setq vc-follow-symlinks t)
   (setq mac-option-modifier 'super)
   (setq mac-command-modifier 'meta)
 
 
-  ;; (eval-after-load 'gnugo
-  ;;   '(define-key evil-normal-state-map "\C-m" nil)
-  ;;   ;; '(define-key gnugo-board-mode-map (kbd "RET") 'gnugo-move)
-  ;;   )
-
-  ;; (eval-after-load 'gnugo
-  ;;   '(define-key gnugo-board-mode-map "\C-m" 'gnugo-move)
-  ;;   ;; '(local-set-key (kbd "RET") 'gnugo-move)
-  ;;   ;; '(global-set-key (kbd "RET") 'gnugo-move)
-  ;;   )
-
-
+  ;; Twitter
   (setq twittering-use-master-password t)
 
+  ;; Go
   (evil-declare-key 'motion gnugo-board-mode-map (kbd "<return>") 'gnugo-move)
   (evil-declare-key 'motion gnugo-board-mode-map (kbd "RET") 'gnugo-move)
-
   (evil-declare-key 'motion gnugo-board-mode-map (kbd "q") 'gnugo-quit)
 
-
-
-
-  ;; EMAIL!
+  ;; Email
   (setq mu4e-account-alist
         '(("gmail"
            (mu4e-sent-messages-behavior delete)
@@ -258,16 +244,26 @@ before layers configuration."
         mu4e-view-prefer-html t
         mu4e-use-fancy-chars t
 
+        ;; use msmtp
+        message-send-mail-function 'message-send-mail-with-sendmail
+        sendmail-program "/usr/local/bin/msmtp"
+        ;; tell msmtp to choose the SMTP server according to the from field in the outgoing email
+        message-sendmail-extra-arguments '("--read-envelope-from")
+        message-sendmail-f-is-evil 't
 
-        message-send-mail-function 'smtpmail-send-it
-        smtpmail-stream-type 'starttls
-        smtpmail-default-smtp-server "smtp.gmail.com"
-        smtpmail-smtp-server "smtp.gmail.com"
-        smtpmail-smtp-service 587
+        ;; message-kill-buffer-on-exit 't
 
-        ;; smtpmail-smtp-user "calum0macrae@gmail.com"
-        ;; (setq starttls-extra-arguments '("--x509cafile" "/usr/pkg/share/ncat/ca-bundle.crt"))
+        ;; message-send-mail-function 'smtpmail-send-it
+        ;; smtpmail-stream-type 'starttls
+        ;; smtpmail-default-smtp-server "smtp.gmail.com"
+        ;; smtpmail-smtp-server "smtp.gmail.com"
+        ;; smtpmail-smtp-service 587
+
         )
+
+  ;; (add-hook 'mail-setup-hook
+  ;;           (lambda ()
+  ;;             (add-hook 'mail-send-actions 'kill-this-buffer)))
 
 ;;; Mail directory shortcuts
   (setq mu4e-maildir-shortcuts
@@ -294,9 +290,6 @@ before layers configuration."
                           (concat "maildir:" (car maildir)))
                         mu4e-maildir-shortcuts) " OR ")
            "All inboxes" ?i)))
-
-
-
 
   ;; (package-install ())
   (prefer-coding-system 'utf-8)
