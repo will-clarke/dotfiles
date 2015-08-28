@@ -225,9 +225,7 @@ before layers configuration."
            (user-full-name "Will Clarke"))))
   (mu4e/mail-account-reset)
 
-  (require 'smtpmail)
-  (require 'starttls)
-;;; Set up some common mu4e variables
+  ;; (require 'starttls)
   (setq
         mu4e-maildir "~/.mail"
         mu4e-trash-folder "/trash"
@@ -250,38 +248,25 @@ before layers configuration."
         ;; tell msmtp to choose the SMTP server according to the from field in the outgoing email
         message-sendmail-extra-arguments '("--read-envelope-from")
         message-sendmail-f-is-evil 't
-
-        ;; message-kill-buffer-on-exit 't
-
-        ;; message-send-mail-function 'smtpmail-send-it
-        ;; smtpmail-stream-type 'starttls
-        ;; smtpmail-default-smtp-server "smtp.gmail.com"
-        ;; smtpmail-smtp-server "smtp.gmail.com"
-        ;; smtpmail-smtp-service 587
-
         )
 
-  ;; (add-hook 'mail-setup-hook
-  ;;           (lambda ()
-  ;;             (add-hook 'mail-send-actions 'kill-this-buffer)))
+  (when (fboundp 'imagemagick-register-types)
+    (imagemagick-register-types))
 
-;;; Mail directory shortcuts
   (setq mu4e-maildir-shortcuts
           '(("/gmail/Inbox" . ?g)
             ("/snaptrip/Inbox" . ?s)
             ("/snaptrip/Later" . ?w)
             ("/gmail/Later" . ?l)))
 
-  (when (fboundp 'imagemagick-register-types)
-    (imagemagick-register-types))
-
-
-;;; Bookmarks
   (setq mu4e-bookmarks
-        `(("flag:unread AND NOT flag:trashed" "Unread messages" ?u)
+        `(
+          ("maildir:/gmail/Inbox OR maildir:/snaptrip/Inbox" "All Inboxes" ?i)
+          ("maildir:/gmail/Later OR maildir:/snaptrip/Later" "All Later" ?l)
           ("date:today..now" "Today's messages" ?t)
           ("date:today..now AND maildir:/snaptrip/Archive" "Snaptrip Today" ?s)
           ("date:today..now AND maildir:/gmail/Archive" "Gmail Today" ?g)
+          ("flag:unread AND NOT flag:trashed" "Unread messages" ?u)
           ("date:7d..now" "Last 7 days" ?w)
           ("mime:image/*" "Messages with images" ?p)
           (,(mapconcat 'identity
@@ -289,9 +274,8 @@ before layers configuration."
                         (lambda (maildir)
                           (concat "maildir:" (car maildir)))
                         mu4e-maildir-shortcuts) " OR ")
-           "All inboxes" ?i)))
+           "All maildirs with shortcuts" ?a)))
 
-  ;; (package-install ())
   (prefer-coding-system 'utf-8)
   (setq system-time-locale "en_GB" )
 
