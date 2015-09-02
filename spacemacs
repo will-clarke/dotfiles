@@ -203,6 +203,10 @@ before layers configuration."
   (evil-declare-key 'motion gnugo-board-mode-map (kbd "RET") 'gnugo-move)
   (evil-declare-key 'motion gnugo-board-mode-map (kbd "q") 'gnugo-quit)
 
+  ;; Eshell aliases
+  (require 'em-alias)
+  (setq eshell-aliases-file "~/.emacs.d/aliases")
+
   ;; Email
   (setq mu4e-account-alist
         '(("gmail"

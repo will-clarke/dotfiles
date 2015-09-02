@@ -1,0 +1,8 @@
+alias be bundle exec $*
+alias zc zeus console
+alias zs zeus server
+alias gs git status
+alias gco git checkout
+alias ga. git add .
+alias ga git add $*
+alias gd git diff $*
