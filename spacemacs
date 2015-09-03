@@ -1,8 +1,3 @@
-;; -*- mode: emacs-lisp -*-
-;; This file is loaded by Spacemacs at startup.
-;; It must be stored in your home directory.
-
-
 (defun dotspacemacs/layers ()
   "Configuration Layers declaration."
   (setq-default
@@ -36,7 +31,7 @@
      perspectives
      (shell :variables
             shell-default-term-shell "/bin/bash"
-            shell-default-shell 'shell
+            shell-default-shell 'eshell
             shell-default-position 'bottom
             shell-default-height 50)
      syntax-checking
@@ -50,6 +45,7 @@
      gtags
      xkcd
      scala
+     rust
 
      mu4e
 
@@ -194,6 +190,7 @@ before layers configuration."
   (setq mac-option-modifier 'super)
   (setq mac-command-modifier 'meta)
 
+  (eval-after-load 'tramp '(setenv "SHELL" "/bin/bash"))
 
   ;; Twitter
   (setq twittering-use-master-password t)

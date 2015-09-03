@@ -680,3 +680,5 @@ inoremap <leader>fs <C-O>:update<CR><ESC>
 " Rust Racer:
 " In insert mode use C-x-C-o to search for completions
 " In normal mode type 'gd' to go to a definition
+"
+nnoremap <leader>qq :q<CR>

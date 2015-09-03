@@ -11,8 +11,7 @@ alias lh='ls -Alh'
 # alias -g M='| less'
 # alias -g L='| wc -l'
 # alias -g ONE="| awk '{ print \$1}'"
-alias e="$EDITOR"
-alias v=$EDITOR
+alias v=vim
 alias n='nvim'
 alias rmrf="rm -rf"
 
