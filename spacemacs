@@ -357,6 +357,8 @@ before layers configuration."
       (define-key evil-insert-state-map "\C-e" 'end-of-line)
       (define-key evil-visual-state-map "\C-e" 'end-of-line)
       (define-key evil-normal-state-map "\C-e" 'end-of-line)
+      (define-key evil-normal-state-map "Y" "y$")
+
 
       (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
