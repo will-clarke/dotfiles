@@ -5,7 +5,8 @@ require 'pathname'
 class Installer
   EXCLUDED_FILES = [
     'Rakefile', 'readme.md', 'README.md',
-    'setup_script_from_thoughtbot', 'install.sh'
+    'setup_script_from_thoughtbot', 'install.sh',
+    'applications',
   ]
 
   def repo(name)
