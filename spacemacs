@@ -47,7 +47,7 @@
      scala
      rust
      (python :variables
-             python-enable-yapf-format-on-save to t)
+             python-enable-yapf-format-on-save t)
 
      mu4e
 

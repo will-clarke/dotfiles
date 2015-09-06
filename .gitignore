@@ -6,9 +6,6 @@ nvim/.netrwhist
 vim/.cache
 vim/bundle
 
-offlineimap/*
-!offlineimap/offlineimap.py
-
 # Way of only selecting one nested dir:
 # - ignore dir -- except dir / file. etc..
 # emacs.d/*
