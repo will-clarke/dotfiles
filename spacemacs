@@ -202,6 +202,14 @@ before layers configuration."
   (evil-declare-key 'motion gnugo-board-mode-map (kbd "RET") 'gnugo-move)
   (evil-declare-key 'motion gnugo-board-mode-map (kbd "q") 'gnugo-quit)
 
+  ;; create loads of shells
+  (defun make-shell (name)
+    "Create a shell buffer named NAME."
+    (interactive "sName: ")
+    (setq name (concat "$" name))
+    (eshell)
+    (rename-buffer name))
+
   ;; Eshell aliases
   (require 'em-alias)
   (setq eshell-aliases-file "~/.emacs.d/aliases")

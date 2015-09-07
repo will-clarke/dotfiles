@@ -14,13 +14,13 @@ set -e
 
 # shellcheck disable=SC2016
 
-case "$SHELL" in
-  */zsh) : ;;
-  *)
-    fancy_echo "Changing your shell to zsh ..."
-      chsh -s "$(which zsh)"
-    ;;
-esac
+# case "$SHELL" in
+#   */zsh) : ;;
+#   *)
+#     fancy_echo "Changing your shell to zsh ..."
+#       chsh -s "$(which zsh)"
+#     ;;
+# esac
 
 brew_install_or_upgrade() {
   if brew_is_installed "$1"; then
