@@ -39,6 +39,12 @@ class Installer
     end
   end
 
+  def location_hash
+    {
+      'applications/karabina/private.xml' => '~/ApplicationSupport'
+    }
+  end
+
   def create_backup_folder(name)
     file_path = File.join backup_folder.first.to_s, name
     directory = File.directory?(destination(name))
