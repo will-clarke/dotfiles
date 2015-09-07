@@ -1,4 +1,6 @@
 # Unix
+alias git=hub
+
 alias tlf="tail -f"
 alias ln='ln -v'
 alias mkdir='mkdir -p'

@@ -4,7 +4,18 @@ set -e
 
 fancy_echo() {
     local fmt="$1"; shift
-    printf "\nfmts\n" "$@"
+    printf "\n$fmt\n" "$@"
+}
+
+install_homebrew() {
+    if ! command -v brew >/dev/null; then
+        fancy_echo "Installing Homebrew ..."
+        curl -fsS \
+             'https://raw.githubusercontent.com/Homebrew/install/master/install' | ruby
+        export PATH="/usr/local/bin:$PATH"
+    else
+        fancy_echo "You've already got Homebrew..."
+    fi
 }
 
 brew_install_or_upgrade() {
@@ -50,17 +61,10 @@ gem_install_or_update() {
     fi
 }
 
-if ! command -v brew >/dev/null; then
-    fancy_echo "Installing Homebrew ..."
-    curl -fsS \
-         'https://raw.githubusercontent.com/Homebrew/install/master/install' | ruby
-    export PATH="/usr/local/bin:$PATH"
-else
-    fancy_echo "Homebrew already installed. Skipping ..."
-fi
 
 ask_to_install() {
-    fancy_echo "Do you want to install $1? (yes/no): "
+    fancy_echo "Do you want to install $1?
+[yes/no]: "
     read resp
     if [ "$resp" = "y" ] || [ "$resp" = "yes" ]
     then
@@ -75,6 +79,10 @@ ask_to_install() {
 install_essentials() {
     brew_install_or_upgrade 'git'
     brew_install_or_upgrade 'hub'
+    git clone "https://github.com/wmmc/dotfiles"
+    cd dotfiles
+    rake install
+    cd $HOME
 }
 
 
@@ -188,13 +196,13 @@ install_everything() {
     install_emacs_extensions
 }
 
-ask_to_install "essentials" install_essentials
-
 intro() {
     fancy_echo "Hey!
-Nice job installing this!
+You're pretty chilled. Nice work. I can see you've been working out...
 
-First question: do you want to install an updated new version of ruby?"
+First question:
+Do you want to install an updated new version of ruby?
+[yes/no]"
     read resp
     if [ "$resp" = "y" ] || [ "$resp" = "yes" ]; then
         should_update_ruby_version=true
@@ -205,7 +213,8 @@ First question: do you want to install an updated new version of ruby?"
 }
 
 should_we_install_everything() {
-    fancy_echo "Should we just install everything?"
+    fancy_echo "Should we just install everything else?
+[yes/no]"
     read resp
     if [ "$resp" = "y" ] || [ "$resp" = "yes" ]; then
         fancy_echo "Okay. We'll update it all!"
@@ -215,9 +224,10 @@ should_we_install_everything() {
     fi
 }
 
+cd $HOME
 intro
 should_we_install_everything
-ask_to_install "essentials"
+install_essentials
 ask_to_install "db"
 ask_to_install "unix_stuff"
 ask_to_install "vim"
