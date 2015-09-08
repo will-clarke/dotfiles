@@ -141,12 +141,19 @@ update_ruby_version() {
     rbenv shell "$ruby_version"
 }
 
+install_scala() {
+    brew_install_or_upgrade 'typesafe-activator'
+}
+
 cask() {
     brew cask install "$1"
 }
 
 install_comfy_setup() {
     brew_install_or_upgrade 'caskroom/cask/brew-cask'
+    cask 'postgres'
+    cask 'dash'
+    cask 'imageoptim'
     cask '1password'
     cask 'flux'
     cask 'caffeine'
@@ -179,6 +186,7 @@ install_emacs_extensions() {
     brew_install_or_upgrade 'homebrew/emacs/gnugo-emacs'
     brew_install_or_upgrade 'libyaml'
     # brew_install_or_upgrade 'gnutls'
+    brew_install_or_upgrade 'isync'
     brew_install_or_upgrade 'w3m'
     brew_install_or_upgrade 'msmtp'
 }
@@ -190,6 +198,7 @@ install_everything() {
     install_vim
     install_javascript_stuff
     install_ruby
+    install_scala
     install_comfy_setup
     install_totally_pointless_stuff
     install_emacs
@@ -233,6 +242,7 @@ ask_to_install "unix_stuff"
 ask_to_install "vim"
 ask_to_install "javascript_stuff"
 ask_to_install "ruby"
+ask_to_install "scala"
 ask_to_install "comfy_setup"
 ask_to_install "totally_pointless_stuff"
 ask_to_install "emacs"

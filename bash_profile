@@ -9,3 +9,5 @@ fi
 if [[ $- == *i* && -f ~/.bashrc ]]; then
     . ~/.bashrc
 fi
+
+eval "$(rbenv init -)"
