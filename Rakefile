@@ -27,6 +27,7 @@ class Installer
       end
     end
     Dropbox.new.link_secrets_from_dropbox
+    Applications.new.link_source
   end
 
   def backup(file_names = dotfiles)
@@ -71,6 +72,7 @@ class Installer
       p "REMOVING: #{destination file}]"
     end
     Dropbox.new.unlink_secrets_from_dropbox
+    Applications.new.delete_source
   end
 
   def overwrite
@@ -108,8 +110,8 @@ class Dropbox
     dropbox_location = "#{ENV['HOME']}/Dropbox/dev/secrets"
     (p 'Error:   Dropbox not linked' && return) unless Dir.exist?(dropbox_location)
     ::Pathname.new(dropbox_location).children
-      .reject { |i| i.to_s =~ /DS_Store|gitconfig/ }
-      .each do |source|
+    .reject { |i| i.to_s =~ /DS_Store|gitconfig/ }
+    .each do |source|
       destination = "#{ENV['HOME']}/.#{source.split.last}"
       block.call source, destination
     end
@@ -121,21 +123,51 @@ class Applications
   def location_hash
     {
       'applications/karabiner/private.xml' =>
-        '~/Library/Application Support/Karabiner/private.xml'
+        "#{ENV['HOME']}/Library/Application Support/Karabiner/private.xml"
     }
   end
 
-  def link_location_hash
+  def link_source
+    each_source_and_destination do |source, destination|
+      if source.exist? && !destination.exist?
+        FileUtils.cp source, destination
+        p "LINKING:  #{destination} [SECRET]"
+      elsif destination.exist?
+        p "Exists:   #{destination}"
+      end
+    end
+  end
+
+  def ask_to_remove file
+    p "Remove #{file}?"
+    p '[yes/no/diff]'
+    overwrite = STDIN.gets.chomp
+    if overwrite == 'y' || overwrite == 'yes'
+      p "REMOVING: #{file}"
+      FileUtils.rm file
+    elsif overwrite == 'diff'
+      p file.read
+      ask_to_remove file
+    else
+      p "Not overwriting #{file}"
+    end
+  end
+
+  def delete_source
+    each_source_and_destination do |source, destination|
+      if destination.exist?
+        p ''
+        p "#{destination} exists."
+        ask_to_remove destination
+      end
+    end
+  end
+
+  def each_source_and_destination(&block)
     location_hash.each do |from, to|
       source = ::Pathname.new(from)
       destination = ::Pathname.new(to)
-      if source.exist? && !destination.exist?
-        FileUtils.cp source, destination
-      elsif destination.exist?
-        p "Exists:  #{destination}"
-      else
-        p 'here. todo'
-      end
+      block.call source, destination
     end
   end
 end

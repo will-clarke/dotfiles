@@ -168,6 +168,7 @@ install_comfy_setup() {
     cask 'karabiner'
     cask 'growlnotify'
     cask 'iterm2'
+    bash ~/dotfiles/applications/karabiner/karabiner-import.sh
 }
 
 install_totally_pointless_stuff() {
