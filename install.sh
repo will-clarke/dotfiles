@@ -61,7 +61,6 @@ gem_install_or_update() {
     fi
 }
 
-
 ask_to_install() {
     fancy_echo "Do you want to install $1?
 [yes/no]: "
@@ -75,7 +74,6 @@ ask_to_install() {
     fi
 }
 
-
 install_essentials() {
     brew_install_or_upgrade 'git'
     brew_install_or_upgrade 'hub'
@@ -84,7 +82,6 @@ install_essentials() {
     rake install
     cd $HOME
 }
-
 
 install_db() {
     brew_install_or_upgrade 'postgres'
@@ -118,8 +115,16 @@ install_ruby() {
     brew_install_or_upgrade 'rbenv'
     brew_install_or_upgrade 'ruby-build'
     echo 'eval "$(rbenv init -)"' >> ~/.bash_profile
-    if [ "$should_update_ruby_version" = "true" ]; then
+
+    ruby_version="$(curl -sSL http://ruby.thoughtbot.com/latest)"
+    fancy_echo "Do you want to update Ruby to version $ruby_version
+    [yes/no]"
+    read resp
+    if [ "$resp" = "y" ] || [ "$resp" = "yes" ]; then
+        fancy_echo "Updating ruby versions"
         update_ruby_version
+    else
+        fancy_echo "Okay. We won't update Ruby"
     fi
     update_gems
 }
@@ -210,15 +215,6 @@ intro() {
 You're pretty chilled. Nice work. I can see you've been working out...
 
 First question:
-Do you want to install an updated new version of ruby?
-[yes/no]"
-    read resp
-    if [ "$resp" = "y" ] || [ "$resp" = "yes" ]; then
-        should_update_ruby_version=true
-        fancy_echo "Cool. We'll update ruby versions"
-    else
-        fancy_echo "Okay. We'll skip updating ruby versions"
-    fi
 }
 
 should_we_install_everything() {

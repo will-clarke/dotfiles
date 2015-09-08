@@ -6,7 +6,7 @@ class Installer
   EXCLUDED_FILES = [
     'Rakefile', 'readme.md', 'README.md',
     'setup_script_from_thoughtbot', 'install.sh',
-    'applications',
+    'applications'
   ]
 
   def repo(name)
@@ -20,13 +20,13 @@ class Installer
   def install
     dotfiles.each do |name|
       if File.exist?(destination(name))
-        p "#{destination name} exists"
+        p "Exists:   #{destination name}"
       else
-        p "Linking #{destination(name)}"
+        p "LINKING:  #{destination(name)}"
         link(repo(name), destination(name))
       end
     end
-    link_secrets_from_dropbox
+    Dropbox.new.link_secrets_from_dropbox
   end
 
   def backup(file_names = dotfiles)
@@ -37,12 +37,6 @@ class Installer
         FileUtils.cp destination(name), file_path if file_exists
       end
     end
-  end
-
-  def location_hash
-    {
-      'applications/karabina/private.xml' => '~/ApplicationSupport'
-    }
   end
 
   def create_backup_folder(name)
@@ -74,45 +68,75 @@ class Installer
     dotfiles.each do |file|
       backup [destination(file)]
       FileUtils.rm_rf destination file
+      p "REMOVING: #{destination file}]"
     end
-  end
-
-  def link_secrets_from_dropbox
-    dropbox_location = ENV['HOME'] + '/Dropbox/dev/secrets'
-    fail 'Dropbox not linked' unless Dir.exist?(dropbox_location)
-
-    directories, files = ::Pathname.new(dropbox_location)
-      .children.group_by { |f| f.directory? }
-      .sort_by { |k,v| k ? 0 : 1 }
-      .map{|f| f[1].map {|i| i.to_s } }
-
-    directories.each do |directory|
-      name = directory.split('/').last
-      local_path = ENV['HOME'] + '/.' + name
-      if Dir.exist?(local_path)
-        p "Secret Directory ~/.#{name} already exists"
-      else
-        FileUtils.ln_s(directory, local_path)
-        p "Linking Secret Directory #{name}"
-      end
-    end
-
-    files.reject { |i| i.match(/DS_Store|gitconfig/) }.each do |file|
-      name = file.split('/').last
-      local_path = ENV['HOME'] + '/.' + name
-      if File.exist?(local_path)
-        p "Secret File ~/.#{name} already exists"
-      else
-        FileUtils.ln_s(file, local_path)
-        p "Linking Secret File #{name}"
-      end
-    end
+    Dropbox.new.unlink_secrets_from_dropbox
   end
 
   def overwrite
     backup
     uninstall
     install
+  end
+end
+
+# link from ~/Dropbox/dev/secrets to ~/.secret_file
+class Dropbox
+  def link_secrets_from_dropbox
+    each_secret_file_and_destination do |secret_file, destination|
+      if ::Pathname.new(destination).exist?
+        p "Exists:   #{destination} [SECRET]"
+      else
+        FileUtils.ln_s(secret_file, destination)
+        p "LINKING:  #{destination} [SECRET]"
+      end
+    end
+  end
+
+  def unlink_secrets_from_dropbox
+    each_secret_file_and_destination do |secret_file, destination|
+      if ::Pathname.new(destination).exist?
+        FileUtils.rm_rf(destination)
+        p "REMOVING: #{destination} [SECRET]"
+      else
+        p "Removed:  #{destination} [SECRET]"
+      end
+    end
+  end
+
+  def each_secret_file_and_destination(&block)
+    dropbox_location = "#{ENV['HOME']}/Dropbox/dev/secrets"
+    (p 'Error:   Dropbox not linked' && return) unless Dir.exist?(dropbox_location)
+    ::Pathname.new(dropbox_location).children
+      .reject { |i| i.to_s =~ /DS_Store|gitconfig/ }
+      .each do |source|
+      destination = "#{ENV['HOME']}/.#{source.split.last}"
+      block.call source, destination
+    end
+  end
+end
+
+# Link files in ~/dotfiles/applications to proper places
+class Applications
+  def location_hash
+    {
+      'applications/karabiner/private.xml' =>
+        '~/Library/Application Support/Karabiner/private.xml'
+    }
+  end
+
+  def link_location_hash
+    location_hash.each do |from, to|
+      source = ::Pathname.new(from)
+      destination = ::Pathname.new(to)
+      if source.exist? && !destination.exist?
+        FileUtils.cp source, destination
+      elsif destination.exist?
+        p "Exists:  #{destination}"
+      else
+        p 'here. todo'
+      end
+    end
   end
 end
 
