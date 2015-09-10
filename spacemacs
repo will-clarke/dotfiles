@@ -45,6 +45,7 @@
      gtags
      xkcd
      scala
+     emacs-lisp
      rust
      (python :variables
              python-enable-yapf-format-on-save t)
@@ -200,6 +201,9 @@ before layers configuration."
 
   ;; source ~/.emacs_bash
   (setenv "PATH" (shell-command-to-string "source ~/.emacs_bash; echo -n $PATH"))
+
+  ;; dired has a groovy way of going up directories
+  (evil-declare-key 'normal dired-mode-map (kbd ";") 'dired-up-directory)
 
   ;; Twitter
   (setq twittering-use-master-password t)
