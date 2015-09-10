@@ -1,10 +1,13 @@
 <?xml version="1.0"?>
 <root>
   <item>
-    <name>Swap Space and Tab</name>
-    <identifier>private.swap_space_and_tab</identifier>
-    <autogen>__KeyToKey__ KeyCode::SPACE, KeyCode::TAB</autogen>
-    <autogen>__KeyToKey__ KeyCode::TAB, KeyCode::SPACE</autogen>
+    <name>Me: Swap Section Symbol(§) to Underscore(_)</name>
+    <identifier>private.swap_section_symbol_with_underscore</identifier>
+    <autogen>
+      __KeyToKey__
+      KeyCode::DANISH_DOLLAR,  ModifierFlag::NONE,
+      KeyCode::MINUS, ModifierFlag::SHIFT_L
+    </autogen>
   </item>
 
   <item>

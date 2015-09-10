@@ -148,8 +148,16 @@ update_ruby_version() {
 
 install_scala() {
     brew_install_or_upgrade 'typesafe-activator'
-}
 
+    brew_install_or_upgrade 'sbt'
+    mkdir -p $HOME/sbt/0.13/plugins
+    touch $HOME/sbt/0.13/plugins/plugins.sbt
+    echo "addSbtPlugin(\"org.ensime\" % \"ensime-sbt\" % \"0.2.0\")" > $HOME/sbt/0.13/plugins/plugins.sbt
+    # for different scala projects do this in the directory:
+    # sbt
+    # gen-ensime
+    # M-x ensime-gen-and-restart
+}
 cask() {
     brew cask install "$1"
 }

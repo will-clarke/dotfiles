@@ -1,2 +1,3 @@
 #!/bin/sh
-/Applications/Karabiner.app/Contents/Library/bin/karabiner export > ~/dotfiles/applications/karabiner/karabiner-import.sh
+/Applications/Karabiner.app/Contents/Library/bin/karabiner export > $HOME/dotfiles/applications/karabiner/karabiner-import.sh
+cp $HOME/Library/Application\ Support/Karabiner/private.xml $HOME/dotfiles/applications/karabiner/private.xml

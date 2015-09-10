@@ -194,6 +194,13 @@ before layers configuration."
 
   (eval-after-load 'tramp '(setenv "SHELL" "/bin/bash"))
 
+  ;; Yasnippets
+  ;; (setq-default yas-snippet-dirs '("~/.emacs.d/snippets"))
+  (setq-default yas-snippet-dirs '("/Users/wmmc/.emacs.d/snippets/" "~/.emacs.d/private/snippets" yas-installed-snippets-dir . "/Users/wmmc/.emacs.d/contrib/auto-completion/snippets"))
+
+  ;; source ~/.emacs_bash
+  (setenv "PATH" (shell-command-to-string "source ~/.emacs_bash; echo -n $PATH"))
+
   ;; Twitter
   (setq twittering-use-master-password t)
 
@@ -322,46 +329,35 @@ before layers configuration."
     (let (
           (original-buffer (buffer-name))
           (redis-buffer (generate-new-buffer-name "### redis"))
-          (zeus-buffer (generate-new-buffer-name "### zeus"))
           (server-buffer (generate-new-buffer-name "### server"))
-          (worker-buffer (generate-new-buffer-name "### worker"))
+          (console-buffer (generate-new-buffer-name "### console"))
           (elasticsearch-buffer (generate-new-buffer-name "### elasticsearch"))
           )
+
       (shell redis-buffer)
       (set-buffer redis-buffer)
-      (insert "cd ~/Desktop/snap-trip")
+      (insert "cd ~/snaptrip")
       (comint-send-input)
       (insert "redis-server")
       (comint-send-input)
 
-      (shell zeus-buffer)
-      (set-buffer zeus-buffer)
-      (insert "cd ~/Desktop/snap-trip")
+      (shell console-buffer)
+      (set-buffer console-buffer)
+      (insert "cd ~/snaptrip")
       (comint-send-input)
-      (insert "zeus start")
+      (insert "be rails c")
       (comint-send-input)
 
       (shell server-buffer)
       (set-buffer server-buffer)
-      (insert "cd ~/Desktop/snap-trip")
+      (insert "cd ~/snaptrip")
       (comint-send-input)
-      (insert "sleep 5")
-      (comint-send-input)
-      (insert "zeus server")
-      (comint-send-input)
-
-      (shell worker-buffer)
-      (set-buffer worker-buffer)
-      (insert "cd ~/Desktop/snap-trip")
-      (comint-send-input)
-      (insert "sleep 5")
-      (comint-send-input)
-      (insert "zeus rake resque:work")
+      (insert "be rails server")
       (comint-send-input)
 
       (shell elasticsearch-buffer)
       (set-buffer elasticsearch-buffer)
-      (insert "cd ~/Desktop/snap-trip")
+      (insert "cd ~/snaptrip")
       (comint-send-input)
       (insert "elasticsearch --config=/usr/local/opt/elasticsearch/config/elasticsearch.yml")
       (comint-send-input)

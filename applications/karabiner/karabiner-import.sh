@@ -18,8 +18,8 @@ $cli set remap.controlL2controlL_escape 1
 /bin/echo -n .
 $cli set remap.controlJ2return 1
 /bin/echo -n .
-$cli set remap.pc_application2optionR 1
-/bin/echo -n .
 $cli set remap.mouse_keys_mode_2 1
+/bin/echo -n .
+$cli set remap.pc_application2optionR 1
 /bin/echo -n .
 /bin/echo
