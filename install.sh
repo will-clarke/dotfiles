@@ -191,10 +191,14 @@ install_emacs() {
 install_emacs_extensions() {
     brew_install_or_upgrade 'homebrew/emacs/gnugo-emacs'
     brew_install_or_upgrade 'libyaml'
-    # brew_install_or_upgrade 'gnutls'
-    brew_install_or_upgrade 'isync'
+    brew_install_or_upgrade 'trash'
     brew_install_or_upgrade 'w3m'
+
     brew_install_or_upgrade 'msmtp'
+    brew_install_or_upgrade 'mu'
+    brew_install_or_upgrade 'isync'
+    mkdir -p $HOME/{gmail,snaptrip}
+    mbsync -a && mu index --maildir=$HOME/.mail &
 }
 
 install_everything() {
@@ -213,9 +217,7 @@ install_everything() {
 
 intro() {
     fancy_echo "Hey!
-You're pretty chilled. Nice work. I can see you've been working out...
-
-First question:
+You're a few steps away from setting up EVERYTHING!"
 }
 
 should_we_install_everything() {
@@ -251,3 +253,5 @@ brew update
 
 brew cleanup
 brew cask cleanup
+
+exit

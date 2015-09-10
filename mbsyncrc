@@ -12,7 +12,7 @@ Host imap.gmail.com
 User wmmclarke@gmail.com
 PassCmd "gpg --passphrase \"`security find-generic-password -a megalolz -s megalolz -w`\"  -d ~/.password-store/email/wmmclarke@gmail.com-app.gpg"
 # UseIMAPS yes
-CertificateFile ~/.certificates/Equifax.crt
+CertificateFile ~/.certificates/gmail.crt
 SSLType IMAPS
 AuthMechs LOGIN
 
@@ -64,7 +64,7 @@ IMAPAccount snaptrip
 Host imap.gmail.com
 User will.clarke@snaptrip.com
 PassCmd "gpg --passphrase \"`security find-generic-password -a megalolz -s megalolz -w`\"  -d ~/.password-store/email/will.clarke@snaptrip.com.gpg"
-CertificateFile ~/.certificates/Equifax.crt
+CertificateFile ~/.certificates/gmail.crt
 SSLType IMAPS
 AuthMechs LOGIN
 
