@@ -122,7 +122,7 @@ end
 class Applications
   def location_hash
     {
-      'applications/karabiner/private.xml' =>
+      "#{ENV['HOME']}/dotfiles/applications/karabiner/private.xml" =>
         "#{ENV['HOME']}/Library/Application Support/Karabiner/private.xml"
     }
   end
@@ -130,7 +130,7 @@ class Applications
   def link_source
     each_source_and_destination do |source, destination|
       if source.exist? && !destination.exist?
-        FileUtils.cp source, destination
+        FileUtils.ln_s source, destination
         p "LINKING:  #{destination} [SECRET]"
       elsif destination.exist?
         p "Exists:   #{destination}"

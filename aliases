@@ -4,23 +4,17 @@ alias git=hub
 alias tlf="tail -f"
 alias ln='ln -v'
 alias mkdir='mkdir -p'
-alias ...='../..'
-alias ....='../../..'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
 alias l='ls'
 alias ll='ls -al'
 alias lh='ls -Alh'
-# alias -g G='| grep'
-# alias -g M='| less'
-# alias -g L='| wc -l'
-# alias -g ONE="| awk '{ print \$1}'"
 alias v=vim
-alias n='nvim'
 alias rmrf="rm -rf"
 
 # git
-alias gci="git pull --rebase && rake && git push"
 alias gco="git checkout"
-alias gr="git reset"
 alias gs="git status"
 alias gd='git diff'
 alias gdh='git diff HEAD^'
@@ -28,6 +22,7 @@ alias gdc='git diff --cached'
 alias gcm='git commit -m "'
 alias ga='git add'
 alias gaa='git add .'
+alias ga.='git add .'
 alias gc='git commit'
 alias gl='git log'
 alias gb='git branch'
@@ -38,7 +33,6 @@ alias vgc='vim `gconflict` -c "Gdiff"'
 alias vgm='vim `gconflict` -c "Gdiff"'
 alias ga.='git add .'
 alias gstash='git stash show -p stash@{0}'
-
 
 # Bundler
 alias b="bundle"
@@ -82,6 +76,7 @@ alias dotfiles="cd ~/dotfiles"
 # alias todolist="v ~/Dropbox/Apps/UpWord\ Notes/"
 # alias todo="v ~/Dropbox/Apps/UpWord\ Notes/todo.txt"
 alias t='/usr/local/Cellar/todo-txt/2.10/bin/todo.sh -d $HOME/Dropbox/todo/todo.cfg'
+
 # emacs
 alias e='open -a /Applications/Emacs.app $1'
 alias ec='/Applications/Emacs.app/Contents/MacOS/bin/emacsclient'
