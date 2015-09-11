@@ -132,7 +132,7 @@ before layers configuration."
   (setq-default yas-snippet-dirs '("/Users/wmmc/.emacs.d/snippets/" "~/.emacs.d/private/snippets" yas-installed-snippets-dir . "/Users/wmmc/.emacs.d/contrib/auto-completion/snippets"))
 
   ;; source ~/.emacs_bash
-  (setenv "PATH" (shell-command-to-string "source ~/.emacs_bash; echo -n $PATH"))
+  (setenv "PATH" (shell-command-to-string ". ~/.emacs_bash; echo -n $PATH"))
 
   ;; dired has a groovy way of going up directories
   (evil-declare-key 'normal dired-mode-map (kbd ";") 'dired-up-directory)
