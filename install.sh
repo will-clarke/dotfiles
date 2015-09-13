@@ -219,6 +219,7 @@ install_rust() {
     mv $HOME/racer/target/release/racer /usr/local/bin
     rm -rf $HOME/racer
     cd $HOME
+    git clone https://github.com/rust-lang/rust.git ~/.rust
 }
 
 install_everything() {

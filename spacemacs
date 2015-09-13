@@ -131,7 +131,7 @@ before layers configuration."
   (eval-after-load 'tramp '(setenv "SHELL" "/bin/bash"))
 
   ;; Yasnippets
-  (setq yas-snippet-dirs '("/Users/wmmc/.emacs.d/snippets/" "~/.emacs.d/private/snippets" yas-installed-snippets-dir . "/Users/wmmc/.emacs.d/contrib/auto-completion/snippets" ))
+  (setq yas-snippet-dirs '("/Users/wmmc/.emacs.d/snippets/" "~/.emacs.d/private/snippets" yas-installed-snippets-dir ))
 
   ;; gk and gj are sensible
   (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
@@ -152,6 +152,14 @@ before layers configuration."
   (global-set-key (kbd "M-?") 'mark-paragraph)
   (global-set-key (kbd "C-h") 'delete-backward-char)
   (global-set-key (kbd "M-h") 'backward-kill-word)
+
+  ;; Disable smartparens for most pairs
+  ;; (eval-after-load 'smartparens
+  ;;   '(progn
+  ;;      (sp-pair "(" nil :actions :rem)
+  ;;      (sp-pair "[" nil :actions :rem)
+  ;;      (sp-pair "'" nil :actions :rem)
+  ;;      (sp-pair "\"" nil :actions :rem)))
 
   ;; OSX commands
   (global-set-key (kbd "M-v") 'yank)
