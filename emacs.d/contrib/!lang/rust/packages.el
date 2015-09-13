@@ -16,6 +16,7 @@
     company-racer
     flycheck
     flycheck-rust
+    racer
     rust-mode
     toml-mode
     ))
@@ -58,3 +59,12 @@
       :if (configuration-layer/package-usedp 'company)
       :defer t
       :init (push 'company-racer company-backends-rust-mode))))
+
+(defun rust/init-racer ()
+  (use-package racer
+    :if rust-enable-racer
+    :defer t
+    :init (add-hook 'rust-mode-hook
+                    '(lambda ()
+                       (racer-mode)
+                       (eldoc-mode)))))
