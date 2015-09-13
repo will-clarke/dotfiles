@@ -14,9 +14,9 @@
   '(
     company
     company-racer
+    racer
     flycheck
     flycheck-rust
-    racer
     rust-mode
     toml-mode
     ))
