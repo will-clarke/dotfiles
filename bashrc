@@ -8,6 +8,10 @@ then
   source ~/.aliases
 fi
 
+if [ -f `brew --prefix`/etc/bash_completion ]; then
+    . `brew --prefix`/etc/bash_completion
+fi
+
 export PATH="$HOME/.bin:/usr/local/sbin:$PATH"
 
 source /usr/local/etc/bash_completion.d/password-store

@@ -209,6 +209,18 @@ install_emacs_extensions() {
     mbsync -a && mu index --maildir=$HOME/.mail &
 }
 
+install_rust() {
+    brew_install_or_upgrade 'rust'
+
+    cd $HOME
+    git clone https://github.com/phildawes/racer.git
+    cd $HOME/racer
+    cargo build --release
+    mv $HOME/racer/target/release/racer /usr/local/bin
+    rm -rf $HOME/racer
+    cd $HOME
+}
+
 install_everything() {
     install_essentials
     install_db
@@ -216,6 +228,7 @@ install_everything() {
     install_vim
     install_javascript_stuff
     install_ruby
+    install_rust
     install_scala
     install_comfy_setup
     install_totally_pointless_stuff
@@ -249,6 +262,7 @@ ask_to_install "unix_stuff"
 ask_to_install "vim"
 ask_to_install "javascript_stuff"
 ask_to_install "ruby"
+ask_to_install "rust"
 ask_to_install "scala"
 ask_to_install "comfy_setup"
 ask_to_install "totally_pointless_stuff"

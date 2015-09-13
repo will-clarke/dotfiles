@@ -9,4 +9,4 @@ alias ga. git add .
 alias ga git add $*
 alias gd git diff $*
 alias python python3
-alias ff find-file
+alias ff find-file $*

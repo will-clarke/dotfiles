@@ -1,3 +1,4 @@
+;; -*- mode: emacs-lisp -*-
 (defun dotspacemacs/layers ()
   "Configuration Layers declaration."
   (setq-default
@@ -52,6 +53,8 @@
                                       gnugo
                                       evil-rails
                                       w3m
+                                      racer
+                                      ;; exec-path-from-shell
                                       ;; auth-password-store
 
                                       )
@@ -150,6 +153,86 @@ before layers configuration."
   (global-set-key (kbd "M-?") 'mark-paragraph)
   (global-set-key (kbd "C-h") 'delete-backward-char)
   (global-set-key (kbd "M-h") 'backward-kill-word)
+
+
+
+  ;; OSX commands
+  ;; (global-set-key (kbd "M-q") 'save-buffers-kill-terminal)
+  (global-set-key (kbd "M-v") 'yank)
+  (global-set-key (kbd "M-c") 'evil-yank)
+  (global-set-key (kbd "M-a") 'mark-whole-buffer)
+
+  (global-set-key (kbd "M-w") 'delete-window)
+  (global-set-key (kbd "M-n") 'split-window-right)
+  (global-set-key (kbd "M-s")
+                  (lambda ()
+                    (interactive)
+                    (call-interactively (key-binding "\C-x\C-s"))))
+
+
+  ;; rust racer
+  ;; (setq rust-enable-racer t)
+  (setenv "RUST_SRC_PATH" "/usr/local/src/rust/src")
+  (setq racer-cmd "/usr/local/bin/racer")
+  (setq racer-rust-src-path "/usr/local/src/rust/src")
+
+  ;; (add-hook 'rust-mode-hook #'racer-mode)
+  ;; (add-hook 'racer-mode-hook #'eldoc-mode)
+
+  ;; (add-hook 'racer-mode-hook #'company-mode)
+
+  ;; (global-set-key (kbd "TAB") #'company-indent-or-complete-common) ;
+  ;; (setq company-tooltip-align-annotations t)
+
+  ;; (set rust-enable-racer t)
+  ;; (setq racer-cmd "/usr/local/bin/racer")
+
+
+
+
+
+
+
+
+  ;; Eshell behaves itself
+  ;; (defun eshell-mode-hook-func ()
+  ;;   ;; (setq eshell-path-env (concat "/usr/local/bin:" eshell-path-env))
+  ;;   ;; (setenv "PATH" (concat "/usr/local/bin:" (getenv "PATH")))
+
+  ;;   ;; (define-key eshell-mode-map (kbd "M-s") 'other-window-or-split))
+  ;;   (eshell-command ". ~/.secrets")
+  ;;   (eshell-source-file ". ~/.secrets")
+  ;;   )
+
+
+  ;; (defun eshell-source-env-file (filename)
+  ;;   (interactive
+  ;;    (list (ido-read-file-name "Find Openstackrc: " openstack-rc-directory)))
+  ;;   (eshell-do-eval
+  ;;    (catch 'eshell-replace-command
+  ;;      (eshell-source-file filename))))
+
+  ;; (eshell-do-eval
+  ;; (
+
+;;   (eshell-do-eval
+;;   (catch 'eshell-replace-command
+;;     (eshell-source-file "~/.secrets"))
+;; )
+;;   ;; )
+
+;;   (load-file "~/.secrets")
+;; (eshell-do-eval "sh . ~/.secrets")
+
+  (let ((path (shell-command-to-string ". ~/.secrets; echo -n $PATH")))
+    (setenv "PATH" path)
+    (setq exec-path
+          (append
+           (split-string-and-unquote path ":")
+           exec-path)))
+
+  (add-hook 'eshell-mode-hook 'eshell-mode-hook-func)
+
 
   ;; create loads of shells
   (defun make-shell (name)
@@ -310,19 +393,8 @@ before layers configuration."
 
   (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
-  (setq tab-width 2)
+  ;; (setq tab-width 2)
 
-  ;; (define-key window-numbering-keymap "\M-0" nil)
-  ;; (define-key window-numbering-keymap "\M-1" nil)
-  ;; (define-key window-numbering-keymap "\M-2" nil)
-  ;; (define-key window-numbering-keymap "\M-3" nil)
-  ;; (define-key window-numbering-keymap "\M-4" nil)
-  ;; (define-key window-numbering-keymap "\M-5" nil)
-  ;; (define-key window-numbering-keymap "\M-6" nil)
-  ;; (define-key window-numbering-keymap "\M-7" nil)
-  ;; (define-key window-numbering-keymap "\M-8" nil)
-  ;; (define-key window-numbering-keymap "\M-9" nil)
-                                        ; Actually allow typing #
   (global-set-key (kbd "s-3") `(lambda () (interactive) (insert "#")))
 
   "Configuration function.
