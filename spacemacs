@@ -10,7 +10,8 @@
    '(
      (ruby :variables
            ruby-version-manager 'rbenv
-           ruby-enable-ruby-on-rails-support t)
+           ruby-enable-ruby-on-rails-support t
+           enh-ruby-add-encoding-comment-on-save nil)
      html
      auto-completion
      better-defaults
@@ -51,12 +52,11 @@
                                       twittering-mode
                                       sx
                                       gnugo
-                                      evil-rails
                                       w3m
-                                      racer
+                                      csv-mode
+                                      ;; evil-rails
+                                      ;; racer
                                       ;; exec-path-from-shell
-                                      ;; auth-password-store
-
                                       )
 
    dotspacemacs-excluded-packages '()
@@ -122,6 +122,37 @@ before layers configuration."
   )
 
 (defun dotspacemacs/config ()
+
+  ;; Startup
+  ;; (mu4e)
+  ;; (switch-to-buffer "*spacemacs*")
+
+  (defun source (filename)
+    "Update environment variables from a shell source file."
+    (interactive "fSource file: ")
+
+    (message "Sourcing environment from `%s'..." filename)
+    (with-temp-buffer
+
+      (shell-command (format "diff -u <(true; export) <(source %s; export)" filename) '(4))
+
+      (let ((envvar-re "declare -x \\([^=]+\\)=\\(.*\\)$"))
+        ;; Remove environment variables
+        (while (search-forward-regexp (concat "^-" envvar-re) nil t)
+          (let ((var (match-string 1)))
+            (message "%s" (prin1-to-string `(setenv ,var nil)))
+            (setenv var nil)))
+
+        ;; Update environment variables
+        (goto-char (point-min))
+        (while (search-forward-regexp (concat "^+" envvar-re) nil t)
+          (let ((var (match-string 1))
+                (value (read (match-string 2))))
+            (message "%s" (prin1-to-string `(setenv ,var ,value)))
+            (setenv var value)))))
+    (message "Sourcing environment from `%s'... done." filename))
+
+  (source "~/.secrets")
 
   ;; Mac
   (setq vc-follow-symlinks t)
@@ -289,40 +320,37 @@ before layers configuration."
     "Start all the right processes for snaptrip"
     (interactive)
     (let (
+          (default-directory (cd-absolute "~/snaptrip"))
           (original-buffer (buffer-name))
           (redis-buffer (generate-new-buffer-name "### redis"))
           (server-buffer (generate-new-buffer-name "### server"))
-          (console-buffer (generate-new-buffer-name "### console"))
-          (elasticsearch-buffer (generate-new-buffer-name "### elasticsearch"))
-          )
+          @@ -296,31 +329,32 @@ before layers configuration."
+           (elasticsearch-buffer (generate-new-buffer-name "### elasticsearch"))
+           )
 
-      (shell redis-buffer)
+      (eshell redis-buffer)
       (set-buffer redis-buffer)
-      (insert "cd ~/snaptrip")
-      (comint-send-input)
+      ;; (let ((default-directory (cd-absolute "~/snaptrip"))))
+      ;; (insert "cd ~/snaptrip")
+      ;; (comint-send-input)
       (insert "redis-server")
       (comint-send-input)
 
-      (shell console-buffer)
+      (eshell console-buffer)
       (set-buffer console-buffer)
-      (insert "cd ~/snaptrip")
-      (comint-send-input)
       (insert "be rails c")
       (comint-send-input)
 
-      (shell server-buffer)
+      (eshell server-buffer)
       (set-buffer server-buffer)
-      (insert "cd ~/snaptrip")
-      (comint-send-input)
       (insert "be rails server")
       (comint-send-input)
 
-      (shell elasticsearch-buffer)
+      (eshell elasticsearch-buffer)
       (set-buffer elasticsearch-buffer)
-      (insert "cd ~/snaptrip")
-      (comint-send-input)
       (insert "elasticsearch --config=/usr/local/opt/elasticsearch/config/elasticsearch.yml")
       (comint-send-input)
+
 
       (echo "Snaptrip's booting up! :D")
       (switch-to-buffer original-buffer)

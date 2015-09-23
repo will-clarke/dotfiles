@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 set -e
 
@@ -67,17 +67,20 @@ ask_to_install() {
     read resp
     if [ "$resp" = "y" ] || [ "$resp" = "yes" ]
     then
+        fancy_echo "Installing $1?"
         install_="install_"
         eval "$install_$1"
     else
-        echo "Skipping $1..."
+        fancy_echo "Skipping $1..."
     fi
 }
 
 install_essentials() {
     brew_install_or_upgrade 'git'
     brew_install_or_upgrade 'hub'
-    git clone "https://github.com/wmmc/dotfiles"
+    if [ ! -d  "$HOME/dotfiles" ]; then
+        git clone "https://github.com/wmmc/dotfiles"
+    fi
     cd dotfiles
     rake install
     cd $HOME
@@ -115,7 +118,6 @@ install_ruby() {
     brew_install_or_upgrade 'rbenv'
     brew_install_or_upgrade 'ruby-build'
     echo 'eval "$(rbenv init -)"' >> ~/.bash_profile
-
     ruby_version="$(curl -sSL http://ruby.thoughtbot.com/latest)"
     fancy_echo "Do you want to update Ruby to version $ruby_version
     [yes/no]"
@@ -201,12 +203,13 @@ install_emacs_extensions() {
     brew_install_or_upgrade 'libyaml'
     brew_install_or_upgrade 'trash'
     brew_install_or_upgrade 'w3m'
-
+    brew_install_or_upgrade 'markdown'
     brew_install_or_upgrade 'msmtp'
     brew_install_or_upgrade 'mu'
     brew_install_or_upgrade 'isync'
     mkdir -p $HOME/{gmail,snaptrip}
     mbsync -a && mu index --maildir=$HOME/.mail &
+    printf "\n`openssl s_client -connect imap.gmail.com:993 -showcerts 2>&1 < /dev/null | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sed -ne '1,/-END CERTIFICATE-/p'`" >> ~/.certificates/gmail.crt
 }
 
 install_rust() {
@@ -270,11 +273,14 @@ ask_to_install "totally_pointless_stuff"
 ask_to_install "emacs"
 ask_to_install "emacs_extensions"
 
-intro
 fancy_echo "Updating Homebrew formulas ..."
 brew update
 
 brew cleanup
 brew cask cleanup
 
+fancy_echo "Running brew doctor"
+brew doctor
+
+fancy_echo "Thanks. It's been a blast."
 exit
