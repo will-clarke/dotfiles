@@ -316,45 +316,39 @@ before layers configuration."
         (remq 'process-kill-buffer-query-function
               kill-buffer-query-functions))
 
-  (defun snaptrip-start ()
-    "Start all the right processes for snaptrip"
-    (interactive)
-    (let (
-          (default-directory (cd-absolute "~/snaptrip"))
-          (original-buffer (buffer-name))
-          (redis-buffer (generate-new-buffer-name "### redis"))
-          (server-buffer (generate-new-buffer-name "### server"))
-          @@ -296,31 +329,32 @@ before layers configuration."
-           (elasticsearch-buffer (generate-new-buffer-name "### elasticsearch"))
-           )
-
-      (eshell redis-buffer)
-      (set-buffer redis-buffer)
-      ;; (let ((default-directory (cd-absolute "~/snaptrip"))))
-      ;; (insert "cd ~/snaptrip")
-      ;; (comint-send-input)
-      (insert "redis-server")
-      (comint-send-input)
-
-      (eshell console-buffer)
-      (set-buffer console-buffer)
-      (insert "be rails c")
-      (comint-send-input)
-
-      (eshell server-buffer)
-      (set-buffer server-buffer)
-      (insert "be rails server")
-      (comint-send-input)
-
-      (eshell elasticsearch-buffer)
-      (set-buffer elasticsearch-buffer)
-      (insert "elasticsearch --config=/usr/local/opt/elasticsearch/config/elasticsearch.yml")
-      (comint-send-input)
-
-
-      (echo "Snaptrip's booting up! :D")
-      (switch-to-buffer original-buffer)
-      ))
+ (defun snaptrip-start ()
+   "Start all the right processes for snaptrip"
+   (interactive)
+   (let (
+         (default-directory (cd-absolute "~/snaptrip"))
+         (original-buffer (buffer-name))
+         (redis-buffer (generate-new-buffer-name "### redis"))
+         (server-buffer (generate-new-buffer-name "### server"))
+          (elasticsearch-buffer (generate-new-buffer-name "### elasticsearch"))
+          )
+     (eshell redis-buffer)
+     (set-buffer redis-buffer)
+     (insert "redis-server")
+     (comint-send-input)
+     ;;
+     (eshell console-buffer)
+     (set-buffer console-buffer)
+     (insert "be rails c")
+     (comint-send-input)
+     ;;
+     (eshell server-buffer)
+     (set-buffer server-buffer)
+     (insert "be rails server")
+     (comint-send-input)
+     ;;
+     (eshell elasticsearch-buffer)
+     (set-buffer elasticsearch-buffer)
+     (insert "elasticsearch --config=/usr/local/opt/elasticsearch/config/elasticsearch.yml")
+     (comint-send-input)
+     ;;
+     (echo "Snaptrip's booting up! :D")
+     (switch-to-buffer original-buffer)
+     ))
 
   (define-key evil-insert-state-map "\C-e" 'end-of-line)
   (define-key evil-visual-state-map "\C-e" 'end-of-line)

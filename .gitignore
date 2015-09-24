@@ -16,3 +16,4 @@ emacs.d/.sx*
 # !emacs.d/contrib/!email
 # emacs.d/contrib/!email/*
 # !emacs.d/contrib/!email/mu4e
+/emacs.d/rake.cache
