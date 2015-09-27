@@ -188,6 +188,7 @@ install_totally_pointless_stuff() {
     cask 'firefox'
     cask 'vlc'
     cask 'disk-inventory-x'
+    cask 'tunnelbear'
 }
 
 
@@ -213,7 +214,8 @@ install_emacs_extensions() {
 }
 
 install_rust() {
-    brew_install_or_upgrade 'rust'
+    brew tap cheba/rust-nightly
+    brew_install_or_upgrade 'rust-nightly'
 
     cd $HOME
     git clone https://github.com/phildawes/racer.git
