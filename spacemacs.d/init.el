@@ -8,7 +8,6 @@
    '(
      (ruby :variables
            ruby-version-manager 'rbenv
-           ruby-enable-ruby-on-rails-support t
            enh-ruby-add-encoding-comment-on-save nil)
      html
      (auto-completion :variables
@@ -41,6 +40,8 @@
      scala
      emacs-lisp
      rust
+     ruby-on-rails
+     restclient
      (python :variables
              python-enable-yapf-format-on-save t)
      mu4e
@@ -58,7 +59,6 @@
 (defun dotspacemacs/init ()
   (setq-default
    ruby-version-manager 'rbenv
-   ruby-enable-ruby-on-rails-support t
    dotspacemacs-editing-style 'vim
    dotspacemacs-verbose-loading nil
    dotspacemacs-startup-banner 'random ;;'official
@@ -280,7 +280,7 @@
          (original-buffer (buffer-name))
          (redis-buffer (generate-new-buffer-name "### redis"))
          (zeus-buffer (generate-new-buffer-name "### zeus"))
-         (server-buffer (generate-new-buffer-name "### server"))
+         ;; (server-buffer (generate-new-buffer-name "### server"))
          (elasticsearch-buffer (generate-new-buffer-name "### elasticsearch"))
           )
      (shell redis-buffer)
@@ -293,10 +293,10 @@
      (insert "zeus start")
      (comint-send-input)
      ;;
-     (shell server-buffer)
-     (set-buffer server-buffer)
-     (insert "be rails server")
-     (comint-send-input)
+     ;; (shell server-buffer)
+     ;; (set-buffer server-buffer)
+     ;; (insert "be rails server")
+     ;; (comint-send-input)
      ;;
      (shell elasticsearch-buffer)
      (set-buffer elasticsearch-buffer)

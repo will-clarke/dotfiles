@@ -7,11 +7,9 @@ endif
 
 set mouse=a
 
-noremap ; :
-
 imap jk <ESC>
-noremap ; :
-noremap : ;
+; noremap ; :
+; noremap : ;
 
 " Use Vim settings, rather then Vi settings. This setting must be as early as
 " possible, as it has side effects.
