@@ -52,6 +52,7 @@
                                       gnugo
                                       w3m
                                       csv-mode
+                                      hyde
                                       )
    dotspacemacs-excluded-packages '()
    dotspacemacs-delete-orphan-packages t))
@@ -139,8 +140,8 @@
   ;; (setq yas-snippet-dirs '("/Users/wmmc/.emacs.d/snippets/" "/Users/wmmc/.emacs.d/private/snippets" yas-installed-snippets-dir ))
 
   ;; gk and gj are sensible
-  (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
-  (define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
+  ;; (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
+  ;; (define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
 
   ;; Twitter
   (setq twittering-use-master-password t)
@@ -165,6 +166,10 @@
                   (lambda ()
                     (interactive)
                     (call-interactively (key-binding "\C-x\C-s"))))
+
+  ;; jekyll
+  (setq-default hyde-home "~/blog" )
+  (require 'hyde)
 
   ;; rust racer
   (setq rust-enable-racer t)
@@ -280,7 +285,7 @@
          (original-buffer (buffer-name))
          (redis-buffer (generate-new-buffer-name "### redis"))
          (zeus-buffer (generate-new-buffer-name "### zeus"))
-         ;; (server-buffer (generate-new-buffer-name "### server"))
+         (server-buffer (generate-new-buffer-name "### server"))
          (elasticsearch-buffer (generate-new-buffer-name "### elasticsearch"))
           )
      (shell redis-buffer)
@@ -293,10 +298,10 @@
      (insert "zeus start")
      (comint-send-input)
      ;;
-     ;; (shell server-buffer)
-     ;; (set-buffer server-buffer)
-     ;; (insert "be rails server")
-     ;; (comint-send-input)
+     (shell server-buffer)
+     (set-buffer server-buffer)
+     (insert "be rails server")
+     (comint-send-input)
      ;;
      (shell elasticsearch-buffer)
      (set-buffer elasticsearch-buffer)

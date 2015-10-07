@@ -168,6 +168,7 @@ cask() {
 install_comfy_setup() {
     brew_install_or_upgrade 'caskroom/cask/brew-cask'
     cask 'postgres'
+    cask 'slack'
     cask 'dash'
     cask 'imageoptim'
     cask '1password'
