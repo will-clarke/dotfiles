@@ -277,9 +277,10 @@
         (remq 'process-kill-buffer-query-function
               kill-buffer-query-functions))
 
-  (defun snaptrip-start ()
+  (defun snaptrip_start ()
     "Start all the right processes for snaptrip"
     (interactive)
+    (save-excursion
     (let (
           (original-buffer (buffer-name))
           (redis-buffer (generate-new-buffer-name "### redis"))
@@ -287,6 +288,7 @@
           (server-buffer (generate-new-buffer-name "### server"))
           (worker-buffer (generate-new-buffer-name "### worker"))
           (elasticsearch-buffer (generate-new-buffer-name "### elasticsearch"))
+          (console-buffer (generate-new-buffer-name "### console"))
           )
       (shell redis-buffer)
       (set-buffer redis-buffer)
@@ -294,14 +296,14 @@
       (comint-send-input)
       (insert "redis-server")
       (comint-send-input)
-
+      ;;
       (shell zeus-buffer)
       (set-buffer zeus-buffer)
       (insert "cd ~/snaptrip")
       (comint-send-input)
       (insert "zeus start")
       (comint-send-input)
-
+      ;;
       (shell server-buffer)
       (set-buffer server-buffer)
       (insert "cd ~/snaptrip")
@@ -310,7 +312,7 @@
       (comint-send-input)
       (insert "zeus server")
       (comint-send-input)
-
+      ;;
       (shell worker-buffer)
       (set-buffer worker-buffer)
       (insert "cd ~/snaptrip")
@@ -319,17 +321,26 @@
       (comint-send-input)
       (insert "zeus rake resque:work")
       (comint-send-input)
-
+      ;;
       (shell elasticsearch-buffer)
       (set-buffer elasticsearch-buffer)
       (insert "cd ~/snaptrip")
       (comint-send-input)
       (insert "elasticsearch --config=/usr/local/opt/elasticsearch/config/elasticsearch.yml")
       (comint-send-input)
-
-      (echo "Snaptrip's booting up! :D")
+      ;;
+      (shell console-buffer)
+      (set-buffer console-buffer)
+      (insert "cd ~/snaptrip")
+      (comint-send-input)
+      (insert "sleep 5")
+      (comint-send-input)
+      (insert "zeus console")
+      (comint-send-input)
+      ;;
+      (message "Snaptrip's booting up! :D")
       (switch-to-buffer original-buffer)
-      ))
+      )))
 
   ;; (defun snaptrip-start ()
   ;;   "Start all the right processes for snaptrip"
