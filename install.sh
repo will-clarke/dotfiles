@@ -81,6 +81,7 @@ install_essentials() {
     if [ ! -d  "$HOME/dotfiles" ]; then
         git clone "https://github.com/wmmc/dotfiles"
     fi
+    git clone https://github.com/wmmc/blog/ "$HOME/blog"
     cd dotfiles
     rake install
     cd $HOME
