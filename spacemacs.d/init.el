@@ -35,6 +35,7 @@
      games
      github
      emoji
+     colors
      gtags
      xkcd
      scala
