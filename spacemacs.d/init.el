@@ -178,12 +178,17 @@
   (setq racer-rust-src-path "/Users/wmmc/.rust/src/")
 
   ;; create loads of shells
-  (defun make-shell (name)
+  (defun make-eshell (name)
     "Create a shell buffer named NAME."
     (interactive "sName: ")
     (setq name (concat "$" name))
     (eshell)
     (rename-buffer name))
+
+ (defun make-eshell-named (name)
+   "Create a shell buffer named NAME."
+   (eshell)
+   (rename-buffer name))
 
   ;; Eshell aliases
   ;; (require 'em-alias)
@@ -278,105 +283,74 @@
         (remq 'process-kill-buffer-query-function
               kill-buffer-query-functions))
 
-  (defun snaptrip_start ()
-    "Start all the right processes for snaptrip"
-    (interactive)
-    (save-excursion
-    (let (
-          (original-buffer (buffer-name))
-          (redis-buffer (generate-new-buffer-name "### redis"))
-          (zeus-buffer (generate-new-buffer-name "### zeus"))
-          (server-buffer (generate-new-buffer-name "### server"))
-          (worker-buffer (generate-new-buffer-name "### worker"))
-          (elasticsearch-buffer (generate-new-buffer-name "### elasticsearch"))
-          (console-buffer (generate-new-buffer-name "### console"))
-          )
-      (shell redis-buffer)
-      (set-buffer redis-buffer)
-      (insert "cd ~/snaptrip")
-      (comint-send-input)
-      (insert "redis-server")
-      (comint-send-input)
-      ;;
-      (shell zeus-buffer)
-      (set-buffer zeus-buffer)
-      (insert "cd ~/snaptrip")
-      (comint-send-input)
-      (insert "zeus start")
-      (comint-send-input)
-      ;;
-      (shell server-buffer)
-      (set-buffer server-buffer)
-      (insert "cd ~/snaptrip")
-      (comint-send-input)
-      (insert "sleep 5")
-      (comint-send-input)
-      (insert "zeus server")
-      (comint-send-input)
-      ;;
-      (shell worker-buffer)
-      (set-buffer worker-buffer)
-      (insert "cd ~/snaptrip")
-      (comint-send-input)
-      (insert "sleep 5")
-      (comint-send-input)
-      (insert "zeus rake resque:work")
-      (comint-send-input)
-      ;;
-      (shell elasticsearch-buffer)
-      (set-buffer elasticsearch-buffer)
-      (insert "cd ~/snaptrip")
-      (comint-send-input)
-      (insert "elasticsearch --config=/usr/local/opt/elasticsearch/config/elasticsearch.yml")
-      (comint-send-input)
-      ;;
-      (shell console-buffer)
-      (set-buffer console-buffer)
-      (insert "cd ~/snaptrip")
-      (comint-send-input)
-      (insert "sleep 5")
-      (comint-send-input)
-      (insert "zeus console")
-      (comint-send-input)
-      ;;
-      (message "Snaptrip's booting up! :D")
-      (switch-to-buffer original-buffer)
-      )))
-
-  ;; (defun snaptrip-start ()
+  ;; (defun snaptest ()
   ;;   "Start all the right processes for snaptrip"
   ;;   (interactive)
-  ;;   (let (
-  ;;         (default-directory (cd-absolute "~/snaptrip"))
-  ;;         (original-buffer (buffer-name))
-  ;;         (redis-buffer (generate-new-buffer-name "### redis"))
-  ;;         (zeus-buffer (generate-new-buffer-name "### zeus"))
-  ;;         (server-buffer (generate-new-buffer-name "### server"))
-  ;;         (elasticsearch-buffer (generate-new-buffer-name "### elasticsearch"))
-  ;;          )
-  ;;     (shell redis-buffer)
-  ;;     (set-buffer redis-buffer)
-  ;;     (insert "redis-server")
-  ;;     (comint-send-input)
-  ;;     ;;
-  ;;     (shell zeus-buffer)
-  ;;     (set-buffer redis-buffer)
-  ;;     (insert "zeus start")
-  ;;     (comint-send-input)
-  ;;     ;;
-  ;;     (shell server-buffer)
-  ;;     (set-buffer server-buffer)
-  ;;     (insert "be rails server")
-  ;;     (comint-send-input)
-  ;;     ;;
-  ;;     (shell elasticsearch-buffer)
-  ;;     (set-buffer elasticsearch-buffer)
-  ;;     (insert "elasticsearch --config=/usr/local/opt/elasticsearch/config/elasticsearch.yml")
-  ;;     (comint-send-input)
-  ;;     ;;
-  ;;     (echo "Snaptrip's booting up! :D")
-  ;;     (switch-to-buffer original-buffer)
-  ;;     ))
+  ;;   (save-excursion
+  ;;     (let (
+  ;;           (original-buffer (buffer-name))
+  ;;           (redis-buffer (make-eshell-named "asfdTWEESGING"))
+  ;;           )
+  ;;       ;; (set-buffer redis-buffer)
+  ;;       ;; (insert "cd ~/snaptrip")
+  ;;       ;; (eshell/cd "~/snaptrip")
+  ;;       ;;  (eshell-send-input)
+  ;;       (eshell/cd (directory-file-name "~/dotfiles"))
+  ;;       (insert "pwd")
+  ;;       (eshell-send-input)
+  ;;       )
+  ;;     )
+  ;;   )
+
+ (defun snaptrip_start ()
+   "Start all the right processes for snaptrip"
+   (interactive)
+   (save-excursion
+   (let (
+         (original-buffer (buffer-name))
+         (zeus-buffer (make-eshell-named "### zeus"))
+         (redis-buffer (make-eshell-named "### redis"))
+         (elasticsearch-buffer (make-eshell-named "### elasticsearch"))
+         (server-buffer (make-eshell-named "### server"))
+         (worker-buffer (make-eshell-named "### worker"))
+         (console-buffer (make-eshell-named "### console"))
+         )
+     ;;
+     (set-buffer zeus-buffer)
+     (eshell/cd (directory-file-name "~/snaptrip"))
+     (insert "zeus start")
+     (eshell-send-input)
+     ;;
+     (set-buffer elasticsearch-buffer)
+     (eshell/cd (directory-file-name "~/snaptrip"))
+     (insert "elasticsearch --config=/usr/local/opt/elasticsearch/config/elasticsearch.yml")
+     (eshell-send-input)
+     ;;
+     (set-buffer redis-buffer)
+     (eshell/cd (directory-file-name "~/snaptrip"))
+     (insert "redis-server")
+     (eshell-send-input)
+     ;;
+     (sleep-for 3)
+     ;;
+     (set-buffer server-buffer)
+     (eshell/cd (directory-file-name "~/snaptrip"))
+     (insert "zeus server")
+     (eshell-send-input)
+     ;;
+     (set-buffer worker-buffer)
+     (eshell/cd (directory-file-name "~/snaptrip"))
+     (insert "zeus rake resque:work")
+     (eshell-send-input)
+     ;;
+     (set-buffer console-buffer)
+     (eshell/cd (directory-file-name "~/snaptrip"))
+     (insert "zeus console")
+     (eshell-send-input)
+     ;;
+     (message "Snaptrip's booting up! :D")
+     (switch-to-buffer original-buffer)
+     )))
 
   (define-key evil-insert-state-map "\C-e" 'end-of-line)
   (define-key evil-visual-state-map "\C-e" 'end-of-line)
@@ -391,6 +365,10 @@
 
   (global-set-key (kbd "s-3") `(lambda () (interactive) (insert "#")))
 
+(evil-leader/set-key
+  "wo"  'other-window
+  ;; was 'other-frame
+  )
   "Configuration function.
  This function is called at the very end of Spacemacs initialization after
 layers configuration."
@@ -412,6 +390,7 @@ layers configuration."
    (quote
     ("62408b3adcd05f887b6357e5bd9221652984a389e9b015f87bbc596aba62ba48" default)))
  '(fancy-battery-mode t)
+ '(magit-commit-arguments nil)
  '(ring-bell-function (quote ignore) t)
  '(send-mail-function (quote smtpmail-send-it)))
 (custom-set-faces
