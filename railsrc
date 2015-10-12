@@ -1,0 +1,7 @@
+# .railsrc
+
+--database=postgresql
+--skip-test-unit
+--template=~/.rails_template.rb
+# --skip-turbolinks
+# --skip-spring
