@@ -101,16 +101,51 @@
   ;; User initialization goes here
   )
 
+
+
+
+;; +  (defun source (filename &optional use_default_gpg_key)
+;;      "Update environment variables from a shell source file."
+;;      (interactive "fSource file: ")
+
+;; -    ;; (let ((var (shell-command(format "security find-generic-password -a megalolz -s megalolz -w")))
+;;      (message "Sourcing environment from `%s'..." filename)
+;;      (with-temp-buffer
+
+;; -      (shell-command (format "diff -u <(true; export) <(source %s; export)" filename) '(4))
+;; +      ;; ;; (if (use_default_key == nil)
+;; +      ;; (shell-command (format "diff -u <(true; export) <(source %s; export)" filename) '(4))
+;; +      ;; ;; (shell-command (format "gpg --passphrase \"`security find-generic-password -a megalolz -s megalolz -w`\"  -d %s" filename ) '(4))
+;; +      ;; ;; )
+;; +      (if use_default_gpg_key
+;; +          (shell-command (format "diff -u <(true; export) <(gpg --passphrase \"`security find-generic-password -a megalolz -s megalolz -w`\"  -d ~/.secrets.gpg)" ) '(4))
+;; +        (shell-command (format "diff -u <(true; export) <(source %s; export)" filename) '(4))
+;; +        )
+
+;;        (let ((envvar-re "declare -x \\([^=]+\\)=\\(.*\\)$"))
+;;          ;; Remove environment variables
+;; @@ -129,7 +135,10 @@
+;;              (setenv var value)))))
+;;      (message "Sourcing environment from `%s'... done." filename))
+
+;; -  (source "~/.secrets.gpg")
+;; +  (source "~/.secrets.gpg" t)
+
+
 (defun dotspacemacs/config ()
 
-  (defun source (filename)
+  (defun source (filename &optional use_default_gpg_key)
     "Update environment variables from a shell source file."
     (interactive "fSource file: ")
 
     (message "Sourcing environment from `%s'..." filename)
     (with-temp-buffer
 
-      (shell-command (format "diff -u <(true; export) <(source %s; export)" filename) '(4))
+      (if use_default_gpg_key
+          (shell-command (format "diff -u <(true; export) <(gpg --passphrase \"`security find-generic-password -a megalolz -s megalolz -w`\"  -d ~/.secrets.gpg)" ) '(4))
+        (shell-command (format "diff -u <(true; export) <(source %s; export)" filename) '(4))
+        )
+      ;; (shell-command (format "diff -u <(true; export) <(source %s; export)" filename) '(4))
 
       (let ((envvar-re "declare -x \\([^=]+\\)=\\(.*\\)$"))
         ;; Remove environment variables
@@ -129,6 +164,7 @@
     (message "Sourcing environment from `%s'... done." filename))
 
   (source "~/.secrets")
+  ;; (source "~/.secrets.gpg" t)
 
   ;; Mac
   (setq vc-follow-symlinks t)
