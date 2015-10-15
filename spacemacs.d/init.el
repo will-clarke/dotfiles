@@ -35,11 +35,13 @@
      games
      github
      emoji
-     colors
+     (colors :variables
+             colors-enable-rainbow-identifiers nil)
      gtags
      xkcd
      scala
      emacs-lisp
+     spotify
      rust
      ruby-on-rails
      restclient
