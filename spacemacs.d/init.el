@@ -11,8 +11,10 @@
            enh-ruby-add-encoding-comment-on-save nil)
      html
      (auto-completion :variables
-                      auto-completion-private-snippets-directory
-                      "~/.spacemacs.d/snippets")
+                      auto-completion-private-snippets-directory "~/.spacemacs.d/snippets"
+                      auto-completion-return-key-behavior nil
+                      auto-completion-tab-key-behavior 'complete
+                      )
      better-defaults
      emacs-lisp
      (git :variables
@@ -35,8 +37,8 @@
      games
      github
      emoji
-     (colors :variables
-             colors-enable-rainbow-identifiers nil)
+     ;; (colors :variables
+     ;;         colors-enable-rainbow-identifiers nil)
      gtags
      xkcd
      scala
@@ -82,6 +84,7 @@
    dotspacemacs-major-mode-leader-key ","
    dotspacemacs-major-mode-emacs-leader-key "C-M-m"
    dotspacemacs-command-key ":"
+   dotspacemacs-remap-Y-to-y$ t
    dotspacemacs-auto-save-file-location 'cache
    dotspacemacs-use-ido nil
    dotspacemacs-enable-paste-micro-state t
@@ -343,6 +346,7 @@
  (defun snaptrip_start ()
    "Start all the right processes for snaptrip"
    (interactive)
+   (require 'linum)
    (save-excursion
    (let (
          (original-buffer (buffer-name))

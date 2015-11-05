@@ -14,6 +14,7 @@ fi
 
 export PATH="$HOME/.bin:/usr/local/sbin:$PATH"
 
+export EDITOR='vim'
 source /usr/local/etc/bash_completion.d/password-store
 
 # rust racer
