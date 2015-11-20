@@ -8,6 +8,7 @@
    '(
      (ruby :variables
            ruby-version-manager 'rbenv
+           ruby-insert-encoding-magic-comment nil
            enh-ruby-add-encoding-comment-on-save nil)
      html
      (auto-completion :variables
@@ -59,7 +60,9 @@
                                       csv-mode
                                       hyde
                                       )
-   dotspacemacs-excluded-packages '()
+   dotspacemacs-excluded-packages '(
+                                    smartparens
+                                    )
    dotspacemacs-delete-orphan-packages t))
 
 (defun dotspacemacs/init ()
@@ -222,6 +225,7 @@
   (defun make-eshell (name)
     "Create a shell buffer named NAME."
     (interactive "sName: ")
+    (require 'linum)
     (setq name (concat "$" name))
     (eshell)
     (rename-buffer name))
@@ -435,10 +439,10 @@ layers configuration."
  '(magit-commit-arguments nil)
  '(ring-bell-function (quote ignore) t)
  '(send-mail-function (quote smtpmail-send-it)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(company-tooltip-common ((t (:inherit company-tooltip :weight bold :underline nil))))
- '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :weight bold :underline nil)))))
+;; (custom-set-faces
+;;  ;; custom-set-faces was added by Custom.
+;;  ;; If you edit it by hand, you could mess it up, so be careful.
+;;  ;; Your init file should contain only one such instance.
+;;  ;; If there is more than one, they won't work right.
+;;  '(company-tooltip-common ((t (:inherit company-tooltip :weight bold :underline nil))))
+;;  '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :weight bold :underline nil)))))
