@@ -12,12 +12,9 @@ if [ -f `brew --prefix`/etc/bash_completion ]; then
     . `brew --prefix`/etc/bash_completion
 fi
 
-export PATH="$HOME/.bin:/usr/local/sbin:$PATH"
 
 export EDITOR='vim'
 source /usr/local/etc/bash_completion.d/password-store
 
-# rust racer
-export RUST_SRC_PATH=/usr/local/src/rust/src
 
 export PS1="\w > "

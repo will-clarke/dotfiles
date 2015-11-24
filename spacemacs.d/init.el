@@ -313,7 +313,7 @@
   (setq mac-pass-command-to-system nil)
 
   ;; enable autocomplete
-  (auto-complete-mode t)
+  ;; (auto-complete-mode t)
 
   ;; Another vairable
   (setq helm-echo-input-in-header-line nil)
@@ -409,6 +409,7 @@
 
   ;; (setq tab-width 2)
 
+  ;; hash
   (global-set-key (kbd "s-3") `(lambda () (interactive) (insert "#")))
 
 (evil-leader/set-key

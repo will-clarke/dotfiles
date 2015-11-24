@@ -1,5 +1,6 @@
 # .bash_profile
 
+export PATH="$HOME/.bin:/usr/local/sbin:$PATH"
 # If .bash_profile exists, bash doesn't read .profile
 if [[ -f ~/.profile ]]; then
   . ~/.profile
@@ -11,3 +12,6 @@ if [[ $- == *i* && -f ~/.bashrc ]]; then
 fi
 
 eval "$(rbenv init -)"
+
+# rust racer
+export RUST_SRC_PATH=/usr/local/src/rust/src
