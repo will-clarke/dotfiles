@@ -64,7 +64,7 @@ gem_install_or_update() {
 ask_to_install() {
     fancy_echo "Do you want to install $1?
 [yes/no]: "
-    read resp
+    read -rsp resp
     if [ "$resp" = "y" ] || [ "$resp" = "yes" ]
     then
         fancy_echo "Installing $1?"
@@ -79,12 +79,17 @@ install_essentials() {
     brew_install_or_upgrade 'git'
     brew_install_or_upgrade 'hub'
     if [ ! -d  "$HOME/dotfiles" ]; then
-        git clone "https://github.com/wmmc/dotfiles"
+        git clone "https://github.com/wmmc/dotfiles" "$HOME/dotfiles"
     fi
-    git clone https://github.com/wmmc/blog/ "$HOME/blog"
+    if [ ! -d  "$HOME/blog" ]; then
+        git clone https://github.com/wmmc/blog/ "$HOME/blog"
+    fi
     cd dotfiles
     rake install
     cd $HOME
+    brew_install_or_upgrade 'caskroom/cask/brew-cask'
+    cask 'dropbox'
+    fancy_echo "It's probable worth logging into Dropbox now if you haven't already..."
 }
 
 install_db() {
@@ -122,7 +127,7 @@ install_ruby() {
     ruby_version="$(curl -sSL http://ruby.thoughtbot.com/latest)"
     fancy_echo "Do you want to update Ruby to version $ruby_version
     [yes/no]"
-    read resp
+    read -rsp resp
     if [ "$resp" = "y" ] || [ "$resp" = "yes" ]; then
         fancy_echo "Updating ruby versions"
         update_ruby_version
@@ -146,6 +151,7 @@ update_ruby_version() {
         rbenv install -s "$ruby_version"
     fi
     rbenv global "$ruby_version"
+    # if rbenv shell doesn't work, try: rbenv init
     rbenv shell "$ruby_version"
 }
 
@@ -169,6 +175,8 @@ install_comfy_setup() {
     brew_install_or_upgrade 'caskroom/cask/brew-cask'
     cask 'postgres'
     cask 'slack'
+    cask 'skype'
+    cask 'google-chrome'
     cask 'dash'
     cask 'imageoptim'
     cask '1password'
@@ -180,7 +188,9 @@ install_comfy_setup() {
     cask 'karabiner'
     cask 'growlnotify'
     cask 'iterm2'
-    bash ~/dotfiles/applications/karabiner/karabiner-import.sh
+    if [ -f "$HOME/dotfiles/applications/karabiner/karabiner-import.sh" ]; then
+        bash ~/dotfiles/applications/karabiner/karabiner-import.sh
+    fi
 }
 
 install_totally_pointless_stuff() {
@@ -252,13 +262,23 @@ You're a few steps away from setting up EVERYTHING!"
 should_we_install_everything() {
     fancy_echo "Should we just install everything else?
 [yes/no]"
-    read resp
+    read -rsp resp
     if [ "$resp" = "y" ] || [ "$resp" = "yes" ]; then
         fancy_echo "Okay. We'll update it all!"
         install_everything
     else
         fancy_echo "Okay. Choose what you want:"
     fi
+}
+
+cleanup() {
+    fancy_echo "Updating Homebrew formulas ..."
+    brew update
+    brew cleanup
+    brew cask cleanup
+    fancy_echo "Running brew doctor"
+    brew doctor
+    fancy_echo "Thanks. It's been a blast."
 }
 
 cd $HOME
@@ -276,15 +296,4 @@ ask_to_install "comfy_setup"
 ask_to_install "totally_pointless_stuff"
 ask_to_install "emacs"
 ask_to_install "emacs_extensions"
-
-fancy_echo "Updating Homebrew formulas ..."
-brew update
-
-brew cleanup
-brew cask cleanup
-
-fancy_echo "Running brew doctor"
-brew doctor
-
-fancy_echo "Thanks. It's been a blast."
-exit
+cleanup

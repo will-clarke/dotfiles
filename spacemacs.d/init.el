@@ -56,6 +56,7 @@
                                       color-theme-sanityinc-tomorrow
                                       twittering-mode
                                       gnugo
+                                      web-beautify
                                       w3m
                                       csv-mode
                                       hyde

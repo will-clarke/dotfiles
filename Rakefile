@@ -129,7 +129,7 @@ class Applications
 
   def link_source
     each_source_and_destination do |source, destination|
-      if source.exist? && !destination.exist?
+      if source.exist? && !destination.exist? && source.dirname.exist?
         FileUtils.ln_s source, destination
         p "LINKING:  #{destination} [SECRET]"
       elsif destination.exist?
