@@ -4,7 +4,10 @@
 ## Super-easy installation
 __[<sub><sub><sub>(probably shouldn't be piping curl to bash...)</sub></sub></sub>](http://curlpipesh.tumblr.com/)__
 
-    curl -L https://raw.githubusercontent.com/wmmc/dotfiles/master/install.sh | sudo sh
+    curl --remote-name https://raw.githubusercontent.com/wmmc/dotfiles/master/install.sh
+    less install.sh
+    sh install.sh 2>&1 | tee ~/install.sh.log
+
 
 ## What this contains:
 

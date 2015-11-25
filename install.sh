@@ -64,7 +64,7 @@ gem_install_or_update() {
 ask_to_install() {
     fancy_echo "Do you want to install $1?
 [yes/no]: "
-    read -rsp resp
+    read resp
     if [ "$resp" = "y" ] || [ "$resp" = "yes" ]
     then
         fancy_echo "Installing $1?"
@@ -127,7 +127,7 @@ install_ruby() {
     ruby_version="$(curl -sSL http://ruby.thoughtbot.com/latest)"
     fancy_echo "Do you want to update Ruby to version $ruby_version
     [yes/no]"
-    read -rsp resp
+    read resp
     if [ "$resp" = "y" ] || [ "$resp" = "yes" ]; then
         fancy_echo "Updating ruby versions"
         update_ruby_version
@@ -262,7 +262,7 @@ You're a few steps away from setting up EVERYTHING!"
 should_we_install_everything() {
     fancy_echo "Should we just install everything else?
 [yes/no]"
-    read -rsp resp
+    read resp
     if [ "$resp" = "y" ] || [ "$resp" = "yes" ]; then
         fancy_echo "Okay. We'll update it all!"
         install_everything
