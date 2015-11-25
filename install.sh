@@ -123,7 +123,7 @@ install_javascript_stuff() {
 install_ruby() {
     brew_install_or_upgrade 'rbenv'
     brew_install_or_upgrade 'ruby-build'
-    echo 'eval "$(rbenv init -)"' >> ~/.bash_profile
+    eval "$(rbenv init -)"
     ruby_version="$(curl -sSL http://ruby.thoughtbot.com/latest)"
     fancy_echo "Do you want to update Ruby to version $ruby_version
     [yes/no]"
