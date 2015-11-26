@@ -79,7 +79,8 @@
                          )
    dotspacemacs-colorize-cursor-according-to-state t
    dotspacemacs-default-font '("Source Code Pro"
-                               :size 23
+                               :size 15
+                               ;; :size 23
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
@@ -370,7 +371,8 @@
      ;;
      (set-buffer elasticsearch-buffer)
      (eshell/cd (directory-file-name "~/snaptrip"))
-     (insert "elasticsearch --config=/usr/local/opt/elasticsearch/config/elasticsearch.yml")
+     ;; (insert "elasticsearch --config=/usr/local/opt/elasticsearch/config/elasticsearch.yml")
+     (insert "elasticsearch")
      (eshell-send-input)
      ;;
      (set-buffer redis-buffer)
