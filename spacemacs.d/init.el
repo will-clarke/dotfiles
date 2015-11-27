@@ -11,11 +11,11 @@
            ruby-insert-encoding-magic-comment nil
            enh-ruby-add-encoding-comment-on-save nil)
      html
-     (auto-completion :variables
-                      auto-completion-private-snippets-directory "~/.spacemacs.d/snippets"
-                      auto-completion-return-key-behavior nil
-                      auto-completion-tab-key-behavior 'complete
-                      )
+     ;; (auto-completion :variables
+     ;;                  auto-completion-private-snippets-directory "~/.spacemacs.d/snippets"
+     ;;                  auto-completion-return-key-behavior nil
+     ;;                  auto-completion-tab-key-behavior 'complete
+     ;;                  )
      better-defaults
      emacs-lisp
      (git :variables
@@ -79,8 +79,7 @@
                          )
    dotspacemacs-colorize-cursor-according-to-state t
    dotspacemacs-default-font '("Source Code Pro"
-                               :size 15
-                               ;; :size 23
+                               :size 23
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)

@@ -167,6 +167,11 @@ install_scala() {
     # gen-ensime
     # M-x ensime-gen-and-restart
 }
+
+install_osx_tweaks() {
+    defaults write -g ApplePressAndHoldEnabled -bool false
+}
+
 cask() {
     brew cask install "$1"
 }
@@ -174,9 +179,10 @@ cask() {
 install_comfy_setup() {
     brew_install_or_upgrade 'caskroom/cask/brew-cask'
     cask 'postgres'
+    cask 'google-chrome'
     cask 'slack'
     cask 'skype'
-    cask 'google-chrome'
+    cask 'spotify'
     cask 'dash'
     cask 'imageoptim'
     cask '1password'
@@ -252,6 +258,7 @@ install_everything() {
     install_totally_pointless_stuff
     install_emacs
     install_emacs_extensions
+    install_osx_tweaks
 }
 
 intro() {
@@ -296,4 +303,5 @@ ask_to_install "comfy_setup"
 ask_to_install "totally_pointless_stuff"
 ask_to_install "emacs"
 ask_to_install "emacs_extensions"
+ask_to_install "osx_tweaks"
 cleanup
