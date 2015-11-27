@@ -226,7 +226,7 @@ install_emacs_extensions() {
     brew_install_or_upgrade 'msmtp'
     brew_install_or_upgrade 'mu'
     brew_install_or_upgrade 'isync'
-    mkdir -p $HOME/{gmail,snaptrip}
+    mkdir -p $HOME/.mail/{gmail,snaptrip}
     mbsync -a && mu index --maildir=$HOME/.mail &
     printf "\n`openssl s_client -connect imap.gmail.com:993 -showcerts 2>&1 < /dev/null | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sed -ne '1,/-END CERTIFICATE-/p'`" >> ~/.certificates/gmail.crt
 }

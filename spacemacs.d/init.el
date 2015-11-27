@@ -175,6 +175,9 @@
   (source "~/.secrets")
   ;; (source "~/.secrets.gpg" t)
 
+  (setq org-agenda-files (list "~/todo.org"
+                               "~/Dropbox/Dev/org-mode/work.org"))
+
   ;; Mac
   (setq vc-follow-symlinks t)
   (setq mac-option-modifier 'super)
@@ -449,3 +452,10 @@ layers configuration."
 ;;  ;; If there is more than one, they won't work right.
 ;;  '(company-tooltip-common ((t (:inherit company-tooltip :weight bold :underline nil))))
 ;;  '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :weight bold :underline nil)))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(company-tooltip-common ((t (:inherit company-tooltip :weight bold :underline nil))))
+ '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :weight bold :underline nil)))))
