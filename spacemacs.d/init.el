@@ -54,6 +54,7 @@
      )
    dotspacemacs-additional-packages '(soft-charcoal-theme
                                       color-theme-sanityinc-tomorrow
+                                      ;; rspec-mode
                                       twittering-mode
                                       gnugo
                                       web-beautify
@@ -239,6 +240,8 @@
    (eshell)
    (rename-buffer name))
 
+ (setq kill-read-only-ok t)
+
   ;; Eshell aliases
   ;; (require 'em-alias)
   ;; (setq eshell-aliases-file "~/.emacs.d/aliases")
@@ -264,7 +267,7 @@
            (mu4e-drafts-folder "/snaptrip/Drafts")
            (user-mail-address "will.clarke@snaptrip.com")
            (user-full-name "Will Clarke"))))
-  (mu4e/mail-account-reset)
+  ;; (mu4e/mail-account-reset)
   (setq
    mu4e-maildir "~/.mail"
    mu4e-trash-folder "/trash"
@@ -417,10 +420,29 @@
   ;; hash
   (global-set-key (kbd "s-3") `(lambda () (interactive) (insert "#")))
 
-(evil-leader/set-key
-  "wo"  'other-window
-  ;; was 'other-frame
-  )
+  (evil-leader/set-key "ot"  '(lambda () (interactive) (find-file "~/todo.org")))
+
+  (defun my-run-remote-pry (&rest args)
+    (interactive)
+    (let ((buffer (apply 'make-comint "pry-remote" "pry-remote" nil args)))
+      (switch-to-buffer buffer)
+      (setq-local comint-process-echoes t)))
+  (evil-leader/set-key-for-mode ruby-mode-map "op" 'my-run-remote-pry)
+  (evil-leader/set-key "op" 'my-run-remote-pry)
+
+  (defun my-require-pry ()
+    (interactive)
+    (save-excursion
+      (evil-insert-newline-above)
+      (indent-according-to-mode)
+      (insert "require \"pry-remote\"")
+      (evil-insert-newline-below)
+      (indent-according-to-mode)
+      (insert "binding.remote_pry")))
+  (evil-leader/set-key "or" 'my-require-pry)
+
+  (evil-leader/set-key "wo"  'other-window)
+
   "Configuration function.
  This function is called at the very end of Spacemacs initialization after
 layers configuration."
