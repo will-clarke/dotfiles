@@ -61,6 +61,7 @@
                                       w3m
                                       csv-mode
                                       hyde
+                                      yaml-mode
                                       )
    dotspacemacs-excluded-packages '(
                                     smartparens
@@ -450,23 +451,31 @@ layers configuration."
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(ahs-case-fold-search nil)
- '(ahs-default-range (quote ahs-range-whole-buffer))
- '(ahs-idle-interval 0.25)
- '(ahs-idle-timer 0 t)
- '(ahs-inhibit-face-list nil)
- '(custom-safe-themes
-   (quote
-    ("62408b3adcd05f887b6357e5bd9221652984a389e9b015f87bbc596aba62ba48" default)))
- '(fancy-battery-mode t)
- '(magit-commit-arguments nil)
- '(ring-bell-function (quote ignore) t)
- '(send-mail-function (quote smtpmail-send-it)))
+;; (custom-set-variables
+;;  ;; custom-set-variables was added by Custom.
+;;  ;; If you edit it by hand, you could mess it up, so be careful.
+;;  ;; Your init file should contain only one such instance.
+;;  ;; If there is more than one, they won't work right.
+;;  '(ahs-case-fold-search nil)
+;;  '(ahs-default-range (quote ahs-range-whole-buffer))
+;;  '(ahs-idle-interval 0.25)
+;;  '(ahs-idle-timer 0 t)
+;;  '(ahs-inhibit-face-list nil)
+;;  '(custom-safe-themes
+;;    (quote
+;;     ("62408b3adcd05f887b6357e5bd9221652984a389e9b015f87bbc596aba62ba48" default)))
+;;  '(fancy-battery-mode t)
+;;  '(magit-commit-arguments nil)
+;;  '(magit-log-section-arguments (quote ("--decorate")))
+;;  '(ring-bell-function (quote ignore) t)
+;;  '(send-mail-function (quote smtpmail-send-it)))
+;; ;; (custom-set-faces
+;; ;;  ;; custom-set-faces was added by Custom.
+;; ;;  ;; If you edit it by hand, you could mess it up, so be careful.
+;; ;;  ;; Your init file should contain only one such instance.
+;; ;;  ;; If there is more than one, they won't work right.
+;; ;;  '(company-tooltip-common ((t (:inherit company-tooltip :weight bold :underline nil))))
+;; ;;  '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :weight bold :underline nil)))))
 ;; (custom-set-faces
 ;;  ;; custom-set-faces was added by Custom.
 ;;  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -474,10 +483,3 @@ layers configuration."
 ;;  ;; If there is more than one, they won't work right.
 ;;  '(company-tooltip-common ((t (:inherit company-tooltip :weight bold :underline nil))))
 ;;  '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :weight bold :underline nil)))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(company-tooltip-common ((t (:inherit company-tooltip :weight bold :underline nil))))
- '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :weight bold :underline nil)))))

@@ -1,10 +1,11 @@
-alias zr zeus rake $*
-alias .... ../../..
-alias be bundle exec $*
-alias zc zeus console
-alias ... cd ../..
-alias zs zeus server
-alias zw zeus rake resque:work
-alias gd git diff $*
-alias gs git status $*
+alias ga git add $*
 alias ff find-file $1
+alias gs git status $*
+alias gd git diff $*
+alias zw zeus rake resque:work
+alias zs zeus server
+alias ... cd ../..
+alias zc zeus console
+alias be bundle exec $*
+alias .... ../../..
+alias zr zeus rake $*

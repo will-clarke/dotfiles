@@ -128,3 +128,6 @@ if [ -f ~/.ssh/id_rsa ] && [ -f ~/.ssh/id_rsa.pub ]; then
 else
   export SSH_KEYS=NULL
 fi
+
+# added by travis gem
+[ -f /Users/wmmc/.travis/travis.sh ] && source /Users/wmmc/.travis/travis.sh
