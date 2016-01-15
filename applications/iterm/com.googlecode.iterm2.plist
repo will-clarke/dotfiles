@@ -844,6 +844,13 @@
 	<real>1</real>
 	<key>GlobalKeyMap</key>
 	<dict>
+		<key>0x70-0x100000</key>
+		<dict>
+			<key>Action</key>
+			<integer>10</integer>
+			<key>Text</key>
+			<string>A</string>
+		</dict>
 		<key>0x7f-0x100000</key>
 		<dict>
 			<key>Action</key>
@@ -1013,9 +1020,11 @@
 	<key>NSScrollAnimationEnabled</key>
 	<false/>
 	<key>NSWindow Frame Preferences</key>
-	<string>471 339 924 485 0 0 1920 1057 </string>
+	<string>1932 640 924 485 1366 302 1920 1057 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>395 7 1525 1050 0 0 1920 1057 </string>
+	<string>1384 338 1810 1008 1366 302 1920 1057 </string>
+	<key>NSWindow Frame iTerm Window 1</key>
+	<string>169 100 570 451 0 0 1366 745 </string>
 	<key>NeverWarnAboutShortLivedSessions_76498BB4-4838-4273-886E-C1AB5D674116</key>
 	<true/>
 	<key>New Bookmarks</key>
@@ -1553,7 +1562,7 @@
 			<key>Name</key>
 			<string>Default</string>
 			<key>Non Ascii Font</key>
-			<string>InconsolataForPowerline 15</string>
+			<string>Menlo-Regular 11</string>
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
 			<key>Normal Font</key>
@@ -1735,9 +1744,9 @@
 		</dict>
 	</array>
 	<key>NoSyncTimeOfLastPromo</key>
-	<real>463058697.52989101</real>
+	<real>470160542.38711601</real>
 	<key>NoSyncTimeOfLastPromoDownload</key>
-	<real>465910343.472767</real>
+	<real>474462517.19320399</real>
 	<key>OnlyWhenMoreTabs</key>
 	<true/>
 	<key>OpenArrangementAtStartup</key>
@@ -1798,11 +1807,11 @@
 	<key>SUEnableAutomaticChecks</key>
 	<true/>
 	<key>SUFeedURL</key>
-	<string>http://iterm2.com/appcasts/testing.xml</string>
+	<string>https://iterm2.com/appcasts/testing.xml</string>
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2015-10-07T11:32:12Z</date>
+	<date>2016-01-14T11:08:21Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Show Toolbelt</key>
@@ -1850,6 +1859,6 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>2.1.1</string>
+	<string>2.1.4</string>
 </dict>
 </plist>
