@@ -442,23 +442,34 @@
 
   (evil-leader/set-key "ot"  '(lambda () (interactive) (find-file "~/todo.org")))
 
-  (defun my-run-remote-pry (&rest args)
-    (interactive)
-    (let ((buffer (apply 'make-comint "pry-remote" "pry-remote" nil args)))
-      (switch-to-buffer buffer)
-      (setq-local comint-process-echoes t)))
-  (evil-leader/set-key-for-mode ruby-mode-map "op" 'my-run-remote-pry)
-  (evil-leader/set-key "op" 'my-run-remote-pry)
+  ;; (add-hook 'after-init-hook 'inf-ruby-switch-setup)
+
+  ;; (defun my-run-remote-pry (&rest args)
+  ;;   (interactive)
+  ;;   (let ((buffer (apply 'make-comint "pry-remote" "pry-remote" nil args)))
+  ;;     (switch-to-buffer buffer)
+  ;;     (setq-local comint-process-echoes t)))
+  ;; (evil-leader/set-key-for-mode ruby-mode-map "op" 'my-run-remote-pry)
+  ;; (evil-leader/set-key "op" 'my-run-remote-pry)
+
+  ;; (define-key rspec-compilation-mode-map (kbd "C-x C-q")
+
+(evil-leader/set-key "op" '(lambda ()
+                             (interactive)
+                             (inf-ruby-switch-from-compilation)
+                             (end-of-line)
+                             (insert)))
 
   (defun my-require-pry ()
     (interactive)
     (save-excursion
       (evil-insert-newline-above)
       (indent-according-to-mode)
-      (insert "require \"pry-remote\"")
+      (insert "require 'pry'")
       (evil-insert-newline-below)
       (indent-according-to-mode)
-      (insert "binding.remote_pry")))
+      (insert "binding.pry")))
+
   (evil-leader/set-key "or" 'my-require-pry)
 
   (evil-leader/set-key "wo"  'other-window)
