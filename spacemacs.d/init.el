@@ -11,11 +11,6 @@
            ruby-insert-encoding-magic-comment nil
            enh-ruby-add-encoding-comment-on-save nil)
      html
-     ;; (auto-completion :variables
-     ;;                  auto-completion-private-snippets-directory "~/.spacemacs.d/snippets"
-     ;;                  auto-completion-return-key-behavior nil
-     ;;                  auto-completion-tab-key-behavior 'complete
-     ;;                  )
      better-defaults
      emacs-lisp
      (git :variables
@@ -25,7 +20,6 @@
      markdown
      osx
      org
-     perspectives
      (shell :variables
             shell-default-term-shell "/bin/bash"
             shell-default-shell 'eshell
@@ -38,8 +32,6 @@
      games
      github
      emoji
-     ;; (colors :variables
-     ;;         colors-enable-rainbow-identifiers nil)
      gtags
      xkcd
      scala
@@ -50,7 +42,6 @@
      restclient
      (python :variables
              python-enable-yapf-format-on-save t)
-     mu4e
      )
    dotspacemacs-additional-packages '(soft-charcoal-theme
                                       color-theme-sanityinc-tomorrow
@@ -113,68 +104,31 @@
   )
 
 
-
-
-;; +  (defun source (filename &optional use_default_gpg_key)
-;;      "Update environment variables from a shell source file."
-;;      (interactive "fSource file: ")
-
-;; -    ;; (let ((var (shell-command(format "security find-generic-password -a megalolz -s megalolz -w")))
-;;      (message "Sourcing environment from `%s'..." filename)
-;;      (with-temp-buffer
-
-;; -      (shell-command (format "diff -u <(true; export) <(source %s; export)" filename) '(4))
-;; +      ;; ;; (if (use_default_key == nil)
-;; +      ;; (shell-command (format "diff -u <(true; export) <(source %s; export)" filename) '(4))
-;; +      ;; ;; (shell-command (format "gpg --passphrase \"`security find-generic-password -a megalolz -s megalolz -w`\"  -d %s" filename ) '(4))
-;; +      ;; ;; )
-;; +      (if use_default_gpg_key
-;; +          (shell-command (format "diff -u <(true; export) <(gpg --passphrase \"`security find-generic-password -a megalolz -s megalolz -w`\"  -d ~/.secrets.gpg)" ) '(4))
-;; +        (shell-command (format "diff -u <(true; export) <(source %s; export)" filename) '(4))
-;; +        )
-
-;;        (let ((envvar-re "declare -x \\([^=]+\\)=\\(.*\\)$"))
-;;          ;; Remove environment variables
-;; @@ -129,7 +135,10 @@
-;;              (setenv var value)))))
-;;      (message "Sourcing environment from `%s'... done." filename))
-
-;; -  (source "~/.secrets.gpg")
-;; +  (source "~/.secrets.gpg" t)
-
-
 (defun dotspacemacs/config ()
 
-  (defun source (filename &optional use_default_gpg_key)
-    "Update environment variables from a shell source file."
-    (interactive "fSource file: ")
+  ;; (defun source (filename &optional use_default_gpg_key)
+  ;;   "Update environment variables from a shell source file."
+  ;;   (interactive "fSource file: ")
+  ;;   (message "Sourcing environment from `%s'..." filename)
+  ;;   (with-temp-buffer
+  ;;     (if use_default_gpg_key
+  ;;         (shell-command (format "diff -u <(true; export) <(gpg --passphrase \"`security find-generic-password -a megalolz -s megalolz -w`\"  -d ~/.secrets.gpg)" ) '(4))
+  ;;       (shell-command (format "diff -u <(true; export) <(source %s; export)" filename) '(4))
+  ;;       )
+  ;;     (let ((envvar-re "declare -x \\([^=]+\\)=\\(.*\\)$"))
+  ;;       (while (search-forward-regexp (concat "^-" envvar-re) nil t)
+  ;;         (let ((var (match-string 1)))
+  ;;           (message "%s" (prin1-to-string `(setenv ,var nil)))
+  ;;           (setenv var nil)))
+  ;;       (goto-char (point-min))
+  ;;       (while (search-forward-regexp (concat "^+" envvar-re) nil t)
+  ;;         (let ((var (match-string 1))
+  ;;               (value (read (match-string 2))))
+  ;;           (message "%s" (prin1-to-string `(setenv ,var ,value)))
+  ;;           (setenv var value)))))
+  ;;   (message "Sourcing environment from `%s'... done." filename))
+  ;; (source "~/.secrets")
 
-    (message "Sourcing environment from `%s'..." filename)
-    (with-temp-buffer
-
-      (if use_default_gpg_key
-          (shell-command (format "diff -u <(true; export) <(gpg --passphrase \"`security find-generic-password -a megalolz -s megalolz -w`\"  -d ~/.secrets.gpg)" ) '(4))
-        (shell-command (format "diff -u <(true; export) <(source %s; export)" filename) '(4))
-        )
-      ;; (shell-command (format "diff -u <(true; export) <(source %s; export)" filename) '(4))
-
-      (let ((envvar-re "declare -x \\([^=]+\\)=\\(.*\\)$"))
-        ;; Remove environment variables
-        (while (search-forward-regexp (concat "^-" envvar-re) nil t)
-          (let ((var (match-string 1)))
-            (message "%s" (prin1-to-string `(setenv ,var nil)))
-            (setenv var nil)))
-
-        ;; Update environment variables
-        (goto-char (point-min))
-        (while (search-forward-regexp (concat "^+" envvar-re) nil t)
-          (let ((var (match-string 1))
-                (value (read (match-string 2))))
-            (message "%s" (prin1-to-string `(setenv ,var ,value)))
-            (setenv var value)))))
-    (message "Sourcing environment from `%s'... done." filename))
-
-  (source "~/.secrets")
   ;; (source "~/.secrets.gpg" t)
 
   (setq org-agenda-files (list "~/todo.org"
