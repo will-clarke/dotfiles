@@ -54,3 +54,6 @@ end
   Pry.config.pager = false
   Pry.config.auto_indent = false
 # end
+
+require "awesome_print"
+AwesomePrint.pry!
