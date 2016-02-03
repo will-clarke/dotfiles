@@ -107,28 +107,28 @@
 
 (defun dotspacemacs/config ()
 
-  ;; (defun source (filename &optional use_default_gpg_key)
-  ;;   "Update environment variables from a shell source file."
-  ;;   (interactive "fSource file: ")
-  ;;   (message "Sourcing environment from `%s'..." filename)
-  ;;   (with-temp-buffer
-  ;;     (if use_default_gpg_key
-  ;;         (shell-command (format "diff -u <(true; export) <(gpg --passphrase \"`security find-generic-password -a megalolz -s megalolz -w`\"  -d ~/.secrets.gpg)" ) '(4))
-  ;;       (shell-command (format "diff -u <(true; export) <(source %s; export)" filename) '(4))
-  ;;       )
-  ;;     (let ((envvar-re "declare -x \\([^=]+\\)=\\(.*\\)$"))
-  ;;       (while (search-forward-regexp (concat "^-" envvar-re) nil t)
-  ;;         (let ((var (match-string 1)))
-  ;;           (message "%s" (prin1-to-string `(setenv ,var nil)))
-  ;;           (setenv var nil)))
-  ;;       (goto-char (point-min))
-  ;;       (while (search-forward-regexp (concat "^+" envvar-re) nil t)
-  ;;         (let ((var (match-string 1))
-  ;;               (value (read (match-string 2))))
-  ;;           (message "%s" (prin1-to-string `(setenv ,var ,value)))
-  ;;           (setenv var value)))))
-  ;;   (message "Sourcing environment from `%s'... done." filename))
-  ;; (source "~/.secrets")
+  (defun source (filename &optional use_default_gpg_key)
+    "Update environment variables from a shell source file."
+    (interactive "fSource file: ")
+    (message "Sourcing environment from `%s'..." filename)
+    (with-temp-buffer
+      (if use_default_gpg_key
+          (shell-command (format "diff -u <(true; export) <(gpg --passphrase \"`security find-generic-password -a megalolz -s megalolz -w`\"  -d ~/.secrets.gpg)" ) '(4))
+        (shell-command (format "diff -u <(true; export) <(source %s; export)" filename) '(4))
+        )
+      (let ((envvar-re "declare -x \\([^=]+\\)=\\(.*\\)$"))
+        (while (search-forward-regexp (concat "^-" envvar-re) nil t)
+          (let ((var (match-string 1)))
+            (message "%s" (prin1-to-string `(setenv ,var nil)))
+            (setenv var nil)))
+        (goto-char (point-min))
+        (while (search-forward-regexp (concat "^+" envvar-re) nil t)
+          (let ((var (match-string 1))
+                (value (read (match-string 2))))
+            (message "%s" (prin1-to-string `(setenv ,var ,value)))
+            (setenv var value)))))
+    (message "Sourcing environment from `%s'... done." filename))
+  (source "~/.secrets")
 
   ;; (source "~/.secrets.gpg" t)
 
@@ -200,21 +200,21 @@
 
 
  ;; tramp can open root files over ssh
- ;; (set-default 'tramp-default-proxies-alist (quote ((".*" "\\`root\\'" "/ssh:%h:"))))
- ;; (require 'tramp)
- ;; (defun sudo-edit-current-file ()
- ;;   (interactive)
- ;;   (let ((position (point)))
- ;;     (find-alternate-file
- ;;      (if (file-remote-p (buffer-file-name))
- ;;          (let ((vec (tramp-dissect-file-name (buffer-file-name))))
- ;;            (tramp-make-tramp-file-name
- ;;             "sudo"
- ;;             (tramp-file-name-user vec)
- ;;             (tramp-file-name-host vec)
- ;;             (tramp-file-name-localname vec)))
- ;;        (concat "/sudo:root@localhost:" (buffer-file-name))))
- ;;     (goto-char position)))
+ (set-default 'tramp-default-proxies-alist (quote ((".*" "\\`root\\'" "/ssh:%h:"))))
+ (require 'tramp)
+ (defun sudo-edit-current-file ()
+   (interactive)
+   (let ((position (point)))
+     (find-alternate-file
+      (if (file-remote-p (buffer-file-name))
+          (let ((vec (tramp-dissect-file-name (buffer-file-name))))
+            (tramp-make-tramp-file-name
+             "sudo"
+             (tramp-file-name-user vec)
+             (tramp-file-name-host vec)
+             (tramp-file-name-localname vec)))
+        (concat "/sudo:root@localhost:" (buffer-file-name))))
+     (goto-char position)))
 
 
   ;; Eshell aliases
