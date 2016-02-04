@@ -428,6 +428,7 @@
   (evil-leader/set-key "or" 'my-require-pry)
 
   (evil-leader/set-key "wo"  'other-window)
+  (evil-leader/set-key "ow"  'other-window)
 
   "Configuration function.
  This function is called at the very end of Spacemacs initialization after
