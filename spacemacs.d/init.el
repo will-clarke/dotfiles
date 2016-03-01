@@ -33,6 +33,7 @@
      games
      github
      emoji
+     mu4e
      gtags
      xkcd
      scala
@@ -106,6 +107,8 @@
 
 
 (defun dotspacemacs/config ()
+
+  (display-time-mode 1)
 
   (defun source (filename &optional use_default_gpg_key)
     "Update environment variables from a shell source file."
