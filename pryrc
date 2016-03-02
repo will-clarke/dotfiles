@@ -57,3 +57,4 @@ end
 
 require "awesome_print"
 AwesomePrint.pry!
+AwesomePrint.defaults = {limit: true}
