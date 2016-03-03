@@ -58,3 +58,10 @@ end
 require "awesome_print"
 AwesomePrint.pry!
 AwesomePrint.defaults = {limit: true}
+
+Pry.config.commands.command "limit_true" do |*args|
+    AwesomePrint.defaults = {limit: true}
+end
+Pry.config.commands.command "limit_false" do |*args|
+    AwesomePrint.defaults = {limit: false}
+end
