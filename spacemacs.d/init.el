@@ -33,6 +33,7 @@
      games
      github
      emoji
+     w3m
      mu4e
      gtags
      xkcd
@@ -400,8 +401,6 @@
 
   (evil-leader/set-key "ot"  '(lambda () (interactive) (find-file "~/todo.org")))
 
-  ;; (add-hook 'after-init-hook 'inf-ruby-switch-setup)
-
   ;; (defun my-run-remote-pry (&rest args)
   ;;   (interactive)
   ;;   (let ((buffer (apply 'make-comint "pry-remote" "pry-remote" nil args)))
@@ -410,13 +409,15 @@
   ;; (evil-leader/set-key-for-mode ruby-mode-map "op" 'my-run-remote-pry)
   ;; (evil-leader/set-key "op" 'my-run-remote-pry)
 
-  ;; (define-key rspec-compilation-mode-map (kbd "C-x C-q")
+  (add-hook 'rspec-compilation-mode-hook 'my-interactive-test-mode)
+  (defun my-interactive-test-mode ()
+    (inf-ruby-switch-from-compilation))
 
-(evil-leader/set-key "op" '(lambda ()
-                             (interactive)
-                             (inf-ruby-switch-from-compilation)
-                             (end-of-line)
-                             (insert)))
+  (evil-leader/set-key "op" '(lambda ()
+                               (interactive)
+                               (inf-ruby-switch-from-compilation)
+                               (end-of-line)
+                               (insert)))
 
   (defun my-require-pry ()
     (interactive)
