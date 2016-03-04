@@ -178,6 +178,8 @@ cask() {
 
 install_comfy_setup() {
     brew_install_or_upgrade 'caskroom/cask/brew-cask'
+    cask 'cocoapacketanalyzer'
+    cask 'charles'
     cask 'postgres'
     cask 'google-chrome'
     cask 'slack'
