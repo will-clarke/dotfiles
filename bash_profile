@@ -15,6 +15,7 @@ eval "$(rbenv init -)"
 
 # rust racer
 export RUST_SRC_PATH=/usr/local/src/rust/src
+export PATH="$HOME/.cargo/bin:$PATH"
 
 # virtualenv
 source "/usr/local/bin/virtualenvwrapper.sh"

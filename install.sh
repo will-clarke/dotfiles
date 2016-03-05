@@ -237,15 +237,8 @@ install_emacs_extensions() {
 install_rust() {
     brew tap cheba/rust-nightly
     brew_install_or_upgrade 'rust-nightly'
-
-    cd $HOME
-    git clone https://github.com/phildawes/racer.git
-    cd $HOME/racer
-    cargo build --release
-    mv $HOME/racer/target/release/racer /usr/local/bin
-    rm -rf $HOME/racer
-    cd $HOME
-    git clone https://github.com/rust-lang/rust.git ~/.rust
+    cargo install racer
+    git clone https://github.com/rust-lang/rust.git ~/.rust # really needeed?
 }
 
 install_everything() {

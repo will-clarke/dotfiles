@@ -41,6 +41,7 @@
      emacs-lisp
      spotify
      rust
+     auto-completion
      ruby-on-rails
      restclient
      (python :variables
