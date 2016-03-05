@@ -41,7 +41,12 @@
      emacs-lisp
      spotify
      rust
-     auto-completion
+     (auto-completion :variables
+                      auto-completion-return-key-behavior 'complete
+                      auto-completion-tab-key-behavior 'cycle
+                      auto-completion-complete-with-key-sequence "jk"
+                      auto-completion-complete-with-key-sequence-delay 0.1
+                      auto-completion-private-snippets-directory "~/.spacemacs.d/snippets/")
      ruby-on-rails
      restclient
      (python :variables
@@ -186,6 +191,12 @@
   (setq rust-enable-racer t)
   (setenv "RUST_SRC_PATH" "/Users/wmmc/.rust/src/")
   (setq racer-rust-src-path "/Users/wmmc/.rust/src/")
+  ;; Rust: how to have interactive compiler:
+  ;;   compile-mode - C-u M-x compile RET
+  ;;   see http://stackoverflow.com/questions/3217408/interactive-compilation-mode-in-emacs-what-if-compiler-asks-a-question
+  ;;   so spacemacs shortcut is SPC-u SPC c C RET
+
+
 
   ;; create loads of shells
   (defun make-eshell (name)
