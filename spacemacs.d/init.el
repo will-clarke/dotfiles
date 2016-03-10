@@ -39,6 +39,7 @@
      xkcd
      scala
      emacs-lisp
+     c-c++
      spotify
      rust
      (auto-completion :variables
