@@ -20,3 +20,6 @@ export PATH="$HOME/.cargo/bin:$PATH"
 # virtualenv
 source "/usr/local/bin/virtualenvwrapper.sh"
 # export WORKON_HOME="/opt/virtual_env/"
+
+# for sdl2
+export LIBRARY_PATH="$LIBRARY_PATH:/usr/local/lib"
