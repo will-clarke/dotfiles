@@ -39,7 +39,8 @@
      xkcd
      scala
      emacs-lisp
-     c-c++
+     (c-c++ :variables
+            c-c++-enable-clang-support t)
      spotify
      rust
      (auto-completion :variables
