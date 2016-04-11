@@ -62,6 +62,11 @@ AwesomePrint.defaults = {limit: true}
 Pry.config.commands.command "limit_true" do |*args|
     AwesomePrint.defaults = {limit: true}
 end
+Pry.config.commands.command "limit" do |*args|
+    current_status = AwesomePrint.defaults[:limit]
+    AwesomePrint.defaults = {limit: !current_status}
+    p "Limiting is #{!current_status ? 'ON' : 'OFF'}"
+end
 Pry.config.commands.command "limit_false" do |*args|
     AwesomePrint.defaults = {limit: false}
 end

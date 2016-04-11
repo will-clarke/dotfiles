@@ -13,11 +13,9 @@ if [ -f `brew --prefix`/etc/bash_completion ]; then
 fi
 
 
-export EDITOR='vim'
 source /usr/local/etc/bash_completion.d/password-store
 
 
-export PS1="\w > "
 
 # added by travis gem
 [ -f /Users/wmmc/.travis/travis.sh ] && source /Users/wmmc/.travis/travis.sh

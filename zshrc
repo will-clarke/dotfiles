@@ -14,19 +14,10 @@ then
   source ~/.secrets
 fi
 
-# use vim as the visual editor
-export VISUAL=vim
-export EDITOR=$VISUAL
-
-# ensure dotfiles bin directory is loaded first
-export PATH="$HOME/.bin:/usr/local/sbin:$PATH"
-
 # load rbenv if available
 if which rbenv &>/dev/null ; then
   eval "$(rbenv init - --no-rehash)"
 fi
-
-export PS1="%~ $  "
 
 # load our own completion functions
 fpath=(~/.zsh/completion $fpath)
@@ -43,9 +34,6 @@ done
 # makes color constants available
 autoload -U colors
 colors
-
-# enable colored output from ls, etc
-export CLICOLOR=1
 
 # history settings
 setopt hist_ignore_all_dups inc_append_history
@@ -84,9 +72,6 @@ bindkey -s "^T" "^[Isudo ^[A" # "t" for "toughguy"
 
 # stty -ixon
 
-export PATH="$HOME/.bin:$PATH"
-export BUN="$HOME/.vimrc.bundles.local"
-export VL="$HOME/.vimrc.local"
 eval "$(rbenv init - zsh --no-rehash)"
 
 if [ -f ~/.bin/z ]
@@ -118,16 +103,33 @@ fancy-ctrl-z () {
 zle -N fancy-ctrl-z
 bindkey '^Z' fancy-ctrl-z
 
-# rust:
-# export DYLD_LIBRARY_PATH=/usr/local/lib/rustlib/x86_64-apple-darwin/lib
-# export RUST_SRC_PATH=/usr/local/Cellar/rust/1.0.0-beta
-# export RUST_SRC_PATH=$HOME/rust/src #should be default now..
-
-if [ -f ~/.ssh/id_rsa ] && [ -f ~/.ssh/id_rsa.pub ]; then
-  export SSH_KEYS=https://github.com/
-else
-  export SSH_KEYS=NULL
-fi
-
 # added by travis gem
 [ -f /Users/wmmc/.travis/travis.sh ] && source /Users/wmmc/.travis/travis.sh
+
+
+# # rust:
+# # export DYLD_LIBRARY_PATH=/usr/local/lib/rustlib/x86_64-apple-darwin/lib
+# # export RUST_SRC_PATH=/usr/local/Cellar/rust/1.0.0-beta
+# # export RUST_SRC_PATH=$HOME/rust/src #should be default now..
+
+# # use vim as the visual editor
+# export VISUAL=vim
+# export EDITOR=$VISUAL
+
+# # ensure dotfiles bin directory is loaded first
+# export PATH="$HOME/.bin:/usr/local/sbin:$PATH"
+
+# if [ -f ~/.ssh/id_rsa ] && [ -f ~/.ssh/id_rsa.pub ]; then
+#   export SSH_KEYS=https://github.com/
+# else
+#   export SSH_KEYS=NULL
+# fi
+
+# export PATH="$HOME/.bin:$PATH"
+# export BUN="$HOME/.vimrc.bundles.local"
+# export VL="$HOME/.vimrc.local"
+
+# export PS1="%~ $  "
+
+# # enable colored output from ls, etc
+# export CLICOLOR=1
