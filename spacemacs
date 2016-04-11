@@ -459,13 +459,9 @@ layers configuration. You are free to put any user code."
 
 
  ;; ;; dired has a groovy way of going up directories
- ;; (evil-declare-key 'normal dired-mode-map (kbd ";") 'dired-up-directory)
+ (evil-declare-key 'normal dired-mode-map (kbd ";") 'dired-up-directory)
 
-
- ;; (global-set-key (kbd "s-3") `(lambda () (interactive) (insert "#")))
- ;; #
- ;; (define-key evil-insert-state-map (kbd "s-3") `(lambda () (interactive) (insert "#")))
- ;; (define-key evil-normal-state-map "S" 'my-global-ex-search)
+ (define-key evil-insert-state-map (kbd "s-3") `(lambda () (interactive) (insert "#")))
 
 
   )
