@@ -463,6 +463,9 @@ layers configuration. You are free to put any user code."
 
  (define-key evil-insert-state-map (kbd "s-3") `(lambda () (interactive) (insert "#")))
 
+ (define-key evil-insert-state-map "\C-e" 'end-of-line)
+ (define-key evil-visual-state-map "\C-e" 'end-of-line)
+ (define-key evil-normal-state-map "\C-e" 'end-of-line)
 
   )
 
