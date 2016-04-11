@@ -399,6 +399,12 @@ layers configuration. You are free to put any user code."
  ;;    (flet ((process-list ())) ad-do-it))
 
 
+  (defun make-eshell-named (name)
+    "Create a shell buffer named NAME."
+    (eshell)
+    (rename-buffer name))
+
+
  (defun snaptrip_start ()
    "Start all the right processes for snaptrip"
    (interactive)
