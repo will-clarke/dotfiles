@@ -33,6 +33,7 @@ values."
      html
      markdown
      org
+     mu4e
      (git :variables
           git-magit-status-fullscreen t
           git-enable-github-support t
@@ -233,7 +234,7 @@ values."
    ;; Select a scope to highlight delimiters. Possible values are `any',
    ;; `current', `all' or `nil'. Default is `all' (highlight any scope and
    ;; emphasis the current one). (default 'all)
-   dotspacemacs-highlight-delimiters 'all
+   dotspacemacs-highlight-delimiters 'current
    ;; If non nil advises quit functions to keep server open when quitting.
    ;; (default nil)
    dotspacemacs-persistent-server nil
@@ -404,7 +405,6 @@ layers configuration. You are free to put any user code."
     (eshell)
     (rename-buffer name))
 
-
  (defun snaptrip_start ()
    "Start all the right processes for snaptrip"
    (interactive)
@@ -466,6 +466,10 @@ layers configuration. You are free to put any user code."
  (define-key evil-insert-state-map "\C-e" 'end-of-line)
  (define-key evil-visual-state-map "\C-e" 'end-of-line)
  (define-key evil-normal-state-map "\C-e" 'end-of-line)
+
+ (setq kill-buffer-query-functions
+       (remq 'process-kill-buffer-query-function
+             kill-buffer-query-functions))
 
   )
 
