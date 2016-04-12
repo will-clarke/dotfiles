@@ -471,6 +471,23 @@ layers configuration. You are free to put any user code."
        (remq 'process-kill-buffer-query-function
              kill-buffer-query-functions))
 
+ (defun my-require-pry ()
+   (interactive)
+   (save-excursion
+     (evil-insert-newline-above)
+     (indent-according-to-mode)
+     (insert "require 'pry'")
+     (evil-insert-newline-below)
+     (indent-according-to-mode)
+     (insert "binding.pry")))
+
+ (evil-leader/set-key "or" 'my-require-pry)
+
+ (evil-leader/set-key "wo"  'other-window)
+ (evil-leader/set-key "ow"  'other-window)
+
+
+
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
