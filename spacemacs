@@ -487,6 +487,16 @@ layers configuration. You are free to put any user code."
  (evil-leader/set-key "ow"  'other-window)
 
 
+ (evil-leader/set-key "op" '(lambda ()
+                              (interactive)
+                              (inf-ruby-switch-from-compilation)
+                              (end-of-line)
+                              (insert)))
+
+
+ (global-set-key (kbd "M-v") 'yank)
+ (global-set-key (kbd "M-c") 'evil-yank)
+ (global-set-key (kbd "M-a") 'mark-whole-buffer)
 
   )
 
