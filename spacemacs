@@ -32,6 +32,7 @@ values."
            enh-ruby-add-encoding-comment-on-save nil)
      html
      markdown
+     sql
      org
      mu4e
      (git :variables
@@ -494,11 +495,50 @@ layers configuration. You are free to put any user code."
                               (insert)))
 
 
+ (global-set-key (kbd "s-v") 'yank)
  (global-set-key (kbd "M-v") 'yank)
  (global-set-key (kbd "M-c") 'evil-yank)
  (global-set-key (kbd "M-a") 'mark-whole-buffer)
 
-  )
+ ;; postgres:
+ ;; To start:  mx: sql-postgres
+ ;;            Put in login detils
+ ;;              New buffer: omg.sql
+ ;;              Write query. Send it to original SQLi[Postgres] buffer.
+ ;;            Remember the ';' :|
+
+ ;; (setq sql-postgres-login-params
+ ;;       '((user :default (getenv "ST_PG_USER"))
+ ;;         (database :default (getenv "ST_PG_DB"))
+ ;;         (server :default (getenv "ST_PG_SERVER"))
+ ;;         (password :default (getenv "ST_PG_PW"))
+ ;;         (port :default 5662)))
+
+ )
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(sql-connection-alist
+   (quote
+    (("olive"
+      (sql-product
+       (quote postgres))
+      (sql-user (getenv "ST_PG_USER"))
+      (sql-database (getenv "ST_PG_DB"))
+      (sql-server (getenv "ST_PG_SERVER"))
+      (sql-password (getenv "ST_PG_PW"))
+      (sql-port 5662)))))
+ )
+
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(company-tooltip-common ((t (:inherit company-tooltip :weight bold :underline nil))))
+ '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :weight bold :underline nil)))))
