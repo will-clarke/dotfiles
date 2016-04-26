@@ -276,7 +276,7 @@ layers configuration. You are free to put any user code."
     (message "Sourcing environment from `%s'..." filename)
     (with-temp-buffer
       (if use_default_gpg_key
-          (shell-command (format "diff -u <(true; export) <(gpg --passphrase \"`security find-generic-password -a megalolz -s megalolz -w`\"  -d ~/.secrets.gpg)" ) '(4))
+          (shell-command (format "diff -u <(true; export) <(eval $((gpg --passphrase \"`security find-generic-password -a megalolz -s megalolz -w`\"  -d ~/.secrets.gpg) 2> /dev/null); export)" ) '(4))
         (shell-command (format "diff -u <(true; export) <(source %s; export)" filename) '(4))
         )
       (let ((envvar-re "declare -x \\([^=]+\\)=\\(.*\\)$"))
@@ -291,9 +291,7 @@ layers configuration. You are free to put any user code."
             (message "%s" (prin1-to-string `(setenv ,var ,value)))
             (setenv var value)))))
     (message "Sourcing environment from `%s'... done." filename))
-  (source "~/.secrets")
-
-  ;; (source "~/.secrets.gpg" t)
+  (source "~/.secrets.gpg" t)
 
  ;;  (setq org-agenda-files (list "~/todo.org"
  ;;                               "~/Dropbox/Dev/org-mode/work.org"))
