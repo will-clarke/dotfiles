@@ -226,7 +226,7 @@ install_emacs_extensions() {
     brew_install_or_upgrade 'w3m'
     brew_install_or_upgrade 'markdown'
     brew_install_or_upgrade 'msmtp'
-    brew_install_or_upgrade 'mu'
+    brew_install_or_upgrade 'mu --with-emacs --HEAD'
     brew_install_or_upgrade 'isync'
     mkdir -p $HOME/.mail/{gmail,snaptrip}
     mbsync -a && mu index --maildir=$HOME/.mail &

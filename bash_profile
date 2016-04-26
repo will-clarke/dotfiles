@@ -26,3 +26,6 @@ export LIBRARY_PATH="$LIBRARY_PATH:/usr/local/lib"
 
 export EDITOR='vim'
 export PS1="\w > "
+
+# postgres
+export PATH=/Applications/Postgres.app/Contents/Versions/9.4/bin:$PATH

@@ -59,6 +59,16 @@ require "awesome_print"
 AwesomePrint.pry!
 AwesomePrint.defaults = {limit: true}
 
+
+# snaptrip:
+# to avoid #undefined method `cookie_jar` for nil:NilClass
+Draper::ViewContext.build!
+store = RequestStore.store[:current_view_context]
+def store.cookies
+{visitor_email_id: 0}
+end
+
+
 Pry.config.commands.command "limit_true" do |*args|
     AwesomePrint.defaults = {limit: true}
 end

@@ -303,6 +303,7 @@ layers configuration. You are free to put any user code."
 
   (eval-after-load 'tramp '(setenv "SHELL" "/bin/bash"))
   (set-default 'tramp-default-proxies-alist (quote ((".*" "\\`root\\'" "/ssh:%h:"))))
+  ;; example:  C-x C-f /sudo:root@host[#port]:/path/to/file
   (require 'tramp)
   (defun sudo-edit-current-file ()
     (interactive)
@@ -391,7 +392,6 @@ layers configuration. You are free to put any user code."
  ;;  ;; get c-h working
  ;;  (set-keyboard-coding-system nil)
  ;;  (setq mac-pass-command-to-system nil)
-
 
  ;;  ;; Don’t ask me when close emacs with process is running
  ;;  (defadvice save-buffers-kill-emacs (around no-query-kill-emacs activate)
@@ -498,10 +498,13 @@ layers configuration. You are free to put any user code."
  (global-set-key (kbd "M-c") 'evil-yank)
  (global-set-key (kbd "M-a") 'mark-whole-buffer)
 
+ (setq org-mu4e-convert-to-html t)
+
  ;; postgres:
- ;; To start:  mx: sql-postgres
+ ;; To start:  mx: sql-connect -> olive
+ ;; OR:        sql-postgres
  ;;            Put in login detils
- ;;              New buffer: omg.sql
+ ;;              New buffer: whatever.sql
  ;;              Write query. Send it to original SQLi[Postgres] buffer.
  ;;            Remember the ';' :|
 
