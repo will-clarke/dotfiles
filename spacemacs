@@ -34,7 +34,9 @@ values."
      markdown
      sql
      org
-     mu4e
+     (mu4e :variables
+           mu4e-enable-mode-line t
+           mu4e-enable-notifications t)
      (git :variables
           git-magit-status-fullscreen t
           git-enable-github-support t
@@ -203,7 +205,7 @@ values."
    dotspacemacs-loading-progress-bar t
    ;; If non nil the frame is fullscreen when Emacs starts up. (default nil)
    ;; (Emacs 24.4+ only)
-   dotspacemacs-fullscreen-at-startup t
+   dotspacemacs-fullscreen-at-startup nil
    ;; If non nil `spacemacs/toggle-fullscreen' will not use native fullscreen.
    ;; Use to disable fullscreen animations in OSX. (default nil)
    dotspacemacs-fullscreen-use-non-native t
@@ -267,6 +269,13 @@ in `dotspacemacs/user-config'."
 This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
 
+  (with-eval-after-load 'mu4e-alert
+    ;; Enable Desktop notifications
+    ;; (mu4e-alert-set-default-style 'notifications)) ; For linux
+  ;; (mu4e-alert-set-default-style 'libnotify))  ; Alternative for linux
+  ;; (mu4e-alert-set-default-style 'notifier))   ; For Mac OSX (through the
+                                        ; terminal notifier app)
+  (mu4e-alert-set-default-style 'growl))      ; Alternative for Mac OSX
 
   (display-time-mode 1)
 
@@ -398,6 +407,7 @@ layers configuration. You are free to put any user code."
  ;;    "Prevent annoying \"Active processes exist\" query when you quit Emacs."
  ;;    (flet ((process-list ())) ad-do-it))
 
+  (setq eshell-aliases-file (concat dotspacemacs-directory "eshell/alias"))
 
   (defun make-eshell-named (name)
     "Create a shell buffer named NAME."
