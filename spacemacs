@@ -18,6 +18,7 @@ values."
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
    '(
+     yaml
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
@@ -302,6 +303,38 @@ layers configuration. You are free to put any user code."
     (message "Sourcing environment from `%s'... done." filename))
   (source "~/.secrets.gpg" t)
 
+
+
+
+
+
+
+
+
+;;  ;; https://www.emacswiki.org/emacs/CompileCommand
+;;  (add-hook 'c-mode-hook
+;;            (lambda ()
+;;              (unless (file-exists-p "Makefile")
+;;                (set (make-local-variable 'compile-command)
+;;                     ;; emulate make's .c.o implicit pattern rule, but with
+;;                     ;; different defaults for the CC, CPPFLAGS, and CFLAGS
+;;                     ;; variables:
+;;                     ;; $(CC) -c -o $@ $(CPPFLAGS) $(CFLAGS) $<
+;;                     (let ((file (file-name-nondirectory buffer-file-name)))
+;;                       ;; (format "%s -c -o %s.o %s %s %s"
+;;                       (format "%s %s -o %s.o %s %s && ./%s.o"
+;;                               (or (getenv "CC") "gcc")
+;;                               file
+;;                               (file-name-sans-extension file)
+;;                               (or (getenv "CPPFLAGS") "-DDEBUG=9")
+;;                               (or (getenv "CFLAGS") "-ansi -pedantic -Wall -g")
+;;                               (file-name-sans-extension file)
+;;                               ))))))
+
+
+
+
+
  ;;  (setq org-agenda-files (list "~/todo.org"
  ;;                               "~/Dropbox/Dev/org-mode/work.org"))
 
@@ -509,6 +542,12 @@ layers configuration. You are free to put any user code."
  (global-set-key (kbd "M-a") 'mark-whole-buffer)
 
  (setq org-mu4e-convert-to-html t)
+ ;; Set to the location of your Org files on your local system
+ (setq org-directory "~/org")
+ ;; Set to the name of the file where new notes will be stored
+ (setq org-mobile-inbox-for-pull "~/org/flagged.org")
+ ;; Set to <your Dropbox root directory>/MobileOrg.
+ (setq org-mobile-directory "~/Dropbox/Apps/MobileOrg")
 
  ;; postgres:
  ;; To start:  mx: sql-connect -> olive
