@@ -57,7 +57,8 @@ values."
      c-c++
      spotify
      (auto-completion :variables
-                      auto-completion-return-key-behavior 'complete
+                      auto-completion-enable-snippets-in-popup t
+                      auto-completion-return-key-behavior 'nil
                       auto-completion-tab-key-behavior 'cycle
                       auto-completion-complete-with-key-sequence "jk"
                       auto-completion-complete-with-key-sequence-delay 0.1
@@ -69,7 +70,9 @@ values."
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.)
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages '(
+                                      mu4e-alert
+                                      )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
@@ -535,6 +538,8 @@ layers configuration. You are free to put any user code."
                               (end-of-line)
                               (insert)))
 
+ (setq org-agenda-include-diary t)
+
 
  (global-set-key (kbd "s-v") 'yank)
  (global-set-key (kbd "M-v") 'yank)
@@ -578,12 +583,15 @@ layers configuration. You are free to put any user code."
     (("olive"
       (sql-product
        (quote postgres))
-      (sql-user (getenv "ST_PG_USER"))
-      (sql-database (getenv "ST_PG_DB"))
-      (sql-server (getenv "ST_PG_SERVER"))
-      (sql-password (getenv "ST_PG_PW"))
-      (sql-port 5662)))))
- )
+      (sql-user
+       (getenv "ST_PG_USER"))
+      (sql-database
+       (getenv "ST_PG_DB"))
+      (sql-server
+       (getenv "ST_PG_SERVER"))
+      (sql-password
+       (getenv "ST_PG_PW"))
+      (sql-port 5662))))))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
