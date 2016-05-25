@@ -334,12 +334,12 @@ layers configuration. You are free to put any user code."
 ;;                               (file-name-sans-extension file)
 ;;                               ))))))
 
+  (setq projectile-tags-command "ctags -Re -f \"%s\" %s --exclude=*.html --exclude=*.js")
 
-
-
-
- ;;  (setq org-agenda-files (list "~/todo.org"
- ;;                               "~/Dropbox/Dev/org-mode/work.org"))
+  (setq org-agenda-files (list "~/todo.org"
+                               "~/Dropbox/Dev/org-mode/work.org"
+                               "~/org/notes.org"
+                               "~/snaptrip/TODO.org"))
 
   ;; Mac
   (setq vc-follow-symlinks t)
