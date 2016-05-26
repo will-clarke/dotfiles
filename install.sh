@@ -213,9 +213,9 @@ install_totally_pointless_stuff() {
 
 
 install_emacs() {
-    brew tap railwaycat/emacsmacport
-    brew install emacs-mac --with-spacemacs-icon
-    brew linkapps emacs-mac
+    brew tap d12frosted/emacs-plus
+    brew install emacs-plus --with-cocoa --with-gnutls --with-librsvg --with-imagemagick --with-spacemacs-icon
+    brew linkapps
     git clone --recursive https://github.com/syl20bnr/spacemacs ~/.emacs.d
 }
 

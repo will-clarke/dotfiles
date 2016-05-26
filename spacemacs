@@ -72,6 +72,9 @@ values."
    ;; configuration in `dotspacemacs/user-config'.)
    dotspacemacs-additional-packages '(
                                       mu4e-alert
+                                      ;; org-mu4e
+                                      org-projectile
+                                      org-alert
                                       )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
@@ -279,8 +282,11 @@ layers configuration. You are free to put any user code."
   ;; (mu4e-alert-set-default-style 'libnotify))  ; Alternative for linux
   ;; (mu4e-alert-set-default-style 'notifier))   ; For Mac OSX (through the
                                         ; terminal notifier app)
-  (mu4e-alert-set-default-style 'growl))      ; Alternative for Mac OSX
+    (mu4e-alert-set-default-style 'growl)
+    )      ; Alternative for Mac OSX
 
+  (mu4e-alert-enable-notifications)
+  ;; mu4e-alert-enable-mode-line-display
   (display-time-mode 1)
 
   (defun source (filename &optional use_default_gpg_key)
@@ -393,7 +399,8 @@ layers configuration. You are free to put any user code."
    mu4e-refile-folder "/archive"
    mu4e-get-mail-command "mbsync Inboxes; mbsync -a"
    ;; 900 second = 15 minutes
-   mu4e-update-interval 900
+   ;; 300 second = 5 minutes
+   mu4e-update-interval 300
    mu4e-compose-signature-auto-include nil
    mu4e-view-show-images t
    mu4e-view-show-addresses t
@@ -416,6 +423,7 @@ layers configuration. You are free to put any user code."
           ("/gmail/Later" . ?l)))
   (setq mu4e-bookmarks
         `(
+          ("NOT maildir:/archive AND NOT maildir:'/[Gmail].All Mail' AND date:today" "Unread Today" ?b)
           ("maildir:/gmail/Inbox OR maildir:/snaptrip/Inbox" "All Inboxes" ?i)
           ("maildir:/gmail/Later OR maildir:/snaptrip/Later" "All Later" ?l)
           ("date:today..now" "Today's messages" ?t)
@@ -528,6 +536,18 @@ layers configuration. You are free to put any user code."
 
  (evil-leader/set-key "or" 'my-require-pry)
 
+ (defun my_mu4e_buffer ()
+   "Navigate to my mu4e buffer"
+   (interactive)
+   (save-excursion
+     (mu4e-headers-search (concat "NOT maildir:"
+             "\"/archive\" "
+             "AND NOT maildir:"
+             "\"/[Gmail].All Mail\" "
+             "AND date:today"))
+     ))
+ (evil-leader/set-key "om" 'my_mu4e_buffer)
+
  (evil-leader/set-key "wo"  'other-window)
  (evil-leader/set-key "ow"  'other-window)
 
@@ -539,6 +559,21 @@ layers configuration. You are free to put any user code."
                               (insert)))
 
  (setq org-agenda-include-diary t)
+ (global-set-key (kbd "C-`") 'ort/goto-todos)
+
+ (setq alert-default-style 'growl)
+
+ (setq org-mu4e-link-query-in-headers-mode nil)
+ (setq org-capture-templates
+       '(("t" "todo" entry (file+headline "~/todo.org" "Tasks")
+          "* TODO [#A] %?\nSCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n%a\n")))
+
+ (setq mu4e-alert-interesting-mail-query
+       (concat "NOT maildir:"
+               "\"/archive\" "
+               "AND NOT maildir:"
+               "\"/[Gmail].All Mail\" "
+               "AND date:today"))
 
 
  (global-set-key (kbd "s-v") 'yank)
@@ -553,6 +588,10 @@ layers configuration. You are free to put any user code."
  (setq org-mobile-inbox-for-pull "~/org/flagged.org")
  ;; Set to <your Dropbox root directory>/MobileOrg.
  (setq org-mobile-directory "~/Dropbox/Apps/MobileOrg")
+
+ (setq org-agenda-files (list "~/org/todo.org"
+                              "~/snaptrip/todo.org" ))
+
 
  ;; postgres:
  ;; To start:  mx: sql-connect -> olive
