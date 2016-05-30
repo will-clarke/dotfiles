@@ -581,6 +581,8 @@ layers configuration. You are free to put any user code."
  (global-set-key (kbd "M-c") 'evil-yank)
  (global-set-key (kbd "M-a") 'mark-whole-buffer)
 
+ (setq evil-search-module 'evil-search)
+
  (setq org-mu4e-convert-to-html t)
  ;; Set to the location of your Org files on your local system
  (setq org-directory "~/org")
