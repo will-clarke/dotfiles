@@ -69,6 +69,7 @@ values."
    geolocation
    deft
    fasd
+   w3m
    )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -76,9 +77,10 @@ values."
    ;; configuration in `dotspacemacs/user-config'.)
    dotspacemacs-additional-packages '(
                                       mu4e-alert
-                                      ;; org-mu4e
-                                      org-projectile
                                       org-alert
+                                      ;; org-mu4e
+                                      ;; org-projectile
+                                      ;; helm-w3m
                                       )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
@@ -201,7 +203,7 @@ values."
    dotspacemacs-helm-position 'bottom
    ;; If non nil the paste micro-state is enabled. When enabled pressing `p`
    ;; several times cycle between the kill ring content. (default nil)
-   dotspacemacs-enable-paste-micro-state nil
+   dotspacemacs-enable-paste-micro-state t
    ;; Which-key delay in seconds. The which-key buffer is the popup listing
    ;; the commands bound to the current keystroke sequence. (default 0.4)
    dotspacemacs-which-key-delay 0.4
@@ -280,6 +282,19 @@ in `dotspacemacs/user-config'."
 This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
 
+  (setq w3m-home-page "http://www.google.com")
+  ;; W3M Home Page
+  (setq w3m-default-display-inline-images t)
+  (setq w3m-default-toggle-inline-images t)
+  ;; W3M default display images
+  (setq w3m-command-arguments '("-cookie" "-F"))
+  (setq w3m-use-cookies t)
+  ;; W3M use cookies
+  (setq browse-url-browser-function 'w3m-browse-url)
+  ;; Browse url function use w3m
+  (setq w3m-view-this-url-new-session-in-background t)
+  ;; W3M view url new session in background
+
   (with-eval-after-load 'mu4e-alert
     ;; Enable Desktop notifications
     ;; (mu4e-alert-set-default-style 'notifications)) ; For linux
@@ -346,9 +361,8 @@ layers configuration. You are free to put any user code."
 
   (setq projectile-tags-command "ctags -Re -f \"%s\" %s --exclude=*.html --exclude=*.js")
 
-  (setq org-agenda-files (list "~/todo.org"
-                               "~/Dropbox/Dev/org-mode/work.org"
-                               "~/org/notes.org"
+  (setq org-agenda-files (list "~/org"
+                               ;; "~/Dropbox/Dev/org-mode/work.org"
                                "~/snaptrip/TODO.org"))
 
   ;; Mac
@@ -405,12 +419,15 @@ layers configuration. You are free to put any user code."
    ;; 900 second = 15 minutes
    ;; 300 second = 5 minutes
    mu4e-update-interval 300
+   mu4e-hide-index-messages t
+   mu4e-index-update-in-background t
    mu4e-compose-signature-auto-include nil
    mu4e-view-show-images t
    mu4e-view-show-addresses t
    mu4e-html2text-command "w3m -dump -T text/html"
    mu4e-view-prefer-html t
    mu4e-use-fancy-chars t
+   mu4e-split-view 'vertical
    ;; use msmtp
    message-send-mail-function 'message-send-mail-with-sendmail
    sendmail-program "/usr/local/bin/msmtp"
@@ -569,7 +586,7 @@ layers configuration. You are free to put any user code."
 
  (setq org-mu4e-link-query-in-headers-mode nil)
  (setq org-capture-templates
-       '(("t" "todo" entry (file+headline "~/todo.org" "Tasks")
+       '(("t" "todo" entry (file+headline "~/org/todo.org" "Tasks")
           "* TODO [#A] %?\nSCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n%a\n")))
 
  (setq mu4e-alert-interesting-mail-query
@@ -578,6 +595,8 @@ layers configuration. You are free to put any user code."
                "AND NOT maildir:"
                "\"/[Gmail].All Mail\" "
                "AND date:today"))
+
+ (add-to-list 'auto-mode-alist '("\\.log\\'" . auto-revert-mode))
 
 
  (global-set-key (kbd "s-v") 'yank)
@@ -606,7 +625,6 @@ layers configuration. You are free to put any user code."
 
  (setq deft-directory "~/Dropbox/notes")
 
-
  (setq paradox-github-token (getenv "PARADOX_GITHUB_TOKEN"))
 
  ;; postgres:
@@ -633,6 +651,7 @@ layers configuration. You are free to put any user code."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(org-agenda-files (quote ("~/snaptrip/todo.org")))
  '(sql-connection-alist
    (quote
     (("olive"
