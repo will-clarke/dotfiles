@@ -56,15 +56,19 @@ values."
      syntax-checking
      c-c++
      spotify
-     (auto-completion :variables
-                      auto-completion-enable-snippets-in-popup t
-                      auto-completion-return-key-behavior 'nil
-                      auto-completion-tab-key-behavior 'cycle
-                      auto-completion-complete-with-key-sequence "jk"
-                      auto-completion-complete-with-key-sequence-delay 0.1
-                      auto-completion-private-snippets-directory "~/.spacemacs.d/snippets/")
+     auto-completion
+     ;; (auto-completion :variables
+                      ;; auto-completion-enable-snippets-in-popup t
+                      ;; auto-completion-return-key-behavior 'nil
+                      ;; auto-completion-tab-key-behavior 'cycle
+                      ;; ;; auto-completion-complete-with-key-sequence "jk"
+                      ;; auto-completion-complete-with-key-sequence-delay 0.1
+                      ;; auto-completion-private-snippets-directory "~/.spacemacs.d/snippets/")
    ruby-on-rails
    restclient
+   geolocation
+   deft
+   fasd
    )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -594,6 +598,16 @@ layers configuration. You are free to put any user code."
  (setq org-agenda-files (list "~/org/todo.org"
                               "~/snaptrip/todo.org" ))
 
+ (setq org-bullets-bullet-list '("◉" "◎" "⚫" "○" "►" "◇"))
+
+ (global-set-key (kbd "s-=") 'spacemacs/scale-up-font)
+ (global-set-key (kbd "s--") 'spacemacs/scale-down-font)
+ (global-set-key (kbd "s-a") 'mark-whole-buffer)
+
+ (setq deft-directory "~/Dropbox/notes")
+
+
+ (setq paradox-github-token (getenv "PARADOX_GITHUB_TOKEN"))
 
  ;; postgres:
  ;; To start:  mx: sql-connect -> olive
