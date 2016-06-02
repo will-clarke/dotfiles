@@ -85,6 +85,7 @@ end
 # link from ~/Dropbox/dev/secrets to ~/.secret_file
 class Dropbox
   def link_secrets_from_dropbox
+    `ln -s ~/Dropbox/org/ ~/org/`
     each_secret_file_and_destination do |secret_file, destination|
       if ::Pathname.new(destination).exist?
         p "Exists:   #{destination} [SECRET]"
@@ -96,6 +97,7 @@ class Dropbox
   end
 
   def unlink_secrets_from_dropbox
+    `rm ~/org`
     each_secret_file_and_destination do |secret_file, destination|
       if ::Pathname.new(destination).exist?
         FileUtils.rm_rf(destination)
