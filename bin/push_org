@@ -1,0 +1,10 @@
+#!/bin/sh
+if [ ! -d ~/org ]; then
+    echo "File not found!"
+    exit 0
+fi
+
+cd ~/org
+git add .
+git commit -m "Automatic Changes from Cron"
+git push origin master

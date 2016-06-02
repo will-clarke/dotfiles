@@ -1,0 +1,14 @@
+# el capitan makes crontab really hard.
+#   http://stackoverflow.com/questions/32781884/is-crontab-broken-on-osx-el-capitan
+#
+# env EDITOR=nano crontab -e
+# crontab -l
+
+
+#=====================================================================#
+# General                                                             #
+#=====================================================================#
+#  Min  |  Hour  |  Mday  |  Month  |  Wday  |  Command               #
+#=====================================================================#
+#  *       /30        *        *         *     push_org               #
+#=====================================================================#
