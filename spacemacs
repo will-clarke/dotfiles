@@ -78,9 +78,10 @@ values."
    dotspacemacs-additional-packages '(
                                       mu4e-alert
                                       org-alert
+                                      helm-w3m
+                                      org-mac-link
                                       ;; org-mu4e
                                       ;; org-projectile
-                                      ;; helm-w3m
                                       )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
@@ -388,9 +389,11 @@ layers configuration. You are free to put any user code."
          (concat "/sudo:root@localhost:" (buffer-file-name))))
       (goto-char position)))
 
-
+  (require 'org-mac-link)
+  (require 'helm-w3m)
 
   ;; Email
+  (setq magit-emacsclient-executable "/usr/local/bin/emacsclient")
   (setq mu4e-account-alist
         '(("gmail"
            (mu4e-sent-messages-behavior delete)
@@ -585,10 +588,6 @@ layers configuration. You are free to put any user code."
  (setq alert-default-style 'growl)
 
  (setq org-mu4e-link-query-in-headers-mode nil)
- (setq org-capture-templates
-       '(("t" "todo" entry (file+headline "~/org/todo.org" "Tasks")
-          "* TODO [#A] %?\nSCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n%a\n")))
-
  (setq mu4e-alert-interesting-mail-query
        (concat "NOT maildir:"
                "\"/archive\" "
@@ -628,6 +627,125 @@ layers configuration. You are free to put any user code."
  (setq paradox-github-token (getenv "PARADOX_GITHUB_TOKEN"))
 
  (setq mu4e-mu-binary "/usr/local/bin/mu")
+
+
+
+ (defvar my/org-basic-task-template "* TODO %^{Task}
+:PROPERTIES:
+:Effort: %^{effort|1:00|0:05|0:15|0:30|2:00|4:00}
+:END:
+Captured %<%Y-%m-%d %H:%M>
+%?
+
+%i
+" "Basic task data")
+
+ (setq org-capture-templates '(
+                               ;; ("ort/checkitem" "Org Repo Checklist Item" checkitem
+                               ;;  (file+headline
+                               ;;   (ort/todo-file)
+                               ;;   "Checklist"))
+                               ;; ("ort/todo" "Org Repo Todo" entry
+                               ;;  (file+headline
+                               ;;   (ort/todo-file)
+                               ;;   "Todos")
+                               ;;  "* TODO %?\n%U\n\n%i" :empty-lines 1)
+                               ("1" "~/org/todo.org #Tasks" entry
+                                (file+headline "~/org/todo.org" "Tasks")
+                                "* TODO [#A] %?\nSCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n%a\n")
+                               ;; ("t" "~/org/todo.org #Tasks" entry
+                               ;;  (file+headline "~/org/todo.org" "Tasks")
+                               ;;  "* TODO %?\nSCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n%a\n")
+                               ;; ("s" "Snaptrip" entry
+                               ;;  (file+headline "~/snaptrip/todo.org" "Inbox")
+                               ;;  "Todo")
+
+                               ;; ("s" "todo" entry (file "~/snaptrip/todo.org")
+                               ;;  "* TODO %?\n%U\n%a\n" )
+
+
+                               ;; ("t" "todo" entry (file "~/org/todo.org")
+                               ;;  "* TODO %?\n%U\n%a\n" :clock-in t :clock-resume t)
+                               ;; ("r" "respond" entry (file "~/org/todo.org")
+                               ;;  "* NEXT Respond to %:from on %:subject\nSCHEDULED: %t\n%U\n%a\n" :clock-in t :clock-resume t :immediate-finish t)
+                               ;; ("n" "note" entry (file "~/org/todo.org")
+                               ;;  "* %? :NOTE:\n%U\n%a\n" :clock-in t :clock-resume t)
+                               ;; ("j" "Journal" entry (file+datetree "~/git/org/diary.org")
+                               ;;  "* %?\n%U\n" :clock-in t :clock-resume t)
+                               ;; ("w" "org-protocol" entry (file "~/org/todo.org")
+                               ;;  "* TODO Review %c\n%U\n" :immediate-finish t)
+                               ;; ("m" "Meeting" entry (file "~/org/todo.org")
+                               ;;  "* MEETING with %? :MEETING:\n%U" :clock-in t :clock-resume t)
+                               ;; ("p" "Phone call" entry (file "~/org/todo.org")
+                               ;;  "* PHONE %? :PHONE:\n%U" :clock-in t :clock-resume t)
+                               ;; ("h" "Habit" entry (file "~/org/todo.org")
+                               ;;  "* NEXT %?\n%U\n%a\nSCHEDULED: %(format-time-string \"%<<%Y-%m-%d %a .+1d/3d>>\")\n:PROPERTIES:\n:STYLE: habit\n:REPEAT_TO_STATE: NEXT\n:END:\n")
+
+
+                               ("t" "Task" entry
+                                (file "~/Org/refile.org")
+                                "* TODO %?\n")
+                               ("T" "Clock-in Task" entry
+                                (file "~/Org/refile.org")
+                                "* TODO %?\n"
+                                :clock-in t
+                                :clock-resume t)
+                               ("d" "Distraction in a pomodoro" entry
+                                (file "~/Org/refile.org")
+                                "* TODO %^{Task}\n  SCHEDULED: %t\n"
+                                :immediate-finish t)
+                               ("n" "Note" entry
+                                (file "~/Org/refile.org")
+                                "* %?\n")
+                               ("l" "Note with link to current file" entry
+                                (file "~/Org/refile.org")
+                                "* %a")
+                               ("j" "Journal" entry
+                                (file+datetree "~/Org/diary.org")
+                                "* %^{Content}\n"
+                                :clock-in t
+                                :clock-resume t)
+                               ("J" "Journal from Phone" entry
+                                (file+datetree "~/Org/diary.org")
+                                "* %^{Content}\n  :LOGBOOK:\n  CLOCK: %^{Begin}U--%^{End}U\n  :END:")
+
+                               ("c" "Link from Chrome" entry
+                                (file "~/Org/refile.org")
+                                "* %(org-mac-chrome-get-frontmost-url)")
+                               ("C" "Clock-in Link from Chrome" entry
+                                (file "~/Org/refile.org")
+                                "* %(org-mac-chrome-get-frontmost-url)"
+                                :clock-in t
+                                :clock-resume t)
+                               ))
+ ;; ("t" "Tasks" entry
+ ;;  (file+headline "~/org/todo.org" "Inbox")
+ ;;  ,my/org-basic-task-template)
+ ;; ("T" "Quick task" entry
+ ;;  (file+headline "~/org/todo.org" "Inbox")
+ ;;  "* TODO %^{Task}\nSCHEDULED: %t\n"
+ ;;  :immediate-finish t)
+ ;; ("i" "Interrupting task" entry
+ ;;  (file+headline "~/org/todo.org" "Inbox")
+ ;;  "* STARTED %^{Task}"
+ ;;  :clock-in :clock-resume)
+ ;; ("e" "Emacs idea" entry
+ ;;  (file+headline "~/org/todo.org" "Emacs")
+ ;;  "* TODO %^{Task}"
+ ;;  :immediate-finish t)
+ ;; ("E" "Energy" table-line
+ ;;  (file+headline "~/org/notes.org" "Track energy")
+ ;;  "| %U | %^{Energy 5-awesome 3-fuzzy 1-zzz} | %^{Note} |"
+ ;;  :immediate-finish t
+ ;;  )
+
+ (setq org-refile-targets '((nil :maxlevel . 2)
+                            (org-agenda-files :maxlevel . 2)))
+ (setq org-outline-path-complete-in-steps nil)         ; Refile in a single go
+ (setq org-refile-use-outline-path t)                  ; Show full paths for refiling
+
+ (setq org-clone-delete-id t)
+
 
  ;; postgres:
  ;; To start:  mx: sql-connect -> olive
