@@ -627,6 +627,8 @@ layers configuration. You are free to put any user code."
 
  (setq paradox-github-token (getenv "PARADOX_GITHUB_TOKEN"))
 
+ (setq mu4e-mu-binary "/usr/local/bin/mu")
+
  ;; postgres:
  ;; To start:  mx: sql-connect -> olive
  ;; OR:        sql-postgres
