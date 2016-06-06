@@ -739,6 +739,8 @@ Captured %<%Y-%m-%d %H:%M>
  ;;  :immediate-finish t
  ;;  )
 
+ (setq-default dotspacemacs-persistent-server t)
+
  (setq org-refile-targets '((nil :maxlevel . 2)
                             (org-agenda-files :maxlevel . 2)))
  (setq org-outline-path-complete-in-steps nil)         ; Refile in a single go
