@@ -683,37 +683,28 @@ Captured %<%Y-%m-%d %H:%M>
 
 
                                ("t" "Task" entry
-                                (file "~/Org/refile.org")
+                                (file "~/org/refile.org")
                                 "* TODO %?\n")
                                ("T" "Clock-in Task" entry
-                                (file "~/Org/refile.org")
+                                (file "~/org/refile.org")
                                 "* TODO %?\n"
                                 :clock-in t
                                 :clock-resume t)
                                ("d" "Distraction in a pomodoro" entry
-                                (file "~/Org/refile.org")
+                                (file "~/org/refile.org")
                                 "* TODO %^{Task}\n  SCHEDULED: %t\n"
                                 :immediate-finish t)
                                ("n" "Note" entry
-                                (file "~/Org/refile.org")
+                                (file "~/org/refile.org")
                                 "* %?\n")
                                ("l" "Note with link to current file" entry
-                                (file "~/Org/refile.org")
+                                (file "~/org/refile.org")
                                 "* %a")
-                               ("j" "Journal" entry
-                                (file+datetree "~/Org/diary.org")
-                                "* %^{Content}\n"
-                                :clock-in t
-                                :clock-resume t)
-                               ("J" "Journal from Phone" entry
-                                (file+datetree "~/Org/diary.org")
-                                "* %^{Content}\n  :LOGBOOK:\n  CLOCK: %^{Begin}U--%^{End}U\n  :END:")
-
                                ("c" "Link from Chrome" entry
-                                (file "~/Org/refile.org")
+                                (file "~/org/refile.org")
                                 "* %(org-mac-chrome-get-frontmost-url)")
                                ("C" "Clock-in Link from Chrome" entry
-                                (file "~/Org/refile.org")
+                                (file "~/org/refile.org")
                                 "* %(org-mac-chrome-get-frontmost-url)"
                                 :clock-in t
                                 :clock-resume t)
