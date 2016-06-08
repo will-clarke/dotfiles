@@ -371,6 +371,8 @@ layers configuration. You are free to put any user code."
   (setq mac-option-modifier 'super)
   (setq mac-command-modifier 'meta)
 
+  ;; normal tramp use: SPC-F-F `/ssh:pi:` or /ssh:user@ip:/directory/file.txt
+  ;;   uses ~/.ssh/config
   (eval-after-load 'tramp '(setenv "SHELL" "/bin/bash"))
   (set-default 'tramp-default-proxies-alist (quote ((".*" "\\`root\\'" "/ssh:%h:"))))
   ;; example:  C-x C-f /sudo:root@host[#port]:/path/to/file
