@@ -18,6 +18,7 @@ values."
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
    '(
+     javascript
      yaml
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
@@ -56,7 +57,7 @@ values."
      syntax-checking
      c-c++
      spotify
-     auto-completion
+     ;; auto-completion
      ;; (auto-completion :variables
                       ;; auto-completion-enable-snippets-in-popup t
                       ;; auto-completion-return-key-behavior 'nil
@@ -731,6 +732,8 @@ Captured %<%Y-%m-%d %H:%M>
  ;;  "| %U | %^{Energy 5-awesome 3-fuzzy 1-zzz} | %^{Note} |"
  ;;  :immediate-finish t
  ;;  )
+
+ (spacemacs/toggle-smartparens-globally-off)
 
  (setq-default dotspacemacs-persistent-server t)
 
