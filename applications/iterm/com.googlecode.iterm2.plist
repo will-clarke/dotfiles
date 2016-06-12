@@ -1009,22 +1009,85 @@
 	<true/>
 	<key>MaxVertically</key>
 	<false/>
+	<key>NSFontPanelAttributes</key>
+	<string>1, 0</string>
 	<key>NSNavLastRootDirectory</key>
-	<string>~/dotfiles/applications/iterm</string>
+	<string>~</string>
 	<key>NSNavPanelExpandedSizeForOpenMode</key>
 	<string>{712, 448}</string>
+	<key>NSNavPanelExpandedSizeForSaveMode</key>
+	<string>{712, 565}</string>
 	<key>NSQuotedKeystrokeBinding</key>
 	<string></string>
 	<key>NSRepeatCountBinding</key>
 	<string></string>
 	<key>NSScrollAnimationEnabled</key>
 	<false/>
+	<key>NSScrollViewShouldScrollUnderTitlebar</key>
+	<false/>
+	<key>NSTableView Columns KeyBingingTable</key>
+	<array>
+		<data>
+		BAtzdHJlYW10eXBlZIHoA4QBQISEhAhOU1N0cmluZwGEhAhOU09iamVjdACF
+		hAErATCG
+		</data>
+		<string>198</string>
+		<data>
+		BAtzdHJlYW10eXBlZIHoA4QBQISEhAhOU1N0cmluZwGEhAhOU09iamVjdACF
+		hAErATGG
+		</data>
+		<string>322</string>
+	</array>
+	<key>NSTableView Hidden Columns KeyBingingTable</key>
+	<array/>
+	<key>NSTableView Sort Ordering KeyBingingTable</key>
+	<array/>
+	<key>NSToolbar Configuration com.apple.NSColorPanel</key>
+	<dict>
+		<key>TB Is Shown</key>
+		<integer>1</integer>
+	</dict>
+	<key>NSUserKeyEquivalents</key>
+	<dict>
+		<key>Clear Buffer</key>
+		<string>@~^k</string>
+		<key>Find Cursor</key>
+		<string>@~^/</string>
+		<key>Jump to Selection</key>
+		<string>@~^k</string>
+		<key>Toggle Solarized.scpt</key>
+		<string></string>
+	</dict>
+	<key>NSWindow Frame NSFontPanel</key>
+	<string>368 167 698 502 0 0 1440 877 </string>
 	<key>NSWindow Frame Preferences</key>
-	<string>1932 640 924 485 1366 302 1920 1057 </string>
+	<string>100 404 606 456 0 0 1440 877 </string>
+	<key>NSWindow Frame UKCrashReporter</key>
+	<string>99 294 592 584 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>1384 338 1810 1008 1366 302 1920 1057 </string>
+	<string>0 4 1440 873 0 0 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>169 100 570 451 0 0 1366 745 </string>
+	<string>0 4 1440 873 0 0 1440 877 </string>
+	<key>NSWindow Frame iTerm Window 10</key>
+	<string>0 4 1440 873 0 0 1440 877 </string>
+	<key>NSWindow Frame iTerm Window 11</key>
+	<string>0 4 1440 873 0 0 1440 877 </string>
+	<key>NSWindow Frame iTerm Window 2</key>
+	<string>0 4 1440 873 0 0 1440 877 </string>
+	<key>NSWindow Frame iTerm Window 3</key>
+	<string>720 4 720 873 0 0 1440 877 </string>
+	<key>NSWindow Frame iTerm Window 4</key>
+	<string>0 4 1440 873 0 0 1440 877 </string>
+	<key>NSWindow Frame iTerm Window 5</key>
+	<string>0 4 1440 873 0 0 1440 877 </string>
+	<key>NSWindow Frame iTerm Window 6</key>
+	<string>0 4 1440 873 0 0 1440 877 </string>
+	<key>NSWindow Frame iTerm Window 7</key>
+	<string>0 4 1440 873 0 0 1440 877 </string>
+	<key>NSWindow Frame iTerm Window 8</key>
+	<string>0 4 1440 873 0 0 1440 877 </string>
+	<key>NSWindow Frame iTerm Window 9</key>
+	<string>0 4 1440 873 0 0 1440 877 </string>
 	<key>NeverWarnAboutShortLivedSessions_76498BB4-4838-4273-886E-C1AB5D674116</key>
 	<true/>
 	<key>New Bookmarks</key>
@@ -1578,7 +1641,7 @@
 			<key>Screen</key>
 			<integer>-1</integer>
 			<key>Scrollback Lines</key>
-			<integer>1000</integer>
+			<integer>100000</integer>
 			<key>Scrollback With Status Bar</key>
 			<true/>
 			<key>Scrollback in Alternate Screen</key>
@@ -1743,10 +1806,31 @@
 			<string>/Users/wmmc</string>
 		</dict>
 	</array>
+	<key>NoSyncDoNotWarnBeforePastingOneLineEndingInNewlineAtShellPrompt</key>
+	<true/>
+	<key>NoSyncDoNotWarnBeforePastingOneLineEndingInNewlineAtShellPrompt_selection</key>
+	<integer>1</integer>
+	<key>NoSyncInstallationId</key>
+	<string>E043D692-FC07-4678-AA39-DD4278EAB794</string>
+	<key>NoSyncLastTipTime</key>
+	<real>487376152.76971</real>
+	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
+	<true/>
+	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
+	<integer>0</integer>
+	<key>NoSyncPermissionToShowTip</key>
+	<true/>
+	<key>NoSyncTimeOfFirstLaunchOfVersionWithTip</key>
+	<real>486770365.67191797</real>
 	<key>NoSyncTimeOfLastPromo</key>
-	<real>470160542.38711601</real>
+	<real>453578193.52679402</real>
 	<key>NoSyncTimeOfLastPromoDownload</key>
-	<real>474462517.19320399</real>
+	<real>486603127.61260903</real>
+	<key>NoSyncTipsToNotShow</key>
+	<array>
+		<string>000</string>
+		<string>0000</string>
+	</array>
 	<key>OnlyWhenMoreTabs</key>
 	<true/>
 	<key>OpenArrangementAtStartup</key>
@@ -1795,7 +1879,7 @@
 		</dict>
 	</dict>
 	<key>PrefsCustomFolder</key>
-	<string>/Users/wmmc/dotfiles/applications/iterm</string>
+	<string>~/dotfiles/applications/iterm</string>
 	<key>PromptOnQuit</key>
 	<false/>
 	<key>QuitWhenAllWindowsClosed</key>
@@ -1806,12 +1890,14 @@
 	<integer>3</integer>
 	<key>SUEnableAutomaticChecks</key>
 	<true/>
+	<key>SUFeedAlternateAppNameKey</key>
+	<string>iTerm</string>
 	<key>SUFeedURL</key>
-	<string>https://iterm2.com/appcasts/testing.xml</string>
+	<string>https://iterm2.com/appcasts/testing.xml?shard=90</string>
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2016-01-14T11:08:21Z</date>
+	<date>2016-06-12T10:43:49Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Show Toolbelt</key>
@@ -1836,6 +1922,8 @@
 	<integer>10</integer>
 	<key>TripleClickSelectsFullWrappedLines</key>
 	<false/>
+	<key>UKCrashReporterLastCrashReportDate</key>
+	<real>1410943360</real>
 	<key>URLHandlersByGuid</key>
 	<dict/>
 	<key>UseBorder</key>
@@ -1859,6 +1947,6 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>2.1.4</string>
+	<string>3.0.0</string>
 </dict>
 </plist>

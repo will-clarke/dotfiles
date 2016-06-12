@@ -366,6 +366,8 @@ layers configuration. You are free to put any user code."
   (setq org-agenda-files (list "~/org"
                                ;; "~/Dropbox/Dev/org-mode/work.org"
                                "~/snaptrip/TODO.org"))
+  (org-babel-do-load-languages
+   'org-babel-load-languages '((C . t)))
 
   ;; Mac
   (setq vc-follow-symlinks t)
@@ -619,7 +621,7 @@ layers configuration. You are free to put any user code."
  (setq org-agenda-files (list "~/org/todo.org"
                               "~/snaptrip/todo.org" ))
 
- (setq org-bullets-bullet-list '("◉" "◎" "⚫" "○" "►" "◇"))
+ (setq org-bullets-bullet-list '("⚫" "○" "◉" "◎" "►" "◇"))
 
  (global-set-key (kbd "s-=") 'spacemacs/scale-up-font)
  (global-set-key (kbd "s--") 'spacemacs/scale-down-font)
