@@ -18,7 +18,6 @@ values."
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
    '(
-     javascript
      yaml
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
@@ -67,17 +66,15 @@ values."
                       ;; auto-completion-private-snippets-directory "~/.spacemacs.d/snippets/")
    ruby-on-rails
    restclient
-   geolocation
    deft
    fasd
-   w3m
    )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.)
    dotspacemacs-additional-packages '(
-                                      mu4e-alert
+                                      ;; mu4e-alert
                                       org-alert
                                       helm-w3m
                                       org-mac-link
@@ -284,6 +281,8 @@ in `dotspacemacs/user-config'."
 This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
 
+
+  (evil-leader/set-key "os" 'w3m-search)
   (setq w3m-home-page "http://www.google.com")
   ;; W3M Home Page
   (setq w3m-default-display-inline-images t)
@@ -292,7 +291,7 @@ layers configuration. You are free to put any user code."
   (setq w3m-command-arguments '("-cookie" "-F"))
   (setq w3m-use-cookies t)
   ;; W3M use cookies
-  (setq browse-url-browser-function 'w3m-browse-url)
+  ;; (setq browse-url-browser-function 'w3m-browse-url)
   ;; Browse url function use w3m
   (setq w3m-view-this-url-new-session-in-background t)
   ;; W3M view url new session in background
@@ -610,7 +609,6 @@ layers configuration. You are free to put any user code."
 
  (setq evil-search-module 'evil-search)
 
- (setq org-mu4e-convert-to-html t)
  ;; Set to the location of your Org files on your local system
  (setq org-directory "~/org")
  ;; Set to the name of the file where new notes will be stored
@@ -633,6 +631,7 @@ layers configuration. You are free to put any user code."
 
  (setq mu4e-mu-binary "/usr/local/bin/mu")
 
+ ;; ag: -G\.js something
 
 
  (defvar my/org-basic-task-template "* TODO %^{Task}
@@ -714,6 +713,7 @@ Captured %<%Y-%m-%d %H:%M>
                                 :clock-in t
                                 :clock-resume t)
                                ))
+
  ;; ("t" "Tasks" entry
  ;;  (file+headline "~/org/todo.org" "Inbox")
  ;;  ,my/org-basic-task-template)
@@ -734,6 +734,17 @@ Captured %<%Y-%m-%d %H:%M>
  ;;  "| %U | %^{Energy 5-awesome 3-fuzzy 1-zzz} | %^{Note} |"
  ;;  :immediate-finish t
  ;;  )
+ (require 'org-mu4e)
+ (setq org-mu4e-convert-to-html t)
+ ;; mu4e org: M-x org~mu4e-mime-switch-headers-or-body
+ ;; https://github.com/djcb/mu/pull/196#issuecomment-36305657
+ (defun org-export-string-hack (string backend &optional body-only ext-plist)
+   (org-export-string-as (concat "#+OPTIONS: tex:dvipng toc:nil
+" string) 'html t))
+ (defalias 'org-export-string 'org-export-string-hack)
+
+ (setq mu4e-refile-folder "/archive")
+
 
  (spacemacs/toggle-smartparens-globally-off)
 
