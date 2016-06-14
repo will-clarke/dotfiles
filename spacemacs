@@ -82,7 +82,8 @@ values."
                                       ;; org-projectile
                                       )
    ;; A list of packages and/or extensions that will not be install and loaded.
-   dotspacemacs-excluded-packages '()
+   dotspacemacs-excluded-packages '(
+                                    smartparens)
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
    ;; are declared in a layer which is not a member of
    ;; the list `dotspacemacs-configuration-layers'. (default t)
@@ -744,6 +745,8 @@ Captured %<%Y-%m-%d %H:%M>
  (defalias 'org-export-string 'org-export-string-hack)
 
  (setq mu4e-refile-folder "/archive")
+
+ (setq disaster-objdump "gobjdump -d -M intel -Sl --no-show-raw-insn")
 
 
  (spacemacs/toggle-smartparens-globally-off)

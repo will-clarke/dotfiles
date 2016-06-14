@@ -44,7 +44,6 @@ alias test="ruby -I test"
 # Rails
 alias migrate="rake db:migrate db:rollback && rake db:migrate"
 alias ret="RAILS_ENV=test"
-alias m="migrate"
 alias rk="rake"
 alias s="rspec"
 alias fr="foreman run"
@@ -82,3 +81,6 @@ alias e='open -a /Applications/Emacs.app $1'
 alias ec='/Applications/Emacs.app/Contents/MacOS/bin/emacsclient'
 
 alias markdown='open -a /Applications/Marked\ 2 $1'
+
+# c
+alias m='make'
