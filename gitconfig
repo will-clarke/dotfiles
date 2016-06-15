@@ -8,6 +8,10 @@
 [color]
   ui = auto
 [alias]
+  frankenstash = "!f() { \n\
+                   touch $(git rev-parse --git-dir)/logs/refs/stash \n\
+                   git update-ref refs/stash $1 \n\
+              }; f"
   aa = add --all
   ap = add --patch
   ca = commit --amend

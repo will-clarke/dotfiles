@@ -579,6 +579,7 @@ layers configuration. You are free to put any user code."
 
  (evil-leader/set-key "wo"  'other-window)
  (evil-leader/set-key "ow"  'other-window)
+ (evil-leader/set-key "ol"  'link-hint-open-link-at-point)
 
 
  (evil-leader/set-key "op" '(lambda ()
