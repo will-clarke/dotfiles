@@ -580,6 +580,27 @@ layers configuration. You are free to put any user code."
  (evil-leader/set-key "wo"  'other-window)
  (evil-leader/set-key "ow"  'other-window)
  (evil-leader/set-key "ol"  'link-hint-open-link-at-point)
+ (evil-leader/set-key "oc" 'my/w3m-chrome)
+
+ (defun my/current-chrome-url ()
+   (interactive)
+   (do-applescript
+    (concat
+     "set frontmostApplication to path to frontmost application\n"
+     "tell application \"Google Chrome\"\n"
+     "	set theUrl to get URL of active tab of first window\n"
+     "	set theResult to (get theUrl)\n"
+     "end tell\n"
+     "return theResult as string\n"
+     )
+    )
+   )
+
+ (defun my/w3m-chrome ()
+   "Open w3m with whatever's in Chrome"
+   (interactive)
+   (w3m-goto-url (my/current-chrome-url))
+   )
 
 
  (evil-leader/set-key "op" '(lambda ()
@@ -748,9 +769,6 @@ Captured %<%Y-%m-%d %H:%M>
  (setq mu4e-refile-folder "/archive")
 
  (setq disaster-objdump "gobjdump -d -M intel -Sl --no-show-raw-insn")
-
-
- (spacemacs/toggle-smartparens-globally-off)
 
  (setq-default dotspacemacs-persistent-server t)
 
