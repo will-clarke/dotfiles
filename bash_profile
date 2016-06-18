@@ -25,7 +25,7 @@ source "/usr/local/bin/virtualenvwrapper.sh"
 export LIBRARY_PATH="$LIBRARY_PATH:/usr/local/lib"
 
 export EDITOR='emacsclient -c'
-export PS1="\w > "
+# export PS1="\w > "
 
 # postgres
 export PATH=/Applications/Postgres.app/Contents/Versions/9.4/bin:$PATH
