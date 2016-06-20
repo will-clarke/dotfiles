@@ -83,8 +83,7 @@ values."
                                       ;; org-projectile
                                       )
    ;; A list of packages and/or extensions that will not be install and loaded.
-   dotspacemacs-excluded-packages '(
-                                    smartparens)
+   dotspacemacs-excluded-packages '()
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
    ;; are declared in a layer which is not a member of
    ;; the list `dotspacemacs-configuration-layers'. (default t)
@@ -494,6 +493,7 @@ layers configuration. You are free to put any user code."
    "Start all the right processes for snaptrip"
    (interactive)
    (require 'linum)
+   (rbenv-use "2.1.8")
    (save-excursion
    (let (
          (original-buffer (buffer-name))
