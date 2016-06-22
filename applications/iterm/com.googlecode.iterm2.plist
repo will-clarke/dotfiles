@@ -17,7 +17,7 @@
 	<key>AutoHideTmuxClientSession</key>
 	<true/>
 	<key>CheckTestRelease</key>
-	<true/>
+	<false/>
 	<key>ClosingHotkeySwitchesSpaces</key>
 	<true/>
 	<key>CommandSelection</key>
@@ -849,7 +849,7 @@
 			<key>Action</key>
 			<integer>10</integer>
 			<key>Text</key>
-			<string>A</string>
+			<string>[A</string>
 		</dict>
 		<key>0x7f-0x100000</key>
 		<dict>
@@ -1062,6 +1062,8 @@
 	<string>368 167 698 502 0 0 1440 877 </string>
 	<key>NSWindow Frame Preferences</key>
 	<string>100 404 606 456 0 0 1440 877 </string>
+	<key>NSWindow Frame SUUpdateAlert</key>
+	<string>410 364 620 392 0 0 1440 877 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>99 294 592 584 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
@@ -1806,6 +1808,12 @@
 			<string>/Users/wmmc</string>
 		</dict>
 	</array>
+	<key>NoSyncConfirmBeta</key>
+	<true/>
+	<key>NoSyncDoNotWarnBeforeMultilinePaste</key>
+	<true/>
+	<key>NoSyncDoNotWarnBeforeMultilinePaste_selection</key>
+	<integer>0</integer>
 	<key>NoSyncDoNotWarnBeforePastingOneLineEndingInNewlineAtShellPrompt</key>
 	<true/>
 	<key>NoSyncDoNotWarnBeforePastingOneLineEndingInNewlineAtShellPrompt_selection</key>
@@ -1813,7 +1821,7 @@
 	<key>NoSyncInstallationId</key>
 	<string>E043D692-FC07-4678-AA39-DD4278EAB794</string>
 	<key>NoSyncLastTipTime</key>
-	<real>487376152.76971</real>
+	<real>487879475.91327697</real>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
@@ -1830,6 +1838,9 @@
 	<array>
 		<string>000</string>
 		<string>0000</string>
+		<string>0001</string>
+		<string>0002</string>
+		<string>0003</string>
 	</array>
 	<key>OnlyWhenMoreTabs</key>
 	<true/>
@@ -1880,6 +1891,8 @@
 	</dict>
 	<key>PrefsCustomFolder</key>
 	<string>~/dotfiles/applications/iterm</string>
+	<key>Print In Black And White</key>
+	<true/>
 	<key>PromptOnQuit</key>
 	<false/>
 	<key>QuitWhenAllWindowsClosed</key>
@@ -1888,16 +1901,18 @@
 	<integer>8</integer>
 	<key>RightOption</key>
 	<integer>3</integer>
+	<key>SUAutomaticallyUpdate</key>
+	<true/>
 	<key>SUEnableAutomaticChecks</key>
 	<true/>
 	<key>SUFeedAlternateAppNameKey</key>
 	<string>iTerm</string>
 	<key>SUFeedURL</key>
-	<string>https://iterm2.com/appcasts/testing.xml?shard=90</string>
+	<string>https://iterm2.com/appcasts/final.xml?shard=90</string>
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2016-06-12T10:43:49Z</date>
+	<date>2016-06-17T16:21:09Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Show Toolbelt</key>
@@ -1947,6 +1962,6 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>3.0.0</string>
+	<string>3.0.2</string>
 </dict>
 </plist>
