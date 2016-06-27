@@ -29,3 +29,4 @@ export EDITOR='emacsclient -c'
 
 # postgres
 export PATH=/Applications/Postgres.app/Contents/Versions/9.4/bin:$PATH
+if [ -e /Users/wmmc/.nix-profile/etc/profile.d/nix.sh ]; then . /Users/wmmc/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer

@@ -19,6 +19,8 @@ values."
            enh-ruby-add-encoding-comment-on-save nil)
      html
      markdown
+     (nixos :variables
+            nixos-options-json-file "~/.nix-options.json")
      sql
      org
      (mu4e :variables
@@ -149,16 +151,16 @@ layers configuration. You are free to put any user code."
   (setq w3m-view-this-url-new-session-in-background t)
   ;; W3M view url new session in background
 
-  (with-eval-after-load 'mu4e-alert
+  ;; (with-eval-after-load 'mu4e-alert
     ;; Enable Desktop notifications
     ;; (mu4e-alert-set-default-style 'notifications)) ; For linux
   ;; (mu4e-alert-set-default-style 'libnotify))  ; Alternative for linux
   ;; (mu4e-alert-set-default-style 'notifier))   ; For Mac OSX (through the
                                         ; terminal notifier app)
-    (mu4e-alert-set-default-style 'growl)
-    )      ; Alternative for Mac OSX
+    ;; (mu4e-alert-set-default-style 'growl)
+    ;; )      ; Alternative for Mac OSX
 
-  (mu4e-alert-enable-notifications)
+  ;; (mu4e-alert-enable-notifications)
   ;; mu4e-alert-enable-mode-line-display
   (display-time-mode 1)
 
@@ -215,9 +217,9 @@ layers configuration. You are free to put any user code."
 
   (setq projectile-tags-command "ctags -Re -f \"%s\" %s --exclude=*.html --exclude=*.js")
 
-  (setq org-agenda-files (list "~/org"
+  (setq org-agenda-files (list "~/org"))
                                ;; "~/Dropbox/Dev/org-mode/work.org"
-                               "~/snaptrip/TODO.org"))
+                               ;; "~/snaptrip/TODO.org"))
   (org-babel-do-load-languages
    'org-babel-load-languages '((C . t)))
 
@@ -463,17 +465,17 @@ layers configuration. You are free to put any user code."
                               (insert)))
 
  (setq org-agenda-include-diary t)
- (global-set-key (kbd "C-`") 'ort/goto-todos)
+ ;; (global-set-key (kbd "C-`") 'ort/goto-todos)
 
  (setq alert-default-style 'growl)
 
  (setq org-mu4e-link-query-in-headers-mode nil)
- (setq mu4e-alert-interesting-mail-query
-       (concat "NOT maildir:"
-               "\"/archive\" "
-               "AND NOT maildir:"
-               "\"/[Gmail].All Mail\" "
-               "AND date:today"))
+ ;; (setq mu4e-alert-interesting-mail-query
+ ;;       (concat "NOT maildir:"
+ ;;               "\"/archive\" "
+ ;;               "AND NOT maildir:"
+ ;;               "\"/[Gmail].All Mail\" "
+ ;;               "AND date:today"))
 
  (add-to-list 'auto-mode-alist '("\\.log\\'" . auto-revert-mode))
 
@@ -488,12 +490,12 @@ layers configuration. You are free to put any user code."
  ;; Set to the location of your Org files on your local system
  (setq org-directory "~/org")
  ;; Set to the name of the file where new notes will be stored
- (setq org-mobile-inbox-for-pull "~/org/flagged.org")
+ (setq org-mobile-inbox-for-pull "~/org/uploaded.org")
  ;; Set to <your Dropbox root directory>/MobileOrg.
  (setq org-mobile-directory "~/Dropbox/Apps/MobileOrg")
 
- (setq org-agenda-files (list "~/org/todo.org"
-                              "~/snaptrip/todo.org" ))
+ (setq org-agenda-files (list "~/org/todo.org"))
+                              ;; "~/snaptrip/todo.org" ))
 
  (setq org-bullets-bullet-list '("⚫" "◉" "○" "►" "◎" "◇"))
 
@@ -667,7 +669,7 @@ Captured %<%Y-%m-%d %H:%M>
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(org-agenda-files (quote ("~/snaptrip/todo.org")))
+ ;; '(org-agenda-files (quote ("~/snaptrip/todo.org")))
  '(sql-connection-alist
    (quote
     (("olive"
