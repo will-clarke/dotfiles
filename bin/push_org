@@ -1,10 +1,10 @@
-#!/bin/sh
-if [ ! -d ~/org ]; then
+#!/bin/bash
+if [ ! -d /Users/wmmc/org ]; then
     echo "File not found!"
     exit 0
 fi
 
-cd ~/org
+cd /Users/wmmc/org
 git add .
 git commit -m "Automatic Changes from Cron"
-git push origin master
+HOME=/Users/wmmc git push origin master
