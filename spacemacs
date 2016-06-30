@@ -277,7 +277,7 @@ layers configuration. You are free to put any user code."
   ;; How to use ag:
   ;; ag: -G\.js something
   (setq disaster-objdump "gobjdump -d -M intel -Sl --no-show-raw-insn")
-  (setq inferior-lisp-program "/usr/local/bin/clisp")
+  (setq inferior-lisp-program "/Users/wmmc/.nix-profile/bin/sbcl")
   (setq mu4e-mu-binary "/usr/local/bin/mu")
 
   ;; ESHELL
@@ -590,3 +590,15 @@ Captured %<%Y-%m-%d %H:%M>
 ;; (custom-set-faces
 ;;  '(company-tooltip-common ((t (:inherit company-tooltip :weight bold :underline nil))))
 ;;  '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :weight bold :underline nil)))))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(safe-local-variable-values (quote ((Package . User) (Syntax . Common-Lisp)))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
