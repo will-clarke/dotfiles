@@ -24,7 +24,7 @@ source "/usr/local/bin/virtualenvwrapper.sh"
 # for sdl2
 export LIBRARY_PATH="$LIBRARY_PATH:/usr/local/lib"
 
-export EDITOR='emacsclient -c'
+export EDITOR=/Users/wmmc/.bin/edit
 # export PS1="\w > "
 
 # postgres

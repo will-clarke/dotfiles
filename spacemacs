@@ -313,6 +313,7 @@ layers configuration. You are free to put any user code."
                                (end-of-line)
                                (insert)))
   (evil-leader/set-key (kbd "1") 'my/get-server)
+  (evil-leader/set-key (kbd "2") 'my/get-worker)
 
   ;; My Functions
   (defun my-require-pry ()
@@ -411,8 +412,10 @@ layers configuration. You are free to put any user code."
         )))
   (defun my/get-server()
     (interactive)
-    (switch-to-buffer(get-buffer "### server"))
-    )
+    (switch-to-buffer(get-buffer "### server")))
+  (defun my/get-worker()
+    (interactive)
+    (switch-to-buffer(get-buffer "### worker")))
 
   ;; Postgres
   ;; To start:  mx: sql-connect -> olive
@@ -423,13 +426,20 @@ layers configuration. You are free to put any user code."
   ;;            Remember the ';' :|
   (setq sql-connection-history nil)
   (setq sql-connection-alist
-        '(("olive"
+        '(
+          ("olive"
            (sql-product 'postgres)
            (sql-server (getenv "ST_PG_SERVER"))
            (sql-user (getenv "ST_PG_USER"))
            (sql-database (getenv "ST_PG_DB"))
            (sql-password (getenv "ST_PG_PW"))
            (sql-port 5662))
+          ("local"
+           (sql-product 'postgres)
+           (sql-server "localhost")
+           (sql-user "wmmc")
+           (sql-database "snap-trip_development")
+           (sql-port 5432))
           )
         )
 
