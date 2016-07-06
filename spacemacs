@@ -10,6 +10,8 @@ values."
    dotspacemacs-configuration-layers
    '(
      yaml
+     xkcd
+     gtags
      better-defaults
      ;; (auto-completion :variables
      ;;                  auto-completion-return-key-behavior 'complete
@@ -314,6 +316,7 @@ layers configuration. You are free to put any user code."
                                (insert)))
   (evil-leader/set-key (kbd "1") 'my/get-server)
   (evil-leader/set-key (kbd "2") 'my/get-worker)
+  ;; (define-key evil-normal-state-map "\C-[" 'helm-gtags-find-tag)
 
   ;; My Functions
   (defun my-require-pry ()
@@ -425,6 +428,7 @@ layers configuration. You are free to put any user code."
   ;;              Write query. Send it to original SQLi[Postgres] buffer.
   ;;            Remember the ';' :|
   (setq sql-connection-history nil)
+  ;; set search_path to cd;
   (setq sql-connection-alist
         '(
           ("olive"
@@ -439,6 +443,12 @@ layers configuration. You are free to put any user code."
            (sql-server "localhost")
            (sql-user "wmmc")
            (sql-database "snap-trip_development")
+           (sql-port 5432))
+          ("exercises"
+           (sql-product 'postgres)
+           (sql-server "localhost")
+           (sql-user "wmmc")
+           (sql-database "exercises")
            (sql-port 5432))
           )
         )
