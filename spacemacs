@@ -6,6 +6,8 @@ You should not put any user code in this function besides modifying the variable
 values."
   (setq-default
    dotspacemacs-distribution 'spacemacs
+   dotspacemacs-enable-lazy-installation 'unused
+   dotspacemacs-ask-for-lazy-installation t
    dotspacemacs-configuration-layer-path '()
    dotspacemacs-configuration-layers
    '(
@@ -13,15 +15,7 @@ values."
      xkcd
      gtags
      better-defaults
-     ;; (auto-completion :variables
-     ;;                  auto-completion-return-key-behavior 'complete
-     ;;                  auto-completion-tab-key-behavior 'cycle
-     ;;                  auto-completion-enable-snippets-in-popup t
-     ;;                  auto-completion-complete-with-key-sequence nil
-     ;;                  auto-completion-complete-with-key-sequence-delay 0.1
-     ;;                  auto-completion-private-snippets-directory nil
-     ;;                  ;; tab-always-indent t
-     ;;                  )
+     ivy
      emacs-lisp
      common-lisp
      (ruby :variables
@@ -30,8 +24,6 @@ values."
            enh-ruby-add-encoding-comment-on-save nil)
      html
      markdown
-     ;; (nixos :variables
-     ;;        nixos-options-json-file "~/.nix-options.json")
      sql
      org
      (mu4e :variables
@@ -54,26 +46,22 @@ values."
      syntax-checking
      c-c++
      spotify
-     ;; (auto-completion :variables
-     ;; auto-completion-enable-snippets-in-popup t
-     ;; auto-completion-return-key-behavior 'nil
-     ;; auto-completion-tab-key-behavior 'cycle
-     ;; ;; auto-completion-complete-with-key-sequence "jk"
-     ;; auto-completion-complete-with-key-sequence-delay 0.1
-     ;; auto-completion-private-snippets-directory "~/.spacemacs.d/snippets/")
      ruby-on-rails
      restclient
      deft
      fasd
      )
+
    dotspacemacs-additional-packages '(
                                       org-alert
                                       helm-w3m
                                       org-mac-link
                                       soft-charcoal-theme
                                       )
+   dotspacemacs-frozen-packages '()
    dotspacemacs-excluded-packages '(evil-unimpaired)
-   dotspacemacs-delete-orphan-packages t))
+   dotspacemacs-delete-orphan-packages t
+   dotspacemacs-download-packages 'used))
 
 (defun dotspacemacs/init ()
   "Initialization function.
@@ -88,14 +76,17 @@ values."
    dotspacemacs-editing-style 'vim
    dotspacemacs-verbose-loading nil
    dotspacemacs-startup-banner 'official
-   dotspacemacs-startup-lists '(recents projects bookmarks)
-   dotspacemacs-startup-recent-list-size 5
+   dotspacemacs-startup-lists '((recents . 5)
+                                (projects . 7))
    dotspacemacs-scratch-mode 'text-mode
-   dotspacemacs-themes '(solarized-light
-                         soft-charcoal)
+   ;; dotspacemacs-themes '(spacemacs-dark
+   ;;                       spacemacs-light)
+  dotspacemacs-themes '(solarized-light
+                        soft-charcoal)
    dotspacemacs-colorize-cursor-according-to-state t
    dotspacemacs-default-font '("Source Code Pro"
                                :size 23
+                               ;; :size 13
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
@@ -103,19 +94,22 @@ values."
    dotspacemacs-emacs-leader-key "M-m"
    dotspacemacs-major-mode-leader-key ","
    dotspacemacs-major-mode-emacs-leader-key "C-M-m"
+   dotspacemacs-emacs-command-key "SPC"
    dotspacemacs-distinguish-gui-tab nil
-   dotspacemacs-command-key ":"
    dotspacemacs-remap-Y-to-y$ t
+   dotspacemacs-retain-visual-state-on-shift t
+   dotspacemacs-visual-line-move-text nil
+   dotspacemacs-ex-substitute-global nil
    dotspacemacs-default-layout-name "Default"
    dotspacemacs-display-default-layout nil
    dotspacemacs-auto-resume-layouts nil
+   dotspacemacs-large-file-size 1
    dotspacemacs-auto-save-file-location 'cache
    dotspacemacs-max-rollback-slots 5
-   dotspacemacs-use-ido nil
    dotspacemacs-helm-resize nil
    dotspacemacs-helm-no-header nil
    dotspacemacs-helm-position 'bottom
-   dotspacemacs-enable-paste-micro-state t
+   dotspacemacs-enable-paste-transient-state t
    dotspacemacs-which-key-delay 0.4
    dotspacemacs-which-key-position 'bottom
    dotspacemacs-loading-progress-bar t
@@ -124,10 +118,14 @@ values."
    dotspacemacs-maximized-at-startup nil
    dotspacemacs-active-transparency 90
    dotspacemacs-inactive-transparency 90
+   dotspacemacs-show-transient-state-title t
+   dotspacemacs-show-transient-state-color-guide t
    dotspacemacs-mode-line-unicode-symbols t
    dotspacemacs-smooth-scrolling t
    dotspacemacs-line-numbers nil
+   dotspacemacs-folding-method 'evil
    dotspacemacs-smartparens-strict-mode nil
+   dotspacemacs-smart-closing-parenthesis nil
    dotspacemacs-highlight-delimiters 'nil
    dotspacemacs-persistent-server t
    dotspacemacs-search-tools '("ag" "ack" "grep")
@@ -137,19 +135,14 @@ values."
 
 (defun dotspacemacs/user-init ()
   "Initialization function for user code.
-It is called immediately after `dotspacemacs/init'.  You are free to put almost
-any user code here.  The exception is org related code, which should be placed
-in `dotspacemacs/user-config'."
-
-
-
+It is called immediately after `dotspacemacs/init', before layer configuration
+executes.
+ This function is mostly useful for variables that need to be set
+before packages are loaded. If you are unsure, you should try in setting them in
+`dotspacemacs/user-config' first."
   )
 
 (defun dotspacemacs/user-config ()
-  "Configuration function for user code.
-This function is called at the very end of Spacemacs initialization after
-layers configuration. You are free to put any user code."
-
   ;;; W3M
   (require 'helm-w3m)
   (evil-leader/set-key "os" 'w3m-search)
@@ -601,21 +594,14 @@ Captured %<%Y-%m-%d %H:%M>
 
   )
 
-;; ============================================================
-
-;; (custom-set-variables
-;;  '(org-agenda-files (quote ("~/snaptrip/todo.org")))
-;;  )
-
-;; (custom-set-faces
-;;  '(company-tooltip-common ((t (:inherit company-tooltip :weight bold :underline nil))))
-;;  '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :weight bold :underline nil)))))
+;; Do not write anything past this comment. This is where Emacs will
+;; auto-generate custom variable definitions.
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(safe-local-variable-values (quote ((Package . User) (Syntax . Common-Lisp)))))
+ '(package-selected-packages (quote (package-build spacemacs-theme))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
