@@ -21,8 +21,9 @@ export PATH="$HOME/.cargo/bin:$PATH"
 source "/usr/local/bin/virtualenvwrapper.sh"
 # export WORKON_HOME="/opt/virtual_env/"
 
-# for sdl2
-export LIBRARY_PATH="$LIBRARY_PATH:/usr/local/lib"
+# for C paths
+export LIBRARY_PATH=/usr/local/lib:$LIBRARY_PATH
+export C_INCLUDE_PATH=/usr/local/include/:$C_INCLUDE_PATH
 
 export EDITOR=/Users/wmmc/.bin/edit
 # export PS1="\w > "
