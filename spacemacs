@@ -50,6 +50,9 @@ values."
      restclient
      deft
      fasd
+     pdf-tools
+
+     slack
      )
 
    dotspacemacs-additional-packages '(
@@ -597,6 +600,17 @@ Captured %<%Y-%m-%d %H:%M>
   ;;                :style "width: auto;"))
   ;; (setq org-html-table-default-attributes
   ;;       '(:border "0" :cellspacing "0" :cellpadding "6" :rules "none" :frame "none"))
+
+
+  (global-prettify-symbols-mode)
+
+  ;; UTF-8 please
+  (setq locale-coding-system    'utf-8)
+  (set-terminal-coding-system   'utf-8)
+  (set-keyboard-coding-system   'utf-8)
+  (set-selection-coding-system  'utf-8)
+  (prefer-coding-system         'utf-8)
+  (set-language-environment     'utf-8)
 
   )
 
