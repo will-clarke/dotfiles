@@ -30,7 +30,7 @@
 [core]
   excludesfile = ~/.gitignore_global
   autocrlf = input
-	editor = emacs
+  editor = /Users/wmmc/.bin/edit
 [merge]
   ff = only
 [fetch]

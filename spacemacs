@@ -13,7 +13,7 @@ values."
    '(
      yaml
      xkcd
-     gtags
+     ;; gtags
      better-defaults
      ivy
      emacs-lisp
@@ -310,6 +310,12 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (evil-leader/set-key (kbd "1") 'my/get-server)
   (evil-leader/set-key (kbd "2") 'my/get-worker)
   ;; (define-key evil-normal-state-map "\C-[" 'helm-gtags-find-tag)
+
+  ;; Tags
+  ;; ctags --force-language=ruby -R -u
+  ;; ctags -R --language-force=ruby --exclude=.git --exclude=log . $(bundle list --paths)
+  ;; (define-key evil-motion-state-map "\C-]" 'helm-gtags-find-tag-from-here);; evil-jump-to-tag)
+  ;; (spacemacs/helm-gtags-define-keys-for-mode 'ruby-mode)
 
   ;; My Functions
   (defun my-require-pry ()
