@@ -72,7 +72,7 @@ values."
                                       org-mac-link
                                       soft-charcoal-theme
                                       )
-   dotspacemacs-excluded-packages '()
+   dotspacemacs-excluded-packages '(evil-unimpaired)
    dotspacemacs-delete-orphan-packages t))
 
 (defun dotspacemacs/init ()
