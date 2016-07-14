@@ -612,6 +612,15 @@ Captured %<%Y-%m-%d %H:%M>
   (prefer-coding-system         'utf-8)
   (set-language-environment     'utf-8)
 
+  ;; pdftools:
+  (setenv "PKG_CONFIG_PATH" "/usr/local/Cellar/zlib/1.2.8/lib/pkgconfig:/usr/local/lib/pkgconfig:/opt/X11/lib/pkgconfig")
+
+  ;; ivy:
+  ;; console-M-x -> fuzzy searching
+  (setq ivy-re-builders-alist
+        '((t . ivy--regex-fuzzy)))
+
+  (setq org-startup-folded nil)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
