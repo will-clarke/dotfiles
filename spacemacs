@@ -37,7 +37,7 @@ values."
             shell-default-term-shell "/bin/bash"
             shell-default-shell 'eshell
             shell-default-position 'bottom
-            shell-default-height 50)
+            shell-default-height 25)
      version-control
      dash
      github
