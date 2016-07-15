@@ -49,9 +49,7 @@ values."
      ruby-on-rails
      restclient
      deft
-     fasd
      pdf-tools
-
      slack
      )
 
