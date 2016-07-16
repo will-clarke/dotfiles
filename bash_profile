@@ -33,6 +33,6 @@ source "/usr/local/bin/virtualenvwrapper.sh"
 
 if [ -e /Users/wmmc/.nix-profile/etc/profile.d/nix.sh ]; then . /Users/wmmc/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
 
-if [[ -f $HOME/.varialbes ]] then
+if [[ -f $HOME/.varialbles ]]; then
    source $HOME/.variables
 fi
