@@ -89,9 +89,11 @@ class Dropbox
     each_secret_file_and_destination do |secret_file, destination|
       if ::Pathname.new(destination).exist?
         p "Exists:   #{destination} [SECRET]"
-      else
+      elsif ::Pathname.new(secret_file).exist?
         FileUtils.ln_s(secret_file, destination)
         p "LINKING:  #{destination} [SECRET]"
+      else
+        p "Can't find ~/Dropbox/dev/secrets"
       end
     end
   end

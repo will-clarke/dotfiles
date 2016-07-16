@@ -487,6 +487,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
             (setenv var value)))))
     (message "Sourcing environment from `%s'... done." filename))
   (source "~/.secrets.gpg" t)
+  (source "~/.variables")
 
   ;; Mac
   (setq vc-follow-symlinks t)
@@ -619,6 +620,9 @@ Captured %<%Y-%m-%d %H:%M>
         '((t . ivy--regex-fuzzy)))
 
   (setq org-startup-folded nil)
+
+
+
   )
 
 ;; Do not write anything past this comment. This is where Emacs will

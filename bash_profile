@@ -1,6 +1,6 @@
 # .bash_profile
 
-export PATH="$HOME/.bin:/usr/local/sbin:$PATH"
+# export PATH="$HOME/.bin:/usr/local/sbin:$PATH"
 # If .bash_profile exists, bash doesn't read .profile
 if [[ -f ~/.profile ]]; then
   . ~/.profile
@@ -14,20 +14,25 @@ fi
 eval "$(rbenv init -)"
 
 # rust racer
-export RUST_SRC_PATH=/usr/local/src/rust/src
-export PATH="$HOME/.cargo/bin:$PATH"
+# export RUST_SRC_PATH=/usr/local/src/rust/src
+# export PATH="$HOME/.cargo/bin:$PATH"
 
 # virtualenv
 source "/usr/local/bin/virtualenvwrapper.sh"
-# export WORKON_HOME="/opt/virtual_env/"
+# # export WORKON_HOME="/opt/virtual_env/"
 
 # for C paths
-export LIBRARY_PATH=/usr/local/lib:$LIBRARY_PATH
-export C_INCLUDE_PATH=/usr/local/include/:$C_INCLUDE_PATH
+# export LIBRARY_PATH=/usr/local/lib:/Users/wmmc/.nix-profile/include:$LIBRARY_PATH
+# export CPATH=/usr/local/include/:/Users/wmmc/.nix-profile/include:$CPATH
 
-export EDITOR=/Users/wmmc/.bin/edit
-# export PS1="\w > "
+# export EDITOR=/Users/wmmc/.bin/edit
+# # export PS1="\w > "
 
 # postgres
-export PATH=/Applications/Postgres.app/Contents/Versions/9.4/bin:$PATH
+# export PATH=/Applications/Postgres.app/Contents/Versions/9.4/bin:$PATH
+
 if [ -e /Users/wmmc/.nix-profile/etc/profile.d/nix.sh ]; then . /Users/wmmc/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+
+if [[ -f $HOME/.varialbes ]] then
+   source $HOME/.variables
+fi
