@@ -50,6 +50,7 @@ values."
      restclient
      deft
      pdf-tools
+     gtags
      slack
      )
 
@@ -60,7 +61,7 @@ values."
                                       soft-charcoal-theme
                                       )
    dotspacemacs-frozen-packages '()
-   dotspacemacs-excluded-packages '(evil-unimpaired)
+   dotspacemacs-excluded-packages '(evil-unimpaired smartparens)
    dotspacemacs-delete-orphan-packages t
    dotspacemacs-download-packages 'used))
 
