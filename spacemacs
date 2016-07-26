@@ -11,6 +11,7 @@ values."
    dotspacemacs-configuration-layer-path '()
    dotspacemacs-configuration-layers
    '(
+     javascript
      yaml
      xkcd
      ;; gtags
@@ -623,6 +624,14 @@ Captured %<%Y-%m-%d %H:%M>
   (setq org-startup-folded nil)
 
 
+  ;; slack:
+  (slack-register-team
+   :name "Hubot"
+   :default t
+   :client-id (getenv "ST_SLACK_CLIENT_ID")
+   :client-secret (getenv "ST_SLACK_CLIENT_SECRET")
+   :token (getenv "ST_SLACK_TOKEN")
+   :subscribed-channels '(general slackbot))
 
   )
 
