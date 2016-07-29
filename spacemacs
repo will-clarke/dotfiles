@@ -14,9 +14,9 @@ values."
      javascript
      yaml
      xkcd
-     ;; gtags
+     gtags
      better-defaults
-     ivy
+     ;; ivy
      emacs-lisp
      common-lisp
      (ruby :variables
@@ -37,6 +37,7 @@ values."
      (shell :variables
             shell-default-term-shell "/bin/bash"
             shell-default-shell 'eshell
+            ;; shell-default-shell 'multi-term
             shell-default-position 'bottom
             shell-default-height 25)
      version-control
@@ -313,6 +314,10 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (evil-leader/set-key (kbd "1") 'my/get-server)
   (evil-leader/set-key (kbd "2") 'my/get-worker)
   ;; (define-key evil-normal-state-map "\C-[" 'helm-gtags-find-tag)
+  (evil-define-key 'normal evil-c-mode-map
+    "\C-[" 'helm-gtags-find-tag)
+  (evil-define-key 'insert evil-term-mode-map
+    "M-DEL" 'term-send-backward-kill-word)
 
   ;; Tags
   ;; ctags --force-language=ruby -R -u
