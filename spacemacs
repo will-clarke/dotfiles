@@ -629,6 +629,11 @@ Captured %<%Y-%m-%d %H:%M>
   (setq org-startup-folded nil)
 
 
+  ;; restclient mode: no localhost -> use 127.0.0.1
+  ;;     eg. POST http://127.0.0.1:3000/visitor_emails
+  ;;     CHECK SERVER IS ACTUALLY WORKING!! DUH!
+
+
   ;; slack:
   (slack-register-team
    :name "Hubot"
