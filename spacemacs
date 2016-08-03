@@ -633,6 +633,8 @@ Captured %<%Y-%m-%d %H:%M>
   ;;     eg. POST http://127.0.0.1:3000/visitor_emails
   ;;     CHECK SERVER IS ACTUALLY WORKING!! DUH!
 
+  ;; \C-h is now DEL
+  (define-key key-translation-map [?\C-h] [?\C-?])
 
   ;; slack:
   (slack-register-team
