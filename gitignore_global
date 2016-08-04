@@ -57,3 +57,7 @@ zeus.json
 vim/bundle*
 vim/bundle/*
 t/
+
+GPATH
+GRTAGS
+GTAGS
