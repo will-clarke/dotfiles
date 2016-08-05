@@ -313,11 +313,13 @@ before packages are loaded. If you are unsure, you should try in setting them in
                                (insert)))
   (evil-leader/set-key (kbd "1") 'my/get-server)
   (evil-leader/set-key (kbd "2") 'my/get-worker)
-  ;; (define-key evil-normal-state-map "\C-[" 'helm-gtags-find-tag)
+  (define-key evil-normal-state-map "\C-]" 'helm-gtags-find-tag)
   (evil-define-key 'normal evil-c-mode-map
     "\C-[" 'helm-gtags-find-tag)
   (evil-define-key 'insert evil-term-mode-map
     "M-DEL" 'term-send-backward-kill-word)
+  (global-set-key (kbd "s-j") 'scroll-other-window)
+  (global-set-key (kbd "s-k") 'scroll-other-window-down)
 
   ;; Tags
   ;; ctags --force-language=ruby -R -u
