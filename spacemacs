@@ -16,6 +16,7 @@ values."
      xkcd
      gtags
      better-defaults
+     plantuml
      ;; ivy
      emacs-lisp
      common-lisp
@@ -318,8 +319,12 @@ before packages are loaded. If you are unsure, you should try in setting them in
     "\C-[" 'helm-gtags-find-tag)
   (evil-define-key 'insert evil-term-mode-map
     "M-DEL" 'term-send-backward-kill-word)
+
   (global-set-key (kbd "s-j") 'scroll-other-window)
   (global-set-key (kbd "s-k") 'scroll-other-window-down)
+
+  (global-set-key (kbd "C-M-H") 'backward-kill-word)
+  (global-set-key (kbd "M-h") 'backward-kill-word)
 
   ;; Tags
   ;; ctags --force-language=ruby -R -u
@@ -529,8 +534,6 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (setq org-agenda-files (list "~/org"))
   ;; "~/Dropbox/Dev/org-mode/work.org"
   ;; "~/snaptrip/TODO.org"))
-  (org-babel-do-load-languages
-   'org-babel-load-languages '((C . t)))
   (setq org-agenda-include-diary t)
   ;; (global-set-key (kbd "C-`") 'ort/goto-todos)
   (setq alert-default-style 'growl)
@@ -544,6 +547,14 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (setq org-agenda-files (list "~/org/todo.org"))
   ;; "~/snaptrip/todo.org" ))
   (setq org-bullets-bullet-list '("⚫" "◉" "○" "►" "◎" "◇"))
+
+  ;; babel
+  (org-babel-do-load-languages
+   'org-babel-load-languages '((C . t)
+                               (plantuml . t)
+                               (ruby . t)
+                               (sh . t)
+                               ))
 
   (defvar my/org-basic-task-template "* TODO %^{Task}
 :PROPERTIES:
@@ -622,6 +633,11 @@ Captured %<%Y-%m-%d %H:%M>
 
   ;; pdftools:
   (setenv "PKG_CONFIG_PATH" "/usr/local/Cellar/zlib/1.2.8/lib/pkgconfig:/usr/local/lib/pkgconfig:/opt/X11/lib/pkgconfig")
+
+  ;; plantuml
+  (setq puml-plantuml-jar-path "/usr/local/Cellar/plantuml/8041/plantuml.8041.jar")
+  (setq plantuml-jar-path "/usr/local/Cellar/plantuml/8041/plantuml.8041.jar")
+  (setq org-plantuml-jar-path "/usr/local/Cellar/plantuml/8041/plantuml.8041.jar")
 
   ;; ivy:
   ;; console-M-x -> fuzzy searching
