@@ -530,7 +530,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
       (goto-char position)))
 
   ;; ORG
-  (require 'org-mac-link)
+  ;; (require 'org-mac-link)
   (setq org-agenda-files (list "~/org"))
   ;; "~/Dropbox/Dev/org-mode/work.org"
   ;; "~/snaptrip/TODO.org"))
