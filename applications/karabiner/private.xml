@@ -29,18 +29,30 @@
     </autogen>
   </item>
 
-      <item>
-      <name>Me: swap # and ` </name>
-      <identifier>private.me_swap_hash_and_backtick</identifier>
-      <autogen>
-        __KeyToKey__
-        KeyCode::BACKQUOTE,  ModifierFlag::NONE,
-        KeyCode::KEY_3, ModifierFlag::OPTION_L
-      </autogen>
-      <autogen>
-        __KeyToKey__
-        KeyCode::KEY_3, ModifierFlag::OPTION_L,
-        KeyCode::BACKQUOTE,  ModifierFlag::NONE
-      </autogen>
-    </item>
+  <item>
+    <name>Me: swap # and ` </name>
+    <identifier>private.me_swap_hash_and_backtick</identifier>
+    <autogen>
+      __KeyToKey__
+      KeyCode::BACKQUOTE,  ModifierFlag::NONE,
+      KeyCode::KEY_3, ModifierFlag::OPTION_L
+    </autogen>
+    <autogen>
+      __KeyToKey__
+      KeyCode::KEY_3, ModifierFlag::OPTION_L,
+      KeyCode::BACKQUOTE,  ModifierFlag::NONE
+    </autogen>
+  </item>
+
+  <item>
+    <name>Me: Semicolon to Escape</name>
+    <identifier>private.me_semicolon_to_escape</identifier>
+    <autogen>
+      __KeyOverlaidModifier__
+      KeyCode::SEMICOLON,
+      KeyCode::CONTROL_L,
+      KeyCode::SEMICOLON
+    </autogen>
+  </item>
+
 </root>
