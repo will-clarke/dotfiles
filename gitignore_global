@@ -46,7 +46,7 @@ b025.dump
 config/initializers/carrier_wave.rb
 config/initializers/geocoder.rb
 tags
-secrets.yml
+# secrets.yml
 
 spec/spec_helper.rb
 app/consumers/cache_pricing_consumer.rb
