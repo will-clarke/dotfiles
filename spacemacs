@@ -55,6 +55,7 @@ values."
      pdf-tools
      gtags
      slack
+     haskell
      )
 
    dotspacemacs-additional-packages '(
