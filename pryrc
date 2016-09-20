@@ -50,24 +50,23 @@ end
 # end
 
 
-begin
-  require "awesome_print"
-  AwesomePrint.pry!
-  AwesomePrint.defaults = {limit: true}
-  Pry.config.commands.command "limit_true" do |*args|
-  AwesomePrint.defaults = {limit: true}
-  end
-  Pry.config.commands.command "limit" do |*args|
-  current_status = AwesomePrint.defaults[:limit]
-  AwesomePrint.defaults = {limit: !current_status}
-  p "Limiting is #{!current_status ? 'ON' : 'OFF'}"
-  end
-  Pry.config.commands.command "limit_false" do |*args|
-  AwesomePrint.defaults = {limit: false}
-  end
-
-rescue LoadError
-end
+# begin
+#   require "awesome_print"
+#   AwesomePrint.pry!
+#   AwesomePrint.defaults = {limit: true}
+#   Pry.config.commands.command "limit_true" do |*args|
+#   AwesomePrint.defaults = {limit: true}
+#   end
+#   Pry.config.commands.command "limit" do |*args|
+#   current_status = AwesomePrint.defaults[:limit]
+#   AwesomePrint.defaults = {limit: !current_status}
+#   p "Limiting is #{!current_status ? 'ON' : 'OFF'}"
+#   end
+#   Pry.config.commands.command "limit_false" do |*args|
+#   AwesomePrint.defaults = {limit: false}
+#   end
+# rescue LoadError
+# end
 
 # if ENV["INSIDE_EMACS"] # ENV['TERM'] == 'emacs'
   Pry.config.color = false
