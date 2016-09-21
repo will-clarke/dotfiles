@@ -61,3 +61,4 @@ t/
 GPATH
 GRTAGS
 GTAGS
+.byebug_history
