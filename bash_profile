@@ -26,7 +26,7 @@ source "/usr/local/bin/virtualenvwrapper.sh"
 # export CPATH=/usr/local/include/:/Users/wmmc/.nix-profile/include:$CPATH
 
 # export EDITOR=/Users/wmmc/.bin/edit
-# # export PS1="\w > "
+export PS1="\w > "
 
 # postgres
 # export PATH=/Applications/Postgres.app/Contents/Versions/9.4/bin:$PATH
