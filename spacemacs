@@ -37,7 +37,7 @@ values."
           git-gutter-use-fringe t)
      (shell :variables
             shell-default-term-shell "/bin/bash"
-            shell-default-shell 'shell
+            shell-default-shell 'eshell
             ;; shell-default-shell 'multi-term
             shell-default-position 'bottom
             shell-default-height 25)
@@ -56,6 +56,7 @@ values."
      gtags
      slack
      haskell
+     elixir
      )
 
    dotspacemacs-additional-packages '(
