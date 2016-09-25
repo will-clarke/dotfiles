@@ -454,6 +454,13 @@ before packages are loaded. If you are unsure, you should try in setting them in
            (sql-database (getenv "ST_PG_DB"))
            (sql-password (getenv "ST_PG_PW"))
            (sql-port 5662))
+          ("domains"
+           (sql-product 'postgres)
+           (sql-server (getenv "DB_HOST"))
+           (sql-user "wmmclarke")
+           (sql-database "domainsdb")
+           (sql-password (getenv "DB_PASSWORD"))
+           (sql-port 5432))
           ("local"
            (sql-product 'postgres)
            (sql-server "localhost")
