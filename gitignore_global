@@ -39,7 +39,7 @@ Thumbs.db
 # ME #
 ######
 
-.ruby-version
+#.ruby-version
 .env
 b025.dump
 .sass-cache
