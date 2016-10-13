@@ -48,13 +48,10 @@ values."
      (spell-checking :variables spell-checking-enable-by-default nil)
      syntax-checking
      c-c++
-     spotify
      ruby-on-rails
      restclient
      deft
      pdf-tools
-     gtags
-     slack
      haskell
      elixir
      )
@@ -664,13 +661,13 @@ Captured %<%Y-%m-%d %H:%M>
   (define-key key-translation-map [?\C-h] [?\C-?])
 
   ;; slack:
-  (slack-register-team
-   :name "Hubot"
-   :default t
-   :client-id (getenv "ST_SLACK_CLIENT_ID")
-   :client-secret (getenv "ST_SLACK_CLIENT_SECRET")
-   :token (getenv "ST_SLACK_TOKEN")
-   :subscribed-channels '(general slackbot))
+  ;; (slack-register-team
+  ;;  :name "Hubot"
+  ;;  :default t
+  ;;  :client-id (getenv "ST_SLACK_CLIENT_ID")
+  ;;  :client-secret (getenv "ST_SLACK_CLIENT_SECRET")
+  ;;  :token (getenv "ST_SLACK_TOKEN")
+  ;;  :subscribed-channels '(general slackbot))
 
   )
 
@@ -681,7 +678,9 @@ Captured %<%Y-%m-%d %H:%M>
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages (quote (package-build spacemacs-theme))))
+ '(package-selected-packages
+   (quote
+    (sass-mode magit-gh-pulls hl-todo yasnippet magit-popup async diff-hl which-key toc-org slime ruby-test-mode robe paradox mwim move-text less-css-mode intero git-gutter-fringe ggtags eshell-prompt-extras dumb-jump cmake-mode clang-format alchemist ace-window ace-link f js2-mode pug-mode ws-butler web-mode spaceline slack emojify projectile-rails persp-mode org-plus-contrib neotree js2-refactor indent-guide help-fns+ helm-themes helm-projectile helm-gtags helm-descbinds helm-ag haskell-snippets evil-mc ace-jump-helm-line iedit smartparens undo-tree elixir-mode w3m helm helm-core haskell-mode flycheck markdown-mode projectile magit git-commit with-editor hydra macrostep s package-build spacemacs-theme))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
