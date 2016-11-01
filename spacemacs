@@ -11,15 +11,16 @@ values."
    dotspacemacs-configuration-layer-path '()
    dotspacemacs-configuration-layers
    '(
+     yaml
+     ivy
      javascript
      yaml
-     xkcd
-     gtags
+     ;; xkcd
+     ;; gtags
      better-defaults
-     plantuml
-     ;; ivy
+     ;; plantuml
      emacs-lisp
-     common-lisp
+     ;; common-lisp
      (ruby :variables
            ruby-version-manager 'rbenv
            ruby-insert-encoding-magic-comment nil
@@ -45,23 +46,23 @@ values."
      dash
      github
      emoji
-     (spell-checking :variables spell-checking-enable-by-default nil)
+     ;; (spell-checking :variables spell-checking-enable-by-default nil)
      syntax-checking
      c-c++
      ruby-on-rails
      restclient
-     deft
-     pdf-tools
-     haskell
-     elixir
+     ;; deft
+     ;; pdf-tools
+     ;; haskell
+     ;; elixir
      )
 
-   dotspacemacs-additional-packages '(
-                                      org-alert
-                                      helm-w3m
-                                      org-mac-link
-                                      soft-charcoal-theme
-                                      )
+   ;; dotspacemacs-additional-packages '(
+   ;;                                    org-alert
+   ;;                                    helm-w3m
+   ;;                                    org-mac-link
+   ;;                                    soft-charcoal-theme
+   ;;                                    )
    dotspacemacs-frozen-packages '()
    dotspacemacs-excluded-packages '(evil-unimpaired smartparens)
    dotspacemacs-delete-orphan-packages t
@@ -148,21 +149,21 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
 (defun dotspacemacs/user-config ()
   ;;; W3M
-  (require 'helm-w3m)
-  (evil-leader/set-key "os" 'w3m-search)
-  (setq w3m-home-page "http://www.google.com")
-  ;; W3M Home Page
-  (setq w3m-default-display-inline-images t)
-  (setq w3m-default-toggle-inline-images t)
-  ;; W3M default display images
-  (setq w3m-command-arguments '("-cookie" "-F"))
-  (setq w3m-use-cookies t)
-  ;; W3M use cookies
-  ;; (setq browse-url-browser-function 'w3m-browse-url)
-  ;; Browse url function use w3m
-  (setq w3m-view-this-url-new-session-in-background t)
-  ;; W3M view url new session in background
-  (evil-declare-key 'normal w3m-mode-map (kbd "RET") 'w3m-view-this-url)
+  ;; (require 'helm-w3m)
+  ;; (evil-leader/set-key "os" 'w3m-search)
+  ;; (setq w3m-home-page "http://www.google.com")
+  ;; ;; W3M Home Page
+  ;; (setq w3m-default-display-inline-images t)
+  ;; (setq w3m-default-toggle-inline-images t)
+  ;; ;; W3M default display images
+  ;; (setq w3m-command-arguments '("-cookie" "-F"))
+  ;; (setq w3m-use-cookies t)
+  ;; ;; W3M use cookies
+  ;; ;; (setq browse-url-browser-function 'w3m-browse-url)
+  ;; ;; Browse url function use w3m
+  ;; (setq w3m-view-this-url-new-session-in-background t)
+  ;; ;; W3M view url new session in background
+  ;; (evil-declare-key 'normal w3m-mode-map (kbd "RET") 'w3m-view-this-url)
 
 
   ;; MU4E
@@ -249,18 +250,18 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ;; OTHER
   (display-time-mode 1)
   ;; https://www.emacswiki.org/emacs/CompileCommand
-  (add-hook 'c-mode-hook
-            (lambda ()
-              (unless (file-exists-p "Makefile")
-                (set (make-local-variable 'compile-command)
-                     (let ((file (file-name-nondirectory buffer-file-name)))
-                       (format "%s %s -o %s.o %s %s && ./%s.o"
-                               (or (getenv "CC") "gcc")
-                               file
-                               (file-name-sans-extension file)
-                               (or (getenv "CPPFLAGS") "-DDEBUG=9")
-                               (or (getenv "CFLAGS") "-ansi -pedantic -Wall -g")
-                               (file-name-sans-extension file)))))))
+  ;; (add-hook 'c-mode-hook
+  ;;           (lambda ()
+  ;;             (unless (file-exists-p "Makefile")
+  ;;               (set (make-local-variable 'compile-command)
+  ;;                    (let ((file (file-name-nondirectory buffer-file-name)))
+  ;;                      (format "%s %s -o %s.o %s %s && ./%s.o"
+  ;;                              (or (getenv "CC") "gcc")
+  ;;                              file
+  ;;                              (file-name-sans-extension file)
+  ;;                              (or (getenv "CPPFLAGS") "-DDEBUG=9")
+  ;;                              (or (getenv "CFLAGS") "-ansi -pedantic -Wall -g")
+  ;;                              (file-name-sans-extension file)))))))
   (setq projectile-tags-command "ctags -Re -f \"%s\" %s --exclude=*.html --exclude=*.js")
   (prefer-coding-system 'utf-8)
   (setq system-time-locale "en_GB" )
@@ -364,16 +365,17 @@ before packages are loaded. If you are unsure, you should try in setting them in
       )
      )
     )
-  (defun my/w3m-chrome ()
-    "Open w3m with whatever's in Chrome"
-    (interactive)
-    (w3m-goto-url (my/current-chrome-url))
-    )
+  ;; (defun my/w3m-chrome ()
+  ;;   "Open w3m with whatever's in Chrome"
+  ;;   (interactive)
+  ;;   (w3m-goto-url (my/current-chrome-url))
+  ;;   )
   (defun my/which-major-mode()
     "Displays the major mode"
     (interactive)
     (message "%s" major-mode)
     )
+
   (defun snaptrip_start ()
     "Start all the right processes for snaptrip"
     (interactive)
@@ -406,7 +408,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
         (insert "redis-server")
         (eshell-send-input)
         ;;
-        (sleep-for 3)
+        (sleep-for 2)
         ;;
         (set-buffer server-buffer)
         (eshell/cd (directory-file-name "~/snaptrip"))
@@ -426,6 +428,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
         (message "Snaptrip's booting up! :D")
         (switch-to-buffer original-buffer)
         )))
+
   (defun my/get-server()
     (interactive)
     (switch-to-buffer(get-buffer "### server")))
@@ -542,115 +545,115 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ;; "~/snaptrip/TODO.org"))
   (setq org-agenda-include-diary t)
   ;; (global-set-key (kbd "C-`") 'ort/goto-todos)
-  (setq alert-default-style 'growl)
-  (setq org-mu4e-link-query-in-headers-mode nil)
-  ;; Set to the location of your Org files on your local system
-  (setq org-directory "~/org")
-  ;; Set to the name of the file where new notes will be stored
-  (setq org-mobile-inbox-for-pull "~/org/uploaded.org")
-  ;; Set to <your Dropbox root directory>/MobileOrg.
-  (setq org-mobile-directory "~/Dropbox/Apps/MobileOrg")
-  (setq org-agenda-files (list "~/org/todo.org"))
-  ;; "~/snaptrip/todo.org" ))
-  (setq org-bullets-bullet-list '("⚫" "◉" "○" "►" "◎" "◇"))
+;;   (setq alert-default-style 'growl)
+;;   (setq org-mu4e-link-query-in-headers-mode nil)
+;;   ;; Set to the location of your Org files on your local system
+;;   (setq org-directory "~/org")
+;;   ;; Set to the name of the file where new notes will be stored
+;;   (setq org-mobile-inbox-for-pull "~/org/uploaded.org")
+;;   ;; Set to <your Dropbox root directory>/MobileOrg.
+;;   (setq org-mobile-directory "~/Dropbox/Apps/MobileOrg")
+;;   (setq org-agenda-files (list "~/org/todo.org"))
+;;   ;; "~/snaptrip/todo.org" ))
+;;   (setq org-bullets-bullet-list '("⚫" "◉" "○" "►" "◎" "◇"))
 
-  ;; babel
-  (org-babel-do-load-languages
-   'org-babel-load-languages '((C . t)
-                               (plantuml . t)
-                               (ruby . t)
-                               (sh . t)
-                               ))
+;;   ;; babel
+;;   (org-babel-do-load-languages
+;;    'org-babel-load-languages '((C . t)
+;;                                (plantuml . t)
+;;                                (ruby . t)
+;;                                (sh . t)
+;;                                ))
 
-  (defvar my/org-basic-task-template "* TODO %^{Task}
-:PROPERTIES:
-:Effort: %^{effort|1:00|0:05|0:15|0:30|2:00|4:00}
-:END:
-Captured %<%Y-%m-%d %H:%M>
-%?
+;;   (defvar my/org-basic-task-template "* TODO %^{Task}
+;; :PROPERTIES:
+;; :Effort: %^{effort|1:00|0:05|0:15|0:30|2:00|4:00}
+;; :END:
+;; Captured %<%Y-%m-%d %H:%M>
+;; %?
 
-%i
-" "Basic task data")
+;; %i
+;; " "Basic task data")
 
-  (setq org-capture-templates '(
-                                ("1" "~/org/todo.org #Tasks" entry
-                                 (file+headline "~/org/todo.org" "Tasks")
-                                 "* TODO [#A] %?\nSCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n%a\n")
-                                ("t" "Task" entry
-                                 (file "~/org/refile.org")
-                                 "* TODO %?\n")
-                                ("T" "Clock-in Task" entry
-                                 (file "~/org/refile.org")
-                                 "* TODO %?\n"
-                                 :clock-in t
-                                 :clock-resume t)
-                                ("d" "Distraction in a pomodoro" entry
-                                 (file "~/org/refile.org")
-                                 "* TODO %^{Task}\n  SCHEDULED: %t\n"
-                                 :immediate-finish t)
-                                ("n" "Note" entry
-                                 (file "~/org/refile.org")
-                                 "* %?\n")
-                                ("l" "Note with link to current file" entry
-                                 (file "~/org/refile.org")
-                                 "* %a")
-                                ("c" "Link from Chrome" entry
-                                 (file "~/org/refile.org")
-                                 "* %(org-mac-chrome-get-frontmost-url)")
-                                ("C" "Clock-in Link from Chrome" entry
-                                 (file "~/org/refile.org")
-                                 "* %(org-mac-chrome-get-frontmost-url)"
-                                 :clock-in t
-                                 :clock-resume t)
-                                ))
-  (require 'org-mu4e)
-  (setq org-mu4e-convert-to-html t)
-  ;; mu4e org: M-x org~mu4e-mime-switch-headers-or-body
-  ;; https://github.com/djcb/mu/pull/196#issuecomment-36305657
-  (defun org-export-string-hack (string backend &optional body-only ext-plist)
-    (org-export-string-as (concat "#+OPTIONS: tex:dvipng toc:nil
-" string) 'html t))
-  (defalias 'org-export-string 'org-export-string-hack)
-  (setq org-refile-targets '((nil :maxlevel . 2)
-                             (org-agenda-files :maxlevel . 2)))
-  (setq org-outline-path-complete-in-steps nil)         ; Refile in a single go
-  (setq org-refile-use-outline-path t)                  ; Show full paths for refiling
-  (setq org-clone-delete-id t)
-  (setq org-export-with-sub-superscripts nil)
-  (setq org-export-with-toc nil)
-  (setq org-export-with-section-numbers nil)
-  (setq org-html-table-default-attributes '(:align "|c|c|c|" :border "3" :rules "all" :frame "border" :cellpadding "8"))
-  ;; (setq org-html-table-default-attributes
-  ;;       '(:class "table table-striped table-bordered table-condensed"
-  ;;                :style "width: auto;"))
-  ;; (setq org-html-table-default-attributes
-  ;;       '(:border "0" :cellspacing "0" :cellpadding "6" :rules "none" :frame "none"))
+;;   (setq org-capture-templates '(
+;;                                 ("1" "~/org/todo.org #Tasks" entry
+;;                                  (file+headline "~/org/todo.org" "Tasks")
+;;                                  "* TODO [#A] %?\nSCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n%a\n")
+;;                                 ("t" "Task" entry
+;;                                  (file "~/org/refile.org")
+;;                                  "* TODO %?\n")
+;;                                 ("T" "Clock-in Task" entry
+;;                                  (file "~/org/refile.org")
+;;                                  "* TODO %?\n"
+;;                                  :clock-in t
+;;                                  :clock-resume t)
+;;                                 ("d" "Distraction in a pomodoro" entry
+;;                                  (file "~/org/refile.org")
+;;                                  "* TODO %^{Task}\n  SCHEDULED: %t\n"
+;;                                  :immediate-finish t)
+;;                                 ("n" "Note" entry
+;;                                  (file "~/org/refile.org")
+;;                                  "* %?\n")
+;;                                 ("l" "Note with link to current file" entry
+;;                                  (file "~/org/refile.org")
+;;                                  "* %a")
+;;                                 ("c" "Link from Chrome" entry
+;;                                  (file "~/org/refile.org")
+;;                                  "* %(org-mac-chrome-get-frontmost-url)")
+;;                                 ("C" "Clock-in Link from Chrome" entry
+;;                                  (file "~/org/refile.org")
+;;                                  "* %(org-mac-chrome-get-frontmost-url)"
+;;                                  :clock-in t
+;;                                  :clock-resume t)
+;;                                 ))
+;;   (require 'org-mu4e)
+;;   (setq org-mu4e-convert-to-html t)
+;;   ;; mu4e org: M-x org~mu4e-mime-switch-headers-or-body
+;;   ;; https://github.com/djcb/mu/pull/196#issuecomment-36305657
+;;   (defun org-export-string-hack (string backend &optional body-only ext-plist)
+;;     (org-export-string-as (concat "#+OPTIONS: tex:dvipng toc:nil
+;; " string) 'html t))
+;;   (defalias 'org-export-string 'org-export-string-hack)
+;;   (setq org-refile-targets '((nil :maxlevel . 2)
+;;                              (org-agenda-files :maxlevel . 2)))
+;;   (setq org-outline-path-complete-in-steps nil)         ; Refile in a single go
+;;   (setq org-refile-use-outline-path t)                  ; Show full paths for refiling
+;;   (setq org-clone-delete-id t)
+;;   (setq org-export-with-sub-superscripts nil)
+;;   (setq org-export-with-toc nil)
+;;   (setq org-export-with-section-numbers nil)
+;;   (setq org-html-table-default-attributes '(:align "|c|c|c|" :border "3" :rules "all" :frame "border" :cellpadding "8"))
+;;   ;; (setq org-html-table-default-attributes
+;;   ;;       '(:class "table table-striped table-bordered table-condensed"
+;;   ;;                :style "width: auto;"))
+;;   ;; (setq org-html-table-default-attributes
+;;   ;;       '(:border "0" :cellspacing "0" :cellpadding "6" :rules "none" :frame "none"))
 
 
-  (global-prettify-symbols-mode)
+;;   (global-prettify-symbols-mode)
 
-  ;; UTF-8 please
-  (setq locale-coding-system    'utf-8)
-  (set-terminal-coding-system   'utf-8)
-  (set-keyboard-coding-system   'utf-8)
-  (set-selection-coding-system  'utf-8)
-  (prefer-coding-system         'utf-8)
-  (set-language-environment     'utf-8)
+;;   ;; UTF-8 please
+;;   (setq locale-coding-system    'utf-8)
+;;   (set-terminal-coding-system   'utf-8)
+;;   (set-keyboard-coding-system   'utf-8)
+;;   (set-selection-coding-system  'utf-8)
+;;   (prefer-coding-system         'utf-8)
+;;   (set-language-environment     'utf-8)
 
-  ;; pdftools:
-  (setenv "PKG_CONFIG_PATH" "/usr/local/Cellar/zlib/1.2.8/lib/pkgconfig:/usr/local/lib/pkgconfig:/opt/X11/lib/pkgconfig")
+;;   ;; pdftools:
+;;   (setenv "PKG_CONFIG_PATH" "/usr/local/Cellar/zlib/1.2.8/lib/pkgconfig:/usr/local/lib/pkgconfig:/opt/X11/lib/pkgconfig")
 
-  ;; plantuml
-  (setq puml-plantuml-jar-path "/usr/local/Cellar/plantuml/8041/plantuml.8041.jar")
-  (setq plantuml-jar-path "/usr/local/Cellar/plantuml/8041/plantuml.8041.jar")
-  (setq org-plantuml-jar-path "/usr/local/Cellar/plantuml/8041/plantuml.8041.jar")
+;;   ;; plantuml
+;;   (setq puml-plantuml-jar-path "/usr/local/Cellar/plantuml/8041/plantuml.8041.jar")
+;;   (setq plantuml-jar-path "/usr/local/Cellar/plantuml/8041/plantuml.8041.jar")
+;;   (setq org-plantuml-jar-path "/usr/local/Cellar/plantuml/8041/plantuml.8041.jar")
 
-  ;; ivy:
-  ;; console-M-x -> fuzzy searching
-  (setq ivy-re-builders-alist
-        '((t . ivy--regex-fuzzy)))
+;;   ;; ivy:
+;;   ;; console-M-x -> fuzzy searching
+;;   (setq ivy-re-builders-alist
+;;         '((t . ivy--regex-fuzzy)))
 
-  (setq org-startup-folded nil)
+;;   (setq org-startup-folded nil)
 
 
   ;; restclient mode: no localhost -> use 127.0.0.1
@@ -680,7 +683,7 @@ Captured %<%Y-%m-%d %H:%M>
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (sass-mode magit-gh-pulls hl-todo yasnippet magit-popup async diff-hl which-key toc-org slime ruby-test-mode robe paradox mwim move-text less-css-mode intero git-gutter-fringe ggtags eshell-prompt-extras dumb-jump cmake-mode clang-format alchemist ace-window ace-link f js2-mode pug-mode ws-butler web-mode spaceline slack emojify projectile-rails persp-mode org-plus-contrib neotree js2-refactor indent-guide help-fns+ helm-themes helm-projectile helm-gtags helm-descbinds helm-ag haskell-snippets evil-mc ace-jump-helm-line iedit smartparens undo-tree elixir-mode w3m helm helm-core haskell-mode flycheck markdown-mode projectile magit git-commit with-editor hydra macrostep s package-build spacemacs-theme))))
+    (inflections yasnippet multiple-cursors ivy-purpose window-purpose imenu-list hide-comnt anzu iedit smartparens undo-tree flycheck git-gutter helm helm-core ht magit git-commit inf-ruby js2-mode yaml-mode wgrep smex ivy-hydra counsel-projectile counsel-dash dash-functional counsel swiper ivy xterm-color ws-butler window-numbering which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tagedit sql-indent spacemacs-theme spaceline solarized-theme soft-charcoal-theme smeargle slim-mode shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restclient restart-emacs rbenv rainbow-delimiters quelpa pug-mode projectile-rails popwin persp-mode paradox orgit org-projectile org-present org-pomodoro org-plus-contrib org-download org-bullets open-junk-file ob-http neotree multi-term mu4e-maildirs-extension mu4e-alert move-text mmm-mode minitest markdown-toc magit-gitflow magit-gh-pulls lorem-ipsum livid-mode linum-relative link-hint less-css-mode json-mode js2-refactor js-doc info+ indent-guide ido-vertical-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-dash helm-css-scss helm-ag google-translate golden-ratio gnuplot github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md flycheck-pos-tip flx-ido fill-column-indicator feature-mode fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help emoji-cheat-sheet-plus emmet-mode dumb-jump disaster diff-hl define-word dash-at-point column-enforce-mode coffee-mode cmake-mode clean-aindent-mode clang-format chruby bundler auto-highlight-symbol aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
