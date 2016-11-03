@@ -22,13 +22,13 @@ brew_install_or_upgrade() {
     if brew_is_installed "$1"; then
         if brew_is_upgradable "$1"; then
             fancy_echo "Upgrading %s ..." "$1"
-            brew upgrade "$@"
+            brew upgrade "$@" || fancy_echo "Upgrade of %s failed. Soz. :|"
         else
             fancy_echo "Already using the latest version of %s. Skipping ..." "$1"
         fi
     else
         fancy_echo "Installing %s ..." "$1"
-        brew install "$@"
+        brew install "$@" || fancy_echo "Install of %s failed. Soz. :|"
     fi
 }
 
@@ -87,9 +87,9 @@ install_essentials() {
     cd dotfiles
     rake install
     cd $HOME
-    brew_install_or_upgrade 'caskroom/cask/brew-cask'
+    brew_tap 'caskroom/cask'
     cask 'dropbox'
-    fancy_echo "It's probable worth logging into Dropbox now if you haven't already..."
+    fancy_echo "It's probably worth logging into Dropbox now if you haven't already..."
 }
 
 install_db() {
@@ -105,7 +105,7 @@ install_unix_stuff() {
     brew_install_or_upgrade 'pass'
     brew_install_or_upgrade 'tree'
     brew_install_or_upgrade 'openssl'
-    brew unlink openssl && brew link openssl --force
+    (brew unlink openssl && brew link openssl --force) || echo "Couldn't install openssl"
 }
 
 install_vim() {
@@ -116,7 +116,7 @@ install_vim() {
 
 install_javascript_stuff() {
     brew_install_or_upgrade 'imagemagick'
-    brew_install_or_upgrade 'qt'
+    # brew_install_or_upgrade 'qt'
     brew_install_or_upgrade 'node'
 }
 
@@ -173,7 +173,8 @@ install_osx_tweaks() {
 }
 
 cask() {
-    brew cask install "$1"
+    fancy_echo "brew cask - installing %s" "$1"
+    brew cask install "$1" > /dev/null
 }
 
 install_comfy_setup() {
@@ -196,6 +197,7 @@ install_comfy_setup() {
     cask 'karabiner'
     cask 'growlnotify'
     cask 'iterm2'
+    cask 'gpgtools'
     if [ -f "$HOME/dotfiles/applications/karabiner/karabiner-import.sh" ]; then
         bash ~/dotfiles/applications/karabiner/karabiner-import.sh
     fi
@@ -237,8 +239,8 @@ install_emacs_extensions() {
 install_rust() {
     brew tap cheba/rust-nightly
     brew_install_or_upgrade 'rust-nightly'
-    cargo install racer
-    git clone https://github.com/rust-lang/rust.git ~/.rust # really needeed?
+    cargo install racer || echo "Could not install racer"
+    # git clone https://github.com/rust-lang/rust.git ~/.rust # really needeed?
 }
 
 install_everything() {

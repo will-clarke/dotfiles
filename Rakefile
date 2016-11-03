@@ -114,8 +114,8 @@ class Dropbox
     dropbox_location = "#{ENV['HOME']}/Dropbox/dev/secrets"
     (p 'Error:   Dropbox not linked' && return) unless Dir.exist?(dropbox_location)
     ::Pathname.new(dropbox_location).children
-    .reject { |i| i.to_s =~ /DS_Store|gitconfig/ }
-    .each do |source|
+      .reject { |i| i.to_s =~ /DS_Store|gitconfig/ }
+      .each do |source|
       destination = "#{ENV['HOME']}/.#{source.split.last}"
       block.call source, destination
     end
@@ -127,17 +127,22 @@ class Applications
   def location_hash
     {
       "#{ENV['HOME']}/dotfiles/applications/karabiner/private.xml" =>
-        "#{ENV['HOME']}/Library/Application Support/Karabiner/private.xml"
+      "#{ENV['HOME']}/Library/Application Support/Karabiner/private.xml"
     }
   end
 
   def link_source
     each_source_and_destination do |source, destination|
-      if source.exist? && !destination.exist? && source.dirname.exist?
-        FileUtils.ln_s source, destination
-        p "LINKING:  #{destination} [SECRET]"
-      elsif destination.exist?
-        p "Exists:   #{destination}"
+      begin
+        if source.exist? && !destination.exist? && source.dirname.exist?
+          FileUtils.ln_s source, destination
+          p "LINKING:  #{destination} [SECRET]"
+        elsif destination.exist?
+          p "Exists:   #{destination}"
+        end
+      rescue => e
+        p "Error trying to link #{source} & #{destination}"
+        p e
       end
     end
   end

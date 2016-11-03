@@ -453,7 +453,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
            (sql-user (getenv "ST_PG_USER"))
            (sql-database (getenv "ST_PG_DB"))
            (sql-password (getenv "ST_PG_PW"))
-           (sql-port 5662))
+           (sql-port 5512))
           ("domains"
            (sql-product 'postgres)
            (sql-server (getenv "DB_HOST"))
@@ -511,6 +511,16 @@ before packages are loaded. If you are unsure, you should try in setting them in
     (message "Sourcing environment from `%s'... done." filename))
   (source "~/.secrets.gpg" t)
   (source "~/.variables")
+  (defun wg/kludge-gpg-agent
+      ()
+    (if
+        (display-graphic-p)
+        (setenv "DISPLAY"
+                (terminal-name))
+      (setenv "GPG_TTY"
+              (terminal-name))
+      (setenv "DISPLAY")))
+  (add-hook 'window-configuration-change-hook 'wg/kludge-gpg-agent)
 
   ;; Mac
   (setq vc-follow-symlinks t)
@@ -672,6 +682,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ;;  :token (getenv "ST_SLACK_TOKEN")
   ;;  :subscribed-channels '(general slackbot))
 
+
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -683,7 +694,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (inflections yasnippet multiple-cursors ivy-purpose window-purpose imenu-list hide-comnt anzu iedit smartparens undo-tree flycheck git-gutter helm helm-core ht magit git-commit inf-ruby js2-mode yaml-mode wgrep smex ivy-hydra counsel-projectile counsel-dash dash-functional counsel swiper ivy xterm-color ws-butler window-numbering which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tagedit sql-indent spacemacs-theme spaceline solarized-theme soft-charcoal-theme smeargle slim-mode shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restclient restart-emacs rbenv rainbow-delimiters quelpa pug-mode projectile-rails popwin persp-mode paradox orgit org-projectile org-present org-pomodoro org-plus-contrib org-download org-bullets open-junk-file ob-http neotree multi-term mu4e-maildirs-extension mu4e-alert move-text mmm-mode minitest markdown-toc magit-gitflow magit-gh-pulls lorem-ipsum livid-mode linum-relative link-hint less-css-mode json-mode js2-refactor js-doc info+ indent-guide ido-vertical-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-dash helm-css-scss helm-ag google-translate golden-ratio gnuplot github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md flycheck-pos-tip flx-ido fill-column-indicator feature-mode fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help emoji-cheat-sheet-plus emmet-mode dumb-jump disaster diff-hl define-word dash-at-point column-enforce-mode coffee-mode cmake-mode clean-aindent-mode clang-format chruby bundler auto-highlight-symbol aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line))))
+    (mwim macrostep elisp-slime-nav auto-compile packed inflections yasnippet multiple-cursors ivy-purpose window-purpose imenu-list hide-comnt anzu iedit smartparens undo-tree flycheck git-gutter helm helm-core ht magit git-commit inf-ruby js2-mode yaml-mode wgrep smex ivy-hydra counsel-projectile counsel-dash dash-functional counsel swiper ivy xterm-color ws-butler window-numbering which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tagedit sql-indent spacemacs-theme spaceline solarized-theme soft-charcoal-theme smeargle slim-mode shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restclient restart-emacs rbenv rainbow-delimiters quelpa pug-mode projectile-rails popwin persp-mode paradox orgit org-projectile org-present org-pomodoro org-plus-contrib org-download org-bullets open-junk-file ob-http neotree multi-term mu4e-maildirs-extension mu4e-alert move-text mmm-mode minitest markdown-toc magit-gitflow magit-gh-pulls lorem-ipsum livid-mode linum-relative link-hint less-css-mode json-mode js2-refactor js-doc info+ indent-guide ido-vertical-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-dash helm-css-scss helm-ag google-translate golden-ratio gnuplot github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md flycheck-pos-tip flx-ido fill-column-indicator feature-mode fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help emoji-cheat-sheet-plus emmet-mode dumb-jump disaster diff-hl define-word dash-at-point column-enforce-mode coffee-mode cmake-mode clean-aindent-mode clang-format chruby bundler auto-highlight-symbol aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
