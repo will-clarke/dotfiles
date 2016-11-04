@@ -44,7 +44,8 @@ Plugin 'nelstrom/vim-textobj-rubyblock'
 " Plugin 'sjl/gundo.vim'
 " Plugin 'ecomba/vim-ruby-refactoring'
 " Plugin 'godlygeek/tabular'
-Plugin 'nanotech/jellybeans.vim'
+" Plugin 'nanotech/jellybeans.vim'
+Plugin 'altercation/vim-colors-solarized'
 
 " Rust
 Plugin 'rust-lang/rust.vim'

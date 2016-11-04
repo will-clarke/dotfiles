@@ -166,14 +166,18 @@ endfunction
 
 syntax enable
 
-set background=dark
+if has('gui_running')
+    set background=light
+else
+    let g:solarized_termcolors=256
+    set background=dark
+endif
 
-if !isdirectory(expand("~/.vim/bundle/jellybeans.vim"))
-  colorscheme jellybeans
+if !isdirectory(expand("~/.vim/bundle/vim-colors-solarized.vim"))
+  colorscheme solarized
 endif
 
 noremap <f2> :call ToggleBackground()<CR>
-
 
 function! RemoveMultipleBlankLines()
   exec '%s/^\(\s*\n\)\+/\r'

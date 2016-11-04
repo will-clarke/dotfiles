@@ -112,6 +112,8 @@ install_vim() {
     brew_install_or_upgrade 'vim'
     brew_install_or_upgrade 'ctags'
     brew_install_or_upgrade 'reattach-to-user-namespace'
+    cd ~/.vim/bundle
+    git clone git://github.com/altercation/vim-colors-solarized.git
 }
 
 install_javascript_stuff() {
@@ -174,11 +176,11 @@ install_osx_tweaks() {
 
 cask() {
     fancy_echo "brew cask - installing %s" "$1"
-    brew cask install "$1" > /dev/null
+    brew cask install "$1" 2>/dev/null
 }
 
 install_comfy_setup() {
-    brew_install_or_upgrade 'caskroom/cask/brew-cask'
+    brew_tap 'caskroom/cask'
     cask 'cocoapacketanalyzer'
     cask 'charles'
     cask 'postgres'
@@ -204,7 +206,7 @@ install_comfy_setup() {
 }
 
 install_totally_pointless_stuff() {
-    brew_install_or_upgrade 'caskroom/cask/brew-cask'
+    brew_tap 'caskroom/cask'
     cask 'utorrent'
     cask 'steam'
     cask 'firefox'
@@ -222,7 +224,7 @@ install_emacs() {
 }
 
 install_emacs_extensions() {
-    brew_install_or_upgrade 'homebrew/emacs/gnugo-emacs'
+    # brew_install_or_upgrade 'homebrew/emacs/gnugo-emacs'
     brew_install_or_upgrade 'libyaml'
     brew_install_or_upgrade 'trash'
     brew_install_or_upgrade 'w3m'
@@ -231,8 +233,10 @@ install_emacs_extensions() {
     brew_install_or_upgrade 'mu --with-emacs --HEAD'
     brew_install_or_upgrade 'isync'
     mkdir -p $HOME/.mail/{gmail,snaptrip}
-    mbsync -a && mu index --maildir=$HOME/.mail &
+    mbsync -a && mu index --maildir=$HOME/.mail & || echo "Can't grab mail"
     # note: this line doesn't work in eshell
+    mkdir ~/.certificates
+    touch ~/.certificates/gmail.crt
     printf "\n`openssl s_client -connect imap.gmail.com:993 -showcerts 2>&1 < /dev/null | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sed -ne '1,/-END CERTIFICATE-/p'`" >> ~/.certificates/gmail.crt
 }
 
