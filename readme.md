@@ -4,7 +4,7 @@
 ## Super-easy installation
 __[<sub><sub><sub>(probably shouldn't be piping curl to bash...)</sub></sub></sub>](http://curlpipesh.tumblr.com/)__
 
-    curl  https://raw.githubusercontent.com/wmmc/dotfiles/master/dotfiles | bash -s link
+    curl  https://raw.githubusercontent.com/wmmc/dotfiles/master/dotfiles | bash -s download
 
 
 ## What this contains:
