@@ -353,7 +353,10 @@ safe_link() {
 
 link_dropbox_files () {
     fancy_echo "Linking dropbox with stuff"
-    mkdir -p "$HOME/Dropbox/dev/{org,dotfiles}"
+# todo: refactor:
+    mkdir -p "$HOME/Dropbox/dev/org"
+    mkdir -p "$HOME/Dropbox/dev/dotfiles"
+    mkdir -p "$HOME/Dropbox/dev/secrets"
     safe_link "$HOME/Dropbox/dev" "$HOME/dev"
     safe_link "$HOME/Dropbox/dev/dotfiles" "$HOME/dotfiles"
     safe_link "$HOME/Dropbox/org" "$HOME/org"
