@@ -4,7 +4,7 @@ set -e
 
 files_to_link() {
     cd $HOME/dotfiles
-    ls | grep -vwi "$filename\|application\|readme.*"
+    ls | grep -vwi "dotfiles\|application\|readme.*"
 }
 
 link_dotfiles() {
@@ -334,13 +334,9 @@ brew_install_everything() {
     cleanup
 }
 
-filename() {
-    basename $0
-}
-
 download() {
     link_dropbox_files
-    if [ ! -e "$HOME/dotfiles/$filename" ]; then
+    if [ ! -e "$HOME/dotfiles/dotfiles" ]; then
         git clone "https://github.com/wmmc/dotfiles" "$HOME/dotfiles"
     else
         fancy_echo "Already got my dotfiles :D"
@@ -373,7 +369,7 @@ main() {
         link_dropbox_files
     elif [ "$1" == "download" ]; then
         download
-    elif [ "$1" == "install" || "$1" == "brew" ]; then
+    elif [ "$1" == "install" ] || [ "$1" == "brew" ]; then
         brew_install_everything
     else
         dotfiles_help

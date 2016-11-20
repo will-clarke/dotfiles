@@ -4,7 +4,8 @@
 ## Super-easy installation
 __[<sub><sub><sub>(probably shouldn't be piping curl to bash...)</sub></sub></sub>](http://curlpipesh.tumblr.com/)__
 
-    curl --remote-name https://raw.githubusercontent.com/wmmc/dotfiles/master/install.sh | source download
+    curl --remote-name https://raw.githubusercontent.com/wmmc/dotfiles/master/dotfiles | sh download
+
 
 ## What this contains:
 
