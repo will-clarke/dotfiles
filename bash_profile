@@ -1,6 +1,11 @@
 ##### -*- mode:shell-script -*-
 # .bash_profile
-eval "$(rbenv init -)"
+
+
+if which rbenv &>/dev/null ; then
+  eval "$(rbenv init - --no-rehash)"
+fi
+
 export PS1="\w > "
 
 source_if_exists() {
