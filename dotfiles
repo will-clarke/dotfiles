@@ -9,7 +9,6 @@ files_to_link() {
 
 link_dotfiles() {
     fancy_echo "Linking dotfiles"
-    cd $HOME/dotfiles
     for file in $(files_to_link)
     do
         link_dotfile $file
@@ -20,7 +19,7 @@ link_dotfile() {
     if [ -e "$HOME/.$1" ]; then
         fancy_echo "$1 exists"
     else
-        ln -s "$1" "$HOME/.$1"
+        ln -s "$HOME/dotfiles/$1" "$HOME/.$1"
     fi
 }
 
@@ -336,12 +335,15 @@ brew_install_everything() {
 }
 
 download() {
-    link_dropbox_files
+    mkdir -p "$HOME/Dropbox/dev/dotfiles"
+    safe_link "$HOME/Dropbox/dev/dotfiles" "$HOME/dotfiles"
     if [ ! -e "$HOME/dotfiles/dotfiles" ]; then
         git clone "https://github.com/wmmc/dotfiles" "$HOME/dotfiles"
     else
         fancy_echo "Already got my dotfiles :D"
     fi
+    link_dropbox_files
+    link_dotfiles
 }
 
 safe_link() {
@@ -356,9 +358,9 @@ link_dropbox_files () {
     fancy_echo "Linking dropbox with stuff"
 # todo: refactor:
     mkdir -p "$HOME/Dropbox/dev/org"
-    mkdir -p "$HOME/Dropbox/dev/dotfiles"
     mkdir -p "$HOME/Dropbox/dev/secrets"
     safe_link "$HOME/Dropbox/dev" "$HOME/dev"
+    mkdir -p "$HOME/Dropbox/dev/dotfiles"
     safe_link "$HOME/Dropbox/dev/dotfiles" "$HOME/dotfiles"
     safe_link "$HOME/Dropbox/org" "$HOME/org"
     secrets=("authinfo.gpg" "certificates" "secrets.gpg")
@@ -370,8 +372,7 @@ link_dropbox_files () {
 
 main() {
     if [ "$1" == "link" ]; then
-        link_dropbox_files
-        link_dotfiles
+        link_dropbox_files && link_dotfiles
     elif [ "$1" == "download" ]; then
         download
     elif [ "$1" == "install" ] || [ "$1" == "brew" ]; then
