@@ -2,9 +2,38 @@
 
 set -e
 
+files_to_link() {
+    cd $HOME/dotfiles
+    ls | grep -vwi "$filename\|application\|readme.*"
+}
+
+link_dotfiles() {
+    cd $HOME/dotfiles
+    for file in $(files_to_link)
+    do
+        link_dotfile $file
+    done
+}
+
+link_dotfile() {
+    if [ -e "$HOME/.$1" ]; then
+        fancy_echo "$1 exists"
+    else
+        ln -s "$1" "$HOME/.$1"
+    fi
+}
+
 fancy_echo() {
     local fmt="$1"; shift
     printf "\n$fmt\n" "$@"
+}
+
+dotfiles_help() {
+    fancy_echo "Usage:
+
+dotfiles download  #=> download the repo & link
+dotfiles install   #=> brew install stuff
+dotfiles link      #=> link dotfile to ~/.dotfile\n"
 }
 
 install_homebrew() {
@@ -76,17 +105,14 @@ ask_to_install() {
 }
 
 install_essentials() {
+    fancy_echo "Installing Essentials... (git, etc...)"
     brew_install_or_upgrade 'git'
-    brew_install_or_upgrade 'hub'
     if [ ! -d  "$HOME/dotfiles" ]; then
         git clone "https://github.com/wmmc/dotfiles" "$HOME/dotfiles"
     fi
     if [ ! -d  "$HOME/blog" ]; then
         git clone https://github.com/wmmc/blog/ "$HOME/blog"
     fi
-    cd dotfiles
-    rake install
-    cd $HOME
     brew_tap 'caskroom/cask'
     cask 'dropbox'
     fancy_echo "It's probably worth logging into Dropbox now if you haven't already..."
@@ -105,30 +131,29 @@ install_unix_stuff() {
     brew_install_or_upgrade 'pass'
     brew_install_or_upgrade 'tree'
     brew_install_or_upgrade 'openssl'
-    (brew unlink openssl && brew link openssl --force) || echo "Couldn't install openssl"
+    (brew unlink openssl && brew link openssl --force) || fancy_echo "Couldn't install openssl"
 }
 
 install_vim() {
     brew_install_or_upgrade 'vim'
     brew_install_or_upgrade 'ctags'
     brew_install_or_upgrade 'reattach-to-user-namespace'
-    cd ~/.vim/bundle
-    git clone git://github.com/altercation/vim-colors-solarized.git
+    mkdir -p "$HOME/.vim/bundle"
+    git clone git://github.com/altercation/vim-colors-solarized.git "$HOME/.vim/bundle"
+
 }
 
 install_javascript_stuff() {
     brew_install_or_upgrade 'imagemagick'
-    # brew_install_or_upgrade 'qt'
-    brew_install_or_upgrade 'node'
+    # brew_install_or_upgrade 'node'
 }
 
 install_ruby() {
     brew_install_or_upgrade 'rbenv'
     brew_install_or_upgrade 'ruby-build'
     eval "$(rbenv init -)"
-    ruby_version="$(curl -sSL http://ruby.thoughtbot.com/latest)"
-    fancy_echo "Do you want to update Ruby to version $ruby_version
-    [yes/no]"
+    ruby_version="$(rbenv install -l | grep -v - | tail -1 | sed -e 's/^ *//')"
+    fancy_echo "Do you want to update Ruby to version $ruby_version\n[yes/no]"
     read resp
     if [ "$resp" = "y" ] || [ "$resp" = "yes" ]; then
         fancy_echo "Updating ruby versions"
@@ -153,13 +178,12 @@ update_ruby_version() {
         rbenv install -s "$ruby_version"
     fi
     rbenv global "$ruby_version"
-    # if rbenv shell doesn't work, try: rbenv init
     rbenv shell "$ruby_version"
+    rbenv init
 }
 
 install_scala() {
     brew_install_or_upgrade 'typesafe-activator'
-
     brew_install_or_upgrade 'sbt'
     mkdir -p $HOME/sbt/0.13/plugins
     touch $HOME/sbt/0.13/plugins/plugins.sbt
@@ -233,8 +257,7 @@ install_emacs_extensions() {
     brew_install_or_upgrade 'mu --with-emacs --HEAD'
     brew_install_or_upgrade 'isync'
     mkdir -p $HOME/.mail/{gmail,snaptrip}
-    mbsync -a && mu index --maildir=$HOME/.mail & || echo "Can't grab mail"
-    # note: this line doesn't work in eshell
+    (mbsync -a && mu index --maildir=$HOME/.mail &) || fancy_echo "Can't grab mail"
     mkdir ~/.certificates
     touch ~/.certificates/gmail.crt
     printf "\n`openssl s_client -connect imap.gmail.com:993 -showcerts 2>&1 < /dev/null | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sed -ne '1,/-END CERTIFICATE-/p'`" >> ~/.certificates/gmail.crt
@@ -243,7 +266,7 @@ install_emacs_extensions() {
 install_rust() {
     brew tap cheba/rust-nightly
     brew_install_or_upgrade 'rust-nightly'
-    cargo install racer || echo "Could not install racer"
+    cargo install racer || fancy_echo "Could not install racer"
     # git clone https://github.com/rust-lang/rust.git ~/.rust # really needeed?
 }
 
@@ -254,8 +277,8 @@ install_everything() {
     install_vim
     install_javascript_stuff
     install_ruby
-    install_rust
-    install_scala
+    # install_rust
+    # install_scala
     install_comfy_setup
     install_totally_pointless_stuff
     install_emacs
@@ -290,20 +313,71 @@ cleanup() {
     fancy_echo "Thanks. It's been a blast."
 }
 
-cd $HOME
-intro
-should_we_install_everything
-install_essentials
-ask_to_install "db"
-ask_to_install "unix_stuff"
-ask_to_install "vim"
-ask_to_install "javascript_stuff"
-ask_to_install "ruby"
-ask_to_install "rust"
-ask_to_install "scala"
-ask_to_install "comfy_setup"
-ask_to_install "totally_pointless_stuff"
-ask_to_install "emacs"
-ask_to_install "emacs_extensions"
-ask_to_install "osx_tweaks"
-cleanup
+
+brew_install_everything() {
+    cd $HOME
+    intro
+    should_we_install_everything
+    install_essentials
+    ask_to_install "db"
+    ask_to_install "unix_stuff"
+    ask_to_install "vim"
+    ask_to_install "javascript_stuff"
+    ask_to_install "ruby"
+    ask_to_install "rust"
+    ask_to_install "scala"
+    ask_to_install "comfy_setup"
+    ask_to_install "totally_pointless_stuff"
+    ask_to_install "emacs"
+    ask_to_install "emacs_extensions"
+    ask_to_install "osx_tweaks"
+    cleanup
+}
+
+filename() {
+    basename $0
+}
+
+download() {
+    link_dropbox_files
+    if [ ! -e "$HOME/dotfiles/$filename" ]; then
+        git clone "https://github.com/wmmc/dotfiles" "$HOME/dotfiles"
+    else
+        fancy_echo "Already got my dotfiles :D"
+    fi
+}
+
+safe_link() {
+    source_file="$1"
+    target_file="$2"
+    if [ -e "$source_file" -a ! -e "$target_file" ]; then
+        ln -s "$source_file" "$target_file"
+    fi
+}
+
+link_dropbox_files () {
+    fancy_echo "Linking dropbox with stuff"
+    mkdir -p "$HOME/Dropbox/dev/{org,dotfiles}"
+    safe_link "$HOME/Dropbox/dev" "$HOME/dev"
+    safe_link "$HOME/Dropbox/dev/dotfiles" "$HOME/dotfiles"
+    safe_link "$HOME/Dropbox/org" "$HOME/org"
+    secrets=("authinfo.gpg" "certificates" "secrets.gpg")
+    for secret in "${secrets[@]}"
+    do
+        safe_link "$HOME/Dropbox/dev/secrets/$secret" "$HOME/.$secret"
+    done
+}
+
+main() {
+    if [ "$1" == "link" ]; then
+        link_dropbox_files
+    elif [ "$1" == "download" ]; then
+        download
+    elif [ "$1" == "install" || "$1" == "brew" ]; then
+        brew_install_everything
+    else
+        dotfiles_help
+    fi
+}
+
+main "$1"

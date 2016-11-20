@@ -1,0 +1,383 @@
+#!/bin/bash
+
+set -e
+
+files_to_link() {
+    cd $HOME/dotfiles
+    ls | grep -vwi "$filename\|application\|readme.*"
+}
+
+link_dotfiles() {
+    cd $HOME/dotfiles
+    for file in $(files_to_link)
+    do
+        link_dotfile $file
+    done
+}
+
+link_dotfile() {
+    if [ -e "$HOME/.$1" ]; then
+        fancy_echo "$1 exists"
+    else
+        ln -s "$1" "$HOME/.$1"
+    fi
+}
+
+fancy_echo() {
+    local fmt="$1"; shift
+    printf "\n$fmt\n" "$@"
+}
+
+dotfiles_help() {
+    fancy_echo "Usage:
+
+dotfiles download  #=> download the repo & link
+dotfiles install   #=> brew install stuff
+dotfiles link      #=> link dotfile to ~/.dotfile\n"
+}
+
+install_homebrew() {
+    if ! command -v brew >/dev/null; then
+        fancy_echo "Installing Homebrew ..."
+        curl -fsS \
+             'https://raw.githubusercontent.com/Homebrew/install/master/install' | ruby
+        export PATH="/usr/local/bin:$PATH"
+    else
+        fancy_echo "You've already got Homebrew..."
+    fi
+}
+
+brew_install_or_upgrade() {
+    if brew_is_installed "$1"; then
+        if brew_is_upgradable "$1"; then
+            fancy_echo "Upgrading %s ..." "$1"
+            brew upgrade "$@" || fancy_echo "Upgrade of %s failed. Soz. :|"
+        else
+            fancy_echo "Already using the latest version of %s. Skipping ..." "$1"
+        fi
+    else
+        fancy_echo "Installing %s ..." "$1"
+        brew install "$@" || fancy_echo "Install of %s failed. Soz. :|"
+    fi
+}
+
+brew_is_installed() {
+    local name="$(brew_expand_alias "$1")"
+    brew list -1 | grep -Fqx "$name"
+}
+
+brew_is_upgradable() {
+    local name="$(brew_expand_alias "$1")"
+    ! brew outdated --quiet "$name" >/dev/null
+}
+
+brew_tap() {
+    brew tap "$1" 2> /dev/null
+}
+
+brew_expand_alias() {
+    brew info "$1" 2>/dev/null | head -1 | awk '{gsub(/:/, ""); print $1}'
+}
+
+gem_install_or_update() {
+    if gem list "$1" --installed > /dev/null; then
+        fancy_echo "Updating %s ..." "$1"
+        gem update "$@"
+    else
+        fancy_echo "Installing %s ..." "$1"
+        gem install "$@"
+        rbenv rehash
+    fi
+}
+
+ask_to_install() {
+    fancy_echo "Do you want to install $1?
+[yes/no]: "
+    read resp
+    if [ "$resp" = "y" ] || [ "$resp" = "yes" ]
+    then
+        fancy_echo "Installing $1?"
+        install_="install_"
+        eval "$install_$1"
+    else
+        fancy_echo "Skipping $1..."
+    fi
+}
+
+install_essentials() {
+    fancy_echo "Installing Essentials... (git, etc...)"
+    brew_install_or_upgrade 'git'
+    if [ ! -d  "$HOME/dotfiles" ]; then
+        git clone "https://github.com/wmmc/dotfiles" "$HOME/dotfiles"
+    fi
+    if [ ! -d  "$HOME/blog" ]; then
+        git clone https://github.com/wmmc/blog/ "$HOME/blog"
+    fi
+    brew_tap 'caskroom/cask'
+    cask 'dropbox'
+    fancy_echo "It's probably worth logging into Dropbox now if you haven't already..."
+}
+
+install_db() {
+    brew_install_or_upgrade 'postgres'
+    brew_install_or_upgrade 'redis'
+}
+
+install_unix_stuff() {
+    brew_install_or_upgrade 'the_silver_searcher'
+    brew_install_or_upgrade 'heroku-toolbelt'
+    brew_install_or_upgrade 'tmux'
+    brew_install_or_upgrade 'gpg'
+    brew_install_or_upgrade 'pass'
+    brew_install_or_upgrade 'tree'
+    brew_install_or_upgrade 'openssl'
+    (brew unlink openssl && brew link openssl --force) || fancy_echo "Couldn't install openssl"
+}
+
+install_vim() {
+    brew_install_or_upgrade 'vim'
+    brew_install_or_upgrade 'ctags'
+    brew_install_or_upgrade 'reattach-to-user-namespace'
+    mkdir -p "$HOME/.vim/bundle"
+    git clone git://github.com/altercation/vim-colors-solarized.git "$HOME/.vim/bundle"
+
+}
+
+install_javascript_stuff() {
+    brew_install_or_upgrade 'imagemagick'
+    # brew_install_or_upgrade 'node'
+}
+
+install_ruby() {
+    brew_install_or_upgrade 'rbenv'
+    brew_install_or_upgrade 'ruby-build'
+    eval "$(rbenv init -)"
+    ruby_version="$(rbenv install -l | grep -v - | tail -1 | sed -e 's/^ *//')"
+    fancy_echo "Do you want to update Ruby to version $ruby_version\n[yes/no]"
+    read resp
+    if [ "$resp" = "y" ] || [ "$resp" = "yes" ]; then
+        fancy_echo "Updating ruby versions"
+        update_ruby_version
+    else
+        fancy_echo "Okay. We won't update Ruby"
+    fi
+    update_gems
+}
+
+update_gems() {
+    gem update --system
+    gem_install_or_update 'bundler'
+    fancy_echo "Configuring Bundler ..."
+    number_of_cores=$(sysctl -n hw.ncpu)
+    bundle config --global jobs $((number_of_cores - 1))
+}
+
+update_ruby_version() {
+    ruby_version="$(curl -sSL http://ruby.thoughtbot.com/latest)"
+    if ! rbenv versions | grep -Fq "$ruby_version"; then
+        rbenv install -s "$ruby_version"
+    fi
+    rbenv global "$ruby_version"
+    rbenv shell "$ruby_version"
+    rbenv init
+}
+
+install_scala() {
+    brew_install_or_upgrade 'typesafe-activator'
+    brew_install_or_upgrade 'sbt'
+    mkdir -p $HOME/sbt/0.13/plugins
+    touch $HOME/sbt/0.13/plugins/plugins.sbt
+    echo "addSbtPlugin(\"org.ensime\" % \"ensime-sbt\" % \"0.2.0\")" > $HOME/sbt/0.13/plugins/plugins.sbt
+    # for different scala projects do this in the directory:
+    # sbt
+    # gen-ensime
+    # M-x ensime-gen-and-restart
+}
+
+install_osx_tweaks() {
+    defaults write -g ApplePressAndHoldEnabled -bool false
+}
+
+cask() {
+    fancy_echo "brew cask - installing %s" "$1"
+    brew cask install "$1" 2>/dev/null
+}
+
+install_comfy_setup() {
+    brew_tap 'caskroom/cask'
+    cask 'cocoapacketanalyzer'
+    cask 'charles'
+    cask 'postgres'
+    cask 'google-chrome'
+    cask 'slack'
+    cask 'skype'
+    cask 'spotify'
+    cask 'dash'
+    cask 'imageoptim'
+    cask '1password'
+    cask 'flux'
+    cask 'caffeine'
+    cask 'alfred'
+    cask 'dropbox'
+    cask 'bettertouchtool'
+    cask 'karabiner'
+    cask 'growlnotify'
+    cask 'iterm2'
+    cask 'gpgtools'
+    if [ -f "$HOME/dotfiles/applications/karabiner/karabiner-import.sh" ]; then
+        bash ~/dotfiles/applications/karabiner/karabiner-import.sh
+    fi
+}
+
+install_totally_pointless_stuff() {
+    brew_tap 'caskroom/cask'
+    cask 'utorrent'
+    cask 'steam'
+    cask 'firefox'
+    cask 'vlc'
+    cask 'disk-inventory-x'
+    cask 'tunnelbear'
+}
+
+
+install_emacs() {
+    brew tap d12frosted/emacs-plus
+    brew install emacs-plus --with-cocoa --with-gnutls --with-librsvg --with-imagemagick --with-spacemacs-icon
+    brew linkapps
+    git clone --recursive https://github.com/syl20bnr/spacemacs ~/.emacs.d
+}
+
+install_emacs_extensions() {
+    # brew_install_or_upgrade 'homebrew/emacs/gnugo-emacs'
+    brew_install_or_upgrade 'libyaml'
+    brew_install_or_upgrade 'trash'
+    brew_install_or_upgrade 'w3m'
+    brew_install_or_upgrade 'markdown'
+    brew_install_or_upgrade 'msmtp'
+    brew_install_or_upgrade 'mu --with-emacs --HEAD'
+    brew_install_or_upgrade 'isync'
+    mkdir -p $HOME/.mail/{gmail,snaptrip}
+    (mbsync -a && mu index --maildir=$HOME/.mail &) || fancy_echo "Can't grab mail"
+    mkdir ~/.certificates
+    touch ~/.certificates/gmail.crt
+    printf "\n`openssl s_client -connect imap.gmail.com:993 -showcerts 2>&1 < /dev/null | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sed -ne '1,/-END CERTIFICATE-/p'`" >> ~/.certificates/gmail.crt
+}
+
+install_rust() {
+    brew tap cheba/rust-nightly
+    brew_install_or_upgrade 'rust-nightly'
+    cargo install racer || fancy_echo "Could not install racer"
+    # git clone https://github.com/rust-lang/rust.git ~/.rust # really needeed?
+}
+
+install_everything() {
+    install_essentials
+    install_db
+    install_unix_stuff
+    install_vim
+    install_javascript_stuff
+    install_ruby
+    # install_rust
+    # install_scala
+    install_comfy_setup
+    install_totally_pointless_stuff
+    install_emacs
+    install_emacs_extensions
+    install_osx_tweaks
+}
+
+intro() {
+    fancy_echo "Hey!
+You're a few steps away from setting up EVERYTHING!"
+}
+
+should_we_install_everything() {
+    fancy_echo "Should we just install everything else?
+[yes/no]"
+    read resp
+    if [ "$resp" = "y" ] || [ "$resp" = "yes" ]; then
+        fancy_echo "Okay. We'll update it all!"
+        install_everything
+    else
+        fancy_echo "Okay. Choose what you want:"
+    fi
+}
+
+cleanup() {
+    fancy_echo "Updating Homebrew formulas ..."
+    brew update
+    brew cleanup
+    brew cask cleanup
+    fancy_echo "Running brew doctor"
+    brew doctor
+    fancy_echo "Thanks. It's been a blast."
+}
+
+
+brew_install_everything() {
+    cd $HOME
+    intro
+    should_we_install_everything
+    install_essentials
+    ask_to_install "db"
+    ask_to_install "unix_stuff"
+    ask_to_install "vim"
+    ask_to_install "javascript_stuff"
+    ask_to_install "ruby"
+    ask_to_install "rust"
+    ask_to_install "scala"
+    ask_to_install "comfy_setup"
+    ask_to_install "totally_pointless_stuff"
+    ask_to_install "emacs"
+    ask_to_install "emacs_extensions"
+    ask_to_install "osx_tweaks"
+    cleanup
+}
+
+filename() {
+    basename $0
+}
+
+download() {
+    link_dropbox_files
+    if [ ! -e "$HOME/dotfiles/$filename" ]; then
+        git clone "https://github.com/wmmc/dotfiles" "$HOME/dotfiles"
+    else
+        fancy_echo "Already got my dotfiles :D"
+    fi
+}
+
+safe_link() {
+    source_file="$1"
+    target_file="$2"
+    if [ -e "$source_file" -a ! -e "$target_file" ]; then
+        ln -s "$source_file" "$target_file"
+    fi
+}
+
+link_dropbox_files () {
+    fancy_echo "Linking dropbox with stuff"
+    mkdir -p "$HOME/Dropbox/dev/{org,dotfiles}"
+    safe_link "$HOME/Dropbox/dev" "$HOME/dev"
+    safe_link "$HOME/Dropbox/dev/dotfiles" "$HOME/dotfiles"
+    safe_link "$HOME/Dropbox/org" "$HOME/org"
+    secrets=("authinfo.gpg" "certificates" "secrets.gpg")
+    for secret in "${secrets[@]}"
+    do
+        safe_link "$HOME/Dropbox/dev/secrets/$secret" "$HOME/.$secret"
+    done
+}
+
+main() {
+    if [ "$1" == "link" ]; then
+        link_dropbox_files
+    elif [ "$1" == "download" ]; then
+        download
+    elif [ "$1" == "install" || "$1" == "brew" ]; then
+        brew_install_everything
+    else
+        dotfiles_help
+    fi
+}
+
+main "$1"

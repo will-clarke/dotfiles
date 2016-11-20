@@ -1,7 +1,0 @@
-export LIBRARY_PATH=/usr/local/lib:/Users/wmmc/.nix-profile/lib:$LIBRARY_PATH
-export CPATH=/usr/local/include/:/Users/wmmc/.nix-profile/include:$CPATH
-export RUST_SRC_PATH=/usr/local/src/rust/src
-export PATH=$HOME/.bin:/usr/local/sbin:$PATH
-export PATH=/Applications/Postgres.app/Contents/Versions/9.4/bin:$PATH
-export PATH=$HOME/.cargo/bin:$PATH
-export EDITOR=/Users/wmmc/.bin/edit

@@ -67,11 +67,6 @@ alias path="echo $PATH | tr -s ':' '\n'"
 alias python=python3
 alias p3="python3"
 
-# Lazy
-alias aliases="v ~/.aliases"
-alias vimrc="v ~/.vimrc"
-alias dotfiles="cd ~/dotfiles"
-
 # alias todolist="v ~/Dropbox/Apps/UpWord\ Notes/"
 # alias todo="v ~/Dropbox/Apps/UpWord\ Notes/todo.txt"
 alias t='/usr/local/Cellar/todo-txt/2.10/bin/todo.sh -d $HOME/Dropbox/todo/todo.cfg'
