@@ -1,0 +1,16 @@
+// https://github.com/tekezo/Karabiner-Elements/pull/170#issuecomment-257091685
+// https://github.com/tekezo/Karabiner-Elements/pull/247
+{
+    "profiles": [
+        {
+            "name": "Default profile",
+            "selected": true,
+            "simple_modifications": {
+                "caps_lock": "left_control"
+            },
+            "standalone_modifiers": {
+                "left_control": "escape"
+            }
+        }
+    ]
+}

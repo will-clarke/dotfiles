@@ -141,7 +141,9 @@ install_vim() {
     brew_install_or_upgrade 'ctags'
     brew_install_or_upgrade 'reattach-to-user-namespace'
     mkdir -p "$HOME/.vim/bundle"
-    git clone git://github.com/altercation/vim-colors-solarized.git "$HOME/.vim/bundle"
+    if [ ! -e "$HOME/.vim/bundle/vim-colors-solarized" ]; then
+        git clone git://github.com/altercation/vim-colors-solarized.git "$HOME/.vim/bundle/vim-colors-solarized"
+    fi
 
 }
 
@@ -175,13 +177,12 @@ update_gems() {
 }
 
 update_ruby_version() {
-    ruby_version="$(curl -sSL http://ruby.thoughtbot.com/latest)"
+    eval "$(rbenv init -)"
     if ! rbenv versions | grep -Fq "$ruby_version"; then
-        rbenv install -s "$ruby_version"
+        RUBY_CONFIGURE_OPTS=--with-openssl-dir=/usr/local/opt/openssl rbenv install -s "$ruby_version"
     fi
     rbenv global "$ruby_version"
     rbenv shell "$ruby_version"
-    rbenv init
 }
 
 install_scala() {
@@ -202,7 +203,7 @@ install_osx_tweaks() {
 
 cask() {
     fancy_echo "brew cask - installing %s" "$1"
-    brew cask install "$1" 2>/dev/null
+    brew cask install "$1" #2>/dev/null
 }
 
 install_comfy_setup() {
@@ -222,7 +223,9 @@ install_comfy_setup() {
     cask 'alfred'
     cask 'dropbox'
     cask 'bettertouchtool'
-    cask 'karabiner'
+    cask 'karabiner-elements'
+    # https://cl.ly/i2PJ/download/Karabiner-Elements-0.90.64.dmg
+    # https://github.com/tekezo/Karabiner-Elements/pull/170
     cask 'growlnotify'
     cask 'iterm2'
     cask 'gpgtools'
@@ -234,11 +237,11 @@ install_comfy_setup() {
 install_totally_pointless_stuff() {
     brew_tap 'caskroom/cask'
     cask 'utorrent'
-    cask 'steam'
+    # cask 'steam'
     cask 'firefox'
     cask 'vlc'
     cask 'disk-inventory-x'
-    cask 'tunnelbear'
+    # cask 'tunnelbear'
 }
 
 
@@ -246,7 +249,9 @@ install_emacs() {
     brew tap d12frosted/emacs-plus
     brew install emacs-plus --with-cocoa --with-gnutls --with-librsvg --with-imagemagick --with-spacemacs-icon
     brew linkapps
-    git clone --recursive https://github.com/syl20bnr/spacemacs ~/.emacs.d
+    if [ ! -e "$HOME/.emacs.d" ]; then
+        git clone --recursive https://github.com/syl20bnr/spacemacs "$HOME/.emacs.d"
+    fi
 }
 
 install_emacs_extensions() {
@@ -279,17 +284,17 @@ install_rust() {
 
 install_everything() {
     install_essentials
+    install_emacs
+    install_emacs_extensions
     install_db
     install_unix_stuff
-    install_vim
-    install_javascript_stuff
     install_ruby
     # install_rust
     # install_scala
+    install_javascript_stuff
     install_comfy_setup
     install_totally_pointless_stuff
-    install_emacs
-    install_emacs_extensions
+    install_vim
     install_osx_tweaks
 }
 
@@ -320,12 +325,13 @@ cleanup() {
     fancy_echo "Thanks. It's been a blast."
 }
 
-
 brew_install_everything() {
     cd "$HOME"
     intro
     should_we_install_everything
     install_essentials
+    ask_to_install "emacs"
+    ask_to_install "emacs_extensions"
     ask_to_install "db"
     ask_to_install "unix_stuff"
     ask_to_install "vim"
@@ -335,8 +341,6 @@ brew_install_everything() {
     ask_to_install "scala"
     ask_to_install "comfy_setup"
     ask_to_install "totally_pointless_stuff"
-    ask_to_install "emacs"
-    ask_to_install "emacs_extensions"
     ask_to_install "osx_tweaks"
     cleanup
 }
@@ -363,7 +367,7 @@ safe_link() {
 
 link_dropbox_files () {
     fancy_echo "Linking dropbox with stuff"
-# todo: refactor:
+    # todo: refactor:
     mkdir -p "$HOME/Dropbox/dev/org"
     mkdir -p "$HOME/Dropbox/dev/secrets"
     safe_link "$HOME/Dropbox/dev" "$HOME/dev"
