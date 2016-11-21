@@ -344,7 +344,7 @@ brew_install_everything() {
 download() {
     mkdir -p "$HOME/Dropbox/dev/dotfiles"
     safe_link "$HOME/Dropbox/dev/dotfiles" "$HOME/dotfiles"
-    if [ ! -e "$HOME/dotfiles/dotfiles" ]; then
+    if [ ! -e "$HOME/dotfiles/bin/dotfiles" ]; then
         git clone "https://github.com/wmmc/dotfiles" "$HOME/dotfiles"
     else
         fancy_echo "Already got my dotfiles :D"
