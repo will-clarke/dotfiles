@@ -698,16 +698,6 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ;; \C-h is now DEL
   (define-key key-translation-map [?\C-h] [?\C-?])
 
-  ;; slack:
-  ;; (slack-register-team
-  ;;  :name "Hubot"
-  ;;  :default t
-  ;;  :client-id (getenv "ST_SLACK_CLIENT_ID")
-  ;;  :client-secret (getenv "ST_SLACK_CLIENT_SECRET")
-  ;;  :token (getenv "ST_SLACK_TOKEN")
-  ;;  :subscribed-channels '(general slackbot))
-
-
   )
 
 ;; Do not write anything past this comment. This is where Emacs will

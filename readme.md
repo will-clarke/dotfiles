@@ -4,14 +4,14 @@
 ## Super-easy installation
 __[<sub><sub><sub>(probably shouldn't be piping curl to bash...)</sub></sub></sub>](http://curlpipesh.tumblr.com/)__
 
-    curl  https://raw.githubusercontent.com/wmmc/dotfiles/master/dotfiles | bash -s download
-
+    curl https://raw.githubusercontent.com/wmmc/dotfiles/master/bin/dotfiles | bash -s download
 
 ## What this contains:
 
-- Emacs ([Spacemacs](https://github.com/syl20bnr/spacemacs) - containing vim keybindings)
-- Tmux
+- ([Spacemacs](https://github.com/syl20bnr/spacemacs) - Emacs wiht vim keybindings)
 - Vim
+- Tmux
+- Some db / ruby dotfiles
 - A decent install script to get stuff up and running:
   dotfiles install
 

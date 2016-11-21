@@ -3,15 +3,15 @@
 set -e
 
 files_to_link() {
-    cd $HOME/dotfiles
-    ls | grep -vwi "$filename\|application\|readme.*"
+    cd "$HOME/dotfiles"
+    ls | grep -vwi "dotfiles\|application\|readme.*"
 }
 
 link_dotfiles() {
-    cd $HOME/dotfiles
+    fancy_echo "Linking dotfiles"
     for file in $(files_to_link)
     do
-        link_dotfile $file
+        link_dotfile "$file"
     done
 }
 
@@ -19,7 +19,7 @@ link_dotfile() {
     if [ -e "$HOME/.$1" ]; then
         fancy_echo "$1 exists"
     else
-        ln -s "$1" "$HOME/.$1"
+        ln -s "$HOME/dotfiles/$1" "$HOME/.$1"
     fi
 }
 
@@ -62,12 +62,14 @@ brew_install_or_upgrade() {
 }
 
 brew_is_installed() {
-    local name="$(brew_expand_alias "$1")"
+    local name
+    name="$(brew_expand_alias "$1")"
     brew list -1 | grep -Fqx "$name"
 }
 
 brew_is_upgradable() {
-    local name="$(brew_expand_alias "$1")"
+    local name
+    name="$(brew_expand_alias "$1")"
     ! brew outdated --quiet "$name" >/dev/null
 }
 
@@ -93,7 +95,7 @@ gem_install_or_update() {
 ask_to_install() {
     fancy_echo "Do you want to install $1?
 [yes/no]: "
-    read resp
+    read -r resp
     if [ "$resp" = "y" ] || [ "$resp" = "yes" ]
     then
         fancy_echo "Installing $1?"
@@ -154,7 +156,7 @@ install_ruby() {
     eval "$(rbenv init -)"
     ruby_version="$(rbenv install -l | grep -v - | tail -1 | sed -e 's/^ *//')"
     fancy_echo "Do you want to update Ruby to version $ruby_version\n[yes/no]"
-    read resp
+    read -r resp
     if [ "$resp" = "y" ] || [ "$resp" = "yes" ]; then
         fancy_echo "Updating ruby versions"
         update_ruby_version
@@ -185,9 +187,9 @@ update_ruby_version() {
 install_scala() {
     brew_install_or_upgrade 'typesafe-activator'
     brew_install_or_upgrade 'sbt'
-    mkdir -p $HOME/sbt/0.13/plugins
-    touch $HOME/sbt/0.13/plugins/plugins.sbt
-    echo "addSbtPlugin(\"org.ensime\" % \"ensime-sbt\" % \"0.2.0\")" > $HOME/sbt/0.13/plugins/plugins.sbt
+    mkdir -p "$HOME/sbt/0.13/plugins"
+    touch "$HOME/sbt/0.13/plugins/plugins.sbt"
+    echo "addSbtPlugin(\"org.ensime\" % \"ensime-sbt\" % \"0.2.0\")" > "$HOME/sbt/0.13/plugins/plugins.sbt"
     # for different scala projects do this in the directory:
     # sbt
     # gen-ensime
@@ -248,19 +250,24 @@ install_emacs() {
 }
 
 install_emacs_extensions() {
-    # brew_install_or_upgrade 'homebrew/emacs/gnugo-emacs'
     brew_install_or_upgrade 'libyaml'
+    # brew_install_or_upgrade 'homebrew/emacs/gnugo-emacs'
     brew_install_or_upgrade 'trash'
     brew_install_or_upgrade 'w3m'
     brew_install_or_upgrade 'markdown'
     brew_install_or_upgrade 'msmtp'
     brew_install_or_upgrade 'mu --with-emacs --HEAD'
     brew_install_or_upgrade 'isync'
-    mkdir -p $HOME/.mail/{gmail,snaptrip}
-    (mbsync -a && mu index --maildir=$HOME/.mail &) || fancy_echo "Can't grab mail"
-    mkdir ~/.certificates
-    touch ~/.certificates/gmail.crt
-    printf "\n`openssl s_client -connect imap.gmail.com:993 -showcerts 2>&1 < /dev/null | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sed -ne '1,/-END CERTIFICATE-/p'`" >> ~/.certificates/gmail.crt
+    mkdir -p "$HOME/" .mail/{gmail,snaptrip}
+    (mbsync -a && mu index --maildir="$HOME/.mail" &) || fancy_echo "Can't grab mail"
+    mkdir -p "$HOME/.certificates"
+    touch "$HOME/.certificates/gmail.crt"
+    cert=$(openssl s_client -connect imap.gmail.com:993 -showcerts 2>&1 < /dev/null | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sed -ne '1,/-END CERTIFICATE-/p')
+    cert_exists=$(grep -c -- "$cert" "$HOME/.certificates/gmail.crt")
+    if [ "$cert_exists" -lt 5 ]; then
+        printf "\n$cert" >> "$HOME/.certificates/gmail.crt"
+        echo "Updating certificates"
+    fi
 }
 
 install_rust() {
@@ -294,7 +301,7 @@ You're a few steps away from setting up EVERYTHING!"
 should_we_install_everything() {
     fancy_echo "Should we just install everything else?
 [yes/no]"
-    read resp
+    read -r resp
     if [ "$resp" = "y" ] || [ "$resp" = "yes" ]; then
         fancy_echo "Okay. We'll update it all!"
         install_everything
@@ -315,7 +322,7 @@ cleanup() {
 
 
 brew_install_everything() {
-    cd $HOME
+    cd "$HOME"
     intro
     should_we_install_everything
     install_essentials
@@ -334,31 +341,33 @@ brew_install_everything() {
     cleanup
 }
 
-filename() {
-    basename $0
-}
-
 download() {
-    link_dropbox_files
-    if [ ! -e "$HOME/dotfiles/$filename" ]; then
+    mkdir -p "$HOME/Dropbox/dev/dotfiles"
+    safe_link "$HOME/Dropbox/dev/dotfiles" "$HOME/dotfiles"
+    if [ ! -e "$HOME/dotfiles/dotfiles" ]; then
         git clone "https://github.com/wmmc/dotfiles" "$HOME/dotfiles"
     else
         fancy_echo "Already got my dotfiles :D"
     fi
+    link_dropbox_files
+    link_dotfiles
 }
 
 safe_link() {
     source_file="$1"
     target_file="$2"
-    if [ -e "$source_file" -a ! -e "$target_file" ]; then
+    if [ -e "$source_file" ] && [ ! -e "$target_file" ]; then
         ln -s "$source_file" "$target_file"
     fi
 }
 
 link_dropbox_files () {
     fancy_echo "Linking dropbox with stuff"
-    mkdir -p "$HOME/Dropbox/dev/{org,dotfiles}"
+# todo: refactor:
+    mkdir -p "$HOME/Dropbox/dev/org"
+    mkdir -p "$HOME/Dropbox/dev/secrets"
     safe_link "$HOME/Dropbox/dev" "$HOME/dev"
+    mkdir -p "$HOME/Dropbox/dev/dotfiles"
     safe_link "$HOME/Dropbox/dev/dotfiles" "$HOME/dotfiles"
     safe_link "$HOME/Dropbox/org" "$HOME/org"
     secrets=("authinfo.gpg" "certificates" "secrets.gpg")
@@ -370,10 +379,10 @@ link_dropbox_files () {
 
 main() {
     if [ "$1" == "link" ]; then
-        link_dropbox_files
+        link_dropbox_files && link_dotfiles
     elif [ "$1" == "download" ]; then
         download
-    elif [ "$1" == "install" || "$1" == "brew" ]; then
+    elif [ "$1" == "install" ] || [ "$1" == "brew" ]; then
         brew_install_everything
     else
         dotfiles_help
