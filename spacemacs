@@ -14,6 +14,7 @@ values."
      (auto-completion :variables
                       auto-completion-enable-help-tooltip t
                       auto-completion-return-key-behavior 'nil
+                      auto-completion-tab-key-behavior 'complete
                       ;; auto-completion-tab-key-behavior 'cycle
                       ;; auto-completion-complete-with-key-sequence nil
                       ;; auto-completion-complete-with-key-sequence-delay 0.1
@@ -99,7 +100,7 @@ values."
                         soft-charcoal)
    dotspacemacs-colorize-cursor-according-to-state t
    dotspacemacs-default-font '("Source Code Pro"
-                               :size 23
+                               :size 20
                                ;; :size 13
                                :weight normal
                                :width normal
@@ -593,12 +594,12 @@ before packages are loaded. If you are unsure, you should try in setting them in
 ;;   (setq org-bullets-bullet-list '("⚫" "◉" "○" "►" "◎" "◇"))
 
 ;;   ;; babel
-;;   (org-babel-do-load-languages
-;;    'org-babel-load-languages '((C . t)
-;;                                (plantuml . t)
-;;                                (ruby . t)
-;;                                (sh . t)
-;;                                ))
+  (org-babel-do-load-languages
+   'org-babel-load-languages '((C . t)
+                               (plantuml . t)
+                               (ruby . t)
+                               (sh . t)
+                               ))
 
 ;;   (defvar my/org-basic-task-template "* TODO %^{Task}
 ;; :PROPERTIES:
