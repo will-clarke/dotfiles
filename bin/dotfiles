@@ -2,12 +2,12 @@
 
 set -e
 
-files_to_link() {
+function files_to_link {
     cd "$HOME/dotfiles"
     ls | grep -vwi "dotfiles\|application\|readme.*"
 }
 
-link_dotfiles() {
+function link_dotfiles {
     fancy_echo "Linking dotfiles"
     for file in $(files_to_link)
     do
@@ -15,7 +15,7 @@ link_dotfiles() {
     done
 }
 
-link_dotfile() {
+function link_dotfile {
     if [ -e "$HOME/.$1" ]; then
         fancy_echo "$1 exists"
     else
@@ -23,12 +23,12 @@ link_dotfile() {
     fi
 }
 
-fancy_echo() {
+function fancy_echo {
     local fmt="$1"; shift
     printf "\n$fmt\n" "$@"
 }
 
-dotfiles_help() {
+function dotfiles_help {
     fancy_echo "Usage:
 
 dotfiles download  #=> download the repo & link
@@ -36,7 +36,7 @@ dotfiles install   #=> brew install stuff
 dotfiles link      #=> link dotfile to ~/.dotfile\n"
 }
 
-install_homebrew() {
+function install_homebrew {
     if ! command -v brew >/dev/null; then
         fancy_echo "Installing Homebrew ..."
         curl -fsS \
@@ -47,7 +47,7 @@ install_homebrew() {
     fi
 }
 
-brew_install_or_upgrade() {
+function brew_install_or_upgrade {
     if brew_is_installed "$1"; then
         if brew_is_upgradable "$1"; then
             fancy_echo "Upgrading %s ..." "$1"
@@ -61,27 +61,27 @@ brew_install_or_upgrade() {
     fi
 }
 
-brew_is_installed() {
+function brew_is_installed {
     local name
     name="$(brew_expand_alias "$1")"
     brew list -1 | grep -Fqx "$name"
 }
 
-brew_is_upgradable() {
+function brew_is_upgradable {
     local name
     name="$(brew_expand_alias "$1")"
     ! brew outdated --quiet "$name" >/dev/null
 }
 
-brew_tap() {
+function brew_tap {
     brew tap "$1" 2> /dev/null
 }
 
-brew_expand_alias() {
+function brew_expand_alias {
     brew info "$1" 2>/dev/null | head -1 | awk '{gsub(/:/, ""); print $1}'
 }
 
-gem_install_or_update() {
+function gem_install_or_update {
     if gem list "$1" --installed > /dev/null; then
         fancy_echo "Updating %s ..." "$1"
         gem update "$@"
@@ -92,7 +92,7 @@ gem_install_or_update() {
     fi
 }
 
-ask_to_install() {
+function ask_to_install {
     fancy_echo "Do you want to install $1?
 [yes/no]: "
     read -r resp
@@ -106,7 +106,7 @@ ask_to_install() {
     fi
 }
 
-install_essentials() {
+function install_essentials {
     fancy_echo "Installing Essentials... (git, etc...)"
     brew_install_or_upgrade 'git'
     if [ ! -d  "$HOME/dotfiles" ]; then
@@ -120,12 +120,12 @@ install_essentials() {
     fancy_echo "It's probably worth logging into Dropbox now if you haven't already..."
 }
 
-install_db() {
+function install_db {
     brew_install_or_upgrade 'postgres'
     brew_install_or_upgrade 'redis'
 }
 
-install_unix_stuff() {
+function install_unix_stuff {
     brew_install_or_upgrade 'the_silver_searcher'
     brew_install_or_upgrade 'heroku-toolbelt'
     brew_install_or_upgrade 'tmux'
@@ -136,7 +136,7 @@ install_unix_stuff() {
     (brew unlink openssl && brew link openssl --force) || fancy_echo "Couldn't install openssl"
 }
 
-install_vim() {
+function install_vim {
     brew_install_or_upgrade 'vim'
     brew_install_or_upgrade 'ctags'
     brew_install_or_upgrade 'reattach-to-user-namespace'
@@ -147,12 +147,12 @@ install_vim() {
 
 }
 
-install_javascript_stuff() {
+function install_javascript_stuff {
     brew_install_or_upgrade 'imagemagick'
     # brew_install_or_upgrade 'node'
 }
 
-install_ruby() {
+function install_ruby {
     brew_install_or_upgrade 'rbenv'
     brew_install_or_upgrade 'ruby-build'
     eval "$(rbenv init -)"
@@ -168,7 +168,7 @@ install_ruby() {
     update_gems
 }
 
-update_gems() {
+function update_gems {
     gem update --system
     gem_install_or_update 'bundler'
     fancy_echo "Configuring Bundler ..."
@@ -176,7 +176,7 @@ update_gems() {
     bundle config --global jobs $((number_of_cores - 1))
 }
 
-update_ruby_version() {
+function update_ruby_version {
     eval "$(rbenv init -)"
     if ! rbenv versions | grep -Fq "$ruby_version"; then
         RUBY_CONFIGURE_OPTS=--with-openssl-dir=/usr/local/opt/openssl rbenv install -s "$ruby_version"
@@ -185,7 +185,7 @@ update_ruby_version() {
     rbenv shell "$ruby_version"
 }
 
-install_scala() {
+function install_scala {
     brew_install_or_upgrade 'typesafe-activator'
     brew_install_or_upgrade 'sbt'
     mkdir -p "$HOME/sbt/0.13/plugins"
@@ -197,18 +197,18 @@ install_scala() {
     # M-x ensime-gen-and-restart
 }
 
-install_osx_tweaks() {
+function install_osx_tweaks {
     defaults write -g ApplePressAndHoldEnabled -bool false
     defaults write -g InitialKeyRepeat -int 15 # normal minimum is 15 (225 ms)
     defaults write -g KeyRepeat -int 1 # normal minimum is 2 (30 ms)
 }
 
-cask() {
+function cask {
     fancy_echo "brew cask - installing %s" "$1"
     brew cask install "$1" 2>/dev/null
 }
 
-install_comfy_setup() {
+function install_comfy_setup {
     brew_tap 'caskroom/cask'
     cask 'cocoapacketanalyzer'
     cask 'charles'
@@ -236,7 +236,7 @@ install_comfy_setup() {
     fi
 }
 
-install_totally_pointless_stuff() {
+function install_totally_pointless_stuff {
     brew_tap 'caskroom/cask'
     cask 'utorrent'
     # cask 'steam'
@@ -247,7 +247,7 @@ install_totally_pointless_stuff() {
 }
 
 
-install_emacs() {
+function install_emacs {
     brew tap d12frosted/emacs-plus
     brew install emacs-plus --with-cocoa --with-gnutls --with-librsvg --with-imagemagick --with-spacemacs-icon
     brew linkapps
@@ -256,7 +256,7 @@ install_emacs() {
     fi
 }
 
-install_emacs_extensions() {
+function install_emacs_extensions {
     brew_install_or_upgrade 'libyaml'
     # brew_install_or_upgrade 'homebrew/emacs/gnugo-emacs'
     brew_install_or_upgrade 'trash'
@@ -277,14 +277,14 @@ install_emacs_extensions() {
     fi
 }
 
-install_rust() {
+function install_rust {
     brew tap cheba/rust-nightly
     brew_install_or_upgrade 'rust-nightly'
     cargo install racer || fancy_echo "Could not install racer"
     # git clone https://github.com/rust-lang/rust.git ~/.rust # really needeed?
 }
 
-install_everything() {
+function install_everything {
     install_essentials
     install_emacs
     install_emacs_extensions
@@ -300,12 +300,12 @@ install_everything() {
     install_osx_tweaks
 }
 
-intro() {
+function intro {
     fancy_echo "Hey!
 You're a few steps away from setting up EVERYTHING!"
 }
 
-should_we_install_everything() {
+function should_we_install_everything {
     fancy_echo "Should we just install everything else?
 [yes/no]"
     read -r resp
@@ -317,7 +317,7 @@ should_we_install_everything() {
     fi
 }
 
-cleanup() {
+function cleanup {
     fancy_echo "Updating Homebrew formulas ..."
     brew update
     brew cleanup
@@ -327,7 +327,7 @@ cleanup() {
     fancy_echo "Thanks. It's been a blast."
 }
 
-brew_install_everything() {
+function brew_install_everything {
     cd "$HOME"
     intro
     should_we_install_everything
@@ -347,7 +347,7 @@ brew_install_everything() {
     cleanup
 }
 
-download() {
+function download {
     mkdir -p "$HOME/Dropbox/dev/dotfiles"
     safe_link "$HOME/Dropbox/dev/dotfiles" "$HOME/dotfiles"
     if [ ! -e "$HOME/dotfiles/bin/dotfiles" ]; then
@@ -359,7 +359,7 @@ download() {
     link_dotfiles
 }
 
-safe_link() {
+function safe_link {
     source_file="$1"
     target_file="$2"
     if [ -e "$source_file" ] && [ ! -e "$target_file" ]; then
@@ -367,7 +367,7 @@ safe_link() {
     fi
 }
 
-link_dropbox_files () {
+function link_dropbox_files {
     fancy_echo "Linking dropbox with stuff"
     # todo: refactor:
     mkdir -p "$HOME/Dropbox/dev/org"
@@ -383,7 +383,7 @@ link_dropbox_files () {
     done
 }
 
-main() {
+function main {
     # install files
     # install apps
     # uninstall files

@@ -351,6 +351,10 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ;; (define-key evil-motion-state-map "\C-]" 'helm-gtags-find-tag-from-here);; evil-jump-to-tag)
   ;; (spacemacs/helm-gtags-define-keys-for-mode 'ruby-mode)
 
+
+  ;; (require 're-builder)
+  (setq reb-re-syntax 'string)
+
   ;; My Functions
   (defun my-require-pry ()
     (interactive)
