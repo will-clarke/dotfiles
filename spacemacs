@@ -50,6 +50,7 @@ values."
             shell-default-term-shell "/bin/bash"
             shell-default-shell 'eshell
             ;; shell-default-shell 'multi-term
+            shell-enable-smart-eshell t
             shell-default-position 'bottom
             shell-default-height 30)
      version-control
@@ -104,7 +105,7 @@ values."
                                ;; :size 13
                                :weight normal
                                :width normal
-                               :powerline-scale 1.1)
+                               :powerline-scale 1.5)
    dotspacemacs-leader-key "SPC"
    dotspacemacs-emacs-leader-key "M-m"
    dotspacemacs-major-mode-leader-key ","
@@ -600,6 +601,14 @@ before packages are loaded. If you are unsure, you should try in setting them in
                                (ruby . t)
                                (sh . t)
                                ))
+
+  ;; spaceline / powerline / bar at bottom
+  (spaceline-toggle-minor-modes-off)
+  (setq powerline-default-separator 'alternate)
+
+  ;; (setq which-key-paging-prefixes '("SPC"))
+  ;; ;; (define-key which-key-mode-map (kbd "C-x <right>") 'which-key-C-h-dispatch)
+  ;; (setq which-key-paging-key "<right>")
 
 ;;   (defvar my/org-basic-task-template "* TODO %^{Task}
 ;; :PROPERTIES:

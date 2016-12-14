@@ -384,6 +384,10 @@ link_dropbox_files () {
 }
 
 main() {
+    # install files
+    # install apps
+    # uninstall files
+    # uninstall apps
     if [ "$1" == "link" ]; then
         link_dropbox_files && link_dotfiles
     elif [ "$1" == "download" ]; then
