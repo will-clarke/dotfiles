@@ -4,7 +4,7 @@ set -e
 
 function files_to_link {
     cd "$HOME/dotfiles"
-    ls | grep -vwi "dotfiles\|application\|readme.*"
+    find ./* -maxdepth 0 -name "readme.md" -prune -o -print0 | xargs -0 basename
 }
 
 function link_dotfiles {
