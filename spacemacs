@@ -103,6 +103,7 @@ values."
    dotspacemacs-default-font '("Source Code Pro"
                                :size 20
                                ;; :size 13
+                               ;; :size 15
                                :weight normal
                                :width normal
                                :powerline-scale 1.5)
@@ -698,6 +699,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
 ;;   (setq org-plantuml-jar-path "/usr/local/Cellar/plantuml/8041/plantuml.8041.jar")
 
 ;;   ;; ivy:
+;; C-M-j -> complete whatever word you were typing
 ;;   ;; console-M-x -> fuzzy searching
 ;;   (setq ivy-re-builders-alist
 ;;         '((t . ivy--regex-fuzzy)))

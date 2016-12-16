@@ -1,6 +1,4 @@
 ##### -*- mode:shell-script -*-
-# .bash_profile
-
 
 if which rbenv &>/dev/null ; then
   eval "$(rbenv init - --no-rehash)"

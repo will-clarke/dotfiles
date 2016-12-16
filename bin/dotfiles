@@ -1,10 +1,14 @@
+##### -*- mode:shell-script -*-
 #!/bin/bash
 
 set -e
 
 function files_to_link {
-    cd "$HOME/dotfiles"
-    find ./* -maxdepth 0 -name "readme.md" -prune -o -print0 | xargs -0 basename
+    find -L "$HOME/dotfiles" -type f -maxdepth 1 \
+         ! -name "Brewfile" \
+         ! -name "readme*" \
+         ! -name ".*" \
+         -print0 | xargs -0 basename
 }
 
 function link_dotfiles {
@@ -47,40 +51,6 @@ function install_homebrew {
     fi
 }
 
-function brew_install_or_upgrade {
-    if brew_is_installed "$1"; then
-        if brew_is_upgradable "$1"; then
-            fancy_echo "Upgrading %s ..." "$1"
-            brew upgrade "$@" || fancy_echo "Upgrade of %s failed. Soz. :|"
-        else
-            fancy_echo "Already using the latest version of %s. Skipping ..." "$1"
-        fi
-    else
-        fancy_echo "Installing %s ..." "$1"
-        brew install "$@" || fancy_echo "Install of %s failed. Soz. :|"
-    fi
-}
-
-function brew_is_installed {
-    local name
-    name="$(brew_expand_alias "$1")"
-    brew list -1 | grep -Fqx "$name"
-}
-
-function brew_is_upgradable {
-    local name
-    name="$(brew_expand_alias "$1")"
-    ! brew outdated --quiet "$name" >/dev/null
-}
-
-function brew_tap {
-    brew tap "$1" 2> /dev/null
-}
-
-function brew_expand_alias {
-    brew info "$1" 2>/dev/null | head -1 | awk '{gsub(/:/, ""); print $1}'
-}
-
 function gem_install_or_update {
     if gem list "$1" --installed > /dev/null; then
         fancy_echo "Updating %s ..." "$1"
@@ -92,110 +62,9 @@ function gem_install_or_update {
     fi
 }
 
-function ask_to_install {
-    fancy_echo "Do you want to install $1?
-[yes/no]: "
-    read -r resp
-    if [ "$resp" = "y" ] || [ "$resp" = "yes" ]
-    then
-        fancy_echo "Installing $1?"
-        install_="install_"
-        eval "$install_$1"
-    else
-        fancy_echo "Skipping $1..."
-    fi
-}
-
-function install_essentials {
-    fancy_echo "Installing Essentials... (git, etc...)"
-    brew_install_or_upgrade 'git'
     if [ ! -d  "$HOME/dotfiles" ]; then
         git clone "https://github.com/wmmc/dotfiles" "$HOME/dotfiles"
     fi
-    if [ ! -d  "$HOME/blog" ]; then
-        git clone https://github.com/wmmc/blog/ "$HOME/blog"
-    fi
-    brew_tap 'caskroom/cask'
-    cask 'dropbox'
-    fancy_echo "It's probably worth logging into Dropbox now if you haven't already..."
-}
-
-function install_db {
-    brew_install_or_upgrade 'postgres'
-    brew_install_or_upgrade 'redis'
-}
-
-function install_unix_stuff {
-    brew_install_or_upgrade 'the_silver_searcher'
-    brew_install_or_upgrade 'heroku-toolbelt'
-    brew_install_or_upgrade 'tmux'
-    brew_install_or_upgrade 'gpg'
-    brew_install_or_upgrade 'pass'
-    brew_install_or_upgrade 'tree'
-    brew_install_or_upgrade 'openssl'
-    (brew unlink openssl && brew link openssl --force) || fancy_echo "Couldn't install openssl"
-}
-
-function install_vim {
-    brew_install_or_upgrade 'vim'
-    brew_install_or_upgrade 'ctags'
-    brew_install_or_upgrade 'reattach-to-user-namespace'
-    mkdir -p "$HOME/.vim/bundle"
-    if [ ! -e "$HOME/.vim/bundle/vim-colors-solarized" ]; then
-        git clone git://github.com/altercation/vim-colors-solarized.git "$HOME/.vim/bundle/vim-colors-solarized"
-    fi
-
-}
-
-function install_javascript_stuff {
-    brew_install_or_upgrade 'imagemagick'
-    # brew_install_or_upgrade 'node'
-}
-
-function install_ruby {
-    brew_install_or_upgrade 'rbenv'
-    brew_install_or_upgrade 'ruby-build'
-    eval "$(rbenv init -)"
-    ruby_version="$(rbenv install -l | grep -v - | tail -1 | sed -e 's/^ *//')"
-    fancy_echo "Do you want to update Ruby to version $ruby_version\n[yes/no]"
-    read -r resp
-    if [ "$resp" = "y" ] || [ "$resp" = "yes" ]; then
-        fancy_echo "Updating ruby versions"
-        update_ruby_version
-    else
-        fancy_echo "Okay. We won't update Ruby"
-    fi
-    update_gems
-}
-
-function update_gems {
-    gem update --system
-    gem_install_or_update 'bundler'
-    fancy_echo "Configuring Bundler ..."
-    number_of_cores=$(sysctl -n hw.ncpu)
-    bundle config --global jobs $((number_of_cores - 1))
-}
-
-function update_ruby_version {
-    eval "$(rbenv init -)"
-    if ! rbenv versions | grep -Fq "$ruby_version"; then
-        RUBY_CONFIGURE_OPTS=--with-openssl-dir=/usr/local/opt/openssl rbenv install -s "$ruby_version"
-    fi
-    rbenv global "$ruby_version"
-    rbenv shell "$ruby_version"
-}
-
-function install_scala {
-    brew_install_or_upgrade 'typesafe-activator'
-    brew_install_or_upgrade 'sbt'
-    mkdir -p "$HOME/sbt/0.13/plugins"
-    touch "$HOME/sbt/0.13/plugins/plugins.sbt"
-    echo "addSbtPlugin(\"org.ensime\" % \"ensime-sbt\" % \"0.2.0\")" > "$HOME/sbt/0.13/plugins/plugins.sbt"
-    # for different scala projects do this in the directory:
-    # sbt
-    # gen-ensime
-    # M-x ensime-gen-and-restart
-}
 
 function install_osx_tweaks {
     defaults write -g ApplePressAndHoldEnabled -bool false
@@ -203,68 +72,23 @@ function install_osx_tweaks {
     defaults write -g KeyRepeat -int 1 # normal minimum is 2 (30 ms)
 }
 
-function cask {
-    fancy_echo "brew cask - installing %s" "$1"
-    brew cask install "$1" 2>/dev/null
-}
-
 function install_comfy_setup {
-    brew_tap 'caskroom/cask'
-    cask 'cocoapacketanalyzer'
-    cask 'charles'
-    cask 'postgres'
-    cask 'google-chrome'
-    cask 'slack'
-    cask 'skype'
-    cask 'spotify'
-    cask 'dash'
-    cask 'imageoptim'
-    cask '1password'
-    cask 'flux'
-    cask 'caffeine'
-    cask 'alfred'
-    cask 'dropbox'
-    cask 'bettertouchtool'
-    cask 'karabiner-elements'
-    # https://cl.ly/i2PJ/download/Karabiner-Elements-0.90.64.dmg
-    # https://github.com/tekezo/Karabiner-Elements/pull/170
-    cask 'growlnotify'
-    cask 'iterm2'
-    cask 'gpgtools'
     if [ -f "$HOME/dotfiles/applications/karabiner/karabiner-import.sh" ]; then
         bash ~/dotfiles/applications/karabiner/karabiner-import.sh
     fi
 }
 
 function install_totally_pointless_stuff {
-    brew_tap 'caskroom/cask'
-    cask 'utorrent'
-    # cask 'steam'
-    cask 'firefox'
-    cask 'vlc'
-    cask 'disk-inventory-x'
-    # cask 'tunnelbear'
 }
 
 
 function install_emacs {
-    brew tap d12frosted/emacs-plus
-    brew install emacs-plus --with-cocoa --with-gnutls --with-librsvg --with-imagemagick --with-spacemacs-icon
-    brew linkapps
     if [ ! -e "$HOME/.emacs.d" ]; then
         git clone --recursive https://github.com/syl20bnr/spacemacs "$HOME/.emacs.d"
     fi
 }
 
 function install_emacs_extensions {
-    brew_install_or_upgrade 'libyaml'
-    # brew_install_or_upgrade 'homebrew/emacs/gnugo-emacs'
-    brew_install_or_upgrade 'trash'
-    brew_install_or_upgrade 'w3m'
-    brew_install_or_upgrade 'markdown'
-    brew_install_or_upgrade 'msmtp'
-    brew_install_or_upgrade 'mu --with-emacs --HEAD'
-    brew_install_or_upgrade 'isync'
     mkdir -p "$HOME/" .mail/{gmail,snaptrip}
     (mbsync -a && mu index --maildir="$HOME/.mail" &) || fancy_echo "Can't grab mail"
     mkdir -p "$HOME/.certificates"
@@ -275,13 +99,6 @@ function install_emacs_extensions {
         printf "\n$cert" >> "$HOME/.certificates/gmail.crt"
         echo "Updating certificates"
     fi
-}
-
-function install_rust {
-    brew tap cheba/rust-nightly
-    brew_install_or_upgrade 'rust-nightly'
-    cargo install racer || fancy_echo "Could not install racer"
-    # git clone https://github.com/rust-lang/rust.git ~/.rust # really needeed?
 }
 
 function install_everything {
@@ -332,18 +149,6 @@ function brew_install_everything {
     intro
     should_we_install_everything
     install_essentials
-    ask_to_install "emacs"
-    ask_to_install "emacs_extensions"
-    ask_to_install "db"
-    ask_to_install "unix_stuff"
-    ask_to_install "vim"
-    ask_to_install "javascript_stuff"
-    ask_to_install "ruby"
-    ask_to_install "rust"
-    ask_to_install "scala"
-    ask_to_install "comfy_setup"
-    ask_to_install "totally_pointless_stuff"
-    ask_to_install "osx_tweaks"
     cleanup
 }
 
@@ -384,10 +189,6 @@ function link_dropbox_files {
 }
 
 function main {
-    # install files
-    # install apps
-    # uninstall files
-    # uninstall apps
     if [ "$1" == "link" ]; then
         link_dropbox_files && link_dotfiles
     elif [ "$1" == "download" ]; then
@@ -399,4 +200,10 @@ function main {
     fi
 }
 
+brew linkapps
 main "$1"
+
+# install files
+# install apps
+# uninstall files
+# uninstall apps

@@ -43,10 +43,6 @@ if (&t_Co > 2 || has("gui_running")) && !exists("syntaxon")
   syntax on
 endif
 
-if filereadable(expand("~/.vimrc.bundles"))
-  source ~/.vimrc.bundles
-endif
-
 filetype plugin indent on
 
 " Easier vertical movement
@@ -71,10 +67,6 @@ set nowrap
 " end of line
 " set noeol
 
-if !isdirectory(expand("~/.vim/bundle/Vundle\.vim"))
-  !git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-  echoe "Cloning Vundle!"
-endif
 " }}}
 " folding {{{
 nnoremap <leader>\ za
@@ -171,10 +163,6 @@ if has('gui_running')
 else
     let g:solarized_termcolors=256
     set background=dark
-endif
-
-if !isdirectory(expand("~/.vim/bundle/vim-colors-solarized.vim"))
-  colorscheme solarized
 endif
 
 noremap <f2> :call ToggleBackground()<CR>
@@ -324,7 +312,6 @@ noremap <silent> <leader>b :CtrlPBuffer<cr>
 noremap <leader>vv :execute 'e ' . resolve(expand($MYVIMRC))<CR>
 " noremap <leader>vv :execute "edit " . "~/.vimrc"<CR>
 noremap <leader>vt :execute "edit " . "~/.tmux.conf"<CR>
-noremap <leader>vb :execute "edit " . "~/.vimrc.bundles"<CR>
 noremap <leader>vr :execute "source " . "~/.vimrc"<CR>
 noremap <leader>vi :execute "edit" . "~/.vim"<CR>
 noremap <leader>vs :execute "source " . "~/.vimrc"<CR>
