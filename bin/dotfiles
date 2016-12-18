@@ -1,43 +1,146 @@
 ##### -*- mode:shell-script -*-
 #!/bin/bash
 
-set -e
+# dotfiles download  #=> download
+# dotfiles install   #=> install stuff from Brewfile (`brew bundle`)
+# dotfiles link      #=> link dotfile from ~/.dotfile
+# dotfiles backup    #=> link dotfile to ~/.dotfile
+# dotfiles revert    #=> revert from latest backup
+# dotfiles setup     #=> run scripts to setup stuff
+# dotfiles           #=> download & backup & link & setup\n\n"
 
-function files_to_link {
-    find -L "$HOME/dotfiles" -type f -maxdepth 1 \
+set -e    # Exit immediately if a command exits with a non-zero status.
+
+
+DOTFILES_DIR="$HOME/.dotfiles_william_clarke"
+BACKUP_DIR="$DOTFILES_DIR/backup"
+
+function clone_repo {
+    if [ ! -d $DOTFILES_DIR ]; then
+        git clone https://github.com/will-clarke/dotfiles.git "$DOTFILES_DIR"
+    else
+        $(cd $DOTFILES_DIR && git pull)
+    fi
+}
+function files_for_home_dir {
+    find -L "$DOTFILES_DIR" -type f -maxdepth 1 \
          ! -name "Brewfile" \
          ! -name "readme*" \
          ! -name ".*" \
          -print0 | xargs -0 basename
 }
+declare -A unusual_files=(
+    ["Brewfile"]=".brewfile/Brewfile"
+    ["applications/karabiner/karabiner-json"]=".karabiner.d/configuration/karabiner.json"
+)
 
-function link_dotfiles {
-    fancy_echo "Linking dotfiles"
-    for file in $(files_to_link)
-    do
-        link_dotfile "$file"
+now_backup_dir="$BACKUP_DIR/$(date "+%Y-%m-%d%--%H:%M:%S")"
+
+function set_latest_backup_dir {
+    latest_backup_dir=$(find "$BACKUP_DIR/*" -prune -print0 | xargs -0 basename | head -n 1)
+}
+
+function backup_home_dir {
+    local backup_directory="$1"
+    for file in "$files_for_home_dir"; do
+        if [ -f "$HOME/.$file" && -d "$backup_directory" ]; then
+            echo "Backing up old ~/.$file"
+            mv "$HOME/.$file" "$backup_directory"
+        fi
     done
 }
 
-function link_dotfile {
-    if [ -e "$HOME/.$1" ]; then
-        fancy_echo "$1 exists"
-    else
-        ln -s "$HOME/dotfiles/$1" "$HOME/.$1"
+function backup_unusual_files {
+    local backup_directory="$1"
+    for file in "${!unusual_files[@]}"; do
+        dotfiles_path="$HOME/$file"
+        backup_path="$BACKUP_DIR/${unusual_files[$file]}"
+        if [ -f "$HOME/$working_path"]; then
+            echo "Backing up old $HOME/$working_path"
+            mkdir -p $(dirname "$backup_path")
+            mv "$HOME/$working_path" "$backup_path"
+        fi
+    done
+}
+
+function backup {
+    local backup_dir="$now_backup_dir"
+    mkdir -p "$backup_dir"
+    backup_home_dir "$backup_dir"
+    backup_unusual_files "$backup_dir"
+}
+
+function link_home_dir {
+    for file in "$files_for_home_dir"; do
+        if [! -f "$HOME/.$file"]; then
+            echo "Linking new ~/.$file"
+            ln -s "$DOTFILES_DIR/$file" "$HOME/.$file"
+        fi
+    done
+}
+
+function link_unusual_files {
+    for file in "${!unusual_files[@]}"; do
+        dotfiles_path="$DOTFILES_DIR/$file"
+        working_path="$HOME/${unusual_files[$file]}"
+        if [ ! -f "$working_path"]; then
+            mkdir -p $(dirname "$working_path")
+            ln -s "$dotfiles_path" "$working_path"
+        fi
+    done
+}
+
+function link {
+    link_home_dir
+    link_unusual_files
+}
+
+function install {
+    clone_repo
+    backup
+    link
+}
+
+# # backup
+# for file in "${!unusual_files[@]}"; do
+#     dotfiles_path="$file"
+#     working_path="${unusual_files[$file]}"
+#     echo "$dotfiles_path -> $working_path"
+# done
+
+# values = echo "${unusual_files[@]}"
+# keys = echo "${!unusual_files[@]}"
+
+
+# brew install bash, you can change the default shell safely by:
+
+function add_line_to_file {
+    # adds a line to a file if it doesn't already exist - and will use sudo if required
+    local line=$1
+    local path=$2
+    if ! grep -Fxq "$line" "$path" &> /dev/null; then
+        mkdir -p $(dirname $path)
+        touch $path
+        if [ -w "$path" ]; then
+            echo "$line" >> "$path"
+        else
+            echo "$line" | sudo tee -a "$path"
+        fi
     fi
 }
+# update to latest bash & make default
+add_line_to_file "/usr/local/bin/bash" "/etc/shells"
+chsh -s /usr/local/bin/bash
 
-function fancy_echo {
-    local fmt="$1"; shift
-    printf "\n$fmt\n" "$@"
-}
 
 function dotfiles_help {
-    fancy_echo "Usage:
-
-dotfiles download  #=> download the repo & link
-dotfiles install   #=> brew install stuff
-dotfiles link      #=> link dotfile to ~/.dotfile\n"
+    printf "\nUsage:\n
+dotfiles download  #=> download
+dotfiles install   #=> install stuff from Brewfile (`brew bundle`)
+dotfiles link      #=> link dotfile from ~/.dotfile
+dotfiles backup    #=> link dotfile to ~/.dotfile
+dotfiles revert    #=> revert from latest backup
+dotfiles           #=> download & & backup & link\n\n"
 }
 
 function install_homebrew {
@@ -200,7 +303,13 @@ function main {
     fi
 }
 
+
+clone_repo
+
+backup_existing_files
+
 brew linkapps
+brew bundle
 main "$1"
 
 # install files

@@ -3,6 +3,7 @@ tap 'caskroom/cask'
 cask_args appdir: '/Applications'
 
 brew ctags
+brew bash
 brew emacs-plus, args: ['with-cocoa', 'with-gnutls', 'with-librsvg', 'with-imagemagick', 'with-spacemacs-icon']
 brew git
 brew heroku-toolbelt

@@ -9,3 +9,4 @@ vim/bundle
 /emacs.d/rake.cache
 
 *.log
+backup
