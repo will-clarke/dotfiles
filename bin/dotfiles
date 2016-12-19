@@ -1,27 +1,29 @@
 ##### -*- mode:shell-script -*-
 #!/bin/bash
 
-# dotfiles download  #=> download
-# dotfiles install   #=> install stuff from Brewfile (`brew bundle`)
-# dotfiles link      #=> link dotfile from ~/.dotfile
-# dotfiles backup    #=> link dotfile to ~/.dotfile
-# dotfiles revert    #=> revert from latest backup
-# dotfiles setup     #=> run scripts to setup stuff
-# dotfiles           #=> download & backup & link & setup\n\n"
-
 set -e    # Exit immediately if a command exits with a non-zero status.
 
+function dotfiles_help {
+    printf "\nUsage:\n
+dotfiles download  #=> download
+dotfiles install   #=> install stuff from Brewfile (`brew bundle`)
+dotfiles link      #=> link dotfile from ~/.dotfile
+dotfiles backup    #=> link dotfile to ~/.dotfile
+dotfiles revert    #=> revert from latest backup
+dotfiles           #=> download & & backup & link\n\n"
+}
 
 DOTFILES_DIR="$HOME/.dotfiles_william_clarke"
 BACKUP_DIR="$DOTFILES_DIR/backup"
 
 function clone_repo {
-    if [ ! -d $DOTFILES_DIR ]; then
+    if [ ! -d "$DOTFILES_DIR" ]; then
         git clone https://github.com/will-clarke/dotfiles.git "$DOTFILES_DIR"
     else
-        $(cd $DOTFILES_DIR && git pull)
+       (cd "$DOTFILES_DIR" && git pull)
     fi
 }
+
 function files_for_home_dir {
     find -L "$DOTFILES_DIR" -type f -maxdepth 1 \
          ! -name "Brewfile" \
@@ -29,6 +31,7 @@ function files_for_home_dir {
          ! -name ".*" \
          -print0 | xargs -0 basename
 }
+
 declare -A unusual_files=(
     ["Brewfile"]=".brewfile/Brewfile"
     ["applications/karabiner/karabiner-json"]=".karabiner.d/configuration/karabiner.json"
@@ -42,8 +45,8 @@ function set_latest_backup_dir {
 
 function backup_home_dir {
     local backup_directory="$1"
-    for file in "$files_for_home_dir"; do
-        if [ -f "$HOME/.$file" && -d "$backup_directory" ]; then
+    for file in $(files_for_home_dir); do
+        if [ -f "$HOME/.$file" ] && [ -d "$backup_directory" ]; then
             echo "Backing up old ~/.$file"
             mv "$HOME/.$file" "$backup_directory"
         fi
@@ -55,9 +58,9 @@ function backup_unusual_files {
     for file in "${!unusual_files[@]}"; do
         dotfiles_path="$HOME/$file"
         backup_path="$BACKUP_DIR/${unusual_files[$file]}"
-        if [ -f "$HOME/$working_path"]; then
+        if [ -f "$HOME/$working_path" ]; then
             echo "Backing up old $HOME/$working_path"
-            mkdir -p $(dirname "$backup_path")
+            mkdir -p "$(dirname "$backup_path")"
             mv "$HOME/$working_path" "$backup_path"
         fi
     done
@@ -71,8 +74,8 @@ function backup {
 }
 
 function link_home_dir {
-    for file in "$files_for_home_dir"; do
-        if [! -f "$HOME/.$file"]; then
+    for file in $(files_for_home_dir); do
+        if [ ! -f "$HOME/.$file" ]; then
             echo "Linking new ~/.$file"
             ln -s "$DOTFILES_DIR/$file" "$HOME/.$file"
         fi
@@ -83,8 +86,8 @@ function link_unusual_files {
     for file in "${!unusual_files[@]}"; do
         dotfiles_path="$DOTFILES_DIR/$file"
         working_path="$HOME/${unusual_files[$file]}"
-        if [ ! -f "$working_path"]; then
-            mkdir -p $(dirname "$working_path")
+        if [ ! -f "$working_path" ]; then
+            mkdir -p "$(dirname "$working_path")"
             ln -s "$dotfiles_path" "$working_path"
         fi
     done
@@ -95,32 +98,48 @@ function link {
     link_unusual_files
 }
 
+function revert_home_dir {
+    backup_dir="$1"
+    for file in $(files_for_home_dir); do
+        if [ ! -f "$HOME/.$file" ]; then
+            cp "$backup_dir/$file" "$HOME/.$file"
+        else
+            echo "Cannot revert ~/.$file to $(basename "$backup_dir") -- it already exists"
+        fi
+    done
+}
+function revert_unusual_files {
+    backup_dir="$1"
+    for file in "${!unusual_files[@]}"; do
+        backup_file="$backup_dir/$file"
+        working_file="$HOME/${unusual_files[$file]}"
+        if [ ! -f "$working_file" ]; then
+            cp "$backup_file" "$working_file"
+        else
+            echo "Cannot revert $working_file to $(basename "$backup_file") -- it already exists"
+        fi
+    done
+
+}
+function revert {
+    set_latest_backup_dir
+    revert_home_dir "$latest_backup_dir"
+    revert_unusual_files "$latest_backup_dir"
+}
+
 function install {
     clone_repo
     backup
     link
 }
 
-# # backup
-# for file in "${!unusual_files[@]}"; do
-#     dotfiles_path="$file"
-#     working_path="${unusual_files[$file]}"
-#     echo "$dotfiles_path -> $working_path"
-# done
-
-# values = echo "${unusual_files[@]}"
-# keys = echo "${!unusual_files[@]}"
-
-
-# brew install bash, you can change the default shell safely by:
-
 function add_line_to_file {
     # adds a line to a file if it doesn't already exist - and will use sudo if required
     local line=$1
     local path=$2
     if ! grep -Fxq "$line" "$path" &> /dev/null; then
-        mkdir -p $(dirname $path)
-        touch $path
+        mkdir -p "$(dirname "$path")"
+        touch "$path"
         if [ -w "$path" ]; then
             echo "$line" >> "$path"
         else
@@ -128,20 +147,11 @@ function add_line_to_file {
         fi
     fi
 }
+
 # update to latest bash & make default
 add_line_to_file "/usr/local/bin/bash" "/etc/shells"
 chsh -s /usr/local/bin/bash
 
-
-function dotfiles_help {
-    printf "\nUsage:\n
-dotfiles download  #=> download
-dotfiles install   #=> install stuff from Brewfile (`brew bundle`)
-dotfiles link      #=> link dotfile from ~/.dotfile
-dotfiles backup    #=> link dotfile to ~/.dotfile
-dotfiles revert    #=> revert from latest backup
-dotfiles           #=> download & & backup & link\n\n"
-}
 
 function install_homebrew {
     if ! command -v brew >/dev/null; then
@@ -149,19 +159,6 @@ function install_homebrew {
         curl -fsS \
              'https://raw.githubusercontent.com/Homebrew/install/master/install' | ruby
         export PATH="/usr/local/bin:$PATH"
-    else
-        fancy_echo "You've already got Homebrew..."
-    fi
-}
-
-function gem_install_or_update {
-    if gem list "$1" --installed > /dev/null; then
-        fancy_echo "Updating %s ..." "$1"
-        gem update "$@"
-    else
-        fancy_echo "Installing %s ..." "$1"
-        gem install "$@"
-        rbenv rehash
     fi
 }
 
@@ -169,29 +166,17 @@ function gem_install_or_update {
         git clone "https://github.com/wmmc/dotfiles" "$HOME/dotfiles"
     fi
 
-function install_osx_tweaks {
     defaults write -g ApplePressAndHoldEnabled -bool false
     defaults write -g InitialKeyRepeat -int 15 # normal minimum is 15 (225 ms)
     defaults write -g KeyRepeat -int 1 # normal minimum is 2 (30 ms)
-}
 
-function install_comfy_setup {
     if [ -f "$HOME/dotfiles/applications/karabiner/karabiner-import.sh" ]; then
         bash ~/dotfiles/applications/karabiner/karabiner-import.sh
     fi
-}
 
-function install_totally_pointless_stuff {
-}
-
-
-function install_emacs {
     if [ ! -e "$HOME/.emacs.d" ]; then
         git clone --recursive https://github.com/syl20bnr/spacemacs "$HOME/.emacs.d"
     fi
-}
-
-function install_emacs_extensions {
     mkdir -p "$HOME/" .mail/{gmail,snaptrip}
     (mbsync -a && mu index --maildir="$HOME/.mail" &) || fancy_echo "Can't grab mail"
     mkdir -p "$HOME/.certificates"
@@ -199,61 +184,10 @@ function install_emacs_extensions {
     cert=$(openssl s_client -connect imap.gmail.com:993 -showcerts 2>&1 < /dev/null | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sed -ne '1,/-END CERTIFICATE-/p')
     cert_exists=$(grep -c -- "$cert" "$HOME/.certificates/gmail.crt")
     if [ "$cert_exists" -lt 5 ]; then
-        printf "\n$cert" >> "$HOME/.certificates/gmail.crt"
+        printf "\n%s", "$cert" >> "$HOME/.certificates/gmail.crt"
         echo "Updating certificates"
     fi
-}
 
-function install_everything {
-    install_essentials
-    install_emacs
-    install_emacs_extensions
-    install_db
-    install_unix_stuff
-    install_ruby
-    # install_rust
-    # install_scala
-    install_javascript_stuff
-    install_comfy_setup
-    install_totally_pointless_stuff
-    install_vim
-    install_osx_tweaks
-}
-
-function intro {
-    fancy_echo "Hey!
-You're a few steps away from setting up EVERYTHING!"
-}
-
-function should_we_install_everything {
-    fancy_echo "Should we just install everything else?
-[yes/no]"
-    read -r resp
-    if [ "$resp" = "y" ] || [ "$resp" = "yes" ]; then
-        fancy_echo "Okay. We'll update it all!"
-        install_everything
-    else
-        fancy_echo "Okay. Choose what you want:"
-    fi
-}
-
-function cleanup {
-    fancy_echo "Updating Homebrew formulas ..."
-    brew update
-    brew cleanup
-    brew cask cleanup
-    fancy_echo "Running brew doctor"
-    brew doctor
-    fancy_echo "Thanks. It's been a blast."
-}
-
-function brew_install_everything {
-    cd "$HOME"
-    intro
-    should_we_install_everything
-    install_essentials
-    cleanup
-}
 
 function download {
     mkdir -p "$HOME/Dropbox/dev/dotfiles"
