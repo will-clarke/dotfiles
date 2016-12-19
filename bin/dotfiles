@@ -47,7 +47,6 @@ function make_new_bash_default {
 }
 function enforce_new_bash {
     if [ "$(echo "$BASH_VERSION" | head -c 1)" -lt 4 ]; then
-        echo 'bash version is less than 4. We gonna install homebrew & bash4 and exit telling you to rerunn the command'
         install_homebrew
         brew install bash
         make_new_bash_default
@@ -60,7 +59,8 @@ enforce_new_bash
 #################################################################################
 DOTFILES_DIR="$HOME/.dotfiles_william_clarke"
 BACKUP_DIR="$DOTFILES_DIR/backup"
-declare -A unusual_files=(["Brewfile"]=".brewfile/Brewfile" ["applications/karabiner/karabiner-json"]=".karabiner.d/configuration/karabiner.json")
+declare -A unusual_files=(
+    ["applications/karabiner/karabiner-json"]=".karabiner.d/configuration/karabiner.json")
 declare -A dropbox_files=(
     ["Dropbox/dev"]="dev"
     ["Dropbox/dev/dotfiles"]="dotfiles"
@@ -188,7 +188,6 @@ function download {
 }
 function files_for_home_dir {
     find -L "$DOTFILES_DIR" -type f -maxdepth 1 \
-         ! -name "Brewfile" \
          ! -name "readme*" \
          ! -name ".*" \
          -print0 | xargs -0 basename
@@ -229,7 +228,7 @@ function install {
     download
     backup
     link
-    brew bundle
+    brew bundle --global
     setup
 }
 # MAIN
@@ -243,7 +242,7 @@ function main {
         link
     elif [ "$1" == "brew" ]; then
         install_homebrew
-        brew bundle
+        brew bundle --global
     elif [ "$1" == "setup" ]; then
         setup
     elif [ "$1" == "revert" ]; then
