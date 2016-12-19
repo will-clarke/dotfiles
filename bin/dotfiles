@@ -4,45 +4,80 @@
 set -e    # Exit immediately if a command exits with a non-zero status.
 
 function dotfiles_help {
-    printf "\nUsage:\n
-dotfiles download  #=> download
-dotfiles install   #=> install stuff from Brewfile (`brew bundle`)
-dotfiles link      #=> link dotfile from ~/.dotfile
-dotfiles backup    #=> link dotfile to ~/.dotfile
-dotfiles revert    #=> revert from latest backup
-dotfiles           #=> download & & backup & link\n\n"
+    echo "
+Usage:
+
+dotfiles download   #=> download
+dotfiles backup     #=> backup all files which could be overwritten
+dotfiles link       #=> link dotfile from ~/.dotfile
+dotfiles brew       #=> install from Brewfile
+dotfiles setup      #=> setup other stuff
+dotfiles revert     #=> revert from latest backup
+dotfiles install    #=> download & backup & link & brew & setup
+
+"
 }
 
-DOTFILES_DIR="$HOME/.dotfiles_william_clarke"
-BACKUP_DIR="$DOTFILES_DIR/backup"
-
-function clone_repo {
-    if [ ! -d "$DOTFILES_DIR" ]; then
-        git clone https://github.com/will-clarke/dotfiles.git "$DOTFILES_DIR"
-    else
-       (cd "$DOTFILES_DIR" && git pull)
+# BASH 4 ENFORCEMENT!
+#################################################################################
+function install_homebrew {
+    if ! command -v brew >/dev/null; then
+        curl -fsS 'https://raw.githubusercontent.com/Homebrew/install/master/install' | ruby
+        export PATH="/usr/local/bin:$PATH"
     fi
 }
-
-function files_for_home_dir {
-    find -L "$DOTFILES_DIR" -type f -maxdepth 1 \
-         ! -name "Brewfile" \
-         ! -name "readme*" \
-         ! -name ".*" \
-         -print0 | xargs -0 basename
+function add_line_to_file {
+    # adds a line to a file if it doesn't already exist - and will use sudo if required
+    local line=$1
+    local path=$2
+    if ! grep -Fxq "$line" "$path" &> /dev/null; then
+        mkdir -p "$(dirname "$path")"
+        if [ -w "$path" ]; then
+            touch "$path"
+            echo "$line" >> "$path"
+        else
+            sudo touch "$path"
+            echo "$line" | sudo tee -a "$path"
+        fi
+    fi
 }
-
-declare -A unusual_files=(
-    ["Brewfile"]=".brewfile/Brewfile"
-    ["applications/karabiner/karabiner-json"]=".karabiner.d/configuration/karabiner.json"
+function make_new_bash_default {
+    add_line_to_file "/usr/local/bin/bash" "/etc/shells"
+    chsh -s /usr/local/bin/bash
+}
+function enforce_new_bash {
+    if [ "$(echo "$BASH_VERSION" | head -c 1)" -lt 4 ]; then
+        echo 'bash version is less than 4. We gonna install homebrew & bash4 and exit telling you to rerunn the command'
+        install_homebrew
+        brew install bash
+        make_new_bash_default
+        echo 'Please rerun this command in a new shell (running bash 4)'
+        exit 0
+    fi
+}
+enforce_new_bash
+# DEFINITIONS
+#################################################################################
+DOTFILES_DIR="$HOME/.dotfiles_william_clarke"
+BACKUP_DIR="$DOTFILES_DIR/backup"
+declare -A unusual_files=(["Brewfile"]=".brewfile/Brewfile" ["applications/karabiner/karabiner-json"]=".karabiner.d/configuration/karabiner.json")
+declare -A dropbox_files=(
+    ["Dropbox/dev"]="dev"
+    ["Dropbox/dev/dotfiles"]="dotfiles"
+    ["Dropbox/org"]="org"
+    ["Dropbox/dev/secrets/authinfo.gpg"]=".authinfo.gpg"
+    ["Dropbox/dev/secrets/certificates"]=".certificates"
+    ["Dropbox/dev/secrets/secrets.gpg"]=".secrets.gpg"
 )
-
-now_backup_dir="$BACKUP_DIR/$(date "+%Y-%m-%d%--%H:%M:%S")"
-
-function set_latest_backup_dir {
-    latest_backup_dir=$(find "$BACKUP_DIR/*" -prune -print0 | xargs -0 basename | head -n 1)
+# BACKUP
+#################################################################################
+function backup {
+    local local_backup_dir
+    local_backup_dir="$BACKUP_DIR/$(date "+%Y-%m-%d%--%H:%M:%S")"
+    mkdir -p "$local_backup_dir"
+    backup_home_dir "$local_backup_dir"
+    backup_unusual_files "$local_backup_dir"
 }
-
 function backup_home_dir {
     local backup_directory="$1"
     for file in $(files_for_home_dir); do
@@ -52,52 +87,63 @@ function backup_home_dir {
         fi
     done
 }
-
 function backup_unusual_files {
     local backup_directory="$1"
     for file in "${!unusual_files[@]}"; do
-        dotfiles_path="$HOME/$file"
-        backup_path="$BACKUP_DIR/${unusual_files[$file]}"
-        if [ -f "$HOME/$working_path" ]; then
-            echo "Backing up old $HOME/$working_path"
+        local working_file="$HOME/$file"
+        local backup_path="$BACKUP_DIR/${unusual_files[$file]}"
+        if [ -f "$HOME/$working_file" ]; then
+            echo "Backing up old ~/$working_file"
             mkdir -p "$(dirname "$backup_path")"
-            mv "$HOME/$working_path" "$backup_path"
+            mv "$HOME/$working_file" "$backup_path"
         fi
     done
 }
-
-function backup {
-    local backup_dir="$now_backup_dir"
-    mkdir -p "$backup_dir"
-    backup_home_dir "$backup_dir"
-    backup_unusual_files "$backup_dir"
+# LINK
+#################################################################################
+function link {
+    link_home_dir
+    link_other_files
+    link_dropbox_files
 }
-
 function link_home_dir {
     for file in $(files_for_home_dir); do
-        if [ ! -f "$HOME/.$file" ]; then
+        if [ -f "$DOTFILES_DIR/$file" ] && [ ! -f "$HOME/.$file" ]; then
             echo "Linking new ~/.$file"
             ln -s "$DOTFILES_DIR/$file" "$HOME/.$file"
+        else
+            echo "Cannot link ~/.$file"
         fi
     done
 }
-
-function link_unusual_files {
+function link_other_files {
     for file in "${!unusual_files[@]}"; do
-        dotfiles_path="$DOTFILES_DIR/$file"
-        working_path="$HOME/${unusual_files[$file]}"
-        if [ ! -f "$working_path" ]; then
+        local dotfiles_path="$DOTFILES_DIR/$file"
+        local working_path="$HOME/${unusual_files[$file]}"
+        if [ -f "$dotfiles_path" ] && [ ! -f "$working_path" ]; then
             mkdir -p "$(dirname "$working_path")"
             ln -s "$dotfiles_path" "$working_path"
         fi
     done
 }
-
-function link {
-    link_home_dir
-    link_unusual_files
+function link_dropbox_files {
+    for file in "${!dropbox_files[@]}"; do
+        local dotfiles_path="$DOTFILES_DIR/$file"
+        local working_path="$HOME/${dropbox_files[$file]}"
+        if [ -f "$dotfiles_path" ] && [ ! -f "$working_path" ]; then
+            mkdir -p "$(dirname "$working_path")"
+            ln -s "$dotfiles_path" "$working_path"
+        fi
+    done
 }
-
+# REVERT
+#################################################################################
+function revert {
+    latest_backup_dir=$(find "$BACKUP_DIR/*" -prune -print0 | xargs -0 basename | head -n 1)
+    revert_home_dir "$latest_backup_dir"
+    revert_unusual_files "$latest_backup_dir"
+    revert_dropbox_files "$latest_backup_dir"
+}
 function revert_home_dir {
     backup_dir="$1"
     for file in $(files_for_home_dir); do
@@ -108,6 +154,16 @@ function revert_home_dir {
         fi
     done
 }
+function revert_dropbox_files {
+    backup_dir="$1"
+    for file in "${!dropbox_files[@]}"; do
+        symlinked_dropbox_file="$HOME/${dropbox_files[$file]}"
+        if [ -f "$symlinked_dropbox_file" ]; then
+            echo "Removed dropbox symlink: $symlinked_dropbox_file"
+            rm "$symlinked_dropbox_file"
+        fi
+    done
+    }
 function revert_unusual_files {
     backup_dir="$1"
     for file in "${!unusual_files[@]}"; do
@@ -121,64 +177,42 @@ function revert_unusual_files {
     done
 
 }
-function revert {
-    set_latest_backup_dir
-    revert_home_dir "$latest_backup_dir"
-    revert_unusual_files "$latest_backup_dir"
-}
-
-function install {
-    clone_repo
-    backup
-    link
-}
-
-function add_line_to_file {
-    # adds a line to a file if it doesn't already exist - and will use sudo if required
-    local line=$1
-    local path=$2
-    if ! grep -Fxq "$line" "$path" &> /dev/null; then
-        mkdir -p "$(dirname "$path")"
-        touch "$path"
-        if [ -w "$path" ]; then
-            echo "$line" >> "$path"
-        else
-            echo "$line" | sudo tee -a "$path"
-        fi
+# INSTALL
+#################################################################################
+function download {
+    if [ ! -d "$DOTFILES_DIR" ]; then
+        git clone https://github.com/will-clarke/dotfiles.git "$DOTFILES_DIR"
+    else
+        (cd "$DOTFILES_DIR" && git pull)
     fi
 }
-
-# update to latest bash & make default
-add_line_to_file "/usr/local/bin/bash" "/etc/shells"
-chsh -s /usr/local/bin/bash
-
-
-function install_homebrew {
-    if ! command -v brew >/dev/null; then
-        fancy_echo "Installing Homebrew ..."
-        curl -fsS \
-             'https://raw.githubusercontent.com/Homebrew/install/master/install' | ruby
-        export PATH="/usr/local/bin:$PATH"
-    fi
+function files_for_home_dir {
+    find -L "$DOTFILES_DIR" -type f -maxdepth 1 \
+         ! -name "Brewfile" \
+         ! -name "readme*" \
+         ! -name ".*" \
+         -print0 | xargs -0 basename
 }
-
-    if [ ! -d  "$HOME/dotfiles" ]; then
-        git clone "https://github.com/wmmc/dotfiles" "$HOME/dotfiles"
-    fi
-
+# SETUP
+#################################################################################
+function setup {
+    setup_apple_defaults
+    setup_spacemacs
+    setup_emails
+    }
+function setup_apple_defaults {
     defaults write -g ApplePressAndHoldEnabled -bool false
     defaults write -g InitialKeyRepeat -int 15 # normal minimum is 15 (225 ms)
     defaults write -g KeyRepeat -int 1 # normal minimum is 2 (30 ms)
-
-    if [ -f "$HOME/dotfiles/applications/karabiner/karabiner-import.sh" ]; then
-        bash ~/dotfiles/applications/karabiner/karabiner-import.sh
-    fi
-
-    if [ ! -e "$HOME/.emacs.d" ]; then
+}
+function setup_spacemacs {
+    if [ ! -d "$HOME/.emacs.d" ]; then
         git clone --recursive https://github.com/syl20bnr/spacemacs "$HOME/.emacs.d"
     fi
-    mkdir -p "$HOME/" .mail/{gmail,snaptrip}
-    (mbsync -a && mu index --maildir="$HOME/.mail" &) || fancy_echo "Can't grab mail"
+}
+function setup_emails {
+    mkdir -p "$HOME/" .mail/gmail
+    (mbsync -a && mu index --maildir="$HOME/.mail" &) || echo "Can't grab mail"
     mkdir -p "$HOME/.certificates"
     touch "$HOME/.certificates/gmail.crt"
     cert=$(openssl s_client -connect imap.gmail.com:993 -showcerts 2>&1 < /dev/null | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sed -ne '1,/-END CERTIFICATE-/p')
@@ -187,66 +221,38 @@ function install_homebrew {
         printf "\n%s", "$cert" >> "$HOME/.certificates/gmail.crt"
         echo "Updating certificates"
     fi
-
-
-function download {
-    mkdir -p "$HOME/Dropbox/dev/dotfiles"
-    safe_link "$HOME/Dropbox/dev/dotfiles" "$HOME/dotfiles"
-    if [ ! -e "$HOME/dotfiles/bin/dotfiles" ]; then
-        git clone "https://github.com/wmmc/dotfiles" "$HOME/dotfiles"
-    else
-        fancy_echo "Already got my dotfiles :D"
-    fi
-    link_dropbox_files
-    link_dotfiles
 }
-
-function safe_link {
-    source_file="$1"
-    target_file="$2"
-    if [ -e "$source_file" ] && [ ! -e "$target_file" ]; then
-        ln -s "$source_file" "$target_file"
-    fi
+# INSTALL
+#################################################################################
+function install {
+    install_homebrew
+    download
+    backup
+    link
+    brew bundle
+    setup
 }
-
-function link_dropbox_files {
-    fancy_echo "Linking dropbox with stuff"
-    # todo: refactor:
-    mkdir -p "$HOME/Dropbox/dev/org"
-    mkdir -p "$HOME/Dropbox/dev/secrets"
-    safe_link "$HOME/Dropbox/dev" "$HOME/dev"
-    mkdir -p "$HOME/Dropbox/dev/dotfiles"
-    safe_link "$HOME/Dropbox/dev/dotfiles" "$HOME/dotfiles"
-    safe_link "$HOME/Dropbox/org" "$HOME/org"
-    secrets=("authinfo.gpg" "certificates" "secrets.gpg")
-    for secret in "${secrets[@]}"
-    do
-        safe_link "$HOME/Dropbox/dev/secrets/$secret" "$HOME/.$secret"
-    done
-}
-
+# MAIN
+#m################################################################################
 function main {
-    if [ "$1" == "link" ]; then
-        link_dropbox_files && link_dotfiles
-    elif [ "$1" == "download" ]; then
+    if [ "$1" == "download" ]; then
         download
-    elif [ "$1" == "install" ] || [ "$1" == "brew" ]; then
-        brew_install_everything
+    elif [ "$1" == "backup" ]; then
+        backup
+    elif [ "$1" == "link" ]; then
+        link
+    elif [ "$1" == "brew" ]; then
+        install_homebrew
+        brew bundle
+    elif [ "$1" == "setup" ]; then
+        setup
+    elif [ "$1" == "revert" ]; then
+        revert
+    elif [ "$1" == "install" ]; then
+        install
     else
         dotfiles_help
     fi
 }
 
-
-clone_repo
-
-backup_existing_files
-
-brew linkapps
-brew bundle
 main "$1"
-
-# install files
-# install apps
-# uninstall files
-# uninstall apps

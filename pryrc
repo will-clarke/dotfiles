@@ -73,13 +73,3 @@ end
   Pry.config.pager = false
   Pry.config.auto_indent = false
 # end
-
-# snaptrip:
-# to avoid #undefined method `cookie_jar` for nil:NilClass
-if defined? Draper
-  Draper::ViewContext.build!
-  store = RequestStore.store[:current_view_context]
-  def store.cookies
-  {visitor_email_id: 0}
-  end
-end

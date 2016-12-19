@@ -6,7 +6,6 @@ SyncState *
 ##   Gmail                                                                    ##
 ################################################################################
 
-
 IMAPAccount gmail
 Host imap.gmail.com
 User wmmclarke@gmail.com
@@ -56,62 +55,9 @@ Channel gmail-Archive
 Channel gmail-Later
 
 
-################################################################################
-##   snaptrip                                                                 ##
-################################################################################
-
-IMAPAccount snaptrip
-Host imap.gmail.com
-User will.clarke@snaptrip.com
-PassCmd "gpg --passphrase \"`security find-generic-password -a megalolz -s megalolz -w`\"  -d ~/.password-store/email/will.clarke@snaptrip.com.gpg"
-CertificateFile ~/.certificates/gmail.crt
-SSLType IMAPS
-AuthMechs LOGIN
-
-IMAPStore snaptrip-remote
-Account snaptrip
-
-MaildirStore snaptrip-local
-Path ~/.mail/snaptrip/
-Inbox ~/.mail/snaptrip/Inbox
-
-Channel snaptrip-Inbox
-Master :snaptrip-remote:Inbox
-Slave :snaptrip-local:Inbox
-
-Channel snaptrip-Drafts
-Master :snaptrip-remote:[Gmail]/Drafts
-Slave :snaptrip-local:Drafts
-
-Channel snaptrip-Sent
-Master ":snaptrip-remote:[Gmail]/Sent Mail"
-Slave :snaptrip-local:Sent
-
-Channel snaptrip-Trash
-Master :snaptrip-remote:[Gmail]/Trash
-Slave :snaptrip-local:Trash
-
-Channel snaptrip-Archive
-Master ":snaptrip-remote:[Gmail]/All Mail"
-Slave :snaptrip-local:Archive
-
-Channel snaptrip-Later
-Master :snaptrip-remote:[Mailbox]/Later
-Slave :snaptrip-local:Later
-
-
-Group snaptrip
-Channel snaptrip-Inbox
-Channel snaptrip-Drafts
-Channel snaptrip-Sent
-Channel snaptrip-Trash
-Channel snaptrip-Archive
-Channel snaptrip-Later
-
 ##################
 # Inboxes        #
 ##################
 
 Group Inboxes
 Channel gmail-Inbox
-Channel snaptrip-Inbox

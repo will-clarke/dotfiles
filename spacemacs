@@ -203,16 +203,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
            (mu4e-follow-up-folder  "/gmail/Later")
            (mu4e-drafts-folder "/gmail/Drafts")
            (user-mail-address "wmmclarke@gmail.com")
-           (user-full-name "William"))
-          ("snaptrip"
-           (mu4e-sent-messages-behavior delete)
-           (mu4e-sent-folder "/snaptrip/Sent")
-           (mu4e-refile-folder  "/snaptrip/Archive")
-           (mu4e-trash-folder  "/snaptrip/Trash")
-           (mu4e-follow-up-folder  "/snaptrip/Later")
-           (mu4e-drafts-folder "/snaptrip/Drafts")
-           (user-mail-address "will.clarke@snaptrip.com")
-           (user-full-name "Will Clarke"))))
+           (user-full-name "William"))))
   ;; (mu4e/mail-account-reset)
   (setq
    mu4e-maildir "~/.mail"
@@ -242,16 +233,13 @@ before packages are loaded. If you are unsure, you should try in setting them in
     (imagemagick-register-types))
   (setq mu4e-maildir-shortcuts
         '(("/gmail/Inbox" . ?g)
-          ("/snaptrip/Inbox" . ?s)
-          ("/snaptrip/Later" . ?w)
           ("/gmail/Later" . ?l)))
   (setq mu4e-bookmarks
         `(
           ("NOT maildir:/archive AND NOT maildir:'/[Gmail].All Mail' AND date:today" "Unread Today" ?b)
-          ("maildir:/gmail/Inbox OR maildir:/snaptrip/Inbox" "All Inboxes" ?i)
-          ("maildir:/gmail/Later OR maildir:/snaptrip/Later" "All Later" ?l)
+          ("maildir:/gmail/Inbox" "All Inboxes" ?i)
+          ("maildir:/gmail/Later" "All Later" ?l)
           ("date:today..now" "Today's messages" ?t)
-          ("date:today..now AND maildir:/snaptrip/Archive" "Snaptrip Today" ?s)
           ("date:today..now AND maildir:/gmail/Archive" "Gmail Today" ?g)
           ("flag:unread AND NOT flag:trashed" "Unread messages" ?u)
           ("date:7d..now" "Last 7 days" ?w)
@@ -400,59 +388,6 @@ before packages are loaded. If you are unsure, you should try in setting them in
     (message "%s" major-mode)
     )
 
-  (defun snaptrip_start ()
-    "Start all the right processes for snaptrip"
-    (interactive)
-    (require 'linum)
-    (rbenv-use "2.1.8")
-    (save-excursion
-      (let (
-            (original-buffer (buffer-name))
-            (zeus-buffer (make-eshell-named "### zeus"))
-            (redis-buffer (make-eshell-named "### redis"))
-            (elasticsearch-buffer (make-eshell-named "### elasticsearch"))
-            (server-buffer (make-eshell-named "### server"))
-            (worker-buffer (make-eshell-named "### worker"))
-            (console-buffer (make-eshell-named "### console"))
-            )
-        ;;
-        (set-buffer zeus-buffer)
-        (eshell/cd (directory-file-name "~/snaptrip"))
-        (insert "zeus start")
-        (eshell-send-input)
-        ;;
-        (set-buffer elasticsearch-buffer)
-        (eshell/cd (directory-file-name "~/snaptrip"))
-        ;; (insert "elasticsearch --config=/usr/local/opt/elasticsearch/config/elasticsearch.yml")
-        (insert "elasticsearch")
-        (eshell-send-input)
-        ;;
-        (set-buffer redis-buffer)
-        (eshell/cd (directory-file-name "~/snaptrip"))
-        (insert "redis-server")
-        (eshell-send-input)
-        ;;
-        (sleep-for 2)
-        ;;
-        (set-buffer server-buffer)
-        (eshell/cd (directory-file-name "~/snaptrip"))
-        (insert "zeus server")
-        (eshell-send-input)
-        ;;
-        (set-buffer worker-buffer)
-        (eshell/cd (directory-file-name "~/snaptrip"))
-        (insert "zeus rake resque:work")
-        (eshell-send-input)
-        ;;
-        (set-buffer console-buffer)
-        (eshell/cd (directory-file-name "~/snaptrip"))
-        (insert "zeus console")
-        (eshell-send-input)
-        ;;
-        (message "Snaptrip's booting up! :D")
-        (switch-to-buffer original-buffer)
-        )))
-
   (defun my/get-server()
     (interactive)
     (switch-to-buffer(get-buffer "### server")))
@@ -471,31 +406,12 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ;; set search_path to cd;
   (setq sql-connection-alist
         '(
-          ("olive"
-           (sql-product 'postgres)
-           (sql-server (getenv "ST_PG_SERVER"))
-           (sql-user (getenv "ST_PG_USER"))
-           (sql-database (getenv "ST_PG_DB"))
-           (sql-password (getenv "ST_PG_PW"))
-           (sql-port 5512))
           ("domains"
            (sql-product 'postgres)
            (sql-server (getenv "DB_HOST"))
            (sql-user "wmmclarke")
            (sql-database "domainsdb")
            (sql-password (getenv "DB_PASSWORD"))
-           (sql-port 5432))
-          ("local"
-           (sql-product 'postgres)
-           (sql-server "localhost")
-           (sql-user "wmmc")
-           (sql-database "snap-trip_development")
-           (sql-port 5432))
-          ("exercises"
-           (sql-product 'postgres)
-           (sql-server "localhost")
-           (sql-user "wmmc")
-           (sql-database "exercises")
            (sql-port 5432))
           )
         )
@@ -584,7 +500,6 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ;; (require 'org-mac-link)
   (setq org-agenda-files (list "~/org"))
   ;; "~/Dropbox/Dev/org-mode/work.org"
-  ;; "~/snaptrip/TODO.org"))
   (setq org-agenda-include-diary t)
   ;; (global-set-key (kbd "C-`") 'ort/goto-todos)
 ;;   (setq alert-default-style 'growl)
@@ -596,7 +511,6 @@ before packages are loaded. If you are unsure, you should try in setting them in
 ;;   ;; Set to <your Dropbox root directory>/MobileOrg.
 ;;   (setq org-mobile-directory "~/Dropbox/Apps/MobileOrg")
 ;;   (setq org-agenda-files (list "~/org/todo.org"))
-;;   ;; "~/snaptrip/todo.org" ))
 ;;   (setq org-bullets-bullet-list '("⚫" "◉" "○" "►" "◎" "◇"))
 
 ;;   ;; babel
