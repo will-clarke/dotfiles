@@ -1,6 +1,8 @@
 ##### -*- mode:shell-script -*-
 #!/bin/bash
 
+# link dotfiles with dropbox????
+
 set -e    # Exit immediately if a command exits with a non-zero status.
 
 function dotfiles_help {
@@ -187,7 +189,7 @@ function download {
     fi
 }
 function files_for_home_dir {
-    find -L "$DOTFILES_DIR" -type f -maxdepth 1 \
+    find -L "$DOTFILES_DIR"/* -maxdepth 1 \
          ! -name "readme*" \
          ! -name ".*" \
          -print0 | xargs -0 basename
@@ -222,6 +224,15 @@ function setup_emails {
         echo "Updating certificates"
     fi
 }
+# BREW
+#################################################################################
+function brew_bundle {
+    if [ ! -w /usr/local ]; then
+        # sudo chown -R $(whoami) /usr/local/var/homebrew
+        sudo chown -R $(whoami):admin /usr/local
+    fi
+    EMACS=$(which emacs) brew bundle --global
+}
 # INSTALL
 #################################################################################
 function install {
@@ -229,7 +240,7 @@ function install {
     download
     backup
     link
-    brew bundle --global
+    brew_bundle
     setup
 }
 # MAIN
@@ -243,7 +254,7 @@ function main {
         link
     elif [ "$1" == "brew" ]; then
         install_homebrew
-        brew bundle --global
+        brew_bundle
     elif [ "$1" == "setup" ]; then
         setup
     elif [ "$1" == "revert" ]; then
