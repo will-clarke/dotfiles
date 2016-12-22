@@ -12,6 +12,7 @@ alias v=vim
 alias rmrf="rm -rf"
 
 # git
+alias git="hub"
 alias gco="git checkout"
 alias gs="git status"
 alias gd='git diff'

@@ -1,31 +1,35 @@
 ##### -*- mode:shell-script -*-
 
-if which rbenv &>/dev/null ; then
-  eval "$(rbenv init - --no-rehash)"
+if hash rbenv &>/dev/null ; then
+    eval "$(rbenv init - --no-rehash)"
+fi
+
+if hash hub &>/dev/null; then
+    eval "$(hub alias -s)"
 fi
 
 export PS1="\w > "
 
 source_if_exists() {
-  if [ -e "$1" ]; then
-      source "$1"
-  fi
+    if [ -e "$1" ]; then
+        source "$1"
+    fi
 }
 
 add_to_path_if_exists() {
-  path_var="$1"
-  path="$2"
-  if [ -e "$2" ]; then
-      export "$path_var"="$path:$PATH"
-  fi
+    path_var="$1"
+    path="$2"
+    if [ -e "$2" ]; then
+        export "$path_var"="$path:$PATH"
+    fi
 }
 
 set_if_exists() {
-  var_name="$1"
-  path="$2"
-  if [ -e "$2" ]; then
-      export "$1=$2"
-  fi
+    var_name="$1"
+    path="$2"
+    if [ -e "$2" ]; then
+        export "$1=$2"
+    fi
 }
 
 source_if_exists "$HOME/.nix-profile/etc/profile.d/nix.sh"

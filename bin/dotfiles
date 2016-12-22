@@ -64,7 +64,7 @@ enforce_new_bash
 DOTFILES_DIR="$HOME/dotfiles_william_clarke"
 BACKUP_DIR="$DOTFILES_DIR"_backup
 declare -A unusual_files=(
-    ["applications/karabiner/karabiner-json"]=".karabiner.d/configuration/karabiner.json")
+    ["applications/karabiner/karabiner.json"]=".karabiner.d/configuration/karabiner.json")
 declare -A dropbox_files=(
     ["Dropbox/dev"]="dev"
     ["Dropbox/dev/dotfiles"]="dotfiles"
@@ -85,19 +85,12 @@ function backup {
 function backup_home_dir {
     local backup_directory="$1"
     for file in $(files_for_home_dir); do
-        echo omg
-        if [ ! -e "$HOME/.$file" ]; then
-            echo not e
-        fi
-        if [ ! -h "$HOME/.$file" ]; then
-            echo not h
-        fi
         if [ -e "$HOME/.$file" -o -h "$HOME/.$file" ] && [ -d "$backup_directory" ]; then
             echo "Backing up old ~/.$file"
             mv "$HOME/.$file" "$backup_directory"
-        else
-            echo "mv $HOME/.$file $backup_directory"
-            echo "Cannot backup ~/.$file"
+        # else
+        #     echo "mv $HOME/.$file $backup_directory"
+        #     echo "Cannot backup ~/.$file"
         fi
     done
 }
@@ -122,13 +115,11 @@ function link {
 }
 function link_home_dir {
     for file in $(files_for_home_dir); do
-        if [ -f "$DOTFILES_DIR/$file" ] && [ ! -f "$HOME/.$file" ]; then
+        if [ -e "$DOTFILES_DIR/$file" ] && [ ! -e "$HOME/.$file" ]; then
             echo "Linking new ~/.$file"
             ln -s "$DOTFILES_DIR/$file" "$HOME/.$file"
         else
-            echo "Maybe `dotfiles backup` first?"
-            echo "ln -s $DOTFILES_DIR/$file $HOME/.$file"
-            echo "Cannot link ~/.$file"
+            echo "Cannot link ~/.$file" # (ln -s $DOTFILES_DIR/$file $HOME/.$file)"
         fi
     done
 }
@@ -138,6 +129,7 @@ function link_other_files {
         local working_path="$HOME/${unusual_files[$file]}"
         if [ -f "$dotfiles_path" ] && [ ! -f "$working_path" ]; then
             mkdir -p "$(dirname "$working_path")"
+            # echo "ln -s $dotfiles_path $working_path"
             ln -s "$dotfiles_path" "$working_path"
         fi
     done
@@ -147,6 +139,7 @@ function link_dropbox_files {
         local dotfiles_path="$DOTFILES_DIR/$file"
         local working_path="$HOME/${dropbox_files[$file]}"
         if [ -f "$dotfiles_path" ] && [ ! -f "$working_path" ]; then
+            echo OMG LINKING DOTFILE
             mkdir -p "$(dirname "$working_path")"
             ln -s "$dotfiles_path" "$working_path"
         fi
@@ -155,44 +148,33 @@ function link_dropbox_files {
 # REVERT
 #################################################################################
 function revert {
-    latest_backup_dir=$(find "$BACKUP_DIR/*" -prune -print0 | xargs -0 basename | head -n 1)
+    local latest_backup_dir="$(find ${BACKUP_DIR}/* -prune | tail -n 1)"
     revert_home_dir "$latest_backup_dir"
-    revert_unusual_files "$latest_backup_dir"
-    revert_dropbox_files "$latest_backup_dir"
+    # revert_unusual_files "$latest_backup_dir"
 }
 function revert_home_dir {
-    backup_dir="$1"
-    for file in $(files_for_home_dir); do
-        if [ ! -f "$HOME/.$file" ]; then
-            cp "$backup_dir/$file" "$HOME/.$file"
+    local backup_dir="$1"
+    for file in $(find "$backup_dir" -mindepth 1 -maxdepth 1); do
+        if [ ! -f "$HOME/.$file" -a ! -h "$HOME/.$file" ]; then
+            echo "Reverting ~/$file from latest backup"
+            cp -r "$file" "$HOME/$(basename $file)"
         else
-            echo "Cannot revert ~/.$file to $(basename "$backup_dir") -- it already exists"
+            echo "Cannot revert ~/.$file -- it already exists"
         fi
     done
 }
-function revert_dropbox_files {
-    backup_dir="$1"
-    for file in "${!dropbox_files[@]}"; do
-        symlinked_dropbox_file="$HOME/${dropbox_files[$file]}"
-        if [ -f "$symlinked_dropbox_file" ]; then
-            echo "Removed dropbox symlink: $symlinked_dropbox_file"
-            rm "$symlinked_dropbox_file"
-        fi
-    done
-    }
-function revert_unusual_files {
-    backup_dir="$1"
-    for file in "${!unusual_files[@]}"; do
-        backup_file="$backup_dir/$file"
-        working_file="$HOME/${unusual_files[$file]}"
-        if [ ! -f "$working_file" ]; then
-            cp "$backup_file" "$working_file"
-        else
-            echo "Cannot revert $working_file to $(basename "$backup_file") -- it already exists"
-        fi
-    done
-
-}
+# function revert_unusual_files {
+#     backup_dir="$1"
+#     for file in "${!unusual_files[@]}"; do
+#         backup_file="$backup_dir/$file"
+#         working_file="$HOME/${unusual_files[$file]}"
+#         if [ ! -f "$working_file" -a -f "$backup_file" ]; then
+#             cp "$backup_file" "$working_file"
+#         else
+#             echo "Cannot revert $working_file to $(basename "$backup_file") -- it already exists"
+#         fi
+#     done
+# }
 # INSTALL
 #################################################################################
 function download {
@@ -213,7 +195,6 @@ function files_for_home_dir {
 function setup {
     setup_apple_defaults
     setup_spacemacs
-    setup_emails
     }
 function setup_apple_defaults {
     defaults write -g ApplePressAndHoldEnabled -bool false
@@ -224,18 +205,6 @@ function setup_apple_defaults {
 function setup_spacemacs {
     if [ ! -d "$HOME/.emacs.d" ]; then
         git clone --recursive https://github.com/syl20bnr/spacemacs "$HOME/.emacs.d"
-    fi
-}
-function setup_emails {
-    mkdir -p "$HOME/" .mail/gmail
-    (mbsync -a && mu index --maildir="$HOME/.mail" &) || echo "Can't grab mail"
-    mkdir -p "$HOME/.certificates"
-    touch "$HOME/.certificates/gmail.crt"
-    cert=$(openssl s_client -connect imap.gmail.com:993 -showcerts 2>&1 < /dev/null | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sed -ne '1,/-END CERTIFICATE-/p')
-    cert_exists=$(grep -c -- "$cert" "$HOME/.certificates/gmail.crt")
-    if [ "$cert_exists" -lt 5 ]; then
-        printf "\n%s", "$cert" >> "$HOME/.certificates/gmail.crt"
-        echo "Updating certificates"
     fi
 }
 # BREW
@@ -303,3 +272,5 @@ ln -s $HOME/Dropbox/dev/dotfiles $DOTFILES_DIR
     }
 
 main "$1"
+
+# Todo: brew link after brew

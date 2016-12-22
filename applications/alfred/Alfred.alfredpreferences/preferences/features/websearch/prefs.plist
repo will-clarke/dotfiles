@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>customSites</key>
+	<dict>
+		<key>0DD25715-FBFE-4543-AB06-3A4419A70479</key>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>keyword</key>
+			<string>gist</string>
+			<key>plusSpaces</key>
+			<false/>
+			<key>text</key>
+			<string>Gist</string>
+			<key>url</key>
+			<string>https://gist.github.com/wmmc</string>
+			<key>utf8</key>
+			<true/>
+		</dict>
+		<key>798D246C-BBF7-4716-935D-0D25C7D34CC7</key>
+		<dict>
+			<key>enabled</key>
+			<false/>
+			<key>keyword</key>
+			<string>so</string>
+			<key>plusSpaces</key>
+			<false/>
+			<key>text</key>
+			<string>StackOverflow</string>
+			<key>url</key>
+			<string>http://stackoverflow.com/search?q={query}
+http://stackoverflow.com/search?q={query}
+http://stackoverflow.com/search?q={query}</string>
+			<key>utf8</key>
+			<true/>
+		</dict>
+		<key>8709C771-0A4C-4282-9DFC-55AF0341EBB4</key>
+		<dict>
+			<key>enabled</key>
+			<false/>
+			<key>keyword</key>
+			<string>gh</string>
+			<key>plusSpaces</key>
+			<true/>
+			<key>text</key>
+			<string>Github</string>
+			<key>url</key>
+			<string>https://github.com/search?utf8=%E2%9C%93&amp;q={query}</string>
+			<key>utf8</key>
+			<true/>
+		</dict>
+	</dict>
+</dict>
+</plist>
