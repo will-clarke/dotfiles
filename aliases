@@ -71,7 +71,7 @@ alias t='/usr/local/Cellar/todo-txt/2.10/bin/todo.sh -d $HOME/Dropbox/todo/todo.
 
 # emacs
 # alias e='open -a /Applications/Emacs.app $1'
-alias e='/Applications/Emacs.app/Contents/MacOS/bin/emacsclient'
+alias e='edit'
 
 alias markdown='open -a /Applications/Marked\ 2 $1'
 

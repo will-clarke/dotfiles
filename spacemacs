@@ -25,6 +25,7 @@ values."
      ivy
      javascript
      yaml
+     erlang
      ;; xkcd
      ;; gtags
      better-defaults
