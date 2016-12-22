@@ -9,16 +9,18 @@ function dotfiles_help {
     echo "
 Usage:
 
-dotfiles download   #=> download
-dotfiles backup     #=> backup all files which could be overwritten
-dotfiles link       #=> link dotfile from ~/.dotfile
-dotfiles brew       #=> install from Brewfile
-dotfiles setup      #=> setup other stuff
-dotfiles revert     #=> revert from latest backup
-dotfiles install    #=> download & backup & link & brew & setup
+dotfiles download                 #  download dotfiles git repo
+dotfiles backup                   #  backup all files which could be overwritten
+dotfiles link                     #  link dotfile from dotfiles repo
+dotfiles brew                     #  install from Brewfile
+dotfiles setup                    #  setup other stuff
+dotifles link_dotfiles_to_dropbox #  ln -s Dropbox <- dotfiles repo
+dotfiles revert                   #  revert from latest backup
+dotfiles install                  #  download & backup & link & brew & setup
 
 "
 }
+
 
 # BASH 4 ENFORCEMENT!
 #################################################################################
@@ -59,8 +61,8 @@ function enforce_new_bash {
 enforce_new_bash
 # DEFINITIONS
 #################################################################################
-DOTFILES_DIR="$HOME/.dotfiles_william_clarke"
-BACKUP_DIR="$DOTFILES_DIR/backup"
+DOTFILES_DIR="$HOME/dotfiles_william_clarke"
+BACKUP_DIR="$DOTFILES_DIR"_backup
 declare -A unusual_files=(
     ["applications/karabiner/karabiner-json"]=".karabiner.d/configuration/karabiner.json")
 declare -A dropbox_files=(
@@ -83,9 +85,19 @@ function backup {
 function backup_home_dir {
     local backup_directory="$1"
     for file in $(files_for_home_dir); do
-        if [ -f "$HOME/.$file" ] && [ -d "$backup_directory" ]; then
+        echo omg
+        if [ ! -e "$HOME/.$file" ]; then
+            echo not e
+        fi
+        if [ ! -h "$HOME/.$file" ]; then
+            echo not h
+        fi
+        if [ -e "$HOME/.$file" -o -h "$HOME/.$file" ] && [ -d "$backup_directory" ]; then
             echo "Backing up old ~/.$file"
             mv "$HOME/.$file" "$backup_directory"
+        else
+            echo "mv $HOME/.$file $backup_directory"
+            echo "Cannot backup ~/.$file"
         fi
     done
 }
@@ -114,6 +126,8 @@ function link_home_dir {
             echo "Linking new ~/.$file"
             ln -s "$DOTFILES_DIR/$file" "$HOME/.$file"
         else
+            echo "Maybe `dotfiles backup` first?"
+            echo "ln -s $DOTFILES_DIR/$file $HOME/.$file"
             echo "Cannot link ~/.$file"
         fi
     done
@@ -189,7 +203,7 @@ function download {
     fi
 }
 function files_for_home_dir {
-    find -L "$DOTFILES_DIR"/* -maxdepth 1 \
+    find -L "$DOTFILES_DIR"/* -maxdepth 0 \
          ! -name "readme*" \
          ! -name ".*" \
          -print0 | xargs -0 basename
@@ -257,6 +271,8 @@ function main {
         brew_bundle
     elif [ "$1" == "setup" ]; then
         setup
+    elif [ "$1" == "link_dotfiles_to_dropbox" ]; then
+        link_dotfiles_to_dropbox
     elif [ "$1" == "revert" ]; then
         revert
     elif [ "$1" == "install" ]; then
@@ -265,5 +281,25 @@ function main {
         dotfiles_help
     fi
 }
+
+function link_dotfiles_to_dropbox {
+    echo "
+(This command doesn't do anything other than spit out text)
+
+To link with dropbox - assuming Drobox is installed:
+
+cd $DOTFILES_DIR
+
+### COMMIT & PUSH TO GITHUB
+
+cd $HOME/Dropbox/dev/dotfiles
+# Pulling any new changes to dropbox repo; syncing up effectively
+git pull
+
+# rm -rf $DOTFILES_DIR # commented out cos it's scary to delete the repo...
+
+ln -s $HOME/Dropbox/dev/dotfiles $DOTFILES_DIR
+"
+    }
 
 main "$1"

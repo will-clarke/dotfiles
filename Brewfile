@@ -12,8 +12,8 @@ brew 'hub'
 brew 'isync'
 brew 'libyaml'
 brew 'markdown'
-brew 'msmtp'
-brew 'mu', args: ['with-emacs']
+# brew 'msmtp'
+# brew 'mu', args: ['with-emacs']
 brew 'node'
 brew 'openssl'
 brew 'postgres'
