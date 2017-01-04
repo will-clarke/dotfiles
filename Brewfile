@@ -26,6 +26,8 @@ brew 'trash'
 brew 'tree'
 brew 'vim'
 brew 'w3m'
+brew 'gpg'
+brew 'pinentry-mac'
 
 cask '1password'
 cask 'alfred'

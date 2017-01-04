@@ -3,6 +3,10 @@
 
 # link dotfiles with dropbox????
 
+
+# secrets: Dropbox/dev/secrets/gitconfig.gpg -> ~/.secrets/gitconfig
+# echo "pinentry-program /usr/local/bin/pinentry-mac" >> ~/.gnupg/gpg-agent.conf
+
 set -e    # Exit immediately if a command exits with a non-zero status.
 
 function dotfiles_help {
@@ -64,7 +68,7 @@ enforce_new_bash
 DOTFILES_DIR="$HOME/dotfiles_william_clarke"
 BACKUP_DIR="$DOTFILES_DIR"_backup
 declare -A unusual_files=(
-    ["applications/karabiner/karabiner.json"]=".karabiner.d/configuration/karabiner.json")
+    ["applications/karabiner/karabiner.json"]=".config/karabiner/karabiner.json")
 declare -A dropbox_files=(
     ["Dropbox/dev"]="dev"
     ["Dropbox/dev/dotfiles"]="dotfiles"

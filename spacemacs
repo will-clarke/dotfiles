@@ -98,8 +98,10 @@ values."
    dotspacemacs-scratch-mode 'text-mode
    ;; dotspacemacs-themes '(spacemacs-dark
    ;;                       spacemacs-light)
-  dotspacemacs-themes '(solarized-light
-                        soft-charcoal)
+  dotspacemacs-themes '(
+                        soft-charcoal
+                        solarized-light
+                        )
    dotspacemacs-colorize-cursor-according-to-state t
    dotspacemacs-default-font '("Source Code Pro"
                                :size 20
@@ -327,6 +329,8 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (evil-define-key 'insert evil-term-mode-map
     "M-DEL" 'term-send-backward-kill-word)
   (evil-define-key 'insert term-raw-map
+    "M-DEL" 'mwim-beginning-of-line-or-code)
+  (evil-define-key 'insert term-raw-map
     "M-DEL" 'term-send-backward-kill-word)
 
   (global-set-key (kbd "s-j") 'scroll-other-window)
@@ -470,6 +474,8 @@ before packages are loaded. If you are unsure, you should try in setting them in
               (terminal-name))
       (setenv "DISPLAY")))
   (add-hook 'window-configuration-change-hook 'wg/kludge-gpg-agent)
+  (require 'epa-file)
+  (epa-file-enable)
 
   ;; Mac
   (setq vc-follow-symlinks t)

@@ -46,6 +46,8 @@
   insteadOf = $SSH_KEY
 # editor = "if [[ $IS_REMOTE -eq 1 ]]; then ED='vim'; else ED='subl -n -w'; fi; $ED"
 [include]
+  path = /Users/williamclarke/.secrets/gitconfig
+[include]
   path = /Users/wmmc/.secrets/gitconfig
 [hub]
 	protocol = https
