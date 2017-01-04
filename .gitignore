@@ -1,3 +1,4 @@
+.DS_Store
 nvim/.cache
 nvim/bundle
 nvim/.netrwhist
