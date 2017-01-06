@@ -1,3 +1,5 @@
+// NOTE. We can't symlink this. So copy it to ~/.config/karabiner/karabiner.json
+
 // use this version \> ... with no hyper mode.
 // https://github.com/wwwjfy/karabiner-elements/releases
 
