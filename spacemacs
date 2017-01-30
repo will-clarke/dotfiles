@@ -669,3 +669,17 @@ This function is called at the very end of Spacemacs initialization."
  ;; If there is more than one, they won't work right.
  )
 )
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (ws-butler web-mode use-package toc-org swift-mode sql-indent spacemacs-theme rubocop rspec-mode request projectile-rails persp-mode orgit org org-download neotree mu4e-maildirs-extension intero info+ hide-comnt gitattributes-mode git-gutter-fringe expand-region evil-surround evil-mc evil-matchit evil-escape evil-anzu eshell-z counsel-projectile company-quickhelp clang-format auto-complete company counsel flycheck haskell-mode helm helm-core yasnippet skewer-mode js2-mode simple-httpd magit git-commit with-editor alert projectile hydra inf-ruby ivy yaml-mode xterm-color window-numbering which-key wgrep web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen tagedit swiper spaceline solarized-theme smex smeargle slim-mode shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode robe restclient restart-emacs rbenv rake rainbow-delimiters quelpa pug-mode popwin pkg-info paradox org-projectile org-present org-pomodoro org-plus-contrib org-bullets open-junk-file ob-http mwim multi-term mu4e-alert move-text mmm-mode minitest markdown-toc magit-gitflow magit-gh-pulls macrostep lorem-ipsum log4e livid-mode linum-relative link-hint less-css-mode json-mode js2-refactor js-doc ivy-hydra inflections indent-guide ido-vertical-mode hungry-delete htmlize hlint-refactor hl-todo hindent highlight-parentheses highlight-numbers highlight-indentation help-fns+ helm-make haskell-snippets google-translate golden-ratio gnuplot gntp gitignore-mode github-search github-clone github-browse-file gitconfig-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter gist gh-md flycheck-pos-tip flycheck-haskell flx-ido fill-column-indicator feature-mode fancy-battery eyebrowse exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-tutor evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-ediff evil-args eval-sexp-fu eshell-prompt-extras esh-help erlang emoji-cheat-sheet-plus emmet-mode elisp-slime-nav dumb-jump disaster diminish diff-hl define-word dash-at-point dactyl-mode counsel-dash company-web company-tern company-statistics company-ghci company-ghc company-emoji company-cabal company-c-headers column-enforce-mode coffee-mode cmm-mode cmake-mode clean-aindent-mode chruby bundler bind-key auto-yasnippet auto-highlight-symbol auto-compile anzu aggressive-indent adaptive-wrap ace-window ace-link ac-ispell))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

@@ -36,7 +36,7 @@
 [fetch]
   prune = true
 [user]
-  name = William
+  name = William Clarke
   email = wmmclarke@gmail.com
 [credential]
   helper = osxkeychain
