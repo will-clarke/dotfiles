@@ -12,27 +12,15 @@ values."
    dotspacemacs-configuration-layers
    '(
      swift
-     (auto-completion :variables
-                      auto-completion-enable-help-tooltip t
-                      auto-completion-return-key-behavior 'nil
-                      auto-completion-tab-key-behavior 'complete
-                      ;; auto-completion-tab-key-behavior 'cycle
-                      ;; auto-completion-complete-with-key-sequence nil
-                      ;; auto-completion-complete-with-key-sequence-delay 0.1
-                      ;; auto-completion-private-snippets-directory nil)
-                      )
+     auto-completion
      vimscript
      yaml
      ivy
      javascript
      yaml
      erlang
-     ;; xkcd
-     ;; gtags
      better-defaults
-     ;; plantuml
      emacs-lisp
-     ;; common-lisp
      (ruby :variables
            ruby-version-manager 'rbenv
            ruby-insert-encoding-magic-comment nil
@@ -50,8 +38,8 @@ values."
           git-gutter-use-fringe t)
      (shell :variables
             shell-default-term-shell "/bin/bash"
-            shell-default-shell 'eshell
-            ;; shell-default-shell 'multi-term
+            ;; shell-default-shell 'eshell
+            shell-default-shell 'multi-term
             shell-enable-smart-eshell t
             shell-default-position 'bottom
             shell-default-height 30)
@@ -481,8 +469,6 @@ before packages are loaded. If you are unsure, you should try in setting them in
               (terminal-name))
       (setenv "DISPLAY")))
   (add-hook 'window-configuration-change-hook 'wg/kludge-gpg-agent)
-  (require 'epa-file)
-  (epa-file-enable)
 
   ;; Mac
   (setq vc-follow-symlinks t)
