@@ -208,13 +208,13 @@
 	<key>NSWindow Frame SharedPreferences</key>
 	<string>-1263 95 770 381 -1680 -488 1680 1027 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 10 2555 1407 0 0 2560 1417 </string>
+	<string>0 815 1158 602 0 0 2560 1417 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>0 815 905 602 0 0 2560 1417 </string>
+	<string>1064 797 1433 602 0 0 2560 1417 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
-	<string>-835 29 835 510 -1680 -488 1680 1027 </string>
+	<string>1655 815 905 602 0 0 2560 1417 </string>
 	<key>NSWindow Frame iTerm Window 3</key>
-	<string>-1618 -293 1583 832 -1680 -488 1680 1027 </string>
+	<string>587 815 905 602 0 0 2560 1417 </string>
 	<key>NSWindow Frame iTerm Window 4</key>
 	<string>275 32 890 602 0 0 1680 1027 </string>
 	<key>New Bookmarks</key>
@@ -897,8 +897,10 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2017-01-27T10:11:07Z</date>
+	<date>2017-02-01T10:34:31Z</date>
 	<key>SUSendProfileInfo</key>
+	<false/>
+	<key>ShowFullScreenTabBar</key>
 	<false/>
 	<key>WordCharacters</key>
 	<string>/-+\~_.</string>

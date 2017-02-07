@@ -49,5 +49,5 @@ add_to_path_if_exists "PATH" "/Applications/Postgres.app/Contents/Versions/lates
 add_to_path_if_exists "PATH" "$HOME/.cargo/bin"
 add_to_path_if_exists "PATH" "/usr/local/sbin"
 set_if_exists "EDITOR" "/Users/wmmc/.bin/edit"
-set_if_exists "RUST_SRC_PATH" "/usr/local/src/rust/src"
+set_if_exists "RUST_SRC_PATH" "$HOME/.multirust/toolchains/nightly-x86_64-apple-darwin/lib/rustlib/src/rust/src/"
 set_if_exists "ORDERWEB_HOME" "$HOME/deliveroo/orderweb"
