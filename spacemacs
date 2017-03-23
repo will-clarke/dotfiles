@@ -92,14 +92,14 @@ values."
    ;;                       spacemacs-light)
   dotspacemacs-themes '(
                         ;; soft-charcoal
-                        solarized-dark
-                        solarized-light
+                        ;; solarized-dark
+                        ;; solarized-light
                         )
    dotspacemacs-colorize-cursor-according-to-state t
    dotspacemacs-default-font '("Source Code Pro"
-                               :size 20
+                               ;; :size 20
                                ;; :size 13
-                               ;; :size 15
+                               :size 15
                                :weight normal
                                :width normal
                                :powerline-scale 1.5)
@@ -503,6 +503,8 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (setq org-agenda-files (list "~/org"))
   ;; "~/Dropbox/Dev/org-mode/work.org"
   (setq org-agenda-include-diary t)
+  (setq org-ditaa-jar-path "/usr/local/Cellar/ditaa/0.10/libexec/ditaa0_10.jar")
+
   ;; (global-set-key (kbd "C-`") 'ort/goto-todos)
 ;;   (setq alert-default-style 'growl)
 ;;   (setq org-mu4e-link-query-in-headers-mode nil)
@@ -521,11 +523,38 @@ before packages are loaded. If you are unsure, you should try in setting them in
                                (plantuml . t)
                                (ruby . t)
                                (sh . t)
+                               (ditaa . t)
                                ))
 
   ;; spaceline / powerline / bar at bottom
   (spaceline-toggle-minor-modes-off)
   (setq powerline-default-separator 'alternate)
+
+
+
+  (setq magit-refresh-status-buffer nil)
+
+
+
+  (add-hook 'eshell-mode-hook
+            '(lambda ()
+                (define-key eshell-mode-map (kbd "M-l")  'helm-eshell-history)))
+
+  ;; for shell-mode
+  (define-key shell-mode-map (kbd "C-c C-l") 'helm-comint-input-ring)
+
+
+
+  (add-hook 'eshell-mode-hook
+            (lambda ()
+              (local-set-key (kbd "C-c h")
+                             (lambda ()
+                               (interactive)
+                               (insert
+                                (ido-completing-read "Eshell history: "
+                                                     (delete-dups
+                                                      (ring-elements eshell-history-ring))))))
+              (local-set-key (kbd "C-c h") 'eshell-list-history)))
 
   ;; (setq which-key-paging-prefixes '("SPC"))
   ;; ;; (define-key which-key-mode-map (kbd "C-x <right>") 'which-key-C-h-dispatch)
