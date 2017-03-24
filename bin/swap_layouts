@@ -1,6 +1,6 @@
 #!/bin/bash
 
 dirname="$HOME/.config/karabiner"
-mv "$dirname/karabiner.json" "$dirname/karabiner_backup.json"
+mv "$dirname/karabiner.json" "$dirname/TMP.json"
 mv "$dirname/karabiner_other.json" "$dirname/karabiner.json"
-mv "$dirname/karabiner_backup.json" "$dirname/karabiner.json"
+mv "$dirname/TMP.json" "$dirname/karabiner_other.json"
