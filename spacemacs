@@ -12,7 +12,12 @@ values."
    dotspacemacs-configuration-layers
    '(
      swift
-     auto-completion
+     (auto-completion :variables
+                      auto-completion-return-key-behavior nil;;'complete
+                      auto-completion-tab-key-behavior 'complete
+                      auto-completion-complete-with-key-sequence nil
+                      auto-completion-complete-with-key-sequence-delay 0.1
+                      auto-completion-private-snippets-directory nil)
      vimscript
      yaml
      ivy
@@ -29,6 +34,7 @@ values."
      markdown
      sql
      org
+     shell-scripts
      (mu4e :variables
            mu4e-enable-mode-line t
            mu4e-enable-notifications t)
@@ -37,9 +43,11 @@ values."
           git-enable-github-support t
           git-gutter-use-fringe t)
      (shell :variables
-            shell-default-term-shell "/bin/bash"
-            shell-default-shell 'eshell
-            ;; shell-default-shell 'multi-term
+            ;; shell-default-term-shell " "/bin/bash"
+            ;; shell-default-shell 'eshell
+            multi-term-program "/usr/local/bin/fish"
+            ;; shell-default-term-shell "/usr/local/bin/fish"
+            shell-default-shell 'multi-term
             shell-enable-smart-eshell t
             shell-default-position 'bottom
             shell-default-height 30)
@@ -90,11 +98,11 @@ values."
    dotspacemacs-scratch-mode 'text-mode
    ;; dotspacemacs-themes '(spacemacs-dark
    ;;                       spacemacs-light)
-  dotspacemacs-themes '(
-                        ;; soft-charcoal
-                        ;; solarized-dark
-                        ;; solarized-light
-                        )
+   dotspacemacs-themes '(
+                         ;; soft-charcoal
+                         ;; solarized-dark
+                         ;; solarized-light
+                         )
    dotspacemacs-colorize-cursor-according-to-state t
    dotspacemacs-default-font '("Source Code Pro"
                                ;; :size 20
@@ -499,6 +507,13 @@ before packages are loaded. If you are unsure, you should try in setting them in
          (concat "/sudo:root@localhost:" (buffer-file-name))))
       (goto-char position)))
 
+  (defun me/setup-term-mode ()
+    (evil-local-set-key 'insert (kbd "C-r") 'me/send-C-r))
+  (defun me/send-C-r ()
+    (interactive)
+    (term-send-raw-string "\C-r"))
+  (add-hook 'term-mode-hook 'me/setup-term-mode)
+
   ;; ORG
   ;; (require 'org-mac-link)
   (setq org-agenda-files (list "~/org"))
@@ -507,18 +522,18 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (setq org-ditaa-jar-path "/usr/local/Cellar/ditaa/0.10/libexec/ditaa0_10.jar")
 
   ;; (global-set-key (kbd "C-`") 'ort/goto-todos)
-;;   (setq alert-default-style 'growl)
-;;   (setq org-mu4e-link-query-in-headers-mode nil)
-;;   ;; Set to the location of your Org files on your local system
-;;   (setq org-directory "~/org")
-;;   ;; Set to the name of the file where new notes will be stored
-;;   (setq org-mobile-inbox-for-pull "~/org/uploaded.org")
-;;   ;; Set to <your Dropbox root directory>/MobileOrg.
-;;   (setq org-mobile-directory "~/Dropbox/Apps/MobileOrg")
-;;   (setq org-agenda-files (list "~/org/todo.org"))
-;;   (setq org-bullets-bullet-list '("⚫" "◉" "○" "►" "◎" "◇"))
+  ;;   (setq alert-default-style 'growl)
+  ;;   (setq org-mu4e-link-query-in-headers-mode nil)
+  ;;   ;; Set to the location of your Org files on your local system
+  ;;   (setq org-directory "~/org")
+  ;;   ;; Set to the name of the file where new notes will be stored
+  ;;   (setq org-mobile-inbox-for-pull "~/org/uploaded.org")
+  ;;   ;; Set to <your Dropbox root directory>/MobileOrg.
+  ;;   (setq org-mobile-directory "~/Dropbox/Apps/MobileOrg")
+  ;;   (setq org-agenda-files (list "~/org/todo.org"))
+  ;;   (setq org-bullets-bullet-list '("⚫" "◉" "○" "►" "◎" "◇"))
 
-;;   ;; babel
+  ;;   ;; babel
   (org-babel-do-load-languages
    'org-babel-load-languages '((C . t)
                                (plantuml . t)
@@ -539,7 +554,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
   (add-hook 'eshell-mode-hook
             '(lambda ()
-                (define-key eshell-mode-map (kbd "M-l")  'helm-eshell-history)))
+               (define-key eshell-mode-map (kbd "M-l")  'helm-eshell-history)))
 
   ;; for shell-mode
   (define-key shell-mode-map (kbd "C-c C-l") 'helm-comint-input-ring)
@@ -561,96 +576,96 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ;; ;; (define-key which-key-mode-map (kbd "C-x <right>") 'which-key-C-h-dispatch)
   ;; (setq which-key-paging-key "<right>")
 
-;;   (defvar my/org-basic-task-template "* TODO %^{Task}
-;; :PROPERTIES:
-;; :Effort: %^{effort|1:00|0:05|0:15|0:30|2:00|4:00}
-;; :END:
-;; Captured %<%Y-%m-%d %H:%M>
-;; %?
+  ;;   (defvar my/org-basic-task-template "* TODO %^{Task}
+  ;; :PROPERTIES:
+  ;; :Effort: %^{effort|1:00|0:05|0:15|0:30|2:00|4:00}
+  ;; :END:
+  ;; Captured %<%Y-%m-%d %H:%M>
+  ;; %?
 
-;; %i
-;; " "Basic task data")
+  ;; %i
+  ;; " "Basic task data")
 
-;;   (setq org-capture-templates '(
-;;                                 ("1" "~/org/todo.org #Tasks" entry
-;;                                  (file+headline "~/org/todo.org" "Tasks")
-;;                                  "* TODO [#A] %?\nSCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n%a\n")
-;;                                 ("t" "Task" entry
-;;                                  (file "~/org/refile.org")
-;;                                  "* TODO %?\n")
-;;                                 ("T" "Clock-in Task" entry
-;;                                  (file "~/org/refile.org")
-;;                                  "* TODO %?\n"
-;;                                  :clock-in t
-;;                                  :clock-resume t)
-;;                                 ("d" "Distraction in a pomodoro" entry
-;;                                  (file "~/org/refile.org")
-;;                                  "* TODO %^{Task}\n  SCHEDULED: %t\n"
-;;                                  :immediate-finish t)
-;;                                 ("n" "Note" entry
-;;                                  (file "~/org/refile.org")
-;;                                  "* %?\n")
-;;                                 ("l" "Note with link to current file" entry
-;;                                  (file "~/org/refile.org")
-;;                                  "* %a")
-;;                                 ("c" "Link from Chrome" entry
-;;                                  (file "~/org/refile.org")
-;;                                  "* %(org-mac-chrome-get-frontmost-url)")
-;;                                 ("C" "Clock-in Link from Chrome" entry
-;;                                  (file "~/org/refile.org")
-;;                                  "* %(org-mac-chrome-get-frontmost-url)"
-;;                                  :clock-in t
-;;                                  :clock-resume t)
-;;                                 ))
-;;   (require 'org-mu4e)
-;;   (setq org-mu4e-convert-to-html t)
-;;   ;; mu4e org: M-x org~mu4e-mime-switch-headers-or-body
-;;   ;; https://github.com/djcb/mu/pull/196#issuecomment-36305657
-;;   (defun org-export-string-hack (string backend &optional body-only ext-plist)
-;;     (org-export-string-as (concat "#+OPTIONS: tex:dvipng toc:nil
-;; " string) 'html t))
-;;   (defalias 'org-export-string 'org-export-string-hack)
-;;   (setq org-refile-targets '((nil :maxlevel . 2)
-;;                              (org-agenda-files :maxlevel . 2)))
-;;   (setq org-outline-path-complete-in-steps nil)         ; Refile in a single go
-;;   (setq org-refile-use-outline-path t)                  ; Show full paths for refiling
-;;   (setq org-clone-delete-id t)
-;;   (setq org-export-with-sub-superscripts nil)
-;;   (setq org-export-with-toc nil)
-;;   (setq org-export-with-section-numbers nil)
-;;   (setq org-html-table-default-attributes '(:align "|c|c|c|" :border "3" :rules "all" :frame "border" :cellpadding "8"))
-;;   ;; (setq org-html-table-default-attributes
-;;   ;;       '(:class "table table-striped table-bordered table-condensed"
-;;   ;;                :style "width: auto;"))
-;;   ;; (setq org-html-table-default-attributes
-;;   ;;       '(:border "0" :cellspacing "0" :cellpadding "6" :rules "none" :frame "none"))
+  ;;   (setq org-capture-templates '(
+  ;;                                 ("1" "~/org/todo.org #Tasks" entry
+  ;;                                  (file+headline "~/org/todo.org" "Tasks")
+  ;;                                  "* TODO [#A] %?\nSCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n%a\n")
+  ;;                                 ("t" "Task" entry
+  ;;                                  (file "~/org/refile.org")
+  ;;                                  "* TODO %?\n")
+  ;;                                 ("T" "Clock-in Task" entry
+  ;;                                  (file "~/org/refile.org")
+  ;;                                  "* TODO %?\n"
+  ;;                                  :clock-in t
+  ;;                                  :clock-resume t)
+  ;;                                 ("d" "Distraction in a pomodoro" entry
+  ;;                                  (file "~/org/refile.org")
+  ;;                                  "* TODO %^{Task}\n  SCHEDULED: %t\n"
+  ;;                                  :immediate-finish t)
+  ;;                                 ("n" "Note" entry
+  ;;                                  (file "~/org/refile.org")
+  ;;                                  "* %?\n")
+  ;;                                 ("l" "Note with link to current file" entry
+  ;;                                  (file "~/org/refile.org")
+  ;;                                  "* %a")
+  ;;                                 ("c" "Link from Chrome" entry
+  ;;                                  (file "~/org/refile.org")
+  ;;                                  "* %(org-mac-chrome-get-frontmost-url)")
+  ;;                                 ("C" "Clock-in Link from Chrome" entry
+  ;;                                  (file "~/org/refile.org")
+  ;;                                  "* %(org-mac-chrome-get-frontmost-url)"
+  ;;                                  :clock-in t
+  ;;                                  :clock-resume t)
+  ;;                                 ))
+  ;;   (require 'org-mu4e)
+  ;;   (setq org-mu4e-convert-to-html t)
+  ;;   ;; mu4e org: M-x org~mu4e-mime-switch-headers-or-body
+  ;;   ;; https://github.com/djcb/mu/pull/196#issuecomment-36305657
+  ;;   (defun org-export-string-hack (string backend &optional body-only ext-plist)
+  ;;     (org-export-string-as (concat "#+OPTIONS: tex:dvipng toc:nil
+  ;; " string) 'html t))
+  ;;   (defalias 'org-export-string 'org-export-string-hack)
+  ;;   (setq org-refile-targets '((nil :maxlevel . 2)
+  ;;                              (org-agenda-files :maxlevel . 2)))
+  ;;   (setq org-outline-path-complete-in-steps nil)         ; Refile in a single go
+  ;;   (setq org-refile-use-outline-path t)                  ; Show full paths for refiling
+  ;;   (setq org-clone-delete-id t)
+  ;;   (setq org-export-with-sub-superscripts nil)
+  ;;   (setq org-export-with-toc nil)
+  ;;   (setq org-export-with-section-numbers nil)
+  ;;   (setq org-html-table-default-attributes '(:align "|c|c|c|" :border "3" :rules "all" :frame "border" :cellpadding "8"))
+  ;;   ;; (setq org-html-table-default-attributes
+  ;;   ;;       '(:class "table table-striped table-bordered table-condensed"
+  ;;   ;;                :style "width: auto;"))
+  ;;   ;; (setq org-html-table-default-attributes
+  ;;   ;;       '(:border "0" :cellspacing "0" :cellpadding "6" :rules "none" :frame "none"))
 
 
-;;   (global-prettify-symbols-mode)
+  ;;   (global-prettify-symbols-mode)
 
-;;   ;; UTF-8 please
-;;   (setq locale-coding-system    'utf-8)
-;;   (set-terminal-coding-system   'utf-8)
-;;   (set-keyboard-coding-system   'utf-8)
-;;   (set-selection-coding-system  'utf-8)
-;;   (prefer-coding-system         'utf-8)
-;;   (set-language-environment     'utf-8)
+  ;;   ;; UTF-8 please
+  ;;   (setq locale-coding-system    'utf-8)
+  ;;   (set-terminal-coding-system   'utf-8)
+  ;;   (set-keyboard-coding-system   'utf-8)
+  ;;   (set-selection-coding-system  'utf-8)
+  ;;   (prefer-coding-system         'utf-8)
+  ;;   (set-language-environment     'utf-8)
 
-;;   ;; pdftools:
-;;   (setenv "PKG_CONFIG_PATH" "/usr/local/Cellar/zlib/1.2.8/lib/pkgconfig:/usr/local/lib/pkgconfig:/opt/X11/lib/pkgconfig")
+  ;;   ;; pdftools:
+  ;;   (setenv "PKG_CONFIG_PATH" "/usr/local/Cellar/zlib/1.2.8/lib/pkgconfig:/usr/local/lib/pkgconfig:/opt/X11/lib/pkgconfig")
 
-;;   ;; plantuml
-;;   (setq puml-plantuml-jar-path "/usr/local/Cellar/plantuml/8041/plantuml.8041.jar")
-;;   (setq plantuml-jar-path "/usr/local/Cellar/plantuml/8041/plantuml.8041.jar")
-;;   (setq org-plantuml-jar-path "/usr/local/Cellar/plantuml/8041/plantuml.8041.jar")
+  ;;   ;; plantuml
+  ;;   (setq puml-plantuml-jar-path "/usr/local/Cellar/plantuml/8041/plantuml.8041.jar")
+  ;;   (setq plantuml-jar-path "/usr/local/Cellar/plantuml/8041/plantuml.8041.jar")
+  ;;   (setq org-plantuml-jar-path "/usr/local/Cellar/plantuml/8041/plantuml.8041.jar")
 
-;;   ;; ivy:
-;; C-M-j -> complete whatever word you were typing
-;;   ;; console-M-x -> fuzzy searching
-;;   (setq ivy-re-builders-alist
-;;         '((t . ivy--regex-fuzzy)))
+  ;;   ;; ivy:
+  ;; C-M-j -> complete whatever word you were typing
+  ;;   ;; console-M-x -> fuzzy searching
+  ;;   (setq ivy-re-builders-alist
+  ;;         '((t . ivy--regex-fuzzy)))
 
-;;   (setq org-startup-folded nil)
+  ;;   (setq org-startup-folded nil)
 
 
   ;; restclient mode: no localhost -> use 127.0.0.1
@@ -680,7 +695,7 @@ This function is called at the very end of Spacemacs initialization."
  '(evil-want-Y-yank-to-eol t)
  '(package-selected-packages
    (quote
-    (magithub slack emojify circe oauth2 websocket erc-yt erc-view-log erc-terminal-notifier erc-social-graph erc-image erc-hl-nicks fuzzy toml-mode racer flycheck-rust seq cargo rust-mode winum unfill swift-mode dash erlang company-quickhelp ob-restclient company-restclient know-your-http-well company-web web-completion-data company-tern tern company-statistics company-emoji company-cabal company-c-headers auto-yasnippet ac-ispell auto-complete intero hlint-refactor hindent haskell-snippets flycheck-haskell company-ghci company-ghc ghc company haskell-mode cmm-mode powerline request rake pcre2el spinner org alert log4e gntp markdown-mode skewer-mode simple-httpd json-snatcher json-reformat hydra parent-mode haml-mode gitignore-mode fringe-helper git-gutter+ gh marshal logito pcache pos-tip flx magit-popup with-editor evil goto-chg highlight f s diminish projectile pkg-info epl popup bind-map bind-key async avy package-build vimrc-mode dactyl-mode mwim macrostep elisp-slime-nav auto-compile packed inflections yasnippet multiple-cursors ivy-purpose window-purpose imenu-list hide-comnt anzu iedit smartparens undo-tree flycheck git-gutter helm helm-core ht magit git-commit inf-ruby js2-mode yaml-mode wgrep smex ivy-hydra counsel-projectile counsel-dash dash-functional counsel swiper ivy xterm-color ws-butler window-numbering which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tagedit sql-indent spacemacs-theme spaceline solarized-theme soft-charcoal-theme smeargle slim-mode shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restclient restart-emacs rbenv rainbow-delimiters quelpa pug-mode projectile-rails popwin persp-mode paradox orgit org-projectile org-present org-pomodoro org-plus-contrib org-download org-bullets open-junk-file ob-http neotree multi-term mu4e-maildirs-extension mu4e-alert move-text mmm-mode minitest markdown-toc magit-gitflow magit-gh-pulls lorem-ipsum livid-mode linum-relative link-hint less-css-mode json-mode js2-refactor js-doc info+ indent-guide ido-vertical-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-dash helm-css-scss helm-ag google-translate golden-ratio gnuplot github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md flycheck-pos-tip flx-ido fill-column-indicator feature-mode fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help emoji-cheat-sheet-plus emmet-mode dumb-jump disaster diff-hl define-word dash-at-point column-enforce-mode coffee-mode cmake-mode clean-aindent-mode clang-format chruby bundler auto-highlight-symbol aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line))))
+    (insert-shebang fish-mode company-shell magithub slack emojify circe oauth2 websocket erc-yt erc-view-log erc-terminal-notifier erc-social-graph erc-image erc-hl-nicks fuzzy toml-mode racer flycheck-rust seq cargo rust-mode winum unfill swift-mode dash erlang company-quickhelp ob-restclient company-restclient know-your-http-well company-web web-completion-data company-tern tern company-statistics company-emoji company-cabal company-c-headers auto-yasnippet ac-ispell auto-complete intero hlint-refactor hindent haskell-snippets flycheck-haskell company-ghci company-ghc ghc company haskell-mode cmm-mode powerline request rake pcre2el spinner org alert log4e gntp markdown-mode skewer-mode simple-httpd json-snatcher json-reformat hydra parent-mode haml-mode gitignore-mode fringe-helper git-gutter+ gh marshal logito pcache pos-tip flx magit-popup with-editor evil goto-chg highlight f s diminish projectile pkg-info epl popup bind-map bind-key async avy package-build vimrc-mode dactyl-mode mwim macrostep elisp-slime-nav auto-compile packed inflections yasnippet multiple-cursors ivy-purpose window-purpose imenu-list hide-comnt anzu iedit smartparens undo-tree flycheck git-gutter helm helm-core ht magit git-commit inf-ruby js2-mode yaml-mode wgrep smex ivy-hydra counsel-projectile counsel-dash dash-functional counsel swiper ivy xterm-color ws-butler window-numbering which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tagedit sql-indent spacemacs-theme spaceline solarized-theme soft-charcoal-theme smeargle slim-mode shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restclient restart-emacs rbenv rainbow-delimiters quelpa pug-mode projectile-rails popwin persp-mode paradox orgit org-projectile org-present org-pomodoro org-plus-contrib org-download org-bullets open-junk-file ob-http neotree multi-term mu4e-maildirs-extension mu4e-alert move-text mmm-mode minitest markdown-toc magit-gitflow magit-gh-pulls lorem-ipsum livid-mode linum-relative link-hint less-css-mode json-mode js2-refactor js-doc info+ indent-guide ido-vertical-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-dash helm-css-scss helm-ag google-translate golden-ratio gnuplot github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md flycheck-pos-tip flx-ido fill-column-indicator feature-mode fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help emoji-cheat-sheet-plus emmet-mode dumb-jump disaster diff-hl define-word dash-at-point column-enforce-mode coffee-mode cmake-mode clean-aindent-mode clang-format chruby bundler auto-highlight-symbol aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
