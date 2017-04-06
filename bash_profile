@@ -8,7 +8,7 @@ if hash hub &>/dev/null; then
     eval "$(hub alias -s)"
 fi
 
-export PS1="\w > "
+export "PS1"="\w > "
 
 source_if_exists() {
     if [ -e "$1" ]; then
@@ -45,10 +45,11 @@ add_to_path_if_exists "PATH" "$HOME/dotfiles/bin"
 add_to_path_if_exists "LIBRARY_PATH" "/usr/local/lib:/Users/wmmc/.nix-profile/lib"
 add_to_path_if_exists "CPATH" "/usr/local/include/:/Users/wmmc/.nix-profile/include"
 add_to_path_if_exists "PATH" "$HOME/.bin"
+add_to_path_if_exists "PATH" "$HOME/dotfiles_william_clarke/bin"
 add_to_path_if_exists "PATH" "/Applications/Postgres.app/Contents/Versions/latest/bin"
 add_to_path_if_exists "PATH" "$HOME/.cargo/bin"
 add_to_path_if_exists "PATH" "/usr/local/sbin"
-set_if_exists "EDITOR" "/Users/wmmc/.bin/edit"
+set_if_exists "EDITOR" "/Users/$HOME/.bin/edit"
 set_if_exists "RUST_SRC_PATH" "$HOME/.multirust/toolchains/nightly-x86_64-apple-darwin/lib/rustlib/src/rust/src/"
 set_if_exists "ORDERWEB_HOME" "$HOME/deliveroo/orderweb"
 
