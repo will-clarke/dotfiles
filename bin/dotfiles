@@ -133,17 +133,16 @@ function link_other_files {
         local working_path="$HOME/${unusual_files[$file]}"
         if [ -f "$dotfiles_path" ] && [ ! -f "$working_path" ]; then
             mkdir -p "$(dirname "$working_path")"
-            # echo "ln -s $dotfiles_path $working_path"
             ln -s "$dotfiles_path" "$working_path"
         fi
     done
 }
 function link_dropbox_files {
     for file in "${!dropbox_files[@]}"; do
-        local dotfiles_path="$DOTFILES_DIR/$file"
+        local dotfiles_path="$HOME/$file"
         local working_path="$HOME/${dropbox_files[$file]}"
         if [ -f "$dotfiles_path" ] && [ ! -f "$working_path" ]; then
-            echo OMG LINKING DOTFILE
+            echo "LINKING DOTFILE: $working_path"
             mkdir -p "$(dirname "$working_path")"
             ln -s "$dotfiles_path" "$working_path"
         fi
@@ -199,6 +198,7 @@ function files_for_home_dir {
 function setup {
     setup_apple_defaults
     setup_spacemacs
+    echo "We've updated some Apple settings and ensured that Spacemacs is installed"
     }
 function setup_apple_defaults {
     defaults write -g ApplePressAndHoldEnabled -bool false
