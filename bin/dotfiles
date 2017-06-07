@@ -76,6 +76,7 @@ declare -A dropbox_files=(
     ["Dropbox/dev/secrets/authinfo.gpg"]=".authinfo.gpg"
     ["Dropbox/dev/secrets/certificates"]=".certificates"
     ["Dropbox/dev/secrets/secrets.gpg"]=".secrets.gpg"
+    ["Dropbox/dev/secrets/gnupg"]=".gnupg"
 )
 # BACKUP
 #################################################################################

@@ -42,7 +42,7 @@ values."
                       better-defaults-move-to-beginning-of-code-first t)
      emacs-lisp
      markdown
-     org
+     (org :variables org-enable-github-support t)
      (auto-completion :variables
                       auto-completion-return-key-behavior nil;;'complete
                       auto-completion-tab-key-behavior 'complete
@@ -152,6 +152,10 @@ values."
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    dotspacemacs-default-font '("Source Code Pro"
                                ;; :size 20
+                               ;; (display-pixel-width)
+                               ;;:size (if (<= (x-display-pixel-width) 1920) 12 20)
+                               ;;          12
+                               ;;        20)
                                :size 15
                                ;; :size 17
                                :weight normal
@@ -182,8 +186,8 @@ values."
    dotspacemacs-distinguish-gui-tab nil
    ;; If non-nil `Y' is remapped to `y$' in Evil states. (default nil)
    dotspacemacs-remap-Y-to-y$ t
-  ;; If non-nil, the shift mappings `<' and `>' retain visual state if used
-  ;; there. (default t)
+   ;; If non-nil, the shift mappings `<' and `>' retain visual state if used
+   ;; there. (default t)
    dotspacemacs-retain-visual-state-on-shift t
    ;; If non-nil, J and K move lines up and down when in visual mode.
    ;; (default nil)
@@ -225,7 +229,7 @@ values."
    dotspacemacs-helm-use-fuzzy 'always
    ;; If non-nil the paste micro-state is enabled. When enabled pressing `p`
    ;; several times cycle between the kill ring content. (default nil)
-   dotspacemacs-enable-paste-transient-state nil
+   dotspacemacs-enable-paste-transient-state 't
    ;; Which-key delay in seconds. The which-key buffer is the popup listing
    ;; the commands bound to the current keystroke sequence. (default 0.4)
    dotspacemacs-which-key-delay 0.4
@@ -280,7 +284,6 @@ values."
    ;;   :disabled-for-modes dired-mode
    ;;                       doc-view-mode
    ;;                       markdown-mode
-   ;;                       org-mode
    ;;                       pdf-view-mode
    ;;                       text-mode
    ;;   :size-limit-kb 1000)
@@ -409,69 +412,93 @@ otherwise fallback to markdown-preview"
        ))
 
 
-;;-------------------------------------------------------
-;; begin sourcing of .bash_profile
+  ;;-------------------------------------------------------
+  ;; begin sourcing of .bash_profile
 
-;; only do this on Mac OS X
-(when (string= system-type "darwin")
-  ;; require common lisp extensions, for search
-  (require 'cl)
-
-
-  (defun src-shell-unescape (string)
-    ;; replace \n \t \r \b \a \v \\
-    ;; and octal escapes of the form \0nn
-
-    (replace-regexp-in-string
-     "\\\\\\([ntrbav]\\|\\(\\\\\\)\\|\\(0[0-7][0-7]\\)\\)"
-     (lambda (str)
-       ;; interpret octal expressions
-       ;; of the form "\0nn"
-       (let ((char1 (aref str 1)))
-     (cond ((= ?0 (aref str 1))
-        (byte-to-string
-         (+ (* (- (aref str 2) ?0) 8)
-            (- (aref str 3) ?0))))
-           ((eq char1 ?n) "\n")
-           ((eq char1 ?t) "\t")
-           ((eq char1 ?r) "\r")
-           ((eq char1 ?b) "\b")
-           ((eq char1 ?a) "\a")
-           ((eq char1 ?v) "\v")
-           ((eq char1 ?\\) "\\\\")
-           (t "")))) string))
-
-  (defun src-set-environment-from-env-output(env-output)
-    ;; set the environment from shell's "env" output
-    (let ((lines (split-string env-output "\n" t)))
-      (dolist (line lines)
-    (let ((idx-equals (search "=" line)))
-      (when (and (not (eq idx-equals nil))
-             (> idx-equals 1))
-        (let  ((key (substring line 0 idx-equals))
-           (value (substring line (+ idx-equals 1))))
-          (setenv key (src-shell-unescape value))
-          ;; (message "%s = %s" key value)
-          ))))))
-
-  (defun src-source-shell-file (file-name)
-    ;; if your shell is sh rather than bash, the "source " may need
-    ;; to be ". " instead
-    (let* ((command (concat "source '"  file-name "'; echo 'post-env'; env"))
-       (output (shell-command-to-string command))
-       (idx-post-env (search "post-env" output)))
-      (if (eq nil idx-post-env)
-      (message "Didn't find expected output after sourcing %s. Found: %s" file-name output)
-    (let ((trimmed-output (substring output idx-post-env)))
-      ;; (message "trimmed-output: %s" trimmed-output)
-      (src-set-environment-from-env-output trimmed-output)))))
+  ;; only do this on Mac OS X
+  (when (string= system-type "darwin")
+    ;; require common lisp extensions, for search
+    (require 'cl)
 
 
+    (defun src-shell-unescape (string)
+      ;; replace \n \t \r \b \a \v \\
+      ;; and octal escapes of the form \0nn
 
-  (src-source-shell-file (expand-file-name "~/.bash_profile")))
+      (replace-regexp-in-string
+       "\\\\\\([ntrbav]\\|\\(\\\\\\)\\|\\(0[0-7][0-7]\\)\\)"
+       (lambda (str)
+         ;; interpret octal expressions
+         ;; of the form "\0nn"
+         (let ((char1 (aref str 1)))
+           (cond ((= ?0 (aref str 1))
+                  (byte-to-string
+                   (+ (* (- (aref str 2) ?0) 8)
+                      (- (aref str 3) ?0))))
+                 ((eq char1 ?n) "\n")
+                 ((eq char1 ?t) "\t")
+                 ((eq char1 ?r) "\r")
+                 ((eq char1 ?b) "\b")
+                 ((eq char1 ?a) "\a")
+                 ((eq char1 ?v) "\v")
+                 ((eq char1 ?\\) "\\\\")
+                 (t "")))) string))
+
+    (defun src-set-environment-from-env-output(env-output)
+      ;; set the environment from shell's "env" output
+      (let ((lines (split-string env-output "\n" t)))
+        (dolist (line lines)
+          (let ((idx-equals (search "=" line)))
+            (when (and (not (eq idx-equals nil))
+                       (> idx-equals 1))
+              (let  ((key (substring line 0 idx-equals))
+                     (value (substring line (+ idx-equals 1))))
+                (setenv key (src-shell-unescape value))
+                ;; (message "%s = %s" key value)
+                ))))))
+
+    (defun src-source-shell-file (file-name)
+      ;; if your shell is sh rather than bash, the "source " may need
+      ;; to be ". " instead
+      (let* ((command (concat "source '"  file-name "'; echo 'post-env'; env"))
+             (output (shell-command-to-string command))
+             (idx-post-env (search "post-env" output)))
+        (if (eq nil idx-post-env)
+            (message "Didn't find expected output after sourcing %s. Found: %s" file-name output)
+          (let ((trimmed-output (substring output idx-post-env)))
+            ;; (message "trimmed-output: %s" trimmed-output)
+            (src-set-environment-from-env-output trimmed-output)))))
 
 
-;; end sourcing of .bash_profile
+    (src-source-shell-file (expand-file-name "~/.bash_profile")))
+  (define-key evil-normal-state-map (kbd "p") 'evil-paste-after)
+  (define-key evil-normal-state-map (kbd "P") 'evil-paste-before)
+
+  (with-eval-after-load 'org
+    (with-eval-after-load 'org-agenda
+      (require 'org-projectile)
+      ;;(push (org-projectile:todo-files) org-agenda-files))
+      (setq org-agenda-files (append org-agenda-files (org-projectile:todo-files))))
+    (org-babel-do-load-languages
+     'org-babel-load-languages '((C . t)
+                                 (plantuml . t)
+                                 (ruby . t)
+                                 (sh . t)
+                                 (http . t)
+                                 (js . t)
+                                 (sh . t)
+                                 ))
+    (setq org-default-notes-file (concat org-directory "/notes.org"))
+    ;; (setq org-capture-templates
+    ;;       '(("t" "Todo" entry (file+headline (concat org-directory "/todo.org")) ;; "Tasks")
+    ;;          "* TODO %?\n  %i\n  %a")
+    ;;         ("j" "Journal" entry (file+datetree  (concat org-directory "/journal.org") )
+    ;;          "* %?\nEntered on %U\n  %i\n  %a")))
+
+    )
+
+
+  ;; end sourcing of .bash_profile
 
 
   ;; (shell-command-to-string "source ~/.bash_profile")
@@ -491,9 +518,10 @@ This function is called at the very end of Spacemacs initialization."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(org-agenda-files nil)
  '(package-selected-packages
    (quote
-    (deft dash evil-lion password-generator ghub+ apiwrap ghub helm-company emojify editorconfig packed git-commit markdown-mode alert async s diminish smartparens evil flycheck company yasnippet avy magit magit-popup with-editor log4e org-plus-contrib projectile hydra f helm helm-core symon string-inflection browse-at-remote skewer-mode simple-httpd json-snatcher json-reformat multiple-cursors js2-mode dash-functional tern helm-css-scss haml-mode web-completion-data rust-mode ob-elixir flycheck-mix flycheck-credo alchemist elixir-mode gh marshal logito pcache ht restclient-helm inflections helm-dash restclient know-your-http-well rake inf-ruby helm-themes helm-swoop helm-purpose helm-projectile helm-mode-manager helm-flx helm-descbinds helm-ag evil-unimpaired ace-jump-helm-line yaml-mode xterm-color ws-butler winum which-key wgrep web-mode web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package unfill toml-mode toc-org tagedit swift-mode sql-indent spaceline smex smeargle slim-mode slack shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restart-emacs rbenv rainbow-delimiters racer pug-mode projectile-rails popwin persp-mode paradox orgit org-projectile org-present org-pomodoro org-download org-bullets open-junk-file ob-restclient ob-http neotree mwim multi-term mu4e-maildirs-extension mu4e-alert move-text mmm-mode minitest markdown-toc magithub magit-gitflow magit-gh-pulls macrostep lorem-ipsum livid-mode linum-relative link-hint less-css-mode json-mode js2-refactor js-doc ivy-purpose ivy-hydra intero insert-shebang info+ indent-guide hungry-delete htmlize hlint-refactor hl-todo hindent highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-make haskell-snippets google-translate golden-ratio gnuplot gitignore-mode github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md fuzzy flycheck-rust flycheck-pos-tip flycheck-haskell flx-ido fish-mode fill-column-indicator feature-mode fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help erlang erc-yt erc-view-log erc-terminal-notifier erc-social-graph erc-image erc-hl-nicks emoji-cheat-sheet-plus emmet-mode elisp-slime-nav dumb-jump disaster diff-hl define-word dash-at-point dactyl-mode counsel-projectile counsel-dash company-web company-tern company-statistics company-shell company-restclient company-ghci company-ghc company-emoji company-cabal company-c-headers column-enforce-mode coffee-mode cmm-mode cmake-mode clean-aindent-mode clang-format chruby cargo bundler auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ac-ispell))))
+    (ruby-refactor add-node-modules-path ox-gfm deft dash evil-lion password-generator ghub+ apiwrap ghub helm-company emojify editorconfig packed git-commit markdown-mode alert async s diminish smartparens evil flycheck company yasnippet avy magit magit-popup with-editor log4e org-plus-contrib projectile hydra f helm helm-core symon string-inflection browse-at-remote skewer-mode simple-httpd json-snatcher json-reformat multiple-cursors js2-mode dash-functional tern helm-css-scss haml-mode web-completion-data rust-mode ob-elixir flycheck-mix flycheck-credo alchemist elixir-mode gh marshal logito pcache ht restclient-helm inflections helm-dash restclient know-your-http-well rake inf-ruby helm-themes helm-swoop helm-purpose helm-projectile helm-mode-manager helm-flx helm-descbinds helm-ag evil-unimpaired ace-jump-helm-line yaml-mode xterm-color ws-butler winum which-key wgrep web-mode web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package unfill toml-mode toc-org tagedit swift-mode sql-indent spaceline smex smeargle slim-mode slack shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restart-emacs rbenv rainbow-delimiters racer pug-mode projectile-rails popwin persp-mode paradox orgit org-projectile org-present org-pomodoro org-download org-bullets open-junk-file ob-restclient ob-http neotree mwim multi-term mu4e-maildirs-extension mu4e-alert move-text mmm-mode minitest markdown-toc magithub magit-gitflow magit-gh-pulls macrostep lorem-ipsum livid-mode linum-relative link-hint less-css-mode json-mode js2-refactor js-doc ivy-purpose ivy-hydra intero insert-shebang info+ indent-guide hungry-delete htmlize hlint-refactor hl-todo hindent highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-make haskell-snippets google-translate golden-ratio gnuplot gitignore-mode github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md fuzzy flycheck-rust flycheck-pos-tip flycheck-haskell flx-ido fish-mode fill-column-indicator feature-mode fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help erlang erc-yt erc-view-log erc-terminal-notifier erc-social-graph erc-image erc-hl-nicks emoji-cheat-sheet-plus emmet-mode elisp-slime-nav dumb-jump disaster diff-hl define-word dash-at-point dactyl-mode counsel-projectile counsel-dash company-web company-tern company-statistics company-shell company-restclient company-ghci company-ghc company-emoji company-cabal company-c-headers column-enforce-mode coffee-mode cmm-mode cmake-mode clean-aindent-mode clang-format chruby cargo bundler auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ac-ispell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
