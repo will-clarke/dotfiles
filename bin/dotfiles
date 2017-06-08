@@ -71,7 +71,6 @@ declare -A unusual_files=(
     ["applications/karabiner/karabiner.json"]=".config/karabiner/karabiner.json")
 declare -A dropbox_files=(
     ["Dropbox/dev"]="dev"
-    ["Dropbox/dev/dotfiles"]="dotfiles"
     ["Dropbox/org"]="org"
     ["Dropbox/dev/secrets/authinfo.gpg"]=".authinfo.gpg"
     ["Dropbox/dev/secrets/certificates"]=".certificates"
@@ -142,7 +141,7 @@ function link_dropbox_files {
     for file in "${!dropbox_files[@]}"; do
         local dotfiles_path="$HOME/$file"
         local working_path="$HOME/${dropbox_files[$file]}"
-        if [ -f "$dotfiles_path" ] && [ ! -f "$working_path" ]; then
+        if [ -e "$dotfiles_path" ] && [ ! -e "$working_path" ]; then
             echo "LINKING DOTFILE: $working_path"
             mkdir -p "$(dirname "$working_path")"
             ln -s "$dotfiles_path" "$working_path"
