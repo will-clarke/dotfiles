@@ -1,3 +1,5 @@
+# -*- mode: ruby -*-
+
 tap 'd12frosted/emacs-plus'
 tap 'caskroom/cask'
 cask_args appdir: '/Applications'
@@ -13,7 +15,7 @@ brew 'isync'
 brew 'libyaml'
 brew 'markdown'
 # brew 'msmtp'
-# brew 'mu', args: ['with-emacs']
+brew 'mu', args: ['with-emacs']
 brew 'node'
 brew 'openssl'
 brew 'postgres'
@@ -48,3 +50,4 @@ cask 'iterm2'
 cask 'karabiner-elements'
 cask 'slack'
 cask 'shiftit'
+cask 'pgptools'

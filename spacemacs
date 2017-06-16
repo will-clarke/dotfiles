@@ -31,6 +31,8 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     (mu4e :variables
+           mu4e-installation-path "/usr/share/emacs/site-lisp")
      javascript
      html
      rust
@@ -471,6 +473,7 @@ otherwise fallback to markdown-preview"
 
 
     (src-source-shell-file (expand-file-name "~/.bash_profile")))
+  ;; end sourcing of .bash_profile
   (define-key evil-normal-state-map (kbd "p") 'evil-paste-after)
   (define-key evil-normal-state-map (kbd "P") 'evil-paste-before)
 
@@ -503,7 +506,54 @@ otherwise fallback to markdown-preview"
     )
 
 
-  ;; end sourcing of .bash_profile
+  (show-paren-mode t)
+
+
+
+
+
+
+  ;; ;; =mu4e
+  ;; (setq-default dotspacemacs-configuration-layers
+  ;;               '((mu4e :variables
+  ;;                       mu4e-installation-path "/usr/share/emacs/site-lisp")))
+
+
+  ;; (setq mu4e-compose-dont-reply-to-self t)
+  ;; (add-to-list 'mu4e-user-mail-address-list "wmmclarke@gmail.com")
+
+  (setq mu4e-maildir "~/.mail"
+        mu4e-trash-folder "/Trash"
+        mu4e-refile-folder "/Archive"
+        mu4e-get-mail-command "mbsync -a"
+        mu4e-update-interval nil
+        mu4e-compose-signature-auto-include nil
+        mu4e-view-show-images t
+        mu4e-view-show-addresses t)
+
+;;; Mail directory shortcuts
+  (setq mu4e-maildir-shortcuts
+        '(("/gmail/INBOX" . ?g)
+          ("/college/INBOX" . ?c)))
+
+;;; Bookmarks
+  (setq mu4e-bookmarks
+        `(("flag:unread AND NOT flag:trashed" "Unread messages" ?u)
+          ("date:today..now" "Today's messages" ?t)
+          ("date:7d..now" "Last 7 days" ?w)
+          ("mime:image/*" "Messages with images" ?p)
+          (,(mapconcat 'identity
+                       (mapcar
+                        (lambda (maildir)
+                          (concat "maildir:" (car maildir)))
+                        mu4e-maildir-shortcuts) " OR ")
+           "All inboxes" ?i)))
+
+
+
+
+
+
 
 
   ;; (shell-command-to-string "source ~/.bash_profile")
@@ -526,7 +576,7 @@ This function is called at the very end of Spacemacs initialization."
  '(org-agenda-files nil)
  '(package-selected-packages
    (quote
-    (powerline pcre2el spinner gntp parent-mode window-purpose imenu-list helm-gitignore request helm-c-yasnippet fringe-helper git-gutter+ git-gutter seq pos-tip flx iedit anzu goto-chg undo-tree highlight bind-map bind-key pkg-info epl auto-complete popup ruby-refactor add-node-modules-path ox-gfm deft dash evil-lion password-generator ghub+ apiwrap ghub helm-company emojify editorconfig packed git-commit markdown-mode alert async s diminish smartparens evil flycheck company yasnippet avy magit magit-popup with-editor log4e org-plus-contrib projectile hydra f helm helm-core symon string-inflection browse-at-remote skewer-mode simple-httpd json-snatcher json-reformat multiple-cursors js2-mode dash-functional tern helm-css-scss haml-mode web-completion-data rust-mode ob-elixir flycheck-mix flycheck-credo alchemist elixir-mode gh marshal logito pcache ht restclient-helm inflections helm-dash restclient know-your-http-well rake inf-ruby helm-themes helm-swoop helm-purpose helm-projectile helm-mode-manager helm-flx helm-descbinds helm-ag evil-unimpaired ace-jump-helm-line yaml-mode xterm-color ws-butler winum which-key wgrep web-mode web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package unfill toml-mode toc-org tagedit swift-mode sql-indent spaceline smex smeargle slim-mode slack shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restart-emacs rbenv rainbow-delimiters racer pug-mode projectile-rails popwin persp-mode paradox orgit org-projectile org-present org-pomodoro org-download org-bullets open-junk-file ob-restclient ob-http neotree mwim multi-term mu4e-maildirs-extension mu4e-alert move-text mmm-mode minitest markdown-toc magithub magit-gitflow magit-gh-pulls macrostep lorem-ipsum livid-mode linum-relative link-hint less-css-mode json-mode js2-refactor js-doc ivy-purpose ivy-hydra intero insert-shebang info+ indent-guide hungry-delete htmlize hlint-refactor hl-todo hindent highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-make haskell-snippets google-translate golden-ratio gnuplot gitignore-mode github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md fuzzy flycheck-rust flycheck-pos-tip flycheck-haskell flx-ido fish-mode fill-column-indicator feature-mode fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help erlang erc-yt erc-view-log erc-terminal-notifier erc-social-graph erc-image erc-hl-nicks emoji-cheat-sheet-plus emmet-mode elisp-slime-nav dumb-jump disaster diff-hl define-word dash-at-point dactyl-mode counsel-projectile counsel-dash company-web company-tern company-statistics company-shell company-restclient company-ghci company-ghc company-emoji company-cabal company-c-headers column-enforce-mode coffee-mode cmm-mode cmake-mode clean-aindent-mode clang-format chruby cargo bundler auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ac-ispell))))
+    (org-brain evil-org powerline pcre2el spinner gntp parent-mode window-purpose imenu-list helm-gitignore request helm-c-yasnippet fringe-helper git-gutter+ git-gutter seq pos-tip flx iedit anzu goto-chg undo-tree highlight bind-map bind-key pkg-info epl auto-complete popup ruby-refactor add-node-modules-path ox-gfm deft dash evil-lion password-generator ghub+ apiwrap ghub helm-company emojify editorconfig packed git-commit markdown-mode alert async s diminish smartparens evil flycheck company yasnippet avy magit magit-popup with-editor log4e org-plus-contrib projectile hydra f helm helm-core symon string-inflection browse-at-remote skewer-mode simple-httpd json-snatcher json-reformat multiple-cursors js2-mode dash-functional tern helm-css-scss haml-mode web-completion-data rust-mode ob-elixir flycheck-mix flycheck-credo alchemist elixir-mode gh marshal logito pcache ht restclient-helm inflections helm-dash restclient know-your-http-well rake inf-ruby helm-themes helm-swoop helm-purpose helm-projectile helm-mode-manager helm-flx helm-descbinds helm-ag evil-unimpaired ace-jump-helm-line yaml-mode xterm-color ws-butler winum which-key wgrep web-mode web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package unfill toml-mode toc-org tagedit swift-mode sql-indent spaceline smex smeargle slim-mode slack shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restart-emacs rbenv rainbow-delimiters racer pug-mode projectile-rails popwin persp-mode paradox orgit org-projectile org-present org-pomodoro org-download org-bullets open-junk-file ob-restclient ob-http neotree mwim multi-term mu4e-maildirs-extension mu4e-alert move-text mmm-mode minitest markdown-toc magithub magit-gitflow magit-gh-pulls macrostep lorem-ipsum livid-mode linum-relative link-hint less-css-mode json-mode js2-refactor js-doc ivy-purpose ivy-hydra intero insert-shebang info+ indent-guide hungry-delete htmlize hlint-refactor hl-todo hindent highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-make haskell-snippets google-translate golden-ratio gnuplot gitignore-mode github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md fuzzy flycheck-rust flycheck-pos-tip flycheck-haskell flx-ido fish-mode fill-column-indicator feature-mode fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help erlang erc-yt erc-view-log erc-terminal-notifier erc-social-graph erc-image erc-hl-nicks emoji-cheat-sheet-plus emmet-mode elisp-slime-nav dumb-jump disaster diff-hl define-word dash-at-point dactyl-mode counsel-projectile counsel-dash company-web company-tern company-statistics company-shell company-restclient company-ghci company-ghc company-emoji company-cabal company-c-headers column-enforce-mode coffee-mode cmm-mode cmake-mode clean-aindent-mode clang-format chruby cargo bundler auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ac-ispell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

@@ -1,14 +1,14 @@
-:+1: My Dotfiles :+1:
-===================
 
-## Super-easy installation
-__[<sub><sub><sub>(probably shouldn't be piping curl to bash...)</sub></sub></sub>](http://curlpipesh.tumblr.com/)__
+* :+1: My Dotfiles :+1:
 
-    curl https://raw.githubusercontent.com/will-clarke/dotfiles/master/bin/dotfiles | bash -s install
+** Super-easy installation
+   [[http://curlpipesh.tumblr.com/][(probably shouldn't be piping curl to the shell...)]]
+
+    ~curl https://raw.githubusercontent.com/will-clarke/dotfiles/master/bin/dotfiles | bash -s install~
 
 ## What this contains:
 
-- ([Spacemacs](https://github.com/syl20bnr/spacemacs) - Emacs wiht vim keybindings)
+- [[https://github.com/syl20bnr/spacemacs][Spacemacs]] - Emacs wiht vim keybindings)
 - Vim
 - Tmux
 - Some db / ruby dotfiles
@@ -16,7 +16,7 @@ __[<sub><sub><sub>(probably shouldn't be piping curl to bash...)</sub></sub></su
   dotfiles install
 
 
-#### Todo
+** Todo
 
 - Install Karabeiner & BTT better.
 
