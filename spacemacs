@@ -31,12 +31,36 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     (elfeed :variables
+             elfeed-feeds '(("http://nullprogram.com/feed/" blog emacs)
+                            "http://www.50ply.com/atom.xml"  ; no autotagging
+                            ("https://feeds.feedburner.com/jumbojoke" jumbo joke)
+                            "https://feeds.feedburner.com/HowToGeek"
+                            "https://feeds.feedburner.com/techcrunch"
+                            "https://feeds.feedburner.com/boingboing/ibag"
+                            "https://feeds.feedburner.com/readwriteweb"
+                            "https://feeds.feedburner.com/37signals/beMH"
+                            "http://feeds.bbci.co.uk/news/rss.xml?edition=uk"
+                            ("http://nedroid.com/feed/" webcomic)))
+     (colors :variables colors-colorize-identifiers nil
+             colors-enable-nyan-cat-progress-bar t
+             )
+     xkcd
+     selectric
+     ibuffer
+     fasd
+     (erc :variables
+            erc-server-list
+            '(("irc.freenode.net"
+               :port "6697"
+               :ssl t
+               :nick "a-person"
+               :password "secret")))
      (mu4e :variables
            mu4e-installation-path "/usr/share/emacs/site-lisp")
      javascript
      html
      rust
-     deft
      yaml
      emoji
      helm
@@ -62,7 +86,8 @@ values."
      ;; spell-checking
      syntax-checking
      ;; languages
-     ruby
+     (ruby :variables
+           ruby-test-runner 'rspec)
      elixir
      ;; frameworks
      ruby-on-rails
@@ -481,8 +506,8 @@ otherwise fallback to markdown-preview"
     (with-eval-after-load 'org-agenda
       (require 'org-projectile)
       )
-      ;;(push (org-projectile:todo-files) org-agenda-files))
-      ;; (setq org-agenda-files (append org-agenda-files (org-projectile:todo-files))))
+    ;;(push (org-projectile:todo-files) org-agenda-files))
+    ;; (setq org-agenda-files (append org-agenda-files (org-projectile:todo-files))))
     (org-babel-do-load-languages
 
      'org-babel-load-languages '((C . t)
@@ -495,7 +520,7 @@ otherwise fallback to markdown-preview"
                                  ))
     (setq org-default-notes-file (concat org-directory "/notes.org"))
 
-;;    find ~/.emacs.d/elpa/org* -name "*elc" -delete
+    ;;    find ~/.emacs.d/elpa/org* -name "*elc" -delete
 
     ;; (setq org-capture-templates
     ;;       '(("t" "Todo" entry (file+headline (concat org-directory "/todo.org")) ;; "Tasks")
@@ -504,37 +529,42 @@ otherwise fallback to markdown-preview"
     ;;          "* %?\nEntered on %U\n  %i\n  %a")))
 
     )
-
-
   (show-paren-mode t)
-
-
-
-
-
+  (setq org-agenda-files (quote ("~/org/todo.org")))
 
   ;; ;; =mu4e
-  ;; (setq-default dotspacemacs-configuration-layers
-  ;;               '((mu4e :variables
-  ;;                       mu4e-installation-path "/usr/share/emacs/site-lisp")))
 
-
-  ;; (setq mu4e-compose-dont-reply-to-self t)
-  ;; (add-to-list 'mu4e-user-mail-address-list "wmmclarke@gmail.com")
 
   (setq mu4e-maildir "~/.mail"
-        mu4e-trash-folder "/Trash"
-        mu4e-refile-folder "/Archive"
+        mu4e-trash-folder "/trash"
+        mu4e-refile-folder "/archive"
         mu4e-get-mail-command "mbsync -a"
         mu4e-update-interval nil
         mu4e-compose-signature-auto-include nil
+        mu4e-compose-dont-reply-to-self t
         mu4e-view-show-images t
-        mu4e-view-show-addresses t)
+        mu4e-view-show-addresses t
+
+        message-send-mail-function 'message-send-mail-with-sendmail
+        sendmail-program "/usr/local/bin/msmtp"
+        message-sendmail-extra-arguments '("--read-envelope-from")
+        message-sendmail-f-is-evil 't
+
+        mu4e-user-mail-address-list "wmmclarke@gmail.com"
+        ;; user-mail-address "wmmclarke@gmail.com"
+        ;; user-full-name "William Clarke"
+        )
 
 ;;; Mail directory shortcuts
   (setq mu4e-maildir-shortcuts
         '(("/gmail/INBOX" . ?g)
-          ("/college/INBOX" . ?c)))
+          ("/gmail/Later" . ?l)
+          ("date:today..now AND maildir:/gmail/Archive" . ?g)
+          ("flag:unread AND NOT flag:trashed" . ?u)
+          ("NOT maildir:/archive AND NOT maildir:'/[Gmail].All Mail' AND date:today" . ?b)))
+          ;; ("date:today..now AND maildir:/gmail/Archive" "Gmail Today" ?g)
+          ;; ("flag:unread AND NOT flag:trashed" "Unread messages" ?u)
+          ;; ("NOT maildir:/archive AND NOT maildir:'/[Gmail].All Mail' AND date:today" "Unread Today" ?b)))
 
 ;;; Bookmarks
   (setq mu4e-bookmarks
@@ -573,10 +603,12 @@ This function is called at the very end of Spacemacs initialization."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(org-agenda-files nil)
+ '(evil-want-Y-yank-to-eol t)
+ '(gud-gdb-command-name "gdb --annotate=1")
+ '(large-file-warning-threshold nil)
  '(package-selected-packages
    (quote
-    (org-brain evil-org powerline pcre2el spinner gntp parent-mode window-purpose imenu-list helm-gitignore request helm-c-yasnippet fringe-helper git-gutter+ git-gutter seq pos-tip flx iedit anzu goto-chg undo-tree highlight bind-map bind-key pkg-info epl auto-complete popup ruby-refactor add-node-modules-path ox-gfm deft dash evil-lion password-generator ghub+ apiwrap ghub helm-company emojify editorconfig packed git-commit markdown-mode alert async s diminish smartparens evil flycheck company yasnippet avy magit magit-popup with-editor log4e org-plus-contrib projectile hydra f helm helm-core symon string-inflection browse-at-remote skewer-mode simple-httpd json-snatcher json-reformat multiple-cursors js2-mode dash-functional tern helm-css-scss haml-mode web-completion-data rust-mode ob-elixir flycheck-mix flycheck-credo alchemist elixir-mode gh marshal logito pcache ht restclient-helm inflections helm-dash restclient know-your-http-well rake inf-ruby helm-themes helm-swoop helm-purpose helm-projectile helm-mode-manager helm-flx helm-descbinds helm-ag evil-unimpaired ace-jump-helm-line yaml-mode xterm-color ws-butler winum which-key wgrep web-mode web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package unfill toml-mode toc-org tagedit swift-mode sql-indent spaceline smex smeargle slim-mode slack shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restart-emacs rbenv rainbow-delimiters racer pug-mode projectile-rails popwin persp-mode paradox orgit org-projectile org-present org-pomodoro org-download org-bullets open-junk-file ob-restclient ob-http neotree mwim multi-term mu4e-maildirs-extension mu4e-alert move-text mmm-mode minitest markdown-toc magithub magit-gitflow magit-gh-pulls macrostep lorem-ipsum livid-mode linum-relative link-hint less-css-mode json-mode js2-refactor js-doc ivy-purpose ivy-hydra intero insert-shebang info+ indent-guide hungry-delete htmlize hlint-refactor hl-todo hindent highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-make haskell-snippets google-translate golden-ratio gnuplot gitignore-mode github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md fuzzy flycheck-rust flycheck-pos-tip flycheck-haskell flx-ido fish-mode fill-column-indicator feature-mode fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help erlang erc-yt erc-view-log erc-terminal-notifier erc-social-graph erc-image erc-hl-nicks emoji-cheat-sheet-plus emmet-mode elisp-slime-nav dumb-jump disaster diff-hl define-word dash-at-point dactyl-mode counsel-projectile counsel-dash company-web company-tern company-statistics company-shell company-restclient company-ghci company-ghc company-emoji company-cabal company-c-headers column-enforce-mode coffee-mode cmm-mode cmake-mode clean-aindent-mode clang-format chruby cargo bundler auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ac-ispell))))
+    (fasd elfeed-web elfeed-org elfeed-goodies ace-jump-mode noflet elfeed xkcd selectric-mode rainbow-mode rainbow-identifiers color-identifiers-mode typo ibuffer-projectile powerline pcre2el spinner gntp parent-mode window-purpose imenu-list helm-gitignore request helm-c-yasnippet fringe-helper git-gutter+ git-gutter seq pos-tip flx iedit anzu goto-chg undo-tree highlight bind-map bind-key pkg-info epl auto-complete popup ruby-refactor add-node-modules-path ox-gfm deft dash evil-lion password-generator ghub+ apiwrap ghub helm-company emojify editorconfig packed git-commit markdown-mode alert async s diminish smartparens evil flycheck company yasnippet avy magit magit-popup with-editor log4e org-plus-contrib projectile hydra f helm helm-core symon string-inflection browse-at-remote skewer-mode simple-httpd json-snatcher json-reformat multiple-cursors js2-mode dash-functional tern helm-css-scss haml-mode web-completion-data rust-mode ob-elixir flycheck-mix flycheck-credo alchemist elixir-mode gh marshal logito pcache ht restclient-helm inflections helm-dash restclient know-your-http-well rake inf-ruby helm-themes helm-swoop helm-purpose helm-projectile helm-mode-manager helm-flx helm-descbinds helm-ag evil-unimpaired ace-jump-helm-line yaml-mode xterm-color ws-butler winum which-key wgrep web-mode web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package unfill toml-mode toc-org tagedit swift-mode sql-indent spaceline smex smeargle slim-mode slack shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restart-emacs rbenv rainbow-delimiters racer pug-mode projectile-rails popwin persp-mode paradox orgit org-projectile org-present org-pomodoro org-download org-bullets open-junk-file ob-restclient ob-http neotree mwim multi-term mu4e-maildirs-extension mu4e-alert move-text mmm-mode minitest markdown-toc magithub magit-gitflow magit-gh-pulls macrostep lorem-ipsum livid-mode linum-relative link-hint less-css-mode json-mode js2-refactor js-doc ivy-purpose ivy-hydra intero insert-shebang info+ indent-guide hungry-delete htmlize hlint-refactor hl-todo hindent highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-make haskell-snippets google-translate golden-ratio gnuplot gitignore-mode github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md fuzzy flycheck-rust flycheck-pos-tip flycheck-haskell flx-ido fish-mode fill-column-indicator feature-mode fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help erlang erc-yt erc-view-log erc-terminal-notifier erc-social-graph erc-image erc-hl-nicks emoji-cheat-sheet-plus emmet-mode elisp-slime-nav dumb-jump disaster diff-hl define-word dash-at-point dactyl-mode counsel-projectile counsel-dash company-web company-tern company-statistics company-shell company-restclient company-ghci company-ghc company-emoji company-cabal company-c-headers column-enforce-mode coffee-mode cmm-mode cmake-mode clean-aindent-mode clang-format chruby cargo bundler auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ac-ispell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

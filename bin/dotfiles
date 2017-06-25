@@ -71,7 +71,7 @@ declare -A unusual_files=(
     ["applications/karabiner/karabiner.json"]=".config/karabiner/karabiner.json")
 declare -A dropbox_files=(
     ["Dropbox/dev"]="dev"
-    ["Dropbox/org"]="org"
+    ["Dropbox/dev/org"]="org"
     ["Dropbox/dev/secrets/authinfo.gpg"]=".authinfo.gpg"
     ["Dropbox/dev/secrets/certificates"]=".certificates"
     ["Dropbox/dev/secrets/secrets.gpg"]=".secrets.gpg"
@@ -198,8 +198,16 @@ function files_for_home_dir {
 function setup {
     setup_apple_defaults
     setup_spacemacs
+    setup_mu4e
     echo "We've updated some Apple settings and ensured that Spacemacs is installed"
     }
+
+function setup_mu4e {
+    mkdir -p ~/.mail/{gmail,sent,drafts,trash}
+    mbsync -a &
+    mu index --maildir=~/.mail &
+}
+
 function setup_apple_defaults {
     defaults write -g ApplePressAndHoldEnabled -bool false
     defaults write -g InitialKeyRepeat -int 15 # normal minimum is 15 (225 ms)

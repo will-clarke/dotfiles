@@ -19,39 +19,39 @@ Account gmail
 
 MaildirStore gmail-local
 Path ~/.mail/gmail/
-Inbox ~/.mail/gmail/Inbox
+Inbox ~/.mail/gmail/inbox
 
-Channel gmail-Inbox
+Channel gmail-inbox
 Master :gmail-remote:Inbox
-Slave :gmail-local:Inbox
+Slave :gmail-local:inbox
 
-Channel gmail-Drafts
+Channel gmail-drafts
 Master :gmail-remote:[Gmail]/Drafts
-Slave :gmail-local:Drafts
+Slave :gmail-local:drafts
 
-Channel gmail-Sent
+Channel gmail-sent
 Master ":gmail-remote:[Gmail]/Sent Mail"
-Slave :gmail-local:Sent
+Slave :gmail-local:sent
 
-Channel gmail-Trash
+Channel gmail-trash
 Master :gmail-remote:[Gmail]/Trash
-Slave :gmail-local:Trash
+Slave :gmail-local:trash
 
-Channel gmail-Archive
+Channel gmail-archive
 Master ":gmail-remote:[Gmail]/All Mail"
-Slave :gmail-local:Archive
+Slave :gmail-local:archive
 
-Channel gmail-Later
+Channel gmail-later
 Master :gmail-remote:[Mailbox]/Later
-Slave :gmail-local:Later
+Slave :gmail-local:later
 
 Group gmail
-Channel gmail-Inbox
-Channel gmail-Drafts
-Channel gmail-Sent
-Channel gmail-Trash
-Channel gmail-Archive
-Channel gmail-Later
+Channel gmail-inbox
+Channel gmail-drafts
+Channel gmail-sent
+Channel gmail-trash
+Channel gmail-archive
+Channel gmail-later
 
 
 ##################
@@ -59,4 +59,4 @@ Channel gmail-Later
 ##################
 
 Group Inboxes
-Channel gmail-Inbox
+Channel gmail-inbox
