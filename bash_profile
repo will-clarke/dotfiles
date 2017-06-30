@@ -40,7 +40,6 @@ execute_if_command_exists() {
     fi
 }
 
-execute_if_command_exists "fasd" 'eval "$(fasd --init auto)"'
 
 source_file_if_exists "$HOME/.nix-profile/etc/profile.d/nix.sh"
 source_file_if_exists "$HOME/.profile"
@@ -50,6 +49,7 @@ source_file_if_exists "$HOME/.travis/travis.sh"
 # Slow:
 # source_file_if_exists "/usr/local/bin/virtualenvwrapper.sh"
 # source_file_if_exists "/usr/local/etc/bash_completion.d/password-store"
+# execute_if_command_exists "fasd" 'eval "$(fasd --init auto)"'
 
 add_to_path_if_file_exists "PATH" "$HOME/Library/Haskell/bin"
 add_to_path_if_file_exists "PATH" "$HOME/dotfiles/bin"
