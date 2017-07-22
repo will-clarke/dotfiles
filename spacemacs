@@ -443,6 +443,17 @@ you should place your code here."
 
   (setq wakatime-api-key (wmmc/secret-from-authinfo-host "wakatime.com"))
 
+
+  (add-hook 'yas-minor-mode-hook
+            (lambda ()
+              (yas-activate-extra-mode 'fundamental-mode)))
+
+  (setq aya-persist-snippets-dir "~/.spacemacs.d/snippets")
+  (setq yas-snippet-dirs (append yas-snippet-dirs
+                                 '("~/.emacs.d/private/snippets/fundemental-mode")))
+
+  (setq eshell-aliases-file "~/.spacemacs.d/eshell/alias")
+
   (defun wmmc/change-font-size (multiplier)
     "Change the font size globally."
     (set-face-attribute 'default nil :height
