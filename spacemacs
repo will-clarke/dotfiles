@@ -443,6 +443,28 @@ you should place your code here."
 
   (setq wakatime-api-key (wmmc/secret-from-authinfo-host "wakatime.com"))
 
+
+  (defun wmmc/change-font-size (multiplier)
+    "Change the font size globally."
+    (set-face-attribute 'default nil :height
+                        (floor (* multiplier
+                                  (face-attribute 'default :height)))))
+
+  (defun wmmc/increase-font-size ()
+    "Increase font size globally."
+    (interactive)
+    (wmmc/change-font-size 1.10))
+
+  (defun wmmc/decrease-font-size ()
+    "Decrease font size globally."
+    (interactive)
+    (wmmc/change-font-size 0.9))
+
+  (evil-leader/set-key "o+" 'wmmc/increase-font-size)
+  (evil-leader/set-key "o-" 'wmmc/decrease-font-size)
+
+
+
   ;; \C-h is now DEL
   (define-key key-translation-map [?\C-h] [?\C-?])
 
