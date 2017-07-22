@@ -30,7 +30,7 @@ values."
    dotspacemacs-configuration-layer-path '()
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(
+   '(haskell
      python
      chrome
      (elfeed :variables
@@ -48,12 +48,12 @@ values."
      ibuffer
      fasd
      (erc :variables
-            erc-server-list
-            '(("irc.freenode.net"
-               :port "6697"
-               :ssl t
-               :nick "a-person"
-               :password "secret")))
+          erc-server-list
+          '(("irc.freenode.net"
+             :port "6697"
+             :ssl t
+             :nick "a-person"
+             :password "secret")))
      (mu4e :variables
            mu4e-installation-path "/usr/share/emacs/site-lisp")
      javascript
@@ -95,13 +95,19 @@ values."
      ;; random
      dash
      restclient
+     deft
+     bm
+     games
+     search-engine
+     pass
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(
-                                      hackernews)
+                                      ;; pretty-mode
+                                      )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
@@ -179,17 +185,18 @@ values."
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
-   dotspacemacs-default-font '("Source Code Pro"
-                               ;; :size 20
-                               ;; (display-pixel-width)
-                               ;;:size (if (<= (x-display-pixel-width) 1920) 12 20)
-                               ;;          12
-                               ;;        20)
+
+   ;; (set-face-attribute 'default nil :family "Source Code Pro")
+   ;; (set-face-attribute 'default nil :family "Haskelig")
+   ;; (set-face-attribute 'default nil :height 165)
+   ;; (set-face-attribute 'default nil :family "Fira Code Retina")
+   ;; (mac-auto-operator-composition-mode)
+   dotspacemacs-default-font '("Fira Code" ;;"Source Code Pro"
                                :size 15
-                               ;; :size 17
                                :weight normal
                                :width normal
-                               :powerline-scale 1.1)
+                               :powerline-scale 1.0)
+
    ;; The leader key
    dotspacemacs-leader-key "SPC"
    ;; The key used for Emacs commands (M-x) (after pressing on the leader key).
@@ -395,6 +402,37 @@ you should place your code here."
   ;; (setq explicit-shell-file-name (replace-regexp-in-string "\n$" ""
   ;;                                                          (shell-command-to-string "which fish || which bash")))
 
+  ;; = + = => ==
+  (let ((alist '((33 . ".\\(?:\\(?:==\\|!!\\)\\|[!=]\\)")
+                 (35 . ".\\(?:###\\|##\\|_(\\|[#(?[_{]\\)")
+                 (36 . ".\\(?:>\\)")
+                 (37 . ".\\(?:\\(?:%%\\)\\|%\\)")
+                 (38 . ".\\(?:\\(?:&&\\)\\|&\\)")
+                 (42 . ".\\(?:\\(?:\\*\\*/\\)\\|\\(?:\\*[*/]\\)\\|[*/>]\\)")
+                 (43 . ".\\(?:\\(?:\\+\\+\\)\\|[+>]\\)")
+                 (45 . ".\\(?:\\(?:-[>-]\\|<<\\|>>\\)\\|[<>}~-]\\)")
+                 ;; (46 . ".\\(?:\\(?:\\.[.<]\\)\\|[.=-]\\)") ;; This causes helm to go mental... :|
+                 (47 . ".\\(?:\\(?:\\*\\*\\|//\\|==\\)\\|[*/=>]\\)")
+                 (48 . ".\\(?:x[a-zA-Z]\\)")
+                 (58 . ".\\(?:::\\|[:=]\\)")
+                 (59 . ".\\(?:;;\\|;\\)")
+                 (60 . ".\\(?:\\(?:!--\\)\\|\\(?:~~\\|->\\|\\$>\\|\\*>\\|\\+>\\|--\\|<[<=-]\\|=[<=>]\\||>\\)\\|[*$+~/<=>|-]\\)")
+                 (61 . ".\\(?:\\(?:/=\\|:=\\|<<\\|=[=>]\\|>>\\)\\|[<=>~]\\)")
+                 (62 . ".\\(?:\\(?:=>\\|>[=>-]\\)\\|[=>-]\\)")
+                 (63 . ".\\(?:\\(\\?\\?\\)\\|[:=?]\\)")
+                 (91 . ".\\(?:]\\)")
+                 (92 . ".\\(?:\\(?:\\\\\\\\\\)\\|\\\\\\)")
+                 (94 . ".\\(?:=\\)")
+                 (119 . ".\\(?:ww\\)")
+                 (123 . ".\\(?:-\\)")
+                 (124 . ".\\(?:\\(?:|[=|]\\)\\|[=>|]\\)")
+                 (126 . ".\\(?:~>\\|~~\\|[>=@~-]\\)")
+                 )
+               ))
+    (dolist (char-regexp alist)
+      (set-char-table-range composition-function-table (car char-regexp)
+                            `([,(cdr char-regexp) 0 font-shape-gstring]))))
+
   ;; \C-h is now DEL
   (define-key key-translation-map [?\C-h] [?\C-?])
 
@@ -408,7 +446,7 @@ you should place your code here."
   (global-set-key (kbd "C-M-H") 'backward-kill-word)
 
   ;; enable #
-  (define-key evil-insert-state-map (kbd "s-3") `(lambda () (interactive) (insert "#")))
+  (global-set-key (kbd "s-3") `(lambda () (interactive) (insert "#")))
 
   (evil-declare-key 'normal dired-mode-map (kbd ";") 'dired-up-directory)
 
@@ -504,8 +542,6 @@ otherwise fallback to markdown-preview"
   (define-key evil-normal-state-map (kbd "p") 'evil-paste-after)
   (define-key evil-normal-state-map (kbd "P") 'evil-paste-before)
 
-  (spacemacs/set-leader-keys "ah" 'hackernews)
-
   (with-eval-after-load 'org
     (with-eval-after-load 'org-agenda
       (require 'org-projectile)
@@ -523,6 +559,7 @@ otherwise fallback to markdown-preview"
                                  (js . t)
                                  (sh . t)
                                  ))
+    (setq org-agenda-files (quote ("~/org/todo.org")))
     (setq org-default-notes-file (concat org-directory "/notes.org"))
 
     ;;    find ~/.emacs.d/elpa/org* -name "*elc" -delete
@@ -535,7 +572,6 @@ otherwise fallback to markdown-preview"
 
     )
   (show-paren-mode t)
-  (setq org-agenda-files (quote ("~/org/todo.org")))
 
 
   ;; ;; =mu4e
@@ -568,9 +604,9 @@ otherwise fallback to markdown-preview"
           ("date:today..now AND maildir:/gmail/Archive" . ?g)
           ("flag:unread AND NOT flag:trashed" . ?u)
           ("NOT maildir:/archive AND NOT maildir:'/[Gmail].All Mail' AND date:today" . ?b)))
-          ;; ("date:today..now AND maildir:/gmail/Archive" "Gmail Today" ?g)
-          ;; ("flag:unread AND NOT flag:trashed" "Unread messages" ?u)
-          ;; ("NOT maildir:/archive AND NOT maildir:'/[Gmail].All Mail' AND date:today" "Unread Today" ?b)))
+  ;; ("date:today..now AND maildir:/gmail/Archive" "Gmail Today" ?g)
+  ;; ("flag:unread AND NOT flag:trashed" "Unread messages" ?u)
+  ;; ("NOT maildir:/archive AND NOT maildir:'/[Gmail].All Mail' AND date:today" "Unread Today" ?b)))
 
 ;;; Bookmarks
   (setq mu4e-bookmarks
@@ -584,6 +620,21 @@ otherwise fallback to markdown-preview"
                           (concat "maildir:" (car maildir)))
                         mu4e-maildir-shortcuts) " OR ")
            "All inboxes" ?i)))
+
+
+  (defun my/current-chrome-url ()
+    (interactive)
+    (do-applescript
+     (concat
+      "set frontmostApplication to path to frontmost application\n"
+      "tell application \"Google Chrome\"\n"
+      " set theUrl to get URL of active tab of first window\n"
+      " set theResult to (get theUrl)\n"
+      "end tell\n"
+      "return theResult as string\n"
+      )
+     )
+    )
 
 
 
@@ -604,21 +655,21 @@ otherwise fallback to markdown-preview"
 This is an auto-generated function, do not modify its content directly, use
 Emacs customize menu instead.
 This function is called at the very end of Spacemacs initialization."
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(evil-want-Y-yank-to-eol t)
- '(gud-gdb-command-name "gdb --annotate=1")
- '(large-file-warning-threshold nil)
- '(package-selected-packages
-   (quote
-    (hackernews org-brain impatient-mode evil-org counsel swiper ivy yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode helm-pydoc cython-mode company-anaconda anaconda-mode pythonic gmail-message-mode ham-mode html-to-markdown flymd edit-server fasd elfeed-web elfeed-org elfeed-goodies ace-jump-mode noflet elfeed xkcd selectric-mode rainbow-mode rainbow-identifiers color-identifiers-mode typo ibuffer-projectile powerline pcre2el spinner gntp parent-mode window-purpose imenu-list helm-gitignore request helm-c-yasnippet fringe-helper git-gutter+ git-gutter seq pos-tip flx iedit anzu goto-chg undo-tree highlight bind-map bind-key pkg-info epl auto-complete popup ruby-refactor add-node-modules-path ox-gfm deft dash evil-lion password-generator ghub+ apiwrap ghub helm-company emojify editorconfig packed git-commit markdown-mode alert async s diminish smartparens evil flycheck company yasnippet avy magit magit-popup with-editor log4e org-plus-contrib projectile hydra f helm helm-core symon string-inflection browse-at-remote skewer-mode simple-httpd json-snatcher json-reformat multiple-cursors js2-mode dash-functional tern helm-css-scss haml-mode web-completion-data rust-mode ob-elixir flycheck-mix flycheck-credo alchemist elixir-mode gh marshal logito pcache ht restclient-helm inflections helm-dash restclient know-your-http-well rake inf-ruby helm-themes helm-swoop helm-purpose helm-projectile helm-mode-manager helm-flx helm-descbinds helm-ag evil-unimpaired ace-jump-helm-line yaml-mode xterm-color ws-butler winum which-key wgrep web-mode web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package unfill toml-mode toc-org tagedit swift-mode sql-indent spaceline smex smeargle slim-mode slack shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restart-emacs rbenv rainbow-delimiters racer pug-mode projectile-rails popwin persp-mode paradox orgit org-projectile org-present org-pomodoro org-download org-bullets open-junk-file ob-restclient ob-http neotree mwim multi-term mu4e-maildirs-extension mu4e-alert move-text mmm-mode minitest markdown-toc magithub magit-gitflow magit-gh-pulls macrostep lorem-ipsum livid-mode linum-relative link-hint less-css-mode json-mode js2-refactor js-doc ivy-purpose ivy-hydra intero insert-shebang info+ indent-guide hungry-delete htmlize hlint-refactor hl-todo hindent highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-make haskell-snippets google-translate golden-ratio gnuplot gitignore-mode github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md fuzzy flycheck-rust flycheck-pos-tip flycheck-haskell flx-ido fish-mode fill-column-indicator feature-mode fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help erlang erc-yt erc-view-log erc-terminal-notifier erc-social-graph erc-image erc-hl-nicks emoji-cheat-sheet-plus emmet-mode elisp-slime-nav dumb-jump disaster diff-hl define-word dash-at-point dactyl-mode counsel-projectile counsel-dash company-web company-tern company-statistics company-shell company-restclient company-ghci company-ghc company-emoji company-cabal company-c-headers column-enforce-mode coffee-mode cmm-mode cmake-mode clean-aindent-mode clang-format chruby cargo bundler auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ac-ispell))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
-)
+  (custom-set-variables
+   ;; custom-set-variables was added by Custom.
+   ;; If you edit it by hand, you could mess it up, so be careful.
+   ;; Your init file should contain only one such instance.
+   ;; If there is more than one, they won't work right.
+   '(evil-want-Y-yank-to-eol t)
+   '(gud-gdb-command-name "gdb --annotate=1")
+   '(large-file-warning-threshold nil)
+   '(package-selected-packages
+     (quote
+      (helm-hoogle dante ghc haskell-mode pretty-mode password-store wakatime-mode typit mmt sudoku pacmacs engine-mode 2048-game bm hackernews org-brain impatient-mode evil-org counsel swiper ivy yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode helm-pydoc cython-mode company-anaconda anaconda-mode pythonic gmail-message-mode ham-mode html-to-markdown flymd edit-server fasd elfeed-web elfeed-org elfeed-goodies ace-jump-mode noflet elfeed xkcd selectric-mode rainbow-mode rainbow-identifiers color-identifiers-mode typo ibuffer-projectile powerline pcre2el spinner gntp parent-mode window-purpose imenu-list helm-gitignore request helm-c-yasnippet fringe-helper git-gutter+ git-gutter seq pos-tip flx iedit anzu goto-chg undo-tree highlight bind-map bind-key pkg-info epl auto-complete popup ruby-refactor add-node-modules-path ox-gfm deft dash evil-lion password-generator ghub+ apiwrap ghub helm-company emojify editorconfig packed git-commit markdown-mode alert async s diminish smartparens evil flycheck company yasnippet avy magit magit-popup with-editor log4e org-plus-contrib projectile hydra f helm helm-core symon string-inflection browse-at-remote skewer-mode simple-httpd json-snatcher json-reformat multiple-cursors js2-mode dash-functional tern helm-css-scss haml-mode web-completion-data rust-mode ob-elixir flycheck-mix flycheck-credo alchemist elixir-mode gh marshal logito pcache ht restclient-helm inflections helm-dash restclient know-your-http-well rake inf-ruby helm-themes helm-swoop helm-purpose helm-projectile helm-mode-manager helm-flx helm-descbinds helm-ag evil-unimpaired ace-jump-helm-line yaml-mode xterm-color ws-butler winum which-key wgrep web-mode web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package unfill toml-mode toc-org tagedit swift-mode sql-indent spaceline smex smeargle slim-mode slack shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restart-emacs rbenv rainbow-delimiters racer pug-mode projectile-rails popwin persp-mode paradox orgit org-projectile org-present org-pomodoro org-download org-bullets open-junk-file ob-restclient ob-http neotree mwim multi-term mu4e-maildirs-extension mu4e-alert move-text mmm-mode minitest markdown-toc magithub magit-gitflow magit-gh-pulls macrostep lorem-ipsum livid-mode linum-relative link-hint less-css-mode json-mode js2-refactor js-doc ivy-purpose ivy-hydra intero insert-shebang info+ indent-guide hungry-delete htmlize hlint-refactor hl-todo hindent highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-make haskell-snippets google-translate golden-ratio gnuplot gitignore-mode github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md fuzzy flycheck-rust flycheck-pos-tip flycheck-haskell flx-ido fish-mode fill-column-indicator feature-mode fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help erlang erc-yt erc-view-log erc-terminal-notifier erc-social-graph erc-image erc-hl-nicks emoji-cheat-sheet-plus emmet-mode elisp-slime-nav dumb-jump disaster diff-hl define-word dash-at-point dactyl-mode counsel-projectile counsel-dash company-web company-tern company-statistics company-shell company-restclient company-ghci company-ghc company-emoji company-cabal company-c-headers column-enforce-mode coffee-mode cmm-mode cmake-mode clean-aindent-mode clang-format chruby cargo bundler auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ac-ispell))))
+  (custom-set-faces
+   ;; custom-set-faces was added by Custom.
+   ;; If you edit it by hand, you could mess it up, so be careful.
+   ;; Your init file should contain only one such instance.
+   ;; If there is more than one, they won't work right.
+   )
+  )

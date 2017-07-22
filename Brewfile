@@ -2,6 +2,8 @@
 
 tap 'd12frosted/emacs-plus'
 tap 'caskroom/cask'
+tap 'caskroom/fonts'
+
 cask_args appdir: '/Applications'
 
 brew 'automake'
@@ -31,6 +33,7 @@ brew 'vim'
 brew 'w3m'
 brew 'gpg'
 brew 'pinentry-mac'
+brew 'global', args: ['with-pygments', 'with-ctags']
 
 cask '1password'
 cask 'alfred'
@@ -51,3 +54,5 @@ cask 'karabiner-elements'
 cask 'slack'
 cask 'shiftit'
 cask 'pgptools'
+cask 'font-fira-code'
+cask 'font-source-code-pro'
