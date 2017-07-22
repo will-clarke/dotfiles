@@ -100,6 +100,7 @@ values."
      games
      search-engine
      pass
+     (wakatime :variables wakatime-cli-path "/usr/local/bin/wakatime")
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -433,6 +434,15 @@ you should place your code here."
       (set-char-table-range composition-function-table (car char-regexp)
                             `([,(cdr char-regexp) 0 font-shape-gstring]))))
 
+  (defun wmmc/secret-from-authinfo-host(host)
+    (setq authinfo-row (
+                        car (auth-source-search :host host
+                                                :max 1
+                                                :requires '(user secret))))
+    (if authinfo-row (funcall (plist-get authinfo-row :secret)) nil))
+
+  (setq wakatime-api-key (wmmc/secret-from-authinfo-host "wakatime.com"))
+
   ;; \C-h is now DEL
   (define-key key-translation-map [?\C-h] [?\C-?])
 
@@ -460,8 +470,7 @@ you should place your code here."
 
   ;; (setq shell-command-switch "-ic")
 
-
-  (defun marked-markdown-preview ()
+  (defun wmmc/marked-markdown-preview ()
     "run Marked on the current file if Marked is installed;
 otherwise fallback to markdown-preview"
     (interactive)
@@ -475,7 +484,7 @@ otherwise fallback to markdown-preview"
 
   (eval-after-load 'markdown-mode
     '(progn
-       (define-key markdown-mode-map (kbd "C-c C-v") 'marked-markdown-preview)
+       (define-key markdown-mode-map (kbd "C-c C-v") 'wmmc/marked-markdown-preview)
        ))
 
 
@@ -488,7 +497,7 @@ otherwise fallback to markdown-preview"
     (require 'cl)
 
 
-    (defun src-shell-unescape (string)
+    (defun wmmc/src-shell-unescape (string)
       ;; replace \n \t \r \b \a \v \\
       ;; and octal escapes of the form \0nn
 
@@ -511,7 +520,7 @@ otherwise fallback to markdown-preview"
                  ((eq char1 ?\\) "\\\\")
                  (t "")))) string))
 
-    (defun src-set-environment-from-env-output(env-output)
+    (defun wmmc/src-set-environment-from-env-output(env-output)
       ;; set the environment from shell's "env" output
       (let ((lines (split-string env-output "\n" t)))
         (dolist (line lines)
@@ -520,11 +529,11 @@ otherwise fallback to markdown-preview"
                        (> idx-equals 1))
               (let  ((key (substring line 0 idx-equals))
                      (value (substring line (+ idx-equals 1))))
-                (setenv key (src-shell-unescape value))
+                (setenv key (wmmc/src-shell-unescape value))
                 ;; (message "%s = %s" key value)
                 ))))))
 
-    (defun src-source-shell-file (file-name)
+    (defun wmmc/src-source-shell-file (file-name)
       ;; if your shell is sh rather than bash, the "source " may need
       ;; to be ". " instead
       (let* ((command (concat "source '"  file-name "'; echo 'post-env'; env"))
@@ -534,10 +543,10 @@ otherwise fallback to markdown-preview"
             (message "Didn't find expected output after sourcing %s. Found: %s" file-name output)
           (let ((trimmed-output (substring output idx-post-env)))
             ;; (message "trimmed-output: %s" trimmed-output)
-            (src-set-environment-from-env-output trimmed-output)))))
+            (wmmc/src-set-environment-from-env-output trimmed-output)))))
 
 
-    (src-source-shell-file (expand-file-name "~/.bash_profile")))
+    (wmmc/src-source-shell-file (expand-file-name "~/.bash_profile")))
   ;; end sourcing of .bash_profile
   (define-key evil-normal-state-map (kbd "p") 'evil-paste-after)
   (define-key evil-normal-state-map (kbd "P") 'evil-paste-before)
@@ -622,7 +631,7 @@ otherwise fallback to markdown-preview"
            "All inboxes" ?i)))
 
 
-  (defun my/current-chrome-url ()
+  (defun wmmc/current-chrome-url ()
     (interactive)
     (do-applescript
      (concat
@@ -646,30 +655,30 @@ otherwise fallback to markdown-preview"
   ;; (shell-command-to-string "source ~/.bash_profile")
   ;; (setenv "PATH" (shell-command-to-string "source ~/.bash_profile")) ;;; echo -n $PATH"))
 
-  )
 
-;; Do not write anything past this comment. This is where Emacs will
-;; auto-generate custom variable definitions.
-(defun dotspacemacs/emacs-custom-settings ()
-  "Emacs custom settings.
+
+  ;; Do not write anything past this comment. This is where Emacs will
+  ;; auto-generate custom variable definitions.
+  (defun dotspacemacs/emacs-custom-settings ()
+    "Emacs custom settings.
 This is an auto-generated function, do not modify its content directly, use
 Emacs customize menu instead.
 This function is called at the very end of Spacemacs initialization."
-  (custom-set-variables
-   ;; custom-set-variables was added by Custom.
-   ;; If you edit it by hand, you could mess it up, so be careful.
-   ;; Your init file should contain only one such instance.
-   ;; If there is more than one, they won't work right.
-   '(evil-want-Y-yank-to-eol t)
-   '(gud-gdb-command-name "gdb --annotate=1")
-   '(large-file-warning-threshold nil)
-   '(package-selected-packages
-     (quote
-      (helm-hoogle dante ghc haskell-mode pretty-mode password-store wakatime-mode typit mmt sudoku pacmacs engine-mode 2048-game bm hackernews org-brain impatient-mode evil-org counsel swiper ivy yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode helm-pydoc cython-mode company-anaconda anaconda-mode pythonic gmail-message-mode ham-mode html-to-markdown flymd edit-server fasd elfeed-web elfeed-org elfeed-goodies ace-jump-mode noflet elfeed xkcd selectric-mode rainbow-mode rainbow-identifiers color-identifiers-mode typo ibuffer-projectile powerline pcre2el spinner gntp parent-mode window-purpose imenu-list helm-gitignore request helm-c-yasnippet fringe-helper git-gutter+ git-gutter seq pos-tip flx iedit anzu goto-chg undo-tree highlight bind-map bind-key pkg-info epl auto-complete popup ruby-refactor add-node-modules-path ox-gfm deft dash evil-lion password-generator ghub+ apiwrap ghub helm-company emojify editorconfig packed git-commit markdown-mode alert async s diminish smartparens evil flycheck company yasnippet avy magit magit-popup with-editor log4e org-plus-contrib projectile hydra f helm helm-core symon string-inflection browse-at-remote skewer-mode simple-httpd json-snatcher json-reformat multiple-cursors js2-mode dash-functional tern helm-css-scss haml-mode web-completion-data rust-mode ob-elixir flycheck-mix flycheck-credo alchemist elixir-mode gh marshal logito pcache ht restclient-helm inflections helm-dash restclient know-your-http-well rake inf-ruby helm-themes helm-swoop helm-purpose helm-projectile helm-mode-manager helm-flx helm-descbinds helm-ag evil-unimpaired ace-jump-helm-line yaml-mode xterm-color ws-butler winum which-key wgrep web-mode web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package unfill toml-mode toc-org tagedit swift-mode sql-indent spaceline smex smeargle slim-mode slack shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restart-emacs rbenv rainbow-delimiters racer pug-mode projectile-rails popwin persp-mode paradox orgit org-projectile org-present org-pomodoro org-download org-bullets open-junk-file ob-restclient ob-http neotree mwim multi-term mu4e-maildirs-extension mu4e-alert move-text mmm-mode minitest markdown-toc magithub magit-gitflow magit-gh-pulls macrostep lorem-ipsum livid-mode linum-relative link-hint less-css-mode json-mode js2-refactor js-doc ivy-purpose ivy-hydra intero insert-shebang info+ indent-guide hungry-delete htmlize hlint-refactor hl-todo hindent highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-make haskell-snippets google-translate golden-ratio gnuplot gitignore-mode github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md fuzzy flycheck-rust flycheck-pos-tip flycheck-haskell flx-ido fish-mode fill-column-indicator feature-mode fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help erlang erc-yt erc-view-log erc-terminal-notifier erc-social-graph erc-image erc-hl-nicks emoji-cheat-sheet-plus emmet-mode elisp-slime-nav dumb-jump disaster diff-hl define-word dash-at-point dactyl-mode counsel-projectile counsel-dash company-web company-tern company-statistics company-shell company-restclient company-ghci company-ghc company-emoji company-cabal company-c-headers column-enforce-mode coffee-mode cmm-mode cmake-mode clean-aindent-mode clang-format chruby cargo bundler auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ac-ispell))))
-  (custom-set-faces
-   ;; custom-set-faces was added by Custom.
-   ;; If you edit it by hand, you could mess it up, so be careful.
-   ;; Your init file should contain only one such instance.
-   ;; If there is more than one, they won't work right.
-   )
-  )
+    (custom-set-variables
+     ;; custom-set-variables was added by Custom.
+     ;; If you edit it by hand, you could mess it up, so be careful.
+     ;; Your init file should contain only one such instance.
+     ;; If there is more than one, they won't work right.
+     '(evil-want-Y-yank-to-eol t)
+     '(gud-gdb-command-name "gdb --annotate=1")
+     '(large-file-warning-threshold nil)
+     '(package-selected-packages
+       (quote
+        (helm-hoogle dante ghc haskell-mode pretty-mode password-store wakatime-mode typit mmt sudoku pacmacs engine-mode 2048-game bm hackernews org-brain impatient-mode evil-org counsel swiper ivy yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode helm-pydoc cython-mode company-anaconda anaconda-mode pythonic gmail-message-mode ham-mode html-to-markdown flymd edit-server fasd elfeed-web elfeed-org elfeed-goodies ace-jump-mode noflet elfeed xkcd selectric-mode rainbow-mode rainbow-identifiers color-identifiers-mode typo ibuffer-projectile powerline pcre2el spinner gntp parent-mode window-purpose imenu-list helm-gitignore request helm-c-yasnippet fringe-helper git-gutter+ git-gutter seq pos-tip flx iedit anzu goto-chg undo-tree highlight bind-map bind-key pkg-info epl auto-complete popup ruby-refactor add-node-modules-path ox-gfm deft dash evil-lion password-generator ghub+ apiwrap ghub helm-company emojify editorconfig packed git-commit markdown-mode alert async s diminish smartparens evil flycheck company yasnippet avy magit magit-popup with-editor log4e org-plus-contrib projectile hydra f helm helm-core symon string-inflection browse-at-remote skewer-mode simple-httpd json-snatcher json-reformat multiple-cursors js2-mode dash-functional tern helm-css-scss haml-mode web-completion-data rust-mode ob-elixir flycheck-mix flycheck-credo alchemist elixir-mode gh marshal logito pcache ht restclient-helm inflections helm-dash restclient know-your-http-well rake inf-ruby helm-themes helm-swoop helm-purpose helm-projectile helm-mode-manager helm-flx helm-descbinds helm-ag evil-unimpaired ace-jump-helm-line yaml-mode xterm-color ws-butler winum which-key wgrep web-mode web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package unfill toml-mode toc-org tagedit swift-mode sql-indent spaceline smex smeargle slim-mode slack shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restart-emacs rbenv rainbow-delimiters racer pug-mode projectile-rails popwin persp-mode paradox orgit org-projectile org-present org-pomodoro org-download org-bullets open-junk-file ob-restclient ob-http neotree mwim multi-term mu4e-maildirs-extension mu4e-alert move-text mmm-mode minitest markdown-toc magithub magit-gitflow magit-gh-pulls macrostep lorem-ipsum livid-mode linum-relative link-hint less-css-mode json-mode js2-refactor js-doc ivy-purpose ivy-hydra intero insert-shebang info+ indent-guide hungry-delete htmlize hlint-refactor hl-todo hindent highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-make haskell-snippets google-translate golden-ratio gnuplot gitignore-mode github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md fuzzy flycheck-rust flycheck-pos-tip flycheck-haskell flx-ido fish-mode fill-column-indicator feature-mode fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help erlang erc-yt erc-view-log erc-terminal-notifier erc-social-graph erc-image erc-hl-nicks emoji-cheat-sheet-plus emmet-mode elisp-slime-nav dumb-jump disaster diff-hl define-word dash-at-point dactyl-mode counsel-projectile counsel-dash company-web company-tern company-statistics company-shell company-restclient company-ghci company-ghc company-emoji company-cabal company-c-headers column-enforce-mode coffee-mode cmm-mode cmake-mode clean-aindent-mode clang-format chruby cargo bundler auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ac-ispell))))
+    (custom-set-faces
+     ;; custom-set-faces was added by Custom.
+     ;; If you edit it by hand, you could mess it up, so be careful.
+     ;; Your init file should contain only one such instance.
+     ;; If there is more than one, they won't work right.
+     )
+    ))
