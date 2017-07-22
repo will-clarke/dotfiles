@@ -72,7 +72,7 @@ values."
                       auto-completion-tab-key-behavior 'complete
                       auto-completion-complete-with-key-sequence nil
                       auto-completion-complete-with-key-sequence-delay 0.1
-                      auto-completion-private-snippets-directory nil
+                      auto-completion-private-snippets-directory (concat dotspacemacs-directory "snippets")
                       auto-completion-enable-snippets-in-popup t
                       aya-persist-snippets-dir (concat dotspacemacs-directory "snippets")
                       )
@@ -380,6 +380,7 @@ values."
    ;; Either nil or a number of seconds. If non-nil zone out after the specified
    ;; number of seconds. (default nil)
    dotspacemacs-zone-out-when-idle nil
+   dotspacemacs-delete-orphan-packages nil
    ))
 
 (defun dotspacemacs/user-init ()
@@ -443,14 +444,12 @@ you should place your code here."
 
   (setq wakatime-api-key (wmmc/secret-from-authinfo-host "wakatime.com"))
 
-
-  (add-hook 'yas-minor-mode-hook
-            (lambda ()
-              (yas-activate-extra-mode 'fundamental-mode)))
+  ;; (add-hook 'yas-minor-mode-hook
+  ;;           (lambda ()
+  ;;             (yas-activate-extra-mode 'fundamental-mode)))
+  (yas-global-mode 1)
 
   (setq aya-persist-snippets-dir "~/.spacemacs.d/snippets")
-  (setq yas-snippet-dirs (append yas-snippet-dirs
-                                 '("~/.emacs.d/private/snippets/fundemental-mode")))
 
   (setq eshell-aliases-file "~/.spacemacs.d/eshell/alias")
 
@@ -678,17 +677,8 @@ otherwise fallback to markdown-preview"
      )
     )
 
-
-
-
-
-
-
-
   ;; (shell-command-to-string "source ~/.bash_profile")
   ;; (setenv "PATH" (shell-command-to-string "source ~/.bash_profile")) ;;; echo -n $PATH"))
-
-
 
   ;; Do not write anything past this comment. This is where Emacs will
   ;; auto-generate custom variable definitions.
@@ -715,3 +705,25 @@ This function is called at the very end of Spacemacs initialization."
      ;; If there is more than one, they won't work right.
      )
     ))
+(defun dotspacemacs/emacs-custom-settings ()
+  "Emacs custom settings.
+This is an auto-generated function, do not modify its content directly, use
+Emacs customize menu instead.
+This function is called at the very end of Spacemacs initialization."
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(gud-gdb-command-name "gdb --annotate=1")
+ '(large-file-warning-threshold nil)
+ '(package-selected-packages
+   (quote
+    (wakatime-mode typit mmt sudoku rvm ruby-tools ruby-test-mode ruby-refactor rubocop rspec-mode robe restclient-helm rbenv projectile-rails rake inflections password-store pacmacs ob-restclient ob-http ob-elixir minitest helm-dash flycheck-rust flycheck-pos-tip pos-tip flycheck-mix flycheck-haskell flycheck-credo feature-mode engine-mode deft dash-at-point company-restclient restclient know-your-http-well chruby bundler inf-ruby bm alchemist elixir-mode 2048-game yapfify yaml-mode xterm-color xkcd ws-butler winum which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package unfill toml-mode toc-org tagedit symon string-inflection spaceline smeargle slim-mode shell-pop selectric-mode scss-mode sass-mode restart-emacs rainbow-mode rainbow-identifiers rainbow-delimiters racer pyvenv pytest pyenv-mode py-isort pug-mode pip-requirements persp-mode pcre2el password-generator paradox ox-gfm orgit org-projectile org-present org-pomodoro org-download org-bullets org-brain open-junk-file neotree mwim multi-term mu4e-maildirs-extension mu4e-alert move-text mmm-mode markdown-toc magithub magit-gitflow magit-gh-pulls macrostep lorem-ipsum livid-mode live-py-mode linum-relative link-hint less-css-mode json-mode js2-refactor js-doc intero info+ indent-guide impatient-mode ibuffer-projectile hy-mode hungry-delete hlint-refactor hl-todo hindent highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-pydoc helm-purpose helm-projectile helm-mode-manager helm-make helm-hoogle helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag haskell-snippets google-translate golden-ratio gnuplot gmail-message-mode github-search github-clone gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md fuzzy flymd flx-ido fill-column-indicator fasd fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help erc-yt erc-view-log erc-terminal-notifier erc-social-graph erc-image erc-hl-nicks emojify emoji-cheat-sheet-plus emmet-mode elisp-slime-nav elfeed-web elfeed-org elfeed-goodies editorconfig edit-server dumb-jump diff-hl define-word dante cython-mode company-web company-tern company-statistics company-ghci company-ghc company-emoji company-cabal company-anaconda column-enforce-mode color-identifiers-mode coffee-mode cmm-mode clean-aindent-mode cargo browse-at-remote auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+)
