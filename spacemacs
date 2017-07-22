@@ -443,7 +443,6 @@ you should place your code here."
 
   (setq wakatime-api-key (wmmc/secret-from-authinfo-host "wakatime.com"))
 
-
   (defun wmmc/change-font-size (multiplier)
     "Change the font size globally."
     (set-face-attribute 'default nil :height
@@ -461,9 +460,10 @@ you should place your code here."
     (wmmc/change-font-size 0.9))
 
   (evil-leader/set-key "o+" 'wmmc/increase-font-size)
+  (evil-leader/set-key "o=" 'wmmc/increase-font-size)
   (evil-leader/set-key "o-" 'wmmc/decrease-font-size)
 
-
+  (spacemacs/toggle-indent-guide-globally-on)
 
   ;; \C-h is now DEL
   (define-key key-translation-map [?\C-h] [?\C-?])
