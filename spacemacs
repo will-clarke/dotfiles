@@ -193,7 +193,7 @@ values."
    ;; (set-face-attribute 'default nil :family "Fira Code Retina")
    ;; (mac-auto-operator-composition-mode)
    dotspacemacs-default-font '("Fira Code" ;;"Source Code Pro"
-                               :size 15
+                               :size 16
                                :weight normal
                                :width normal
                                :powerline-scale 1.0)
@@ -444,10 +444,14 @@ you should place your code here."
 
   (setq wakatime-api-key (wmmc/secret-from-authinfo-host "wakatime.com"))
 
-  ;; (add-hook 'yas-minor-mode-hook
-  ;;           (lambda ()
-  ;;             (yas-activate-extra-mode 'fundamental-mode)))
+  (add-hook 'yas-minor-mode-hook
+            (lambda ()
+              (yas-activate-extra-mode 'fundamental-mode)))
   (yas-global-mode 1)
+
+  ;; reload the tags file without always prompting
+  (setq tags-revert-without-query 1)
+
 
   (setq aya-persist-snippets-dir "~/.spacemacs.d/snippets")
 
@@ -719,7 +723,7 @@ This function is called at the very end of Spacemacs initialization."
  '(large-file-warning-threshold nil)
  '(package-selected-packages
    (quote
-    (wakatime-mode typit mmt sudoku rvm ruby-tools ruby-test-mode ruby-refactor rubocop rspec-mode robe restclient-helm rbenv projectile-rails rake inflections password-store pacmacs ob-restclient ob-http ob-elixir minitest helm-dash flycheck-rust flycheck-pos-tip pos-tip flycheck-mix flycheck-haskell flycheck-credo feature-mode engine-mode deft dash-at-point company-restclient restclient know-your-http-well chruby bundler inf-ruby bm alchemist elixir-mode 2048-game yapfify yaml-mode xterm-color xkcd ws-butler winum which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package unfill toml-mode toc-org tagedit symon string-inflection spaceline smeargle slim-mode shell-pop selectric-mode scss-mode sass-mode restart-emacs rainbow-mode rainbow-identifiers rainbow-delimiters racer pyvenv pytest pyenv-mode py-isort pug-mode pip-requirements persp-mode pcre2el password-generator paradox ox-gfm orgit org-projectile org-present org-pomodoro org-download org-bullets org-brain open-junk-file neotree mwim multi-term mu4e-maildirs-extension mu4e-alert move-text mmm-mode markdown-toc magithub magit-gitflow magit-gh-pulls macrostep lorem-ipsum livid-mode live-py-mode linum-relative link-hint less-css-mode json-mode js2-refactor js-doc intero info+ indent-guide impatient-mode ibuffer-projectile hy-mode hungry-delete hlint-refactor hl-todo hindent highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-pydoc helm-purpose helm-projectile helm-mode-manager helm-make helm-hoogle helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag haskell-snippets google-translate golden-ratio gnuplot gmail-message-mode github-search github-clone gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md fuzzy flymd flx-ido fill-column-indicator fasd fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help erc-yt erc-view-log erc-terminal-notifier erc-social-graph erc-image erc-hl-nicks emojify emoji-cheat-sheet-plus emmet-mode elisp-slime-nav elfeed-web elfeed-org elfeed-goodies editorconfig edit-server dumb-jump diff-hl define-word dante cython-mode company-web company-tern company-statistics company-ghci company-ghc company-emoji company-cabal company-anaconda column-enforce-mode color-identifiers-mode coffee-mode cmm-mode clean-aindent-mode cargo browse-at-remote auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))))
+    (ghc haskell-mode wakatime-mode typit mmt sudoku rvm ruby-tools ruby-test-mode ruby-refactor rubocop rspec-mode robe restclient-helm rbenv projectile-rails rake inflections password-store pacmacs ob-restclient ob-http ob-elixir minitest helm-dash flycheck-rust flycheck-pos-tip pos-tip flycheck-mix flycheck-haskell flycheck-credo feature-mode engine-mode deft dash-at-point company-restclient restclient know-your-http-well chruby bundler inf-ruby bm alchemist elixir-mode 2048-game yapfify yaml-mode xterm-color xkcd ws-butler winum which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package unfill toml-mode toc-org tagedit symon string-inflection spaceline smeargle slim-mode shell-pop selectric-mode scss-mode sass-mode restart-emacs rainbow-mode rainbow-identifiers rainbow-delimiters racer pyvenv pytest pyenv-mode py-isort pug-mode pip-requirements persp-mode pcre2el password-generator paradox ox-gfm orgit org-projectile org-present org-pomodoro org-download org-bullets org-brain open-junk-file neotree mwim multi-term mu4e-maildirs-extension mu4e-alert move-text mmm-mode markdown-toc magithub magit-gitflow magit-gh-pulls macrostep lorem-ipsum livid-mode live-py-mode linum-relative link-hint less-css-mode json-mode js2-refactor js-doc intero info+ indent-guide impatient-mode ibuffer-projectile hy-mode hungry-delete hlint-refactor hl-todo hindent highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-pydoc helm-purpose helm-projectile helm-mode-manager helm-make helm-hoogle helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag haskell-snippets google-translate golden-ratio gnuplot gmail-message-mode github-search github-clone gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md fuzzy flymd flx-ido fill-column-indicator fasd fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help erc-yt erc-view-log erc-terminal-notifier erc-social-graph erc-image erc-hl-nicks emojify emoji-cheat-sheet-plus emmet-mode elisp-slime-nav elfeed-web elfeed-org elfeed-goodies editorconfig edit-server dumb-jump diff-hl define-word dante cython-mode company-web company-tern company-statistics company-ghci company-ghc company-emoji company-cabal company-anaconda column-enforce-mode color-identifiers-mode coffee-mode cmm-mode clean-aindent-mode cargo browse-at-remote auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
