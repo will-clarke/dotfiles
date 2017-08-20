@@ -30,15 +30,26 @@ values."
    dotspacemacs-configuration-layer-path '()
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(haskell
+   '(sql
      python
      chrome
      (elfeed :variables
              elfeed-feeds '(
-                            "https://feeds.feedburner.com/readwriteweb"
-                            "http://feeds.skynews.com/feeds/rss/home.xml"
-                            "http://feeds.reuters.com/Reuters/UKTopNews?format=xml"
+                            "https://herald.community.rs/rss"
                             "https://feeds.feedburner.com/37signals/beMH"
+                            "https://www.joelonsoftware.com/feed/"
+                            "http://feeds.haacked.com/haacked/"
+                            "https://feeds.feedburner.com/codinghorror"
+                            "http://thunk.org/tytso/blog/feed/"
+                            "http://www.aaronsw.com/2002/feeds/pgessays.rss"
+                            "https://www.reddit.com/r/programming/.rss"
+                            "https://pragprog.com/feed/global"
+                            "http://secretgeek.net/Rss"
+                            "https://www.joelonsoftware.com/feed/"
+                            "https://feeds.feedburner.com/ajaxian"
+                            "https://feeds.feedburner.com/SteveysBlogRants"
+                            "http://feeds.reuters.com/reuters/UKTopNews"
+
                             ))
      (colors :variables colors-colorize-identifiers nil
              colors-enable-nyan-cat-progress-bar t
@@ -73,8 +84,8 @@ values."
                       auto-completion-complete-with-key-sequence nil
                       auto-completion-complete-with-key-sequence-delay 0.1
                       auto-completion-private-snippets-directory (concat dotspacemacs-directory "snippets")
-                      auto-completion-enable-snippets-in-popup t
-                      aya-persist-snippets-dir (concat dotspacemacs-directory "snippets")
+                      ;; setq auto-completion-enable-snippets-in-popup nil ;;t
+                      ;; aya-persist-snippets-dir (concat dotspacemacs-directory "snippets")
                       )
      (shell :variables
             shell-default-shell 'eshell
@@ -108,6 +119,7 @@ values."
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(
                                       ;; pretty-mode
+                                      ruby-hash-syntax
                                       )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -400,6 +412,41 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
+
+  ;; qqq
+
+
+
+  (defun wmmc/find-next-file (&optional backward)
+    "Find the next file (by name) in the current directory.
+
+With prefix arg, find the previous file."
+    (interactive "P")
+    (when buffer-file-name
+      (let* ((file (expand-file-name buffer-file-name))
+             (files (cl-remove-if (lambda (file) (cl-first (file-attributes file)))
+                                  (sort (directory-files (file-name-directory file) t nil t) 'string<)))
+             (pos (mod (+ (cl-position file files :test 'equal) (if backward -1 1))
+                       (length files))))
+        (find-file (nth pos files)))))
+  (evil-leader/set-key "on" 'wmmc/find-next-file)
+
+  ;; NB template selector BEGIN_SRC block == <s + TAB
+
+  ;; (setq erc-hide-list '("JOIN" "PART" "QUIT"))
+  (setq erc-lurker-hide-list '("JOIN" "PART" "QUIT"))
+  (setq erc-lurker-threshold-time 3600)
+
+
+  (require 'ruby-hash-syntax)
+
+
+  ;; fix annoying rspec-compliation mode thing where you can't go left
+  (evil-declare-key 'normal rspec-compilation-mode-map (kbd "h") 'evil-backward-char)
+  (evil-declare-key 'normal cargo-process-mode-map (kbd "h") 'evil-backward-char)
+
+  ;; (define-key evil-insert-state-map "\C-e" 'end-of-line)
+
   ;; Set fish as the default shell
   ;; (setq explicit-shell-file-name (replace-regexp-in-string "\n$" ""
   ;;                                                          (shell-command-to-string "which fish || which bash")))
@@ -592,10 +639,13 @@ otherwise fallback to markdown-preview"
       (require 'org-projectile)
       )
 
+    ;; (setq org-agenda-files '("~/org"))
+    (setq org-agenda-files (list "~/org/todo.org"))
+
     ;;(push (org-projectile:todo-files) org-agenda-files))
     ;; (setq org-agenda-files (append org-agenda-files (org-projectile:todo-files))))
-    (org-babel-do-load-languages
 
+    (org-babel-do-load-languages
      'org-babel-load-languages '((C . t)
                                  (plantuml . t)
                                  (ruby . t)
@@ -604,8 +654,8 @@ otherwise fallback to markdown-preview"
                                  (js . t)
                                  (sh . t)
                                  ))
-    (setq org-agenda-files (quote ("~/org/todo.org")))
-    (setq org-default-notes-file (concat org-directory "/notes.org"))
+    ;; (setq org-agenda-files (concat org-directory "/todo.org"))
+    ;; (setq org-default-notes-file (concat org-directory "/notes.org"))
 
     ;;    find ~/.emacs.d/elpa/org* -name "*elc" -delete
 
@@ -719,11 +769,16 @@ This function is called at the very end of Spacemacs initialization."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(evil-want-Y-yank-to-eol t)
  '(gud-gdb-command-name "gdb --annotate=1")
  '(large-file-warning-threshold nil)
+ '(org-agenda-files
+   (quote
+    ("/Users/williamclarke/org/todo.org" "/Users/williamclarke/org/backup.org" "/Users/williamclarke/org/stuff.org")))
  '(package-selected-packages
    (quote
-    (ghc haskell-mode wakatime-mode typit mmt sudoku rvm ruby-tools ruby-test-mode ruby-refactor rubocop rspec-mode robe restclient-helm rbenv projectile-rails rake inflections password-store pacmacs ob-restclient ob-http ob-elixir minitest helm-dash flycheck-rust flycheck-pos-tip pos-tip flycheck-mix flycheck-haskell flycheck-credo feature-mode engine-mode deft dash-at-point company-restclient restclient know-your-http-well chruby bundler inf-ruby bm alchemist elixir-mode 2048-game yapfify yaml-mode xterm-color xkcd ws-butler winum which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package unfill toml-mode toc-org tagedit symon string-inflection spaceline smeargle slim-mode shell-pop selectric-mode scss-mode sass-mode restart-emacs rainbow-mode rainbow-identifiers rainbow-delimiters racer pyvenv pytest pyenv-mode py-isort pug-mode pip-requirements persp-mode pcre2el password-generator paradox ox-gfm orgit org-projectile org-present org-pomodoro org-download org-bullets org-brain open-junk-file neotree mwim multi-term mu4e-maildirs-extension mu4e-alert move-text mmm-mode markdown-toc magithub magit-gitflow magit-gh-pulls macrostep lorem-ipsum livid-mode live-py-mode linum-relative link-hint less-css-mode json-mode js2-refactor js-doc intero info+ indent-guide impatient-mode ibuffer-projectile hy-mode hungry-delete hlint-refactor hl-todo hindent highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-pydoc helm-purpose helm-projectile helm-mode-manager helm-make helm-hoogle helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag haskell-snippets google-translate golden-ratio gnuplot gmail-message-mode github-search github-clone gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md fuzzy flymd flx-ido fill-column-indicator fasd fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help erc-yt erc-view-log erc-terminal-notifier erc-social-graph erc-image erc-hl-nicks emojify emoji-cheat-sheet-plus emmet-mode elisp-slime-nav elfeed-web elfeed-org elfeed-goodies editorconfig edit-server dumb-jump diff-hl define-word dante cython-mode company-web company-tern company-statistics company-ghci company-ghc company-emoji company-cabal company-anaconda column-enforce-mode color-identifiers-mode coffee-mode cmm-mode clean-aindent-mode cargo browse-at-remote auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))))
+    (phpunit phpcbf php-extras php-auto-yasnippets drupal-mode company-php ac-php-core xcscope php-mode org-category-capture helm-hoogle dante ghc haskell-mode pretty-mode password-store wakatime-mode typit mmt sudoku pacmacs engine-mode 2048-game bm hackernews org-brain impatient-mode evil-org counsel swiper ivy yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode helm-pydoc cython-mode company-anaconda anaconda-mode pythonic gmail-message-mode ham-mode html-to-markdown flymd edit-server fasd elfeed-web elfeed-org elfeed-goodies ace-jump-mode noflet elfeed xkcd selectric-mode rainbow-mode rainbow-identifiers color-identifiers-mode typo ibuffer-projectile powerline pcre2el spinner gntp parent-mode window-purpose imenu-list helm-gitignore request helm-c-yasnippet fringe-helper git-gutter+ git-gutter seq pos-tip flx iedit anzu goto-chg undo-tree highlight bind-map bind-key pkg-info epl auto-complete popup ruby-refactor add-node-modules-path ox-gfm deft dash evil-lion password-generator ghub+ apiwrap ghub helm-company emojify editorconfig packed git-commit markdown-mode alert async s diminish smartparens evil flycheck company yasnippet avy magit magit-popup with-editor log4e org-plus-contrib projectile hydra f helm helm-core symon string-inflection browse-at-remote skewer-mode simple-httpd json-snatcher json-reformat multiple-cursors js2-mode dash-functional tern helm-css-scss haml-mode web-completion-data rust-mode ob-elixir flycheck-mix flycheck-credo alchemist elixir-mode gh marshal logito pcache ht restclient-helm inflections helm-dash restclient know-your-http-well rake inf-ruby helm-themes helm-swoop helm-purpose helm-projectile helm-mode-manager helm-flx helm-descbinds helm-ag evil-unimpaired ace-jump-helm-line yaml-mode xterm-color ws-butler winum which-key wgrep web-mode web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package unfill toml-mode toc-org tagedit swift-mode sql-indent spaceline smex smeargle slim-mode slack shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restart-emacs rbenv rainbow-delimiters racer pug-mode projectile-rails popwin persp-mode paradox orgit org-projectile org-present org-pomodoro org-download org-bullets open-junk-file ob-restclient ob-http neotree mwim multi-term mu4e-maildirs-extension mu4e-alert move-text mmm-mode minitest markdown-toc magithub magit-gitflow magit-gh-pulls macrostep lorem-ipsum livid-mode linum-relative link-hint less-css-mode json-mode js2-refactor js-doc ivy-purpose ivy-hydra intero insert-shebang info+ indent-guide hungry-delete htmlize hlint-refactor hl-todo hindent highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-make haskell-snippets google-translate golden-ratio gnuplot gitignore-mode github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md fuzzy flycheck-rust flycheck-pos-tip flycheck-haskell flx-ido fish-mode fill-column-indicator feature-mode fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help erlang erc-yt erc-view-log erc-terminal-notifier erc-social-graph erc-image erc-hl-nicks emoji-cheat-sheet-plus emmet-mode elisp-slime-nav dumb-jump disaster diff-hl define-word dash-at-point dactyl-mode counsel-projectile counsel-dash company-web company-tern company-statistics company-shell company-restclient company-ghci company-ghc company-emoji company-cabal company-c-headers column-enforce-mode coffee-mode cmm-mode cmake-mode clean-aindent-mode clang-format chruby cargo bundler auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ac-ispell)))
+ '(wakatime-python-bin nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
