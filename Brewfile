@@ -34,6 +34,7 @@ brew 'w3m'
 brew 'gpg'
 brew 'pinentry-mac'
 brew 'global', args: ['with-pygments', 'with-ctags']
+brew 'fasd'
 
 cask '1password'
 cask 'alfred'
