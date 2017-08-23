@@ -20,7 +20,7 @@ values."
    ;; installation feature and you have to explicitly list a layer in the
    ;; variable `dotspacemacs-configuration-layers' to install it.
    ;; (default 'unused)
-   dotspacemacs-enable-lazy-installation 'unused
+   dotspacemacs-enable-lazy-installation 'nil
    ;; If non-nil then Spacemacs will ask for confirmation before installing
    ;; a layer lazily. (default t)
    dotspacemacs-ask-for-lazy-installation t
@@ -444,6 +444,8 @@ With prefix arg, find the previous file."
   ;; fix annoying rspec-compliation mode thing where you can't go left
   (evil-declare-key 'normal rspec-compilation-mode-map (kbd "h") 'evil-backward-char)
   (evil-declare-key 'normal cargo-process-mode-map (kbd "h") 'evil-backward-char)
+  (evil-declare-key 'normal rspec-compilation-mode-map (kbd "l") 'evil-forward-char)
+  (evil-declare-key 'normal cargo-process-mode-map (kbd "l") 'evil-forward-char)
 
   ;; (define-key evil-insert-state-map "\C-e" 'end-of-line)
 
