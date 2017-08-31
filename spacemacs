@@ -417,6 +417,9 @@ you should place your code here."
 
   ;; qqq
 
+
+
+
   (eval-after-load 'rspec-mode
     '(define-key rspec-compilation-mode-map (kbd "C-x C-q")
        'inf-ruby-switch-from-compilation))

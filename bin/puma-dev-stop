@@ -1,1 +1,2 @@
 pkill -USR1 puma-dev
+killl puma-dev
