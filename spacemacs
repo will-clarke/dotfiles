@@ -31,9 +31,9 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(sql
+     haskell
      gtags
      python
-     chrome
      c-c++
      (elfeed :variables
              elfeed-feeds '(
@@ -417,6 +417,16 @@ you should place your code here."
 
   ;; qqq
 
+  (setq magithub-debug t)
+
+
+  ;; Set to the location of your Org files on your local system
+  (setq org-directory "~/org")
+  ;; Set to the name of the file where new notes will be stored
+  (setq org-mobile-inbox-for-pull "~/org/todo.org")
+  ;; Set to <your Dropbox root directory>/MobileOrg.
+  (setq org-mobile-directory "~/Dropbox/Apps/MobileOrg")
+
 
 
 
@@ -568,7 +578,16 @@ With prefix arg, find the previous file."
   (global-set-key (kbd "C-M-H") 'backward-kill-word)
 
   ;; enable #
-  (global-set-key (kbd "s-3") `(lambda () (interactive) (insert "#")))
+  (define-key key-translation-map (kbd "§") (kbd "#"))
+  (define-key key-translation-map (kbd "s-3") (kbd "#"))
+  ;; (define-key key-translation-map (kbd "M-3") (kbd "#"))
+  ;; (define-key key-translation-map (kbd "M-£") (kbd "#"))
+  ;; (define-key key-translation-map (kbd "H-3") (kbd "#"))
+  ;; (define-key key-translation-map (kbd "H-£") (kbd "#"))
+  ;; (define-key key-translation-map (kbd "S-3") (kbd "#"))
+  ;; (define-key key-translation-map (kbd "S-£") (kbd "#"))
+
+  ;; (global-set-key (kbd "s-3") `(lambda () (interactive) (insert "#")))
 
   (evil-declare-key 'normal dired-mode-map (kbd ";") 'dired-up-directory)
 

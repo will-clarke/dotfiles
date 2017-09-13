@@ -68,4 +68,9 @@ alias e='edit'
 alias markdown='open -a /Applications/Marked\ 2 $1'
 
 # c
-alias m='make'
+# alias m='make'
+
+# fasd
+# alias v='f -e vim' # quick opening files with vim
+# alias m='f -e mplayer' # quick opening files with mplayer
+alias o='a -e open' # quick opening files with open

@@ -49,7 +49,7 @@ source_file_if_exists "/usr/local/etc/profile.d/autojump.sh"
 # Slow:
 # source_file_if_exists "/usr/local/bin/virtualenvwrapper.sh"
 # source_file_if_exists "/usr/local/etc/bash_completion.d/password-store"
-execute_if_command_exists "fasd" 'eval "$(fasd --init auto)"'
+# execute_if_command_exists "fasd" 'eval "$(fasd --init auto)"'
 
 add_to_path_if_file_exists "PATH" "$HOME/Library/Haskell/bin"
 add_to_path_if_file_exists "PATH" "$HOME/dotfiles/bin"
@@ -60,8 +60,12 @@ add_to_path_if_file_exists "PATH" "$HOME/dotfiles_william_clarke/bin"
 add_to_path_if_file_exists "PATH" "/Applications/Postgres.app/Contents/Versions/latest/bin"
 add_to_path_if_file_exists "PATH" "$HOME/.cargo/bin"
 add_to_path_if_file_exists "PATH" "/usr/local/sbin"
+add_to_path_if_file_exists "PATH" "$HOME/.cabal/bin"
+add_to_path_if_file_exists "PATH" "$HOME/Library/Haskell/bin"
 set_if_file_exists "EDITOR" "$HOME/.bin/edit"
 set_if_file_exists "RUST_SRC_PATH" "$HOME/.multirust/toolchains/nightly-x86_64-apple-darwin/lib/rustlib/src/rust/src/"
 set_if_file_exists "ORDERWEB_HOME" "$HOME/deliveroo/orderweb"
 
 export HEROKU_ORGANIZATION=deliveroo
+
+test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
