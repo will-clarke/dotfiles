@@ -8,7 +8,7 @@
 
 *** What this contains:
 
-- [[https://github.com/syl20bnr/spacemacs][Spacemacs]] - Emacs wiht vim keybindings)
+- [[https://github.com/syl20bnr/spacemacs][Spacemacs]] - Emacs with vim keybindings)
 - Vim
 - Tmux
 - Some db / ruby dotfiles
@@ -22,6 +22,8 @@
 
 
 ** Todo
+
+- Get rid of alfred preference from git (?) It's really big...
 
 - Install Karabeiner & BTT better.
 

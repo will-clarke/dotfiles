@@ -48,7 +48,10 @@
 [include]
   path = /Users/williamclarke/.secrets/gitconfig
 [include]
+  # maybe can delete this one?
   path = /Users/wmmc/.secrets/gitconfig
+[include]
+  path = /Users/wmmc/Dropbox/dev/secrets/gitconfig
 [hub]
 	protocol = https
 [github]

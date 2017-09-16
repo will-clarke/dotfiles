@@ -92,9 +92,9 @@ function backup_home_dir {
         if [ -e "$HOME/.$file" -o -h "$HOME/.$file" ] && [ -d "$backup_directory" ]; then
             echo "Backing up old ~/.$file"
             mv "$HOME/.$file" "$backup_directory"
-        # else
-        #     echo "mv $HOME/.$file $backup_directory"
-        #     echo "Cannot backup ~/.$file"
+            # else
+            #     echo "mv $HOME/.$file $backup_directory"
+            #     echo "Cannot backup ~/.$file"
         fi
     done
 }
@@ -187,6 +187,7 @@ function download {
         (cd "$DOTFILES_DIR" && git pull)
     fi
 }
+
 function files_for_home_dir {
     find -L "$DOTFILES_DIR"/* -maxdepth 0 \
          ! -name "readme*" \
@@ -200,7 +201,7 @@ function setup {
     setup_spacemacs
     setup_mu4e
     echo "We've updated some Apple settings and ensured that Spacemacs is installed"
-    }
+}
 
 function setup_mu4e {
     mkdir -p ~/.mail/{gmail,sent,drafts,trash}
@@ -281,7 +282,7 @@ git pull
 
 ln -s $HOME/Dropbox/dev/dotfiles $DOTFILES_DIR
 "
-    }
+}
 
 main "$1"
 
