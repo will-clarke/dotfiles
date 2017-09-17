@@ -74,3 +74,15 @@ alias markdown='open -a /Applications/Marked\ 2 $1'
 # alias v='f -e vim' # quick opening files with vim
 # alias m='f -e mplayer' # quick opening files with mplayer
 alias o='a -e open' # quick opening files with open
+
+fasd_cd() {
+  if [ $# -le 1 ]; then
+    fasd "$@"
+  else
+    local _fasd_ret="$(fasd -e echo "$@")"
+    [ -z "$_fasd_ret" ] && return
+    [ -d "$_fasd_ret" ] && cd "$_fasd_ret" || echo "$_fasd_ret"
+  fi
+}
+
+alias z="fasd_cd -d"
