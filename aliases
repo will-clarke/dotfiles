@@ -86,3 +86,5 @@ fasd_cd() {
 }
 
 alias z="fasd_cd -d"
+
+alias mux=tmuxinator
