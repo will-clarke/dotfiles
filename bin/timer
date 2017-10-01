@@ -1,0 +1,51 @@
+#!/bin/bash
+
+units=$2 || ""
+number_of_units=$1
+
+function pluralize {
+    local word=$1
+    local count=$2
+    printf "$word"
+    if [ $count -gt 1 ]; then
+        printf "s"
+    fi
+}
+
+function main {
+    case "$units" in
+        min* )
+            unit_name="minute"
+            seconds_to_sleep=60
+            ;;
+        sec* )
+            unit_name="second"
+            seconds_to_sleep=1
+            ;;
+        hour* )
+            unit_name="hour"
+            seconds_to_sleep=3600
+            ;;
+        * )
+            echo "
+usage: timer 4  mins
+       timer 30 secs
+"
+            exit 1
+            ;;
+    esac
+
+    for n in $(seq $number_of_units)
+    do
+        sleep $seconds_to_sleep
+        printf "$n "
+        pluralize "$unit_name" $n
+        printf " passed...\n"
+        if [ $number_of_units == $n ]; then
+            echo "RING RING RING. Timer's up"
+            echo ""
+        fi
+    done
+}
+
+main

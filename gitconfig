@@ -56,3 +56,5 @@
 	protocol = https
 [github]
 	user = will-clarke
+[magit]
+	hideCampaign = true
