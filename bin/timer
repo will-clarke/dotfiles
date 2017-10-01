@@ -14,13 +14,13 @@ function pluralize {
 
 function main {
     case "$units" in
-        min* )
-            unit_name="minute"
-            seconds_to_sleep=60
-            ;;
         sec* )
             unit_name="second"
             seconds_to_sleep=1
+            ;;
+        min* )
+            unit_name="minute"
+            seconds_to_sleep=60
             ;;
         hour* )
             unit_name="hour"
@@ -41,9 +41,16 @@ usage: timer 4  mins
         printf "$n "
         pluralize "$unit_name" $n
         printf " passed...\n"
+
         if [ $number_of_units == $n ]; then
             echo "RING RING RING. Timer's up"
             echo ""
+            for i in $(seq 10)
+            do
+                echo -e "\a"
+                sleep 1
+            done
+
         fi
     done
 }
