@@ -45,6 +45,7 @@ source_file_if_exists "$HOME/.profile"
 source_file_if_exists "$HOME/.bashrc"
 source_file_if_exists "$HOME/.travis/travis.sh"
 source_file_if_exists "/usr/local/etc/profile.d/autojump.sh"
+source_file_if_exists "$HOME/.git-completion.bash"
 
 # Slow:
 # source_file_if_exists "/usr/local/bin/virtualenvwrapper.sh"
@@ -66,6 +67,8 @@ set_if_file_exists "EDITOR" "$HOME/.bin/edit"
 set_if_file_exists "RUST_SRC_PATH" "$HOME/.multirust/toolchains/nightly-x86_64-apple-darwin/lib/rustlib/src/rust/src/"
 set_if_file_exists "ORDERWEB_HOME" "$HOME/deliveroo/orderweb"
 
-export HEROKU_ORGANIZATION=deliveroo
+export JAVA_HOME=$(/System/Library/Frameworks/JavaVM.framework/Versions/A/Commands/java_home)
+
+# export HEROKU_ORGANIZATION=deliveroo
 
 test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"

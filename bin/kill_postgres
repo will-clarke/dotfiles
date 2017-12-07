@@ -1,0 +1,2 @@
+#!/bin/bash
+ps aux | grep postgres | grep -v Postgres.app | grep -v grep | grep -v kill | awk '{ print $2 }' | xargs kill -9
