@@ -73,6 +73,21 @@ This function should only modify configuration layer settings."
 
      terraform
 
+     (elfeed :variables
+             elfeed-feeds '(
+                            "https://feeds.feedburner.com/37signals/beMH"
+                            "https://www.joelonsoftware.com/feed/"
+                            "https://feeds.feedburner.com/codinghorror"
+                            "https://feeds.feedburner.com/SteveysBlogRants"
+
+                            "https://www.reddit.com/r/cryptocurrency/.rss"
+                            "https://www.reddit.com/r/altcoins/.rss"
+
+                            ))
+
+     deft
+     erc
+
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -392,6 +407,13 @@ before packages are loaded."
 
   ;; qqq
 
+  ;; TODO: put a 'documentation' secion here.. .including stuff like:
+  ;;   ;; NB template selector BEGIN_SRC block == <s + TAB
+
+
+  (setq erc-lurker-hide-list '("JOIN" "PART" "QUIT"))
+  (setq erc-lurker-threshold-time 3600)
+
   (setq ensime-startup-notification nil)
 
   (setq mac-option-modifier 'super)
@@ -450,6 +472,23 @@ before packages are loaded."
   (setq dotspacemacs-mode-line-unicode-symbols nil)
   (setq ediff-window-setup-function 'ediff-setup-windows-default)
 
+
+    (defun wmmc/marked-markdown-preview ()
+      "run Marked on the current file if Marked is installed;
+  otherwise fallback to markdown-preview"
+      (interactive)
+      (let ((marked-app "/Applications/Marked\\ 2.app"))
+        (if (file-exists-p "/Applications/Marked 2.app")
+            (shell-command
+             (format (concat "open -a " marked-app " %s")
+                     (shell-quote-argument (buffer-file-name))))
+          (markdown-preview))
+        ))
+
+    (eval-after-load 'markdown-mode
+      '(progn
+         (define-key markdown-mode-map (kbd "C-c C-v") 'wmmc/marked-markdown-preview)
+         ))
 
 
   )
