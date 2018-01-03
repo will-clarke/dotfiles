@@ -473,22 +473,27 @@ before packages are loaded."
   (setq ediff-window-setup-function 'ediff-setup-windows-default)
 
 
-    (defun wmmc/marked-markdown-preview ()
-      "run Marked on the current file if Marked is installed;
+  (defun wmmc/marked-markdown-preview ()
+    "run Marked on the current file if Marked is installed;
   otherwise fallback to markdown-preview"
-      (interactive)
-      (let ((marked-app "/Applications/Marked\\ 2.app"))
-        (if (file-exists-p "/Applications/Marked 2.app")
-            (shell-command
-             (format (concat "open -a " marked-app " %s")
-                     (shell-quote-argument (buffer-file-name))))
-          (markdown-preview))
-        ))
+    (interactive)
+    (let ((marked-app "/Applications/Marked\\ 2.app"))
+      (if (file-exists-p "/Applications/Marked 2.app")
+          (shell-command
+           (format (concat "open -a " marked-app " %s")
+                   (shell-quote-argument (buffer-file-name))))
+        (markdown-preview))
+      ))
 
-    (eval-after-load 'markdown-mode
-      '(progn
-         (define-key markdown-mode-map (kbd "C-c C-v") 'wmmc/marked-markdown-preview)
-         ))
+  (eval-after-load 'markdown-mode
+    '(progn
+       (define-key markdown-mode-map (kbd "C-c C-v") 'wmmc/marked-markdown-preview)
+       ))
+
+  (setq ruby-deep-indent-paren nil)
+  (setq ruby-use-smie nil)
+
+
 
 
   )
@@ -498,19 +503,18 @@ before packages are loaded."
 This is an auto-generated function, do not modify its content directly, use
 Emacs customize menu instead.
 This function is called at the very end of Spacemacs initialization."
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (erc-yt erc-view-log erc-terminal-notifier erc-social-graph erc-image erc-hl-nicks elfeed-web elfeed-org elfeed-goodies ace-jump-mode elfeed deft yaml-mode xterm-color ws-butler winum which-key wgrep web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package unfill toc-org terraform-mode tagedit symon string-inflection sql-indent spaceline smex smeargle slim-mode shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode ruby-refactor rubocop rspec-mode robe restart-emacs request rbenv rainbow-delimiters pug-mode projectile-rails popwin persp-mode password-generator paradox overseer orgit org-projectile org-present org-pomodoro org-download org-bullets org-brain open-junk-file ob-restclient ob-http noflet neotree nameless mwim mvn multi-term move-text mmm-mode minitest meghanada maven-test-mode markdown-toc magit-gitflow magit-gh-pulls macrostep lorem-ipsum livid-mode linum-relative link-hint less-css-mode json-mode js2-refactor js-doc ivy-purpose ivy-hydra info+ indent-guide impatient-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-make groovy-mode groovy-imports gradle-mode google-translate golden-ratio gnuplot gitignore-mode github-search github-clone gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md fuzzy flx-ido fill-column-indicator feature-mode fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help ensime emmet-mode elisp-slime-nav editorconfig dumb-jump diminish diff-hl define-word dash-at-point csv-mode counsel-projectile counsel-dash company-web company-tern company-statistics company-restclient company-emacs-eclim column-enforce-mode coffee-mode clean-aindent-mode chruby bundler browse-at-remote auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ac-ispell))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
-)
-
+  (custom-set-variables
+   ;; custom-set-variables was added by Custom.
+   ;; If you edit it by hand, you could mess it up, so be careful.
+   ;; Your init file should contain only one such instance.
+   ;; If there is more than one, they won't work right.
+   '(package-selected-packages
+     (quote
+      (erc-yt erc-view-log erc-terminal-notifier erc-social-graph erc-image erc-hl-nicks elfeed-web elfeed-org elfeed-goodies ace-jump-mode elfeed deft yaml-mode xterm-color ws-butler winum which-key wgrep web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package unfill toc-org terraform-mode tagedit symon string-inflection sql-indent spaceline smex smeargle slim-mode shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode ruby-refactor rubocop rspec-mode robe restart-emacs request rbenv rainbow-delimiters pug-mode projectile-rails popwin persp-mode password-generator paradox overseer orgit org-projectile org-present org-pomodoro org-download org-bullets org-brain open-junk-file ob-restclient ob-http noflet neotree nameless mwim mvn multi-term move-text mmm-mode minitest meghanada maven-test-mode markdown-toc magit-gitflow magit-gh-pulls macrostep lorem-ipsum livid-mode linum-relative link-hint less-css-mode json-mode js2-refactor js-doc ivy-purpose ivy-hydra info+ indent-guide impatient-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-make groovy-mode groovy-imports gradle-mode google-translate golden-ratio gnuplot gitignore-mode github-search github-clone gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md fuzzy flx-ido fill-column-indicator feature-mode fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help ensime emmet-mode elisp-slime-nav editorconfig dumb-jump diminish diff-hl define-word dash-at-point csv-mode counsel-projectile counsel-dash company-web company-tern company-statistics company-restclient company-emacs-eclim column-enforce-mode coffee-mode clean-aindent-mode chruby bundler browse-at-remote auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ac-ispell))))
+  (custom-set-faces
+   ;; custom-set-faces was added by Custom.
+   ;; If you edit it by hand, you could mess it up, so be careful.
+   ;; Your init file should contain only one such instance.
+   ;; If there is more than one, they won't work right.
+   )
+  )
