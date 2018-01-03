@@ -1,4 +1,4 @@
-;; -*- mode: emacs-lisp -*-
+;; -*- mode: emacs-lisp -*
 ;; This file is loaded by Spacemacs at startup.
 ;; It must be stored in your home directory.
 
@@ -30,13 +30,19 @@ This function should only modify configuration layer settings."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     javascript
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
      ;; `M-m f e R' (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     helm
-     auto-completion
+     ivy
+     (auto-completion :variables
+                      auto-completion-return-key-behavior 'cycle
+                      auto-completion-tab-key-behavior 'complete
+                      auto-completion-complete-with-key-sequence nil
+                      auto-completion-complete-with-key-sequence-delay 0.1
+                      auto-completion-private-snippets-directory nil)
      better-defaults
      emacs-lisp
      git
@@ -45,7 +51,9 @@ This function should only modify configuration layer settings."
      org
      (shell :variables
             shell-default-height 30
-            shell-default-position 'bottom)
+            shell-default-position 'bottom
+            shell-default-shell 'eshell
+            )
      ;; spell-checking
      ;; syntax-checking
      version-control
@@ -57,7 +65,13 @@ This function should only modify configuration layer settings."
      yaml
      sql
      github
+     scala
      restclient
+     html
+     csv
+     dash
+
+     terraform
 
      )
    ;; List of additional packages that will be installed without being
@@ -361,6 +375,12 @@ This function is called immediately after `dotspacemacs/init', before layer
 configuration.
 It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
+
+  ;; Scala stuff
+  (push '("melpa-stable" . "stable.melpa.org/packages/") configuration-layer-elpa-archives)
+  (push '(ensime . "melpa-stable") package-pinned-packages)
+  (setq-default flycheck-scalastylerc "/usr/local/etc/scalastyle_config.xml")
+
   )
 
 (defun dotspacemacs/user-config ()
@@ -371,6 +391,8 @@ Put your configuration code here, except for variables that should be set
 before packages are loaded."
 
   ;; qqq
+
+  (setq ensime-startup-notification nil)
 
   (setq mac-option-modifier 'super)
   (setq mac-command-modifier 'meta)
@@ -386,6 +408,7 @@ before packages are loaded."
 
   (evil-leader/set-key "ol"  'link-hint-open-link-at-point)
 
+  (setq vc-follow-symlinks t)
 
   (defun wmmc/change-font-size (multiplier)
     "Change the font size globally."
@@ -411,10 +434,26 @@ before packages are loaded."
     '(define-key rspec-compilation-mode-map (kbd "C-c C-c")
        'inf-ruby-switch-from-compilation))
 
+  (defun wmmc/find-next-file (&optional backward)
+    (interactive "P")
+    (when buffer-file-name
+      (let* ((file (expand-file-name buffer-file-name))
+             (files (cl-remove-if (lambda (file) (cl-first (file-attributes file)))
+                                  (sort (directory-files (file-name-directory file) t nil t) 'string<)))
+             (pos (mod (+ (cl-position file files :test 'equal) (if backward -1 1))
+                       (length files))))
+        (find-file (nth pos files)))))
+
+  (evil-leader/set-key "on" 'wmmc/find-next-file)
+
+  ;; to avoid wierd crashes when searching
+  (setq dotspacemacs-mode-line-unicode-symbols nil)
+  (setq ediff-window-setup-function 'ediff-setup-windows-default)
+
+
+
   )
 
-;; Do not write anything past this comment. This is where Emacs will
-;; auto-generate custom variable definitions.
 (defun dotspacemacs/emacs-custom-settings ()
   "Emacs custom settings.
 This is an auto-generated function, do not modify its content directly, use
@@ -427,7 +466,7 @@ This function is called at the very end of Spacemacs initialization."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (restclient-helm ob-restclient ob-http company-restclient restclient know-your-http-well sql-indent yaml-mode xterm-color ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package unfill toc-org symon string-inflection spaceline smeargle shell-pop rvm ruby-tools ruby-test-mode ruby-refactor rubocop rspec-mode robe restart-emacs rbenv rainbow-delimiters projectile-rails popwin persp-mode password-generator paradox orgit org-projectile org-present org-pomodoro org-download org-bullets org-brain open-junk-file neotree mwim multi-term move-text mmm-mode minitest markdown-toc magit-gitflow macrostep lorem-ipsum linum-relative link-hint info+ indent-guide hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-purpose helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md fuzzy flx-ido fill-column-indicator feature-mode fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help elisp-slime-nav editorconfig dumb-jump diminish diff-hl define-word company-statistics column-enforce-mode clean-aindent-mode chruby bundler browse-at-remote auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))))
+    (use-package org-brain meghanada groovy-mode evil-org ensime define-word counsel-projectile ace-window company counsel evil goto-chg helm helm-core yasnippet avy markdown-mode alert org-plus-contrib magit projectile f ivy yaml-mode xterm-color ws-butler winum which-key wgrep web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen unfill undo-tree toc-org terraform-mode tagedit symon swiper string-inflection sql-indent spaceline smex smeargle slim-mode shell-pop scss-mode scala-mode sbt-mode sass-mode rvm ruby-tools ruby-test-mode ruby-refactor rubocop rspec-mode robe restart-emacs request rbenv rainbow-delimiters pug-mode projectile-rails popwin persp-mode password-generator paradox overseer orgit org-projectile org-present org-pomodoro org-download org-bullets open-junk-file ob-restclient ob-http noflet neotree nameless mwim mvn multi-term move-text mmm-mode minitest maven-test-mode markdown-toc magit-gitflow magit-gh-pulls macrostep lorem-ipsum log4e livid-mode linum-relative link-hint less-css-mode json-mode js2-refactor js-doc ivy-purpose ivy-hydra info+ indent-guide impatient-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-make groovy-imports gradle-mode google-translate golden-ratio gnuplot gntp gitignore-mode github-search github-clone gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist ghub gh-md fuzzy flycheck flx-ido fill-column-indicator feature-mode fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help emmet-mode elisp-slime-nav editorconfig dumb-jump diminish diff-hl dash-at-point csv-mode counsel-dash company-web company-tern company-statistics company-restclient company-emacs-eclim column-enforce-mode coffee-mode clean-aindent-mode chruby bundler browse-at-remote bind-key auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-link ac-ispell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -435,3 +474,4 @@ This function is called at the very end of Spacemacs initialization."
  ;; If there is more than one, they won't work right.
  )
 )
+

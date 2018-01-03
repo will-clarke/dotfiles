@@ -46,6 +46,9 @@ source_file_if_exists "$HOME/.bashrc"
 source_file_if_exists "$HOME/.travis/travis.sh"
 source_file_if_exists "/usr/local/etc/profile.d/autojump.sh"
 source_file_if_exists "$HOME/.git-completion.bash"
+source_file_if_exists "$HOME/.bashrc.local"
+source_file_if_exists "$HOME/.profile.local"
+source_file_if_exists "$HOME/.bashrc.local"
 
 # Slow:
 # source_file_if_exists "/usr/local/bin/virtualenvwrapper.sh"
@@ -69,6 +72,6 @@ set_if_file_exists "ORDERWEB_HOME" "$HOME/deliveroo/orderweb"
 
 export JAVA_HOME=$(/System/Library/Frameworks/JavaVM.framework/Versions/A/Commands/java_home)
 
-# export HEROKU_ORGANIZATION=deliveroo
+export HEROKU_ORGANIZATION=deliveroo
 
 test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
