@@ -1,0 +1,57 @@
+[advice]
+  pushNonFastForward = false
+  statusHints = false
+  commitBeforeMerge = false
+  detachedHead = false
+[push]
+  default = current
+[color]
+  ui = auto
+[alias]
+  frankenstash = "!f() { \n\
+                   touch $(git rev-parse --git-dir)/logs/refs/stash \n\
+                   git update-ref refs/stash $1 \n\
+              }; f"
+  aa = add --all
+  ap = add --patch
+  ca = commit --amend
+  ci = commit -v
+  co = checkout
+  co-pr = !sh -c 'git fetch origin pull/$1/head:pr/$1 && git checkout pr/$1' -
+  create-branch = !sh -c 'git push origin HEAD:refs/heads/$1 && git fetch origin && git branch --track $1 origin/$1 && cd . && git checkout $1' -
+  ctags = "!sh -c '[ -f .git/hooks/ctags ] || git init; .git/hooks/ctags' git-ctags"
+  delete-branch = !sh -c 'git push origin :refs/heads/$1 && git branch -D $1' -
+  merge-branch = !git checkout master && git merge @{-1}
+  pr = !gh pull-request
+  st = status
+  up = !git fetch origin && git rebase origin/master
+  update-from = "!f() { git fetch $1 --prune; git merge --ff-only $1/$2 || git rebase --preserve-merges $1/$2; }; f"
+  ignored = !git ls-files -v | grep "^[[:lower:]]"
+[core]
+  excludesfile = ~/.gitignore_global
+  autocrlf = input
+  # editor = /Users/wmmc/.bin/edit
+[merge]
+  ff = only
+[fetch]
+  prune = true
+[user]
+  name = William Clarke
+  email = wmmclarke@gmail.com
+[credential]
+  helper = osxkeychain
+# [url "if [[ $SSH_KEY -eq 1]]; then URL='ssh://git@github.com/'; else URL='https://github.com/'; fi; $ED"]
+# insteadOf = https://github.com/
+[url "ssh://git@github.com/"]
+  insteadOf = $SSH_KEY
+# editor = "if [[ $IS_REMOTE -eq 1 ]]; then ED='vim'; else ED='subl -n -w'; fi; $ED"
+[include]
+  path = /Users/williamclarke/.gitconfig.local
+[include]
+  path = /Users/williamclarke/.secrets/gitconfig
+[include]
+  path = /Users/wmmc/.secrets/gitconfig
+[hub]
+	protocol = https
+[github]
+	user = will-clarke
