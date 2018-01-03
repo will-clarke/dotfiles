@@ -452,6 +452,11 @@ before packages are loaded."
   (evil-leader/set-key "o=" 'wmmc/increase-font-size)
   (evil-leader/set-key "o-" 'wmmc/decrease-font-size)
 
+  (eval-after-load "dired-mode"
+    (evilified-state-evilify dired-mode dired-mode-map
+      "G" 'end-of-buffer
+      "gg" 'beginning-of-buffer))
+
   (eval-after-load 'rspec-mode
     '(define-key rspec-compilation-mode-map (kbd "C-c C-c")
        'inf-ruby-switch-from-compilation))
@@ -492,8 +497,6 @@ before packages are loaded."
 
   (setq ruby-deep-indent-paren nil)
   (setq ruby-use-smie nil)
-
-
 
 
   )
