@@ -422,7 +422,6 @@ before packages are loaded."
   (define-key key-translation-map (kbd "§") (kbd "#"))
   (define-key key-translation-map (kbd "s-3") (kbd "#"))
 
-  (evil-declare-key 'normal dired-mode-map (kbd ";") 'dired-up-directory)
 
   (define-key evil-insert-state-map "\C-e" 'end-of-line)
   (define-key evil-visual-state-map "\C-e" 'end-of-line)
@@ -455,7 +454,8 @@ before packages are loaded."
   (eval-after-load "dired-mode"
     (evilified-state-evilify dired-mode dired-mode-map
       "G" 'end-of-buffer
-      "gg" 'beginning-of-buffer))
+      "gg" 'beginning-of-buffer
+      ";" 'dired-up-directory))
 
   (eval-after-load 'rspec-mode
     '(define-key rspec-compilation-mode-map (kbd "C-c C-c")
