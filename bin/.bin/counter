@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+counter=0
+
+while true; do
+    echo $counter
+    ((counter++))
+    sleep 1
+done

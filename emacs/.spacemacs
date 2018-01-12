@@ -497,6 +497,7 @@ before packages are loaded."
 
   (setq ruby-deep-indent-paren nil)
   (setq ruby-use-smie nil)
+  (setq ruby-insert-encoding-magic-comment nil)
 
 
   )
