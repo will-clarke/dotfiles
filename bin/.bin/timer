@@ -38,11 +38,11 @@ usage: timer 4  mins
     for n in $(seq $number_of_units)
     do
         sleep $seconds_to_sleep
-        printf "$n "
-        pluralize "$unit_name" $n
-        printf " passed...\n"
+        unit_type=$(pluralize "$unit_name" $n)
+        echo -en "\r $n $unit_type passed..."
 
         if [ $number_of_units == $n ]; then
+            echo -en "\r"
             echo "RING RING RING. Timer's up"
             echo ""
             for i in $(seq 10)
