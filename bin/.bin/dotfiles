@@ -228,6 +228,7 @@ function brew_bundle {
     #     sudo chown -R $(whoami):admin /usr/local
     # fi
     EMACS=$(which emacs) brew bundle --file="$DOTFILES_DIR/other/dotfiles_stuff/Brewfile" || true
+    brew linkapps emacs-plus || true
 }
 # INSTALL
 #################################################################################

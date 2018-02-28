@@ -36,6 +36,7 @@ brew 'pinentry-mac'
 brew 'global', args: ['with-pygments', 'with-ctags']
 brew 'fasd'
 brew 'z'
+brew 'stow'
 
 cask '1password'
 cask 'alfred'

@@ -49,7 +49,6 @@ This function should only modify configuration layer settings."
      emacs-lisp
      git
      markdown
-     neotree
      org
      (shell :variables
             shell-default-height 30
@@ -59,11 +58,9 @@ This function should only modify configuration layer settings."
      ;; spell-checking
      ;; syntax-checking
      version-control
-
      (ruby :variables
            ruby-test-runner 'rspec)
      ruby-on-rails
-
      yaml
      sql
      github
@@ -72,25 +69,18 @@ This function should only modify configuration layer settings."
      html
      csv
      dash
-
      terraform
-
      (elfeed :variables
              elfeed-feeds '(
                             "https://feeds.feedburner.com/37signals/beMH"
                             "https://www.joelonsoftware.com/feed/"
                             "https://feeds.feedburner.com/codinghorror"
                             "https://feeds.feedburner.com/SteveysBlogRants"
-
                             "https://www.reddit.com/r/cryptocurrency/.rss"
                             "https://www.reddit.com/r/altcoins/.rss"
-
                             ))
-
      deft
      erc
-     thrift
-
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
