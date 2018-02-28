@@ -44,11 +44,20 @@ function setup_apple_defaults {
     defaults write -g InitialKeyRepeat -int 15 # normal minimum is 15 (225 ms)
     defaults write -g KeyRepeat -int 1 # normal minimum is 2 (30 ms)
     defaults write -g AppleShowAllFiles -bool true
+    defaults write -g NSAutomaticSpellingCorrectionEnabled -bool false
 }
 function setup_spacemacs {
     if [ ! -d "$HOME/.emacs.d" ]; then
         git clone --recursive https://github.com/syl20bnr/spacemacs "$HOME/.emacs.d"
     fi
+}
+function setup_alfred {
+    cd "$HOME/Library/Application Support/Alfred 3/"
+    git clone https://github.com/will-clarke/alfred-preferences
+    mv Alfred.alfredpreferences Alfred.alfredpreferences--OLD
+    mv alfred-preferences/Alfred.alfredpreferences Alfred.alfredpreferences
+    rm -rf alfred-preferences
+    cd - 1> /dev/null
 }
 
 # BREW
@@ -71,7 +80,7 @@ function brew_bundle {
 function link {
     cd "$DOTFILES_DIR"
     stow -t ~ bash bin config db emacs git ruby tmux vim
-    cd - > /dev/null
+    cd - 1> /dev/null
     echo "Linked up a load of stuff to ~"
 }
 
@@ -81,7 +90,7 @@ function unlink {
     cd "$DOTFILES_DIR"
     stow -t ~ bash bin config db emacs git ruby tmux vim
     stow -D -t ~ bash bin config db emacs git ruby tmux vim
-    cd - > /dev/null
+    cd - 1> /dev/null
     echo "Deleted a load of symlinks"
 }
 
