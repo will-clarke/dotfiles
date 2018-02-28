@@ -227,7 +227,7 @@ function brew_bundle {
     #     # sudo chown -R $(whoami) /usr/local/var/homebrew
     #     sudo chown -R $(whoami):admin /usr/local
     # fi
-    EMACS=$(which emacs) brew bundle --global
+    EMACS=$(which emacs) brew bundle --file="$DOTFILES_DIR/Brewfile"
 }
 # INSTALL
 #################################################################################
