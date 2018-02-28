@@ -35,6 +35,7 @@ function download_dotfiles_repo {
 function setup {
     setup_apple_defaults
     setup_spacemacs
+    open $(find "$DOTFILES_DIR/other/dotfiles_stuff/fonts")
     echo "We've updated some Apple settings and ensured that Spacemacs is installed"
 }
 
