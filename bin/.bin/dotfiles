@@ -68,17 +68,21 @@ function brew_bundle {
 # LINK
 #############################################################
 function link {
+    cd "$DOTFILES_DIR"
     stow -t ~ bash bin config db emacs git ruby tmux vim
-    echo "Linked up a load of stuff"
+    cd - > /dev/null
+    echo "Linked up a load of stuff to ~"
 }
 
 # UNLINK
 #############################################################
 function unlink {
+    cd "$DOTFILES_DIR"
+    stow -t ~ bash bin config db emacs git ruby tmux vim
     stow -D -t ~ bash bin config db emacs git ruby tmux vim
+    cd - > /dev/null
     echo "Deleted a load of symlinks"
 }
-
 
 # INSTALL
 #############################################################
