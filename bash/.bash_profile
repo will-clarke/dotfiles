@@ -80,3 +80,5 @@ HISTFILESIZE=2000
 HISTSIZE=1000
 
 test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
+
+export SSL_CERT_FILE=/usr/local/etc/openssl/cert.pem

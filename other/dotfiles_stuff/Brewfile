@@ -37,6 +37,7 @@ brew 'global', args: ['with-pygments', 'with-ctags']
 brew 'fasd'
 brew 'z'
 brew 'stow'
+brew 'asciiquarium'
 
 cask '1password'
 cask 'alfred'
