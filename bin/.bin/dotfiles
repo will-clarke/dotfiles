@@ -35,16 +35,27 @@ function download_dotfiles_repo {
 function setup {
     setup_apple_defaults
     setup_spacemacs
+    setup_alfred
     open $(find "$DOTFILES_DIR/other/dotfiles_stuff/fonts")
+
+    download_mac_store_stuff
     echo "We've updated some Apple settings and ensured that Spacemacs is installed"
 }
-
+function download_mac_store_stuff{
+    echo "We've done everything!!!"
+    echo " Just trying to install some more stuff"
+    echo " It doesn't matter if this fails.."
+    mas signin $email_address
+    mas search monosnap
+    # mas search astrogif
+}
 function setup_apple_defaults {
     defaults write -g ApplePressAndHoldEnabled -bool false
     defaults write -g InitialKeyRepeat -int 15 # normal minimum is 15 (225 ms)
     defaults write -g KeyRepeat -int 1 # normal minimum is 2 (30 ms)
     defaults write -g AppleShowAllFiles -bool true
     defaults write -g NSAutomaticSpellingCorrectionEnabled -bool false
+    sudo spctl --master-disable # enable apps downloaded from anywhere...
 }
 function setup_spacemacs {
     if [ ! -d "$HOME/.emacs.d" ]; then

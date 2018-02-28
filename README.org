@@ -13,28 +13,12 @@
 - Some db / ruby dotfiles
 - A decent install script to get stuff up and running:
   dotfiles install
--
 
 *** Other apps that are funky and you should download:
 - Monosnap (from mac store)
 - Astrogif
 
-
 ** Todo
-
-- Get rid of alfred preference from git (?) It's really big...
-
-- Install Karabeiner & BTT better.
-
-:smiley:
-
-Change shells seamlessly (without having to rerun command)
-Install fonts automatically...
-Mac caps lock to ctrl on command line...
-Curson bigger
-sudo spctl --master-disable # enable apps downloaded from anywhere...
-make OSX-specific bin commands only available for macs
-
 define yasnippet directory properly
 
 Thumb drive: github ssh keys?
