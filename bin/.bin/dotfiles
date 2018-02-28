@@ -199,15 +199,15 @@ function files_for_home_dir {
 function setup {
     setup_apple_defaults
     setup_spacemacs
-    setup_mu4e
+    # setup_mu4e
     echo "We've updated some Apple settings and ensured that Spacemacs is installed"
 }
 
-function setup_mu4e {
-    mkdir -p ~/.mail/{gmail,sent,drafts,trash}
-    mbsync -a &
-    mu index --maildir=~/.mail &
-}
+# function setup_mu4e {
+#     mkdir -p ~/.mail/{gmail,sent,drafts,trash}
+#     mbsync -a &
+#     mu index --maildir=~/.mail &
+# }
 
 function setup_apple_defaults {
     defaults write -g ApplePressAndHoldEnabled -bool false
@@ -227,7 +227,7 @@ function brew_bundle {
     #     # sudo chown -R $(whoami) /usr/local/var/homebrew
     #     sudo chown -R $(whoami):admin /usr/local
     # fi
-    EMACS=$(which emacs) brew bundle --file="$DOTFILES_DIR/other/dotfiles_stuff/Brewfile"
+    EMACS=$(which emacs) brew bundle --file="$DOTFILES_DIR/other/dotfiles_stuff/Brewfile" || true
 }
 # INSTALL
 #################################################################################
