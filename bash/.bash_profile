@@ -75,4 +75,8 @@ export JAVA_HOME=$(/System/Library/Frameworks/JavaVM.framework/Versions/A/Comman
 
 export HEROKU_ORGANIZATION=deliveroo
 
+SHELL_SESSION_HISTORY=0
+HISTFILESIZE=2000
+HISTSIZE=1000
+
 test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"

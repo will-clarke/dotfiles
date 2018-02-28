@@ -29,7 +29,9 @@ This function should only modify configuration layer settings."
    dotspacemacs-configuration-layer-path '()
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(vimscript
+   '(
+     vimscript
+     php
      javascript
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
@@ -87,6 +89,7 @@ This function should only modify configuration layer settings."
 
      deft
      erc
+     thrift
 
      )
    ;; List of additional packages that will be installed without being

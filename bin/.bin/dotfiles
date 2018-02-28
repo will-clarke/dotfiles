@@ -223,10 +223,10 @@ function setup_spacemacs {
 # BREW
 #################################################################################
 function brew_bundle {
-    if [ ! -w /usr/local ]; then
-        # sudo chown -R $(whoami) /usr/local/var/homebrew
-        sudo chown -R $(whoami):admin /usr/local
-    fi
+    # if [ ! -w /usr/local ]; then
+    #     # sudo chown -R $(whoami) /usr/local/var/homebrew
+    #     sudo chown -R $(whoami):admin /usr/local
+    # fi
     EMACS=$(which emacs) brew bundle --global
 }
 # INSTALL

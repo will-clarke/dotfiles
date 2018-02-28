@@ -3,7 +3,7 @@
 ** Super-easy installation
    [[http://curlpipesh.tumblr.com/][(probably shouldn't be piping curl to the shell...)]]
 
-    ~curl https://raw.githubusercontent.com/will-clarke/dotfiles/master/bin/dotfiles | bash -s install~
+    ~curl https://raw.githubusercontent.com/will-clarke/dotfiles/master/bin/.bin/dotfiles | bash -s install~
 
 *** What this contains:
 
