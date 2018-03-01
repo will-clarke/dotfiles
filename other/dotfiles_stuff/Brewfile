@@ -62,6 +62,8 @@ cask 'gpgtools'
 cask 'font-fira-code'
 cask 'font-source-code-pro'
 cask 'upterm'
+cask 'ngrok'
+cask 'postgres' # postgresapp
 
 cask 'java'
 brew 'scala'
