@@ -64,6 +64,7 @@ cask 'font-source-code-pro'
 cask 'upterm'
 cask 'ngrok'
 cask 'postgres' # postgresapp
+cask 'awareness'
 
 cask 'java'
 brew 'scala'
