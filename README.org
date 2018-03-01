@@ -5,6 +5,10 @@
 
     ~curl https://raw.githubusercontent.com/will-clarke/dotfiles/master/bin/.bin/dotfiles | bash -s install~
 
+
+To start stuff like redis, you can use homebrew:
+~brew services start redis~
+
 *** What this contains:
 
 - [[https://github.com/syl20bnr/spacemacs][Spacemacs]] - Emacs with vim keybindings)
@@ -17,6 +21,7 @@
 *** Other apps that are funky and you should download:
 - Monosnap (from mac store)
 - Astrogif
+
 
 ** Todo
 define yasnippet directory properly
