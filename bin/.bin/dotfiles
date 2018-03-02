@@ -42,7 +42,7 @@ function setup {
     download_mac_store_stuff
     echo "We've updated some Apple settings and ensured that Spacemacs is installed"
 }
-function download_mac_store_stuff{
+function download_mac_store_stuff {
     echo "We've done everything!!!"
     echo " Just trying to install some more stuff"
     echo " It doesn't matter if this fails.."
