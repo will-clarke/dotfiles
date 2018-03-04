@@ -403,6 +403,7 @@ before packages are loaded."
   ;; TODO: put a 'documentation' secion here.. .including stuff like:
   ;;   ;; NB template selector BEGIN_SRC block == <s + TAB
 
+  (setq powerline-default-separator 'arrow) ;; potentially stop crashes..
 
   (setq erc-lurker-hide-list '("JOIN" "PART" "QUIT"))
   (setq erc-lurker-threshold-time 3600)
@@ -467,7 +468,7 @@ before packages are loaded."
   (evil-leader/set-key "on" 'wmmc/find-next-file)
 
   ;; to avoid wierd crashes when searching
-  (setq dotspacemacs-mode-line-unicode-symbols nil)
+  ;; (setq dotspacemacs-mode-line-unicode-symbols nil)
   (setq ediff-window-setup-function 'ediff-setup-windows-default)
 
 

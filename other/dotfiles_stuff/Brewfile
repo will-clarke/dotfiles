@@ -39,6 +39,7 @@ brew 'z'
 brew 'stow'
 brew 'asciiquarium'
 brew 'mas'
+brew 'pass'
 
 cask '1password'
 cask 'alfred'

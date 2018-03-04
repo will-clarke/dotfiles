@@ -8,13 +8,13 @@ function dotfiles_help {
     echo "
 Usage:
 
-dotfiles install    # sets up everything PERFECTLY™
+config install    # sets up everything PERFECTLY™
 
-dotfiles download   # download / update dotfiles repo
-dotfiles brew       # install from Brewfile
-dotfiles setup      # setup other stuff
-dotfiles link       # link all the things (with stow)
-dotfiles unlink     # unlink all the things (with stow)
+config download   # download / update dotfiles repo
+config brew       # install from Brewfile
+config setup      # setup other stuff
+config link       # link all the things (with stow)
+config unlink     # unlink all the things (with stow)
 "
 }
 
@@ -114,6 +114,7 @@ function install {
     brew_bundle
     link
     setup
+    reset
 }
 
 # MAIN

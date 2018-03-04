@@ -53,7 +53,8 @@ source_file_if_exists "$HOME/.bashrc.local"
 
 # Slow:
 # source_file_if_exists "/usr/local/bin/virtualenvwrapper.sh"
-# source_file_if_exists "/usr/local/etc/bash_completion.d/password-store"
+source_file_if_exists "/usr/local/etc/bash_completion.d/password-store"
+# source_file_if_exists "/usr/local/etc/bash_completion.d/pass"
 # execute_if_command_exists "fasd" 'eval "$(fasd --init auto)"'
 
 add_to_path_if_file_exists "PATH" "$HOME/Library/Haskell/bin"
@@ -82,3 +83,11 @@ HISTSIZE=1000
 test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
 
 export SSL_CERT_FILE=/usr/local/etc/openssl/cert.pem
+
+
+#### SETUP GPG AGENT
+if [ ! -S "$HOME/.gnupg/S.gpg-agent" ]; then
+    eval $(gpg-agent --daemon --log-file /tmp/gpg.log --pinentry-program /usr/local/bin/pinentry-mac)
+fi
+
+alias load_ssh="/Volumes/keys/load"

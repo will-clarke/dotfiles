@@ -55,3 +55,5 @@
 	protocol = https
 [github]
 	user = will-clarke
+[commit]
+	gpgsign = true
