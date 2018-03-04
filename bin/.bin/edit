@@ -1,2 +1,10 @@
 #!/bin/bash
-exec emacsclient --alternate-editor="" -c "$@"
+# exec emacsclient --alternate-editor="" -c "$@"
+
+# awesome new script from: https://medium.com/@bobbypriambodo/blazingly-fast-spacemacs-with-persistent-server-92260f2118b7
+emacsclient -n -e "(if (> (length (frame-list)) 1) 't)" 2> /dev/null | grep t &> /dev/null
+if [ "$?" -eq "1" ]; then
+    emacsclient -a '' -nqc "$@" &> /dev/null
+else
+    emacsclient -nq "$@" &> /dev/null
+fi

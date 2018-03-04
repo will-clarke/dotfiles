@@ -53,8 +53,7 @@ source_file_if_exists "$HOME/.bashrc.local"
 
 # Slow:
 # source_file_if_exists "/usr/local/bin/virtualenvwrapper.sh"
-source_file_if_exists "/usr/local/etc/bash_completion.d/password-store"
-# source_file_if_exists "/usr/local/etc/bash_completion.d/pass"
+source_file_if_exists "/usr/local/etc/bash_completion.d/pass"
 # execute_if_command_exists "fasd" 'eval "$(fasd --init auto)"'
 
 add_to_path_if_file_exists "PATH" "$HOME/Library/Haskell/bin"
