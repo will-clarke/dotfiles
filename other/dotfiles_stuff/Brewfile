@@ -40,6 +40,7 @@ brew 'stow'
 brew 'asciiquarium'
 brew 'mas'
 brew 'pass'
+brew 'awscli'
 
 cask '1password'
 cask 'alfred'
