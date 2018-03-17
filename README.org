@@ -3,7 +3,7 @@
 ** Super-easy installation
    [[http://curlpipesh.tumblr.com/][(probably shouldn't be piping curl to the shell...)]]
 
-    ~curl https://raw.githubusercontent.com/will-clarke/dotfiles/master/bin/.bin/dotfiles | bash -s install~
+    ~curl https://raw.githubusercontent.com/will-clarke/dotfiles/master/bin/.bin/config | bash -s install~
 
 
 To start stuff like redis, you can use homebrew:
@@ -29,7 +29,7 @@ define yasnippet directory properly
 Thumb drive: github ssh keys?
     ? 1password on thumb drive?
 
-    
+
 Work out how to store secrets: dropbox &&/|| thumb drive?
  - how to keep them in sync?
  - gpg encryption and stuff?
