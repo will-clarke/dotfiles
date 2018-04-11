@@ -493,6 +493,8 @@ before packages are loaded."
   (setq ruby-use-smie nil)
   (setq ruby-insert-encoding-magic-comment nil)
 
+  (setq deft-directory "~/Dropbox/notes")
+  (setq org-startup-folded nil)
 
   )
 
