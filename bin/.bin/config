@@ -23,7 +23,8 @@ config unlink     # unlink all the things (with stow)
 function download_dotfiles_repo {
     if [ ! -d "$DOTFILES_DIR" ]; then
         git clone --depth=1 https://github.com/will-clarke/dotfiles.git "$DOTFILES_DIR"
-        ### TODO: cd to repo and update github config to use ssh?????
+        cd "DOTFILES_DIR"
+        sed -i 's https://github.com/will-clarke/dotfiles.git git@github.com:will-clarke/dotfiles ' .git/config
         echo "> Dotfiles repo installed in $DOTFILES_DIR"
     else
         (cd "$DOTFILES_DIR" && git pull)
