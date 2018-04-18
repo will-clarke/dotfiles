@@ -34,6 +34,7 @@ function download_dotfiles_repo {
 # SETUP
 #############################################################
 function setup {
+    stow bash bin config db emacs email git other ruby tmux vim
     setup_apple_defaults
     setup_spacemacs
     setup_alfred
