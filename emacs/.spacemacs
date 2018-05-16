@@ -40,19 +40,25 @@ This function should only modify configuration layer settings."
      ;; ----------------------------------------------------------------
      ivy
      (auto-completion :variables
-                      auto-completion-return-key-behavior 'cycle
-                      auto-completion-tab-key-behavior 'complete
-                      auto-completion-complete-with-key-sequence nil
-                      auto-completion-complete-with-key-sequence-delay 0.1
                       auto-completion-enable-help-tooltip t
                       auto-completion-enable-sort-by-usage t
+                      auto-completion-tab-key-behavior 'complete
+                      auto-completion-return-key-behavior 'cycle
+                      auto-completion-complete-with-key-sequence nil
+                      auto-completion-complete-with-key-sequence-delay 0.1
                       auto-completion-private-snippets-directory "~/spacemacs.d/snippets")
 
      better-defaults
      emacs-lisp
+     (elm :variables
+          elm-format-command "elm-format-0.17"
+          )
+     ;; elm-sort-imports-on-save t
+     ;; elm-format-on-save t
      git
      markdown
      org
+     emoji
      (shell :variables
             shell-default-height 30
             shell-default-position 'bottom
@@ -451,6 +457,9 @@ before packages are loaded."
   (evil-leader/set-key "o=" 'wmmc/increase-font-size)
   (evil-leader/set-key "o-" 'wmmc/decrease-font-size)
 
+  (eval-after-load 'elm-mode
+    '(define-key evil-insert-state-map (kbd "<C-return>") 'newline))
+
   (eval-after-load "dired-mode"
     (evilified-state-evilify dired-mode dired-mode-map
       "G" 'end-of-buffer
@@ -514,10 +523,9 @@ This function is called at the very end of Spacemacs initialization."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(org-agenda-files (quote ("~/org/notes.org")))
  '(package-selected-packages
    (quote
-    (company-quickhelp pos-tip yasnippet-snippets yaml-mode xterm-color ws-butler winum which-key wgrep web-mode web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package unfill toc-org tagedit symon string-inflection sql-indent spaceline-all-the-icons smex smeargle slim-mode shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode ruby-refactor ruby-hash-syntax rubocop rspec-mode robe restart-emacs request rbenv rainbow-delimiters pug-mode projectile-rails phpunit phpcbf php-extras php-auto-yasnippets persp-mode password-generator paradox overseer orgit org-projectile org-present org-pomodoro org-mime org-download org-bullets org-brain open-junk-file ob-restclient ob-http neotree nameless mwim mvn multi-term move-text mmm-mode minitest meghanada maven-test-mode markdown-toc magit-gitflow magit-gh-pulls macrostep lorem-ipsum livid-mode linum-relative link-hint less-css-mode json-mode js2-refactor js-doc ivy-xref ivy-purpose ivy-hydra indent-guide impatient-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-make groovy-mode groovy-imports gradle-mode google-translate golden-ratio gnuplot gitignore-mode github-search github-clone gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md fuzzy font-lock+ flx-ido fill-column-indicator feature-mode fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help erc-yt erc-view-log erc-terminal-notifier erc-social-graph erc-image erc-hl-nicks ensime emmet-mode elisp-slime-nav elfeed-web elfeed-org elfeed-goodies editorconfig dumb-jump drupal-mode diminish diff-hl deft define-word dash-at-point dactyl-mode csv-mode counsel-projectile counsel-dash counsel-css company-web company-terraform company-tern company-statistics company-restclient company-php company-emacs-eclim column-enforce-mode coffee-mode clean-aindent-mode chruby centered-cursor-mode bundler browse-at-remote auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ac-ispell))))
+    (emojify emoji-cheat-sheet-plus company-quickhelp pos-tip company-emoji yasnippet-snippets yaml-mode xterm-color ws-butler winum which-key wgrep web-mode web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package unfill toc-org tagedit symon string-inflection sql-indent spaceline-all-the-icons smex smeargle slim-mode shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode ruby-refactor ruby-hash-syntax rubocop rspec-mode robe restart-emacs request rbenv rainbow-delimiters pug-mode projectile-rails phpunit phpcbf php-extras php-auto-yasnippets persp-mode password-generator paradox overseer orgit org-projectile org-present org-pomodoro org-mime org-download org-bullets org-brain open-junk-file ob-restclient ob-http neotree nameless mwim mvn multi-term move-text mmm-mode minitest meghanada maven-test-mode markdown-toc magit-gitflow magit-gh-pulls macrostep lorem-ipsum livid-mode linum-relative link-hint less-css-mode json-mode js2-refactor js-doc ivy-xref ivy-purpose ivy-hydra indent-guide impatient-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-make groovy-mode groovy-imports gradle-mode google-translate golden-ratio gnuplot gitignore-mode github-search github-clone gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md fuzzy font-lock+ flx-ido fill-column-indicator feature-mode fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help erc-yt erc-view-log erc-terminal-notifier erc-social-graph erc-image erc-hl-nicks ensime emmet-mode elm-mode elisp-slime-nav elfeed-web elfeed-org elfeed-goodies editorconfig dumb-jump drupal-mode diminish diff-hl deft define-word dactyl-mode csv-mode counsel-projectile counsel-css company-web company-terraform company-tern company-statistics company-restclient company-php company-emacs-eclim column-enforce-mode coffee-mode clean-aindent-mode chruby centered-cursor-mode bundler browse-at-remote auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ac-ispell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
