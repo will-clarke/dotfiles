@@ -49,6 +49,7 @@ source_file_if_exists "/usr/local/etc/profile.d/z.sh"
 source_file_if_exists "$HOME/dotfiles/other/dotfiles_stuff/git-completion.bash"
 source_file_if_exists "$HOME/.bashrc.local"
 source_file_if_exists "$HOME/.profile.local"
+source_file_if_exists "$HOME/.bash_profile.local"
 source_file_if_exists "$HOME/.bashrc.local"
 
 # Slow:
