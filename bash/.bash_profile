@@ -58,6 +58,7 @@ source_file_if_exists "/usr/local/etc/bash_completion.d/pass"
 # execute_if_command_exists "fasd" 'eval "$(fasd --init auto)"'
 
 add_to_path_if_file_exists "PATH" "$HOME/Library/Haskell/bin"
+add_to_path_if_file_exists "PATH" "$HOME/go/bin"
 add_to_path_if_file_exists "PATH" "$HOME/dotfiles/bin"
 add_to_path_if_file_exists "LIBRARY_PATH" "/usr/local/lib:/Users/wmmc/.nix-profile/lib"
 add_to_path_if_file_exists "CPATH" "/usr/local/include/:/Users/wmmc/.nix-profile/include"
