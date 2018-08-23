@@ -1,5 +1,4 @@
 alias l  $*
-alias git hub $*
 alias ga git add $*
 alias gco git checkout $*
 alias ff find-file $1

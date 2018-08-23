@@ -75,9 +75,9 @@ set_if_file_exists "EDITOR" "$HOME/.bin/edit"
 set_if_file_exists "RUST_SRC_PATH" "$HOME/.multirust/toolchains/nightly-x86_64-apple-darwin/lib/rustlib/src/rust/src/"
 set_if_file_exists "ORDERWEB_HOME" "$HOME/deliveroo/orderweb"
 
-export JAVA_HOME=$(/System/Library/Frameworks/JavaVM.framework/Versions/A/Commands/java_home)
-
-export HEROKU_ORGANIZATION=deliveroo
+if [ -e /System/Library/Frameworks/JavaVM.framework/Versions/A/Commands/java_home ]; then
+    export JAVA_HOME=$(/System/Library/Frameworks/JavaVM.framework/Versions/A/Commands/java_home)
+fi
 
 SHELL_SESSION_HISTORY=0
 HISTFILESIZE=2000
@@ -89,8 +89,14 @@ export SSL_CERT_FILE=/usr/local/etc/openssl/cert.pem
 
 
 #### SETUP GPG AGENT
-if [ ! -S "$HOME/.gnupg/S.gpg-agent" ]; then
+if [ $(uname) == "Darwin" ! -S "$HOME/.gnupg/S.gpg-agent" ]; then
     eval $(gpg-agent --daemon --log-file /tmp/gpg.log --pinentry-program /usr/local/bin/pinentry-mac)
+fi
+
+export GPG_TTY=$(tty)
+
+if hash gpg-agent &>/dev/null ; then
+    gpg-agent --daemon
 fi
 
 alias load_ssh="/Volumes/keys/load"
