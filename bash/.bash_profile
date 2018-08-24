@@ -71,7 +71,7 @@ add_to_path_if_file_exists "PATH" "$HOME/.cabal/bin"
 add_to_path_if_file_exists "PATH" "$HOME/Library/Haskell/bin"
 add_to_path_if_file_exists "PATH" "/Volumes/keys/bin"
 add_to_path_if_file_exists "PATH" "/usr/local/opt/elasticsearch@5.6/bin"
-set_if_file_exists "EDITOR" "$HOME/.bin/edit"
+# set_if_file_exists "EDITOR" "$HOME/.bin/edit"
 set_if_file_exists "RUST_SRC_PATH" "$HOME/.multirust/toolchains/nightly-x86_64-apple-darwin/lib/rustlib/src/rust/src/"
 set_if_file_exists "ORDERWEB_HOME" "$HOME/deliveroo/orderweb"
 
@@ -89,14 +89,18 @@ export SSL_CERT_FILE=/usr/local/etc/openssl/cert.pem
 
 
 #### SETUP GPG AGENT
-if [ $(uname) == "Darwin" ! -S "$HOME/.gnupg/S.gpg-agent" ]; then
+if [ $(uname) != "Darwin" ] && [ ! -S "$HOME/.gnupg/S.gpg-agent" ]; then
     eval $(gpg-agent --daemon --log-file /tmp/gpg.log --pinentry-program /usr/local/bin/pinentry-mac)
 fi
 
-export GPG_TTY=$(tty)
+export EDITOR=emacsclient
 
 if hash gpg-agent &>/dev/null ; then
     gpg-agent --daemon
 fi
+
+export GPG_TTY=$(tty)
+
+which brightness && brightness -set 700
 
 alias load_ssh="/Volumes/keys/load"

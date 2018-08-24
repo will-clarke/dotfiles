@@ -38,8 +38,8 @@
 [user]
   name = William Clarke
   email = wmmclarke@gmail.com
-[credential]
-  helper = osxkeychain
+# [credential]
+#   helper = osxkeychain
 # [url "if [[ $SSH_KEY -eq 1]]; then URL='ssh://git@github.com/'; else URL='https://github.com/'; fi; $ED"]
 # insteadOf = https://github.com/
 [url "ssh://git@github.com/"]
