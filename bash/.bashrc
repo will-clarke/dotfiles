@@ -15,7 +15,11 @@ export NVM_DIR="$HOME/.nvm"
 if hash setxkbmap &>/dev/null; then
     setxkbmap -option 'caps:ctrl_modifier'
 fi
+
 if hash xcape &>/dev/null; then
     xcape -e 'Caps_Lock=Escape' -t 100
 fi
+
+export GPG_TTY=$(tty)
+
 export VISUAL=emacsclient

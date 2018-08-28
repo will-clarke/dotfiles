@@ -99,8 +99,6 @@ if hash gpg-agent &>/dev/null ; then
     gpg-agent --daemon
 fi
 
-export GPG_TTY=$(tty)
-
-which brightness && brightness -set 700
+which brightness &>/dev/null && brightness -set 700
 
 alias load_ssh="/Volumes/keys/load"
