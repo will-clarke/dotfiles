@@ -102,3 +102,6 @@ fi
 which brightness &>/dev/null && brightness -set 700
 
 alias load_ssh="/Volumes/keys/load"
+
+# load emacs up first time
+edit

@@ -35,6 +35,7 @@ This function should only modify configuration layer settings."
    dotspacemacs-configuration-layers
    '(systemd
      neotree
+     clojure
      (rust :variables rust-format-on-save t)
      (go :variables go-use-gometalinter t)
      vimscript
