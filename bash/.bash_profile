@@ -94,14 +94,18 @@ if [ $(uname) != "Darwin" ] && [ ! -S "$HOME/.gnupg/S.gpg-agent" ]; then
 fi
 
 export EDITOR=emacsclient
+export ALTERNATE_EDITOR=""
 
-if hash gpg-agent &>/dev/null ; then
-    gpg-agent --daemon
-fi
+# if hash gpg-agent &>/dev/null ; then
+#     gpg-agent --daemon
+# fi
 
-which brightness &>/dev/null && brightness -set 700
+brightness -get &>/dev/null && brightness -set 700
 
 alias load_ssh="/Volumes/keys/load"
 
 # load emacs up first time
-edit
+
+emacs --daemon
+
+alias e="emacsclient -a '' -c"

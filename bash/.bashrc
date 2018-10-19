@@ -12,11 +12,11 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
 # for linux:
-if hash setxkbmap &>/dev/null; then
+if  [ $(uname) != "Darwin" ] && hash setxkbmap &>/dev/null; then
     setxkbmap -option 'caps:ctrl_modifier'
 fi
 
-if hash xcape &>/dev/null; then
+if [ $(uname) != "Darwin" ] && hash xcape &>/dev/null; then
     xcape -e 'Caps_Lock=Escape' -t 100
 fi
 
