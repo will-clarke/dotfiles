@@ -93,7 +93,7 @@ if [ $(uname) != "Darwin" ] && [ ! -S "$HOME/.gnupg/S.gpg-agent" ]; then
     eval $(gpg-agent --daemon --log-file /tmp/gpg.log --pinentry-program /usr/local/bin/pinentry-mac)
 fi
 
-export EDITOR=emacsclient
+export EDITOR="emacsclient -a '' -c"
 export ALTERNATE_EDITOR=""
 
 # if hash gpg-agent &>/dev/null ; then
@@ -106,6 +106,7 @@ alias load_ssh="/Volumes/keys/load"
 
 # load emacs up first time
 
-emacs --daemon
+# if emacsclient -a '' -c -e "()" &/dev/null
+# emacs --daemon
 
 alias e="emacsclient -a '' -c"
