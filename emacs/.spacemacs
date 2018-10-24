@@ -33,7 +33,9 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(systemd
+   '(
+     elixir
+     systemd
      neotree
      clojure
      (rust :variables rust-format-on-save t)
@@ -240,17 +242,17 @@ It should only modify the values of Spacemacs settings."
    ;; works in the GUI. (default nil)
    dotspacemacs-distinguish-gui-tab nil
 
-  ;;  ;; If non-nil `Y' is remapped to `y$' in Evil states. (default nil)
-  ;;  dotspacemacs-remap-Y-to-y$ t
-  ;;  ;; If non-nil, the shift mappings `<' and `>' retain visual state if used
-  ;;  ;; there. (default t)
-  ;; dotspacemacs-retain-visual-state-on-shift t
-  ;;  ;; If non-nil, `J' and `K' move lines up and down when in visual mode.
-  ;;  ;; (default nil)
-  ;;  dotspacemacs-visual-line-move-text nil
-  ;;  ;; If non-nil, inverse the meaning of `g' in `:substitute' Evil ex-command.
-  ;;  ;; (default nil)
-  ;;  dotspacemacs-ex-substitute-global nil
+   ;;  ;; If non-nil `Y' is remapped to `y$' in Evil states. (default nil)
+   ;;  dotspacemacs-remap-Y-to-y$ t
+   ;;  ;; If non-nil, the shift mappings `<' and `>' retain visual state if used
+   ;;  ;; there. (default t)
+   ;; dotspacemacs-retain-visual-state-on-shift t
+   ;;  ;; If non-nil, `J' and `K' move lines up and down when in visual mode.
+   ;;  ;; (default nil)
+   ;;  dotspacemacs-visual-line-move-text nil
+   ;;  ;; If non-nil, inverse the meaning of `g' in `:substitute' Evil ex-command.
+   ;;  ;; (default nil)
+   ;;  dotspacemacs-ex-substitute-global nil
 
    ;; Name of the default layout (default "Default")
    dotspacemacs-default-layout-name "Default"
@@ -480,8 +482,16 @@ before packages are loaded."
   ;; TODO: put a 'documentation' secion here.. .including stuff like:
   ;;   ;; NB template selector BEGIN_SRC block == <s + TAB
 
-  (with-eval-after-load 'org (setq org-agenda-files
-                                   '("~/org/notes.org")))
+  (with-eval-after-load 'org
+    (progn
+      (setq org-agenda-files
+            '("~/org"))
+      (setq org-refile-targets
+            '((nil :maxlevel . 3)
+              (org-agenda-files :maxlevel . 3)))
+      )
+    )
+
 
   (setq powerline-default-separator 'arrow) ;; potentially stop crashes..
 
@@ -604,21 +614,21 @@ before packages are loaded."
 This is an auto-generated function, do not modify its content directly, use
 Emacs customize menu instead.
 This function is called at the very end of Spacemacs initialization."
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (seeing-is-believing prettier-js elm-test-runner doom-modeline eldoc-eval shrink-path zeal-at-point yaml-mode xterm-color ws-butler winum which-key wgrep web-mode web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package unfill toml-mode toc-org terraform-mode hcl-mode tagedit sql-indent spaceline smex smeargle slim-mode shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restart-emacs request rbenv rainbow-delimiters racer pug-mode projectile-rails rake inflections phpunit phpcbf php-extras php-auto-yasnippets persp-mode pcre2el paradox spinner orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download org-bullets open-junk-file ob-restclient ob-http neotree mwim multi-term move-text mmm-mode minitest markdown-toc magit-gitflow magit-gh-pulls macrostep lorem-ipsum livid-mode skewer-mode linum-relative link-hint json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc ivy-hydra indent-guide hydra hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-make haml-mode google-translate golden-ratio go-guru go-eldoc gnuplot gitignore-mode github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gist gh marshal logito pcache ht gh-md fuzzy flycheck-rust flycheck-pos-tip flycheck-gometalinter flycheck-elm flycheck flx-ido flx fill-column-indicator feature-mode fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit magit magit-popup git-commit ghub with-editor evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight eshell-z eshell-prompt-extras esh-help erc-yt erc-view-log erc-social-graph erc-image erc-hl-nicks ensime sbt-mode scala-mode emoji-cheat-sheet-plus emmet-mode elm-mode elisp-slime-nav elfeed-web simple-httpd elfeed-org elfeed-goodies ace-jump-mode noflet powerline popwin elfeed dumb-jump f drupal-mode php-mode diminish diff-hl deft define-word dactyl-mode csv-mode counsel-projectile projectile pkg-info epl counsel-dash helm-dash helm helm-core counsel swiper ivy company-web web-completion-data company-tern s dash-functional tern dash company-statistics company-restclient restclient know-your-http-well company-quickhelp pos-tip company-go go-mode company-emoji company column-enforce-mode coffee-mode clean-aindent-mode chruby cargo markdown-mode rust-mode bundler inf-ruby bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol auto-compile packed async aggressive-indent adaptive-wrap ace-window ace-link avy ac-ispell auto-complete popup))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
-)
+  (custom-set-variables
+   ;; custom-set-variables was added by Custom.
+   ;; If you edit it by hand, you could mess it up, so be careful.
+   ;; Your init file should contain only one such instance.
+   ;; If there is more than one, they won't work right.
+   '(package-selected-packages
+     (quote
+      (ob-elixir flycheck-mix flycheck-credo alchemist zeal-at-point yaml-mode xterm-color ws-butler winum which-key wgrep web-mode web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package unfill toml-mode toc-org terraform-mode hcl-mode tagedit sql-indent spaceline smex smeargle slim-mode shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restart-emacs request rbenv rainbow-delimiters racer pug-mode projectile-rails rake inflections phpunit phpcbf php-extras php-auto-yasnippets persp-mode pcre2el paradox spinner orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download org-bullets open-junk-file ob-restclient ob-http neotree mwim multi-term move-text mmm-mode minitest markdown-toc magit-gitflow magit-gh-pulls macrostep lorem-ipsum livid-mode skewer-mode linum-relative link-hint json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc ivy-hydra indent-guide hydra hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-make haml-mode google-translate golden-ratio go-guru go-eldoc gnuplot gitignore-mode github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gist gh marshal logito pcache ht gh-md fuzzy flycheck-rust flycheck-pos-tip flycheck-gometalinter flycheck-elm flycheck flx-ido flx fill-column-indicator feature-mode fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit magit magit-popup git-commit ghub with-editor evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight eshell-z eshell-prompt-extras esh-help erc-yt erc-view-log erc-social-graph erc-image erc-hl-nicks ensime sbt-mode scala-mode emoji-cheat-sheet-plus emmet-mode elm-mode elisp-slime-nav elfeed-web simple-httpd elfeed-org elfeed-goodies ace-jump-mode noflet powerline popwin elfeed dumb-jump f drupal-mode php-mode diminish diff-hl deft define-word dactyl-mode csv-mode counsel-projectile projectile pkg-info epl counsel-dash helm-dash helm helm-core counsel swiper ivy company-web web-completion-data company-tern s dash-functional tern dash company-statistics company-restclient restclient know-your-http-well company-quickhelp pos-tip company-go go-mode company-emoji company column-enforce-mode coffee-mode clean-aindent-mode chruby cargo markdown-mode rust-mode bundler inf-ruby bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol auto-compile packed async aggressive-indent adaptive-wrap ace-window ace-link avy ac-ispell auto-complete popup))))
+  (custom-set-faces
+   ;; custom-set-faces was added by Custom.
+   ;; If you edit it by hand, you could mess it up, so be careful.
+   ;; Your init file should contain only one such instance.
+   ;; If there is more than one, they won't work right.
+   )
+  )
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
