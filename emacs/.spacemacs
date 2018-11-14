@@ -34,6 +34,8 @@ This function should only modify configuration layer settings."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     docker
+     python
      elixir
      systemd
      neotree
@@ -105,7 +107,9 @@ This function should only modify configuration layer settings."
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages '(
+                                      apib-mode
+                                      )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
@@ -457,8 +461,8 @@ It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
 
   ;; Scala stuff
+  (push '("ensime" . "melpa-stable") package-pinned-packages)
   (push '("melpa-stable" . "stable.melpa.org/packages/") configuration-layer-elpa-archives)
-  (push '(ensime . "melpa-stable") package-pinned-packages)
   (setq-default flycheck-scalastylerc "/usr/local/etc/scalastyle_config.xml")
 
   )
@@ -487,11 +491,31 @@ before packages are loaded."
       (setq org-agenda-files
             '("~/org"))
       (setq org-refile-targets
-            '((nil :maxlevel . 3)
-              (org-agenda-files :maxlevel . 3)))
+            '((nil :maxlevel . 2)
+              (org-agenda-files :maxlevel . 2)))
       )
+    (setq org-capture-templates
+          '(("t" "TODO" entry (file+headline "~/org/todo.org" "Todo")
+             "* TODO %? %^G \n  %U" :empty-lines 1)
+            ("s" "Scheduled TODO" entry (file+headline "~/org/todo.org" "Todo")
+             "* TODO %? %^G \nSCHEDULED: %^t\n  %U" :empty-lines 1)
+            ("d" "Deadline" entry (file+headline "~/org/todo.org" "Todo")
+             "* TODO %? %^G \n  DEADLINE: %^t" :empty-lines 1)
+            ("w" "Work" entry (file+headline "~/org/work.org" "Work")
+             "* TODO %? %^G\n%T")
+            ("p" "Priority" entry (file+headline "~/org/todo.org" "Todo")
+             "* TODO [#A] %? %^G \n  SCHEDULED: %^t")
+            ("l" "Link" entry (file+headline "~/org/todo.org" "Todo")
+             "* TODO %? %^G\n %a")
+            ("n" "Note" entry (file+headline "~/org/notes.org" "Notes")
+             "* %? %^G\n%U" :empty-lines 1)
+            ("j" "Journal" entry (file+datetree "~/org/journal.org")
+             "* %? %^G\nEntered on %U\n")))
     )
 
+  (autoload 'apib-mode "apib-mode"
+    "Major mode for editing API Blueprint files" t)
+  (add-to-list 'auto-mode-alist '("\\.apib\\'" . apib-mode))
 
   (setq powerline-default-separator 'arrow) ;; potentially stop crashes..
 
@@ -614,21 +638,21 @@ before packages are loaded."
 This is an auto-generated function, do not modify its content directly, use
 Emacs customize menu instead.
 This function is called at the very end of Spacemacs initialization."
-  (custom-set-variables
-   ;; custom-set-variables was added by Custom.
-   ;; If you edit it by hand, you could mess it up, so be careful.
-   ;; Your init file should contain only one such instance.
-   ;; If there is more than one, they won't work right.
-   '(package-selected-packages
-     (quote
-      (ob-elixir flycheck-mix flycheck-credo alchemist zeal-at-point yaml-mode xterm-color ws-butler winum which-key wgrep web-mode web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package unfill toml-mode toc-org terraform-mode hcl-mode tagedit sql-indent spaceline smex smeargle slim-mode shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restart-emacs request rbenv rainbow-delimiters racer pug-mode projectile-rails rake inflections phpunit phpcbf php-extras php-auto-yasnippets persp-mode pcre2el paradox spinner orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download org-bullets open-junk-file ob-restclient ob-http neotree mwim multi-term move-text mmm-mode minitest markdown-toc magit-gitflow magit-gh-pulls macrostep lorem-ipsum livid-mode skewer-mode linum-relative link-hint json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc ivy-hydra indent-guide hydra hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-make haml-mode google-translate golden-ratio go-guru go-eldoc gnuplot gitignore-mode github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gist gh marshal logito pcache ht gh-md fuzzy flycheck-rust flycheck-pos-tip flycheck-gometalinter flycheck-elm flycheck flx-ido flx fill-column-indicator feature-mode fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit magit magit-popup git-commit ghub with-editor evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight eshell-z eshell-prompt-extras esh-help erc-yt erc-view-log erc-social-graph erc-image erc-hl-nicks ensime sbt-mode scala-mode emoji-cheat-sheet-plus emmet-mode elm-mode elisp-slime-nav elfeed-web simple-httpd elfeed-org elfeed-goodies ace-jump-mode noflet powerline popwin elfeed dumb-jump f drupal-mode php-mode diminish diff-hl deft define-word dactyl-mode csv-mode counsel-projectile projectile pkg-info epl counsel-dash helm-dash helm helm-core counsel swiper ivy company-web web-completion-data company-tern s dash-functional tern dash company-statistics company-restclient restclient know-your-http-well company-quickhelp pos-tip company-go go-mode company-emoji company column-enforce-mode coffee-mode clean-aindent-mode chruby cargo markdown-mode rust-mode bundler inf-ruby bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol auto-compile packed async aggressive-indent adaptive-wrap ace-window ace-link avy ac-ispell auto-complete popup))))
-  (custom-set-faces
-   ;; custom-set-faces was added by Custom.
-   ;; If you edit it by hand, you could mess it up, so be careful.
-   ;; Your init file should contain only one such instance.
-   ;; If there is more than one, they won't work right.
-   )
-  )
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (apib-mode zeal-at-point yaml-mode xterm-color ws-butler winum which-key wgrep web-mode web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package unfill toml-mode toc-org terraform-mode hcl-mode tagedit sql-indent spaceline smex smeargle slim-mode shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restart-emacs request rbenv rainbow-delimiters racer pug-mode projectile-rails rake inflections phpunit phpcbf php-extras php-auto-yasnippets persp-mode pcre2el paradox spinner orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download org-bullets open-junk-file ob-restclient ob-http neotree mwim multi-term move-text mmm-mode minitest markdown-toc magit-gitflow magit-gh-pulls macrostep lorem-ipsum livid-mode skewer-mode linum-relative link-hint json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc ivy-hydra indent-guide hydra hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-make haml-mode google-translate golden-ratio go-guru go-eldoc gnuplot gitignore-mode github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gist gh marshal logito pcache ht gh-md fuzzy flycheck-rust flycheck-pos-tip flycheck-gometalinter flycheck-elm flycheck flx-ido flx fill-column-indicator feature-mode fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit magit magit-popup git-commit ghub with-editor evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight eshell-z eshell-prompt-extras esh-help erc-yt erc-view-log erc-social-graph erc-image erc-hl-nicks ensime sbt-mode scala-mode emoji-cheat-sheet-plus emmet-mode elm-mode elisp-slime-nav elfeed-web simple-httpd elfeed-org elfeed-goodies ace-jump-mode noflet powerline popwin elfeed dumb-jump f drupal-mode php-mode diminish diff-hl deft define-word dactyl-mode csv-mode counsel-projectile projectile pkg-info epl counsel-dash helm-dash helm helm-core counsel swiper ivy company-web web-completion-data company-tern s dash-functional tern dash company-statistics company-restclient restclient know-your-http-well company-quickhelp pos-tip company-go go-mode company-emoji company column-enforce-mode coffee-mode clean-aindent-mode chruby cargo markdown-mode rust-mode bundler inf-ruby bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol auto-compile packed async aggressive-indent adaptive-wrap ace-window ace-link avy ac-ispell auto-complete popup))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

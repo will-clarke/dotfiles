@@ -8,6 +8,12 @@ if hash hub &>/dev/null; then
     eval "$(hub alias -s)"
 fi
 
+if hash go &>/dev/null ; then
+    export PATH=$PATH:$GOPATH/bin
+    export PATH=$PATH:$(go env GOPATH)/bin
+    export GOPATH=$(go env GOPATH)
+fi
+
 export "PS1"="\w > "
 
 source_file_if_exists() {
