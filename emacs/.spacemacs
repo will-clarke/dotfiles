@@ -33,13 +33,14 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(
-     docker
-     python
+   '(python
+     clojure
      elixir
+     docker
      systemd
      neotree
-     clojure
+     gtags
+     ranger
      (rust :variables rust-format-on-save t)
      (go :variables go-use-gometalinter t)
      vimscript
