@@ -16,14 +16,12 @@ brew 'hub'
 brew 'isync'
 brew 'libyaml'
 brew 'markdown'
-# brew 'msmtp'
-# brew 'mu', args: ['with-emacs']
 brew 'node'
 brew 'openssl'
 brew 'postgres'
 brew 'rbenv'
 brew 'ripgrep'
-brew 'reattach-to-user-namespace'
+brew 'reattach-to-user-namespace' # vim / tmux integration
 brew 'redis'
 brew 'the_silver_searcher'
 brew 'tmux'
@@ -38,38 +36,41 @@ brew 'fasd'
 brew 'z'
 brew 'stow'
 brew 'asciiquarium'
-brew 'mas'
 brew 'pass'
 brew 'awscli'
-brew 'drafter'
+brew 'drafter' # for apib files
+brew 'mas'     # install os apps from the CLI
 
 cask '1password'
 cask 'alfred'
 cask 'atom'
-# cask 'bettertouchtool'
 cask 'caffeine'
-# cask 'charles'
-# cask 'cocoapacketanalyzer'
 cask 'dash'
 cask 'disk-inventory-x'
 cask 'dropbox'
 cask 'flux'
 cask 'google-chrome'
-cask 'growlnotify'
-# cask 'imageoptim'
 cask 'iterm2'
 cask 'karabiner-elements'
 cask 'slack'
 cask 'gpgtools'
 cask 'font-fira-code'
 cask 'font-source-code-pro'
-cask 'upterm'
 cask 'ngrok'
 cask 'postgres' # postgresapp
 cask 'awareness'
 
 cask 'shiftit'
-cask 'flycut'
+cask 'flycut'  # clipboard history
 
 cask 'java'
 brew 'scala'
+
+# brew 'msmtp'                     # email stuff
+# brew 'mu', args: ['with-emacs']  # email stuff
+# cask 'growlnotify'
+# cask 'imageoptim'
+# cask 'bettertouchtool'
+# cask 'upterm'
+# cask 'charles'                   # proxy / HTTP inspector
+# cask 'cocoapacketanalyzer'
