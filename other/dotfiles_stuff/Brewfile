@@ -41,6 +41,7 @@ brew 'asciiquarium'
 brew 'mas'
 brew 'pass'
 brew 'awscli'
+brew 'drafter'
 
 cask '1password'
 cask 'alfred'
