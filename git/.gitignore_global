@@ -1,6 +1,6 @@
 # compiled source #
 ###################
-*.com
+# *.com # for some reason this interferes with vendor directories
 *.class
 *.dll
 *.exe
