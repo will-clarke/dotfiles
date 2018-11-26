@@ -39,7 +39,7 @@ This function should only modify configuration layer settings."
      docker
      systemd
      neotree
-     gtags
+     ;; gtags
      ranger
      (rust :variables rust-format-on-save t)
      (go :variables go-use-gometalinter t
