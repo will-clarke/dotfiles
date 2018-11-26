@@ -42,7 +42,11 @@ This function should only modify configuration layer settings."
      gtags
      ranger
      (rust :variables rust-format-on-save t)
-     go
+     (go :variables go-use-gometalinter t
+         go-format-before-save t
+         godoc-at-point-function 'godoc-gogetdoc
+         gofmt-command "goimports"
+         )
      vimscript
      php
      javascript
