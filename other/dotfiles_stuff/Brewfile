@@ -40,6 +40,7 @@ brew 'pass'
 brew 'awscli'
 brew 'drafter' # for apib files
 brew 'mas'     # install os apps from the CLI
+brew 'terminal-notifier'
 
 cask '1password'
 cask 'alfred'
