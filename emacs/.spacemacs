@@ -516,7 +516,36 @@ before packages are loaded."
              "* %? %^G\n%U" :empty-lines 1)
             ("j" "Journal" entry (file+datetree "~/org/journal.org")
              "* %? %^G\nEntered on %U\n")))
+
+    ;; Needs terminal-notifier (brew install terminal-notifier)
+    (defun notify-osx (title message)
+      (call-process "terminal-notifier"
+                    nil 0 nil
+                    "-group" "Emacs"
+                    "-title" title
+                    "-sender" "org.gnu.Emacs"
+                    ;; -sound default
+                    "-message" message))
+
+    ;; org-pomodoro mode hooks
+    (add-hook 'org-pomodoro-finished-hook
+              (lambda ()
+                (notify-osx "Pomodoro completed!" "Time for a break.")))
+
+    (add-hook 'org-pomodoro-break-finished-hook
+              (lambda ()
+                (notify-osx "Pomodoro Short Break Finished" "Ready for Another?")))
+
+    (add-hook 'org-pomodoro-long-break-finished-hook
+              (lambda ()
+                (notify-osx "Pomodoro Long Break Finished" "Ready for Another?")))
+
+    (add-hook 'org-pomodoro-killed-hook
+              (lambda ()
+                (notify-osx "Pomodoro Killed" "One does not simply kill a pomodoro!")))
+
     )
+
 
   (autoload 'apib-mode "apib-mode"
     "Major mode for editing API Blueprint files" t)
