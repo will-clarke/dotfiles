@@ -37,6 +37,7 @@ This function should only modify configuration layer settings."
    '(python
      clojure
      elixir
+     haskell
      docker
      systemd
      neotree
