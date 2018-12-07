@@ -683,12 +683,15 @@ before packages are loaded."
          (funcall concatHome "/.rbenv/shims")
          (funcall concatHome "/.local/bin")
          (funcall concatHome "/.cabal/bin")
-         (getenv "PATH")
          ) )
        )
-    (setenv "PATH" (mapconcat 'identity mypaths ":") )
-    (setq exec-path (append mypaths (list "." exec-directory)) )
+    (setenv "PATH" (concat (mapconcat 'identity mypaths ":")  ":" (getenv "PATH")))
+    (setq exec-path (append mypaths (list exec-directory) exec-path) )
     )
+
+  ;; Solves error: ls does not support –dired; see `dired-use-ls-dired` for more details.
+  (when (string= system-type "darwin")
+    (setq dired-use-ls-dired nil))
 
   (defun wmmc/marked-markdown-preview ()
     "run Marked on the current file if Marked is installed;
