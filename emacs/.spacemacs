@@ -1,8 +1,16 @@
 ;; -*- mode: emacs-lisp; lexical-binding: t -*-
-;; This file is loaded by Spacemacs at startup.
-;; It must be stored in your home directory.
 
-;; Stuff to ask about: Y$
+;; MY DOCS
+
+;; template selector BEGIN_SRC block == <s + TAB
+
+;; rg ripgrep:
+;; (make sure it's actually rg :| )
+;; How to filter by filename
+;; `contact_reason -- -g=*md`
+
+;; Vim surround: ysiw" (iw is a text object)
+
 
 (defun dotspacemacs/layers ()
   "Layer configuration:
@@ -528,17 +536,6 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
-
-  ;; MY DOCS
-
-  ;; template selector BEGIN_SRC block == <s + TAB
-
-  ;; rg ripgrep:
-  ;; (make sure it's actually rg :| )
-  ;; How to filter by filename
-  ;; `contact_reason -- -g=*md`
-
-  ;; (customize-set-variable 'evil-want-Y-yank-to-eol vim-style-remap-Y-to-y$)
 
   (require 'haskell-interactive-mode) (define-key evil-insert-state-map (kbd "C-k" ) 'nil) (define-key haskell-interactive-mode-map (kbd "C-j") #'haskell-interactive-mode-history-next) (define-key haskell-interactive-mode-map (kbd "C-k") #'haskell-interactive-mode-history-previous)
 
