@@ -30,6 +30,15 @@ add_to_path_if_file_exists() {
     fi
 }
 
+add_to_path_if_directory_exists() {
+    path_var="$1"
+    path="$2"
+    if [ -d "$2" ]; then
+        echo "directory $2 exists"
+        export "$path_var"="$path:$PATH"
+    fi
+}
+
 set_if_file_exists() {
     var_name="$1"
     path="$2"
@@ -69,7 +78,6 @@ add_to_path_if_file_exists "PATH" "$HOME/dotfiles/bin"
 add_to_path_if_file_exists "LIBRARY_PATH" "/usr/local/lib:/Users/wmmc/.nix-profile/lib"
 add_to_path_if_file_exists "CPATH" "/usr/local/include/:/Users/wmmc/.nix-profile/include"
 add_to_path_if_file_exists "PATH" "$HOME/.bin"
-add_to_path_if_file_exists "PATH" "$HOME/.local/bin"
 add_to_path_if_file_exists "PATH" "$HOME/.bin.local"
 add_to_path_if_file_exists "PATH" "/Applications/Postgres.app/Contents/Versions/latest/bin"
 add_to_path_if_file_exists "PATH" "$HOME/.cargo/bin"
@@ -78,6 +86,9 @@ add_to_path_if_file_exists "PATH" "$HOME/.cabal/bin"
 add_to_path_if_file_exists "PATH" "$HOME/Library/Haskell/bin"
 add_to_path_if_file_exists "PATH" "/Volumes/keys/bin"
 add_to_path_if_file_exists "PATH" "/usr/local/opt/elasticsearch@5.6/bin"
+
+add_to_path_if_directory_exists "PATH" "$HOME/.local/bin"
+
 # set_if_file_exists "EDITOR" "$HOME/.bin/edit"
 set_if_file_exists "RUST_SRC_PATH" "$HOME/.multirust/toolchains/nightly-x86_64-apple-darwin/lib/rustlib/src/rust/src/"
 set_if_file_exists "ORDERWEB_HOME" "$HOME/deliveroo/orderweb"
