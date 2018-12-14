@@ -126,7 +126,8 @@ This function should only modify configuration layer settings."
      erc
      ;; emoji
      emacs-lisp
-     spell-checking
+     (spell-checking :variables
+                     spell-checking-enable-by-default nil)
      multiple-cursors
      )
    ;; List of additional packages that will be installed without being
