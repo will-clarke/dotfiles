@@ -130,3 +130,10 @@ alias load_ssh="/Volumes/keys/load"
 alias e="emacsclient -a '' -c"
 alias glog="git log --pretty=format:'%Cred%h%Creset %<(50,trunc)%s %Cgreen(%cr) %C(bold blue)%<(16,trunc)%an%Creset %<(32,trunc)%D'"
 alias st-zeus="OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES zeus start"
+
+
+if fortune &>/dev/null; then
+    # if cowsay &>/dev/null; then
+    fortune computers | cowsay
+    # fi
+fi
