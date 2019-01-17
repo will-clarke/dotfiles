@@ -34,7 +34,6 @@ add_to_path_if_directory_exists() {
     path_var="$1"
     path="$2"
     if [ -d "$2" ]; then
-        echo "directory $2 exists"
         export "$path_var"="$path:$PATH"
     fi
 }
@@ -137,3 +136,4 @@ if fortune &>/dev/null; then
     fortune computers | cowsay
     # fi
 fi
+if [ -e /Users/wmmc/.nix-profile/etc/profile.d/nix.sh ]; then . /Users/wmmc/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
