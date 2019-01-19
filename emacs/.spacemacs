@@ -541,8 +541,11 @@ before packages are loaded."
   ;; (setq large-file-warning-threshold nil)
   ;; (setq tags-add-tables nil)
 
-  (require 'inf-haskell)
-  (require 'haskell-interactive-mode) (define-key evil-insert-state-map (kbd "C-k" ) 'nil) (define-key haskell-interactive-mode-map (kbd "C-j") #'haskell-interactive-mode-history-next) (define-key haskell-interactive-mode-map (kbd "C-k") #'haskell-interactive-mode-history-previous)
+  ;; (require 'inf-haskell)
+  ;; (require 'haskell-interactive-mode)
+  ;; (define-key evil-insert-state-map (kbd "C-n" ) 'nil)
+  ;; (define-key haskell-interactive-mode-map (kbd "C-n") #'haskell-interactive-mode-history-next)
+  ;; (define-key haskell-interactive-mode-map (kbd "C-p") #'haskell-interactive-mode-history-previous)
   ;; (setq intero-whitelist '("~/Dropbox/dev/haskell/snake/app/Main.hs"))
 
 
