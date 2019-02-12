@@ -89,7 +89,7 @@ This function should only modify configuration layer settings."
      git
      markdown
      (org :variables
-          org-enable-trello-support t
+          ;; org-enable-trello-support t
           org-enable-hugo-support t
           org-want-todo-bindings t
           org-enable-github-support t
@@ -595,7 +595,6 @@ before packages are loaded."
 
 
   (require 'haskell-interactive-mode) (define-key evil-insert-state-map (kbd "C-k" ) 'nil) (define-key haskell-interactive-mode-map (kbd "C-j") #'haskell-interactive-mode-history-next) (define-key haskell-interactive-mode-map (kbd "C-k") #'haskell-interactive-mode-history-previous)
->>>>>>> Stashed changes
 
   (with-eval-after-load 'org
     (progn
