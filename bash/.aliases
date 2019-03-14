@@ -86,4 +86,6 @@ alias z="fasd_cd -d"
 
 alias mux=tmuxinator
 
-alias cdroot="cd $(git root)"
+cdroot() {
+         cd $(git root)
+}
