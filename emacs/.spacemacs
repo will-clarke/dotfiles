@@ -90,7 +90,7 @@ This function should only modify configuration layer settings."
      markdown
      (org :variables
           ;; org-enable-trello-support t
-          org-enable-hugo-support t
+          ;; org-enable-hugo-support t
           org-want-todo-bindings t
           org-enable-github-support t
           org-enable-org-journal-support t
@@ -570,6 +570,8 @@ before packages are loaded."
 
   ;; How to log into a db server on emacs:
   ;; M-X  sql-postgres
+
+  (setq rspec-use-spring-when-possible nil)
 
   (setq sql-postgres-login-params
         '((user :default "postgres")
