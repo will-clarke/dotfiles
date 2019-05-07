@@ -54,6 +54,7 @@ This function should only modify configuration layer settings."
      clojure
      elixir
      nixos
+     games
      (haskell :variables
               ;; haskell-completion-backend 'intero
               haskell-enable-hindent-style "johan-tibell"
