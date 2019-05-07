@@ -9,9 +9,12 @@ cask_args appdir: '/Applications'
 brew 'automake'
 brew 'ctags'
 brew 'bash'
-brew 'emacs-plus', args: ['with-cocoa', 'with-gnutls', 'with-librsvg', 'with-imagemagick', 'with-spacemacs-icon']
+# After installing emacs-plus:
+# $ ln -s /usr/local/Cellar/emacs-plus/*/Emacs.app/ /Applications/
+brew 'emacs-plus'
 brew 'git'
 brew 'heroku-toolbelt'
+brew 'python'
 brew 'hub'
 brew 'isync'
 brew 'libyaml'
@@ -38,8 +41,8 @@ brew 'stow'
 brew 'asciiquarium'
 brew 'pass'
 brew 'awscli'
-brew 'drafter' # for apib files
-brew 'mas'     # install os apps from the CLI
+# brew 'drafter' # for apib files
+# brew 'mas'     # install os apps from the CLI
 brew 'terminal-notifier'
 
 cask '1password'
@@ -63,6 +66,8 @@ cask 'awareness'
 
 cask 'shiftit'
 cask 'flycut'  # clipboard history
+
+cask 'tenor' # gifs
 
 cask 'java'
 brew 'scala'

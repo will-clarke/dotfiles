@@ -141,8 +141,7 @@ This function should only modify configuration layer settings."
             ("irc.myworkirc.net"
              :port "1234"
              :nick "some-suit"
-             :password "hunter2"))
-      )
+             :password "hunter2")))
      ;; emoji
      emacs-lisp
      (spell-checking :variables
@@ -547,6 +546,7 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
   "Library to load while dumping.
 This function is called only while dumping Spacemacs configuration. You can
 `require' or `load' the libraries of your choice that will be included in the
+
 dump."
   )
 
@@ -782,18 +782,18 @@ before packages are loaded."
 This is an auto-generated function, do not modify its content directly, use
 Emacs customize menu instead.
 This function is called at the very end of Spacemacs initialization."
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (yasnippet-snippets xterm-color writeroom-mode web-mode sql-indent ruby-test-mode robe racer pipenv paradox ox-hugo orgit org-mime org-journal org-brain meghanada magit-svn link-hint groovy-mode git-timemachine git-link forge emacsql expand-region evil-nerd-commenter evil-mc evil-matchit evil-magit elm-mode dumb-jump doom-modeline docker diff-hl counsel-projectile cider-eval-sexp-fu cider clojure-mode centered-cursor-mode browse-at-remote aggressive-indent ace-window ace-link rust-mode counsel swiper helm-dash elfeed company anzu flycheck helm window-purpose ivy multiple-cursors magit-popup magit transient ghub with-editor markdown-mode alert inf-ruby pythonic haml-mode js2-mode all-the-icons powerline dash which-key evil hydra org-plus-contrib yapfify yaml-mode ws-butler winum wgrep web-beautify volatile-highlights visual-fill-column vi-tilde-fringe uuidgen use-package unfill treepy toml-mode toc-org tagedit tablist systemd symon string-inflection spinner spaceline-all-the-icons smex smeargle slim-mode shrink-path shell-pop sesman seeing-is-believing scss-mode sass-mode rvm ruby-tools ruby-refactor ruby-hash-syntax rubocop rspec-mode restart-emacs request reformatter rbenv ranger rainbow-delimiters queue pyvenv pytest pyenv-mode py-isort pug-mode projectile-rails prettier-js pippel pip-requirements persp-mode pcre2el password-generator ox-gfm overseer org-projectile org-present org-pomodoro org-download org-bullets open-junk-file ob-restclient ob-http ob-elixir nix-mode neotree nameless mwim mvn multi-term move-text mmm-mode minitest maven-test-mode markdown-toc magithub magit-gitflow macrostep lorem-ipsum log4e livid-mode live-py-mode linum-relative less-css-mode json-navigator json-mode js2-refactor js-doc ivy-yasnippet ivy-xref ivy-purpose ivy-hydra indent-guide importmagic impatient-mode imenu-list hungry-delete hlint-refactor hl-todo hindent highlight-parentheses highlight-numbers highlight-indentation helm-make helm-core haskell-snippets groovy-imports graphviz-dot-mode graphql gradle-mode goto-chg google-translate golden-ratio godoctor go-tag go-rename go-impl go-guru go-gen-test go-fill-struct go-eldoc gnuplot gntp gitignore-templates gitignore-mode github-search github-clone gitconfig-mode gitattributes-mode git-messenger git-gutter-fringe git-gutter-fringe+ gist gh-md fuzzy font-lock+ flyspell-correct-ivy flycheck-rust flycheck-pos-tip flycheck-mix flycheck-haskell flycheck-elm flycheck-credo flx-ido fill-column-indicator feature-mode fancy-battery eyebrowse evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-org evil-numbers evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help erc-yt erc-view-log erc-terminal-notifier erc-social-graph erc-image erc-hl-nicks ensime emmet-mode elm-test-runner elisp-slime-nav elfeed-web elfeed-org elfeed-goodies eldoc-eval editorconfig dotenv-mode dockerfile-mode docker-tramp diminish deft define-word dash-at-point cython-mode csv-mode counsel-dash counsel-css company-web company-terraform company-tern company-statistics company-restclient company-quickhelp company-nixos-options company-go company-ghci company-emacs-eclim company-cabal company-anaconda column-enforce-mode cmm-mode closql clojure-snippets clean-aindent-mode chruby cargo bundler avy auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile alchemist ac-ispell))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
-)
+  (custom-set-variables
+   ;; custom-set-variables was added by Custom.
+   ;; If you edit it by hand, you could mess it up, so be careful.
+   ;; Your init file should contain only one such instance.
+   ;; If there is more than one, they won't work right.
+   '(package-selected-packages
+     (quote
+      (yasnippet-snippets xterm-color writeroom-mode web-mode sql-indent ruby-test-mode robe racer pipenv paradox ox-hugo orgit org-mime org-journal org-brain meghanada magit-svn link-hint groovy-mode git-timemachine git-link forge emacsql expand-region evil-nerd-commenter evil-mc evil-matchit evil-magit elm-mode dumb-jump doom-modeline docker diff-hl counsel-projectile cider-eval-sexp-fu cider clojure-mode centered-cursor-mode browse-at-remote aggressive-indent ace-window ace-link rust-mode counsel swiper helm-dash elfeed company anzu flycheck helm window-purpose ivy multiple-cursors magit-popup magit transient ghub with-editor markdown-mode alert inf-ruby pythonic haml-mode js2-mode all-the-icons powerline dash which-key evil hydra org-plus-contrib yapfify yaml-mode ws-butler winum wgrep web-beautify volatile-highlights visual-fill-column vi-tilde-fringe uuidgen use-package unfill treepy toml-mode toc-org tagedit tablist systemd symon string-inflection spinner spaceline-all-the-icons smex smeargle slim-mode shrink-path shell-pop sesman seeing-is-believing scss-mode sass-mode rvm ruby-tools ruby-refactor ruby-hash-syntax rubocop rspec-mode restart-emacs request reformatter rbenv ranger rainbow-delimiters queue pyvenv pytest pyenv-mode py-isort pug-mode projectile-rails prettier-js pippel pip-requirements persp-mode pcre2el password-generator ox-gfm overseer org-projectile org-present org-pomodoro org-download org-bullets open-junk-file ob-restclient ob-http ob-elixir nix-mode neotree nameless mwim mvn multi-term move-text mmm-mode minitest maven-test-mode markdown-toc magithub magit-gitflow macrostep lorem-ipsum log4e livid-mode live-py-mode linum-relative less-css-mode json-navigator json-mode js2-refactor js-doc ivy-yasnippet ivy-xref ivy-purpose ivy-hydra indent-guide importmagic impatient-mode imenu-list hungry-delete hlint-refactor hl-todo hindent highlight-parentheses highlight-numbers highlight-indentation helm-make helm-core haskell-snippets groovy-imports graphviz-dot-mode graphql gradle-mode goto-chg google-translate golden-ratio godoctor go-tag go-rename go-impl go-guru go-gen-test go-fill-struct go-eldoc gnuplot gntp gitignore-templates gitignore-mode github-search github-clone gitconfig-mode gitattributes-mode git-messenger git-gutter-fringe git-gutter-fringe+ gist gh-md fuzzy font-lock+ flyspell-correct-ivy flycheck-rust flycheck-pos-tip flycheck-mix flycheck-haskell flycheck-elm flycheck-credo flx-ido fill-column-indicator feature-mode fancy-battery eyebrowse evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-org evil-numbers evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help erc-yt erc-view-log erc-terminal-notifier erc-social-graph erc-image erc-hl-nicks ensime emmet-mode elm-test-runner elisp-slime-nav elfeed-web elfeed-org elfeed-goodies eldoc-eval editorconfig dotenv-mode dockerfile-mode docker-tramp diminish deft define-word dash-at-point cython-mode csv-mode counsel-dash counsel-css company-web company-terraform company-tern company-statistics company-restclient company-quickhelp company-nixos-options company-go company-ghci company-emacs-eclim company-cabal company-anaconda column-enforce-mode cmm-mode closql clojure-snippets clean-aindent-mode chruby cargo bundler avy auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile alchemist ac-ispell))))
+  (custom-set-faces
+   ;; custom-set-faces was added by Custom.
+   ;; If you edit it by hand, you could mess it up, so be careful.
+   ;; Your init file should contain only one such instance.
+   ;; If there is more than one, they won't work right.
+   )
+  )

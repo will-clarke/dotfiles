@@ -595,7 +595,6 @@ endfunction
 noremap <leader>he :call HtmlEscape()<CR>
 noremap <leader>hue :call HtmlUnEscape()<CR>
 " }}}
-
 " strip whitespace {{{
 " Remove trailing whitespaces at the end of a line
 function! <SID>StripTrailingWhitespaces()
