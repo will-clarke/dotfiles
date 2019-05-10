@@ -59,9 +59,6 @@ alias path="echo $PATH | tr -s ':' '\n'"
 alias python=python3
 alias p3="python3"
 
-# emacs
-alias e='edit'
-
 alias markdown='open -a /Applications/Marked\ 2 $1'
 
 # c

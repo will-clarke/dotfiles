@@ -17,6 +17,9 @@
 ;; How to log into a db server on emacs:
 ;; M-X  sql-postgres
 
+;; If ivy's being clever and autocompleting the wrong file:
+;; C-M-j (ivy-immediate-done)
+
 
 (defun dotspacemacs/layers ()
   "Layer configuration:
