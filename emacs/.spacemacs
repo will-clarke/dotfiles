@@ -610,6 +610,7 @@ before packages are loaded."
             '((nil :maxlevel . 2)
               (org-agenda-files :maxlevel . 2)))
       )
+    (require 'org-tempo)
     (setq org-capture-templates
           '(("t" "TODO" entry (file+headline "~/org/todo.org" "Todo")
              "* TODO %? %^G \n  %U" :empty-lines 1)

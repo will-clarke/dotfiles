@@ -137,3 +137,8 @@ if fortune &>/dev/null; then
     # fi
 fi
 if [ -e /Users/wmmc/.nix-profile/etc/profile.d/nix.sh ]; then . /Users/wmmc/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+
+
+if hash edit &>/dev/null; then
+    edit &
+fi
