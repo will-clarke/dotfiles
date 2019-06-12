@@ -138,9 +138,10 @@ if fortune &>/dev/null; then
 fi
 if [ -e /Users/wmmc/.nix-profile/etc/profile.d/nix.sh ]; then . /Users/wmmc/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
 
-if hash edit &>/dev/null; then
-    edit &
-fi
+# if hash edit &>/dev/null; then
+#    edit &
+# we probably don't always want to open this....
+# fi
 
 # history is UNLIMITED!
 HISTSIZE=

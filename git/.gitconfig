@@ -53,8 +53,8 @@
   path = /Users/williamclarke/.gitconfig.local
 [hub]
 	protocol = https
-[commit]
-	gpgsign = true
+# [commit]
+# 	gpgsign = true
 [magithub]
 	online = false
 [magithub "status"]
