@@ -53,6 +53,8 @@ This function should only modify configuration layer settings."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(graphviz
+     php
+     gtags
      python
      clojure
      elixir
@@ -613,21 +615,21 @@ before packages are loaded."
     (require 'org-tempo)
     (setq org-capture-templates
           '(("t" "TODO" entry (file+headline "~/org/todo.org" "Todo")
-             "* TODO %? %^G \n  %U" :empty-lines 1)
+             "* TODO %? \n  %U" :empty-lines 1)
             ("s" "Scheduled TODO" entry (file+headline "~/org/todo.org" "Todo")
-             "* TODO %? %^G \nSCHEDULED: %^t\n  %U" :empty-lines 1)
+             "* TODO %? \nSCHEDULED: %^t\n  %U" :empty-lines 1)
             ("d" "Deadline" entry (file+headline "~/org/todo.org" "Todo")
-             "* TODO %? %^G \n  DEADLINE: %^t" :empty-lines 1)
+             "* TODO %? \n  DEADLINE: %^t" :empty-lines 1)
             ("w" "Work" entry (file+headline "~/org/work.org" "Work")
-             "* TODO %? %^G\n%T")
+             "* TODO %? \n%T")
             ("p" "Priority" entry (file+headline "~/org/todo.org" "Todo")
-             "* TODO [#A] %? %^G \n  SCHEDULED: %^t")
+             "* TODO [#A] %? \n  SCHEDULED: %^t")
             ("l" "Link" entry (file+headline "~/org/todo.org" "Todo")
-             "* TODO %? %^G\n %a")
+             "* TODO %? \n %a")
             ("n" "Note" entry (file+headline "~/org/notes.org" "Notes")
-             "* %? %^G\n%U" :empty-lines 1)
+             "* %? \n%U" :empty-lines 1)
             ("j" "Journal" entry (file+datetree "~/org/journal.org")
-             "* %? %^G\nEntered on %U\n")))
+             "* %? \nEntered on %U\n")))
 
     ;; Needs terminal-notifier (brew install terminal-notifier)
     (defun notify-osx (title message)
