@@ -79,8 +79,9 @@ function setup_alfred {
 #############################################################
 function install_homebrew {
     if ! command -v brew >/dev/null; then
-        curl -fsS 'https://raw.githubusercontent.com/Homebrew/install/master/install' | ruby
+        /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)”
         export PATH="/usr/local/bin:$PATH"
+        sudo chown -R $(whoami) $(brew --prefix)/*
     fi
 }
 

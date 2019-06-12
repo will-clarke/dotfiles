@@ -22,6 +22,8 @@ To start stuff like redis, you can use homebrew:
 - Monosnap (from mac store)
 - Astrogif
 
+** Stuff to open immediately on a mac
+karabiner-elements, shiftit & Flycut
 
 ** Todo
 define yasnippet directory properly
