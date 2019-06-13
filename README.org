@@ -22,17 +22,11 @@ To start stuff like redis, you can use homebrew:
 - Monosnap (from mac store)
 - Astrogif
 
+** Top secret stuff
+Can be found in a top-secret repo with their own readme
+
 ** Stuff to open immediately on a mac
-karabiner-elements, shiftit & Flycut
+karabiner-elements, shiftit, Flycut, tenor
 
 ** Todo
 define yasnippet directory properly
-
-Thumb drive: github ssh keys?
-    ? 1password on thumb drive?
-
-
-Work out how to store secrets: dropbox &&/|| thumb drive?
- - how to keep them in sync?
- - gpg encryption and stuff?
- - could use stow to install them to the right places..

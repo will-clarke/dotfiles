@@ -42,14 +42,12 @@ brew 'awscli'
 # brew 'drafter' # for apib files
 # brew 'mas'     # install os apps from the CLI
 brew 'terminal-notifier'
+brew 'bash-completion'
+brew 'prettier'
 
-cask '1password'
-cask 'alfred'
-cask 'atom'
 cask 'caffeine'
 cask 'dash'
 cask 'disk-inventory-x'
-cask 'dropbox'
 cask 'flux'
 cask 'google-chrome'
 cask 'iterm2'
@@ -64,8 +62,10 @@ cask 'awareness'
 
 cask 'shiftit'
 cask 'flycut'  # clipboard history
+cask 'jetbrains-toolbox'
 
 cask 'tenor' # gifs
+cask 'docker'
 
 cask 'java'
 brew 'scala'

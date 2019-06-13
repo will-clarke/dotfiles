@@ -23,7 +23,7 @@ config unlink     # unlink all the things (with stow)
 function download_dotfiles_repo {
     if [ ! -d "$DOTFILES_DIR" ]; then
         git clone --depth=1 https://github.com/will-clarke/dotfiles.git "$DOTFILES_DIR"
-        cd "DOTFILES_DIR"
+        cd "$DOTFILES_DIR"
         sed -i 's https://github.com/will-clarke/dotfiles.git git@github.com:will-clarke/dotfiles ' .git/config
         echo "> Dotfiles repo installed in $DOTFILES_DIR"
     else
@@ -36,11 +36,8 @@ function download_dotfiles_repo {
 #############################################################
 function setup {
     stow bash bin config db emacs email git other ruby tmux vim
-    ln -s "$HOME/Dropbox/dev/org" "$HOME"
     setup_apple_defaults
     setup_spacemacs
-    setup_alfred
-    open $(find "$DOTFILES_DIR/other/dotfiles_stuff/fonts")
 
     download_mac_store_stuff
     echo "We've updated some Apple settings and ensured that Spacemacs is installed"
@@ -65,14 +62,6 @@ function setup_spacemacs {
     if [ ! -d "$HOME/.emacs.d" ]; then
         git clone --recursive https://github.com/syl20bnr/spacemacs "$HOME/.emacs.d"
     fi
-}
-function setup_alfred {
-    cd "$HOME/Library/Application Support/Alfred 3/"
-    git clone https://github.com/will-clarke/alfred-preferences
-    mv Alfred.alfredpreferences Alfred.alfredpreferences--OLD
-    mv alfred-preferences/Alfred.alfredpreferences Alfred.alfredpreferences
-    rm -rf alfred-preferences
-    cd - 1> /dev/null
 }
 
 # BREW

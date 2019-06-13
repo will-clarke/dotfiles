@@ -595,28 +595,6 @@ endfunction
 noremap <leader>he :call HtmlEscape()<CR>
 noremap <leader>hue :call HtmlUnEscape()<CR>
 " }}}
-" strip whitespace {{{
-" Remove trailing whitespaces at the end of a line
-function! <SID>StripTrailingWhitespaces()
-  "Preparation: save last search, and cursor position.
-  let _s=@/
-  let l = line(".")
-  let c = col(".")
-  "Do the business:
-  %s/\s\+$//e
-  "Clean up: restore previous search history, and cursor position
-  let @/=_s
-  call cursor(l, c)
-  :retab<CR>
-endfunction
-
-function! StripWhitespace ()
-  exec ':%s/ \+$//gc'
-endfunction
-
-" Strip whitespace when saving a file
-autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
-" }}}
 
 " let g:UltiSnipsJumpForwardTrigger="<tab>"
 " let g:UltiSnipsJumpBackwardTrigger="<S-tab>"
