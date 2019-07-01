@@ -54,8 +54,9 @@ This function should only modify configuration layer settings."
    dotspacemacs-configuration-layers
    '(vimscript
      graphviz
+     node
      php
-     gtags
+     ;; gtags
      python
      clojure
      elixir
@@ -69,6 +70,7 @@ This function should only modify configuration layer settings."
      systemd
      neotree
      ranger
+     pass
      (rust :variables rust-format-on-save t)
      (go :variables
          ;; go-use-gometalinter t
@@ -76,7 +78,9 @@ This function should only modify configuration layer settings."
          godoc-at-point-function 'godoc-gogetdoc
          gofmt-command "goimports"
          )
-     javascript
+     (javascript :variables javascript-repl `nodejs
+                 node-add-modules-path t
+                 js2-include-node-externs t)
      ivy
      (auto-completion :variables
                       auto-completion-enable-help-tooltip t

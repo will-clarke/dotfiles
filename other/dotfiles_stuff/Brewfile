@@ -66,6 +66,7 @@ cask 'jetbrains-toolbox'
 
 cask 'tenor' # gifs
 cask 'docker'
+cask 'postman'
 
 cask 'java'
 brew 'scala'

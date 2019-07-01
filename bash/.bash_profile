@@ -146,3 +146,5 @@ if [ -e /Users/wmmc/.nix-profile/etc/profile.d/nix.sh ]; then . /Users/wmmc/.nix
 # history is UNLIMITED!
 HISTSIZE=
 HISTFILESIZE=
+
+ssh-add ~/.ssh/id_rsa &>/dev/null
