@@ -81,7 +81,18 @@ plugins=(
     urltools
     node
     emacs
-    fasd
+    brew
+    z
+    thefuck
+    ripgrep
+    ssh-agent
+    gpg-agent
+    rand-quote
+    redis-cli
+    postgres
+    man
+    docker
+    docker-compose
 )
 
 source $ZSH/oh-my-zsh.sh
