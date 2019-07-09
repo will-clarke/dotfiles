@@ -47,6 +47,8 @@
 [url "ssh://git@github.com/"]
   insteadOf = $SSH_KEY
 # editor = "if [[ $IS_REMOTE -eq 1 ]]; then ED='vim'; else ED='subl -n -w'; fi; $ED"
+[url "ssh://git@github.com/"]
+	insteadOf = https://github.com/
 [include]
   path = /Users/wmmc/.gitconfig.local
 [include]
