@@ -61,6 +61,7 @@ This function should only modify configuration layer settings."
      clojure
      elixir
      nixos
+     ibuffer
      games
      (haskell :variables
               ;; haskell-completion-backend 'intero
@@ -581,6 +582,11 @@ before packages are loaded."
 
   ;; How to log into a db server on emacs:
   ;; M-X  sql-postgres
+
+  ;; (defun ivy-switch-buffer-occur ()
+  ;;   "Occur function for `ivy-switch-buffer' using `ibuffer'."
+  ;;   (ibuffer nil (buffer-name) (list (cons 'name ivy--old-re))))
+  ;; (ivy-set-occur 'ivy-switch-buffer 'ivy-switch-buffer-occur)
 
   (setq rspec-use-spring-when-possible nil)
 
