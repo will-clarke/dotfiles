@@ -60,16 +60,10 @@ source_file_if_exists "$HOME/.bashrc"
 source_file_if_exists "$HOME/.travis/travis.sh"
 source_file_if_exists "/usr/local/etc/profile.d/autojump.sh"
 source_file_if_exists "/usr/local/etc/profile.d/z.sh"
-source_file_if_exists "$HOME/dotfiles/other/dotfiles_stuff/git-completion.bash"
 source_file_if_exists "$HOME/.bashrc.local"
 source_file_if_exists "$HOME/.profile.local"
 source_file_if_exists "$HOME/.bash_profile.local"
 source_file_if_exists "$HOME/.bashrc.local"
-
-# Slow:
-# source_file_if_exists "/usr/local/bin/virtualenvwrapper.sh"
-source_file_if_exists "/usr/local/etc/bash_completion.d/pass"
-# execute_if_command_exists "fasd" 'eval "$(fasd --init auto)"'
 
 add_to_path_if_file_exists "PATH" "$HOME/Library/Haskell/bin"
 add_to_path_if_file_exists "PATH" "$HOME/go/bin"
