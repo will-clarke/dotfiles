@@ -123,4 +123,11 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+export GO111MODULE=on
+
+export PATH=$PATH:$(go env GOPATH)/bin
+export GOPATH=$(go env GOPATH)
+
+export PATH=$PATH:$HOME/.bin.local
+
 alias gs="git status"
