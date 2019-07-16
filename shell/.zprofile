@@ -1,3 +1,3 @@
-if [-e ~/.pathrc]; then
+if [[ -e ~/.pathrc ]]; then
     . ~/.pathrc
 fi
