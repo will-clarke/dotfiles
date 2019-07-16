@@ -1,0 +1,30 @@
+source_file_if_exists() {
+    if [ -e "$1" ]; then
+        source "$1"
+    fi
+}
+
+add_to_path_if_directory_exists() {
+    path_var="$1"
+    path="$2"
+    if [ -d "$2" ]; then
+        export "$path_var"="$path:$PATH"
+    fi
+}
+
+source_file_if_exists "$HOME/.profile"
+source_file_if_exists "$HOME/.bashrc"
+source_file_if_exists "$HOME/.bashrc.local"
+source_file_if_exists "$HOME/.profile.local"
+source_file_if_exists "$HOME/.bash_profile.local"
+source_file_if_exists "$HOME/.bashrc.local"
+
+add_to_path_if_directory_exists "PATH" "$HOME/Library/Haskell/bin"
+add_to_path_if_directory_exists "PATH" "$HOME/go/bin"
+add_to_path_if_directory_exists "PATH" "$HOME/dotfiles/bin"
+add_to_path_if_directory_exists "PATH" "$HOME/.bin"
+add_to_path_if_directory_exists "PATH" "$HOME/.bin.local"
+add_to_path_if_directory_exists "PATH" "$HOME/.cargo/bin"
+add_to_path_if_directory_exists "PATH" "/usr/local/sbin"
+add_to_path_if_directory_exists "PATH" "$HOME/.cabal/bin"
+add_to_path_if_directory_exists "PATH" "$HOME/Library/Haskell/bin"
