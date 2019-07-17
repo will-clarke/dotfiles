@@ -2,5 +2,7 @@ config/.config/pgcli/history
 config/.config/configstore/
 config/.config/pgcli/log
 config/.config/karabiner/automatic_backups/*.json
-/config/.config/karabiner/assets/
+config/.config/karabiner/assets/
 config/.config/hub
+config/.config/thefuck
+

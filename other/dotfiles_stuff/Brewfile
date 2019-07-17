@@ -42,6 +42,7 @@ brew 'awscli'
 # brew 'drafter' # for apib files
 # brew 'mas'     # install os apps from the CLI
 brew 'terminal-notifier'
+brew 'thefuck'
 brew 'bash-completion'
 brew 'prettier'
 
