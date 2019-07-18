@@ -56,6 +56,7 @@ This function should only modify configuration layer settings."
      graphviz
      node
      php
+     pdf
      ;; gtags
      python
      clojure

@@ -86,6 +86,7 @@ plugins=(
     thefuck
     ripgrep
     ssh-agent
+    terraform
     gpg-agent
     rand-quote
     redis-cli
