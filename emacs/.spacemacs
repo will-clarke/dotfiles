@@ -85,12 +85,12 @@ This function should only modify configuration layer settings."
                  js2-include-node-externs t)
      ivy
      (auto-completion :variables
-                      auto-completion-enable-help-tooltip t
-                      auto-completion-enable-sort-by-usage t
-                      auto-completion-tab-key-behavior 'complete
-                      auto-completion-return-key-behavior 'cycle
-                      auto-completion-complete-with-key-sequence nil
-                      auto-completion-complete-with-key-sequence-delay 0.1
+                      ;; auto-completion-enable-help-tooltip t
+                      ;; auto-completion-enable-sort-by-usage t
+                      ;; auto-completion-tab-key-behavior 'complete
+                      ;; auto-completion-return-key-behavior 'cycle
+                      ;; auto-completion-complete-with-key-sequence nil
+                      ;; auto-completion-complete-with-key-sequence-delay 0.1
                       auto-completion-private-snippets-directory "~/spacemacs.d/snippets")
 
      better-defaults
