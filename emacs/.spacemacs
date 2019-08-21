@@ -20,6 +20,11 @@
 ;; If ivy's being clever and autocompleting the wrong file:
 ;; C-M-j (ivy-immediate-done)
 
+;; On mac; getting emacs to open files decently
+;; brew install duti
+;; duti -s org.gnu.Emacs .go all
+;; # osascript -e 'id of app "emacs"' # => org.gnu.Emacs
+
 
 (defun dotspacemacs/layers ()
   "Layer configuration:
@@ -56,7 +61,6 @@ This function should only modify configuration layer settings."
      graphviz
      node
      php
-     pdf
      ;; gtags
      python
      clojure
