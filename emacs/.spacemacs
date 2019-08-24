@@ -25,6 +25,13 @@
 ;; duti -s org.gnu.Emacs .go all
 ;; # osascript -e 'id of app "emacs"' # => org.gnu.Emacs
 
+;; Stuff worth installing:
+;; go get github.com/cespare/reflex
+
+;; How to get autocompletion working on rust
+;; Turl on lsp / lsp-mode
+;; Maybe unblacklist the project ~lsp-workspace-blacklist-remove~
+;; Maybe install rls https://github.com/rust-lang/rls
 
 (defun dotspacemacs/layers ()
   "Layer configuration:
@@ -66,6 +73,7 @@ This function should only modify configuration layer settings."
      clojure
      elixir
      nixos
+     json
      ibuffer
      games
      (haskell :variables
@@ -74,10 +82,15 @@ This function should only modify configuration layer settings."
               haskell-enable-hindent t)
      docker
      systemd
+     lsp
      neotree
      ranger
      pass
-     (rust :variables rust-format-on-save t)
+     dap
+     (rust :variables
+           rust-format-on-save t
+           rust-backend 'lsp
+           )
      (go :variables
          ;; go-use-gometalinter t
          go-format-before-save t
@@ -123,6 +136,7 @@ This function should only modify configuration layer settings."
             shell-default-position 'bottom
             shell-default-shell 'eshell
             )
+     shell-scripts
      syntax-checking
      version-control
      (ruby :variables
