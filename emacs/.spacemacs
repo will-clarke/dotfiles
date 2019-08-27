@@ -33,6 +33,11 @@
 ;; Maybe unblacklist the project ~lsp-workspace-blacklist-remove~
 ;; Maybe install rls https://github.com/rust-lang/rls
 
+
+;; tramp mode:
+;; /ssh:will@calzone|sudo:root@calzone:/var/www/goldmine:
+
+
 (defun dotspacemacs/layers ()
   "Layer configuration:
 This function should only modify configuration layer settings."
@@ -102,12 +107,13 @@ This function should only modify configuration layer settings."
                  js2-include-node-externs t)
      ivy
      (auto-completion :variables
-                      ;; auto-completion-enable-help-tooltip t
-                      ;; auto-completion-enable-sort-by-usage t
-                      ;; auto-completion-tab-key-behavior 'complete
+                      auto-completion-enable-help-tooltip t
+                      ;; auto-completion-enable-snippets-in-popup t
+                      auto-completion-enable-sort-by-usage t
+                      auto-completion-tab-key-behavior 'complete
                       ;; auto-completion-return-key-behavior 'cycle
-                      ;; auto-completion-complete-with-key-sequence nil
-                      ;; auto-completion-complete-with-key-sequence-delay 0.1
+                      auto-completion-complete-with-key-sequence nil
+                      auto-completion-complete-with-key-sequence-delay 0.1
                       auto-completion-private-snippets-directory "~/spacemacs.d/snippets")
 
      better-defaults
@@ -606,6 +612,9 @@ before packages are loaded."
   ;;   "Occur function for `ivy-switch-buffer' using `ibuffer'."
   ;;   (ibuffer nil (buffer-name) (list (cons 'name ivy--old-re))))
   ;; (ivy-set-occur 'ivy-switch-buffer 'ivy-switch-buffer-occur)
+
+  (add-to-list 'projectile-globally-ignored-directories "node_modules")
+  (add-to-list 'projectile-globally-ignored-directories "vendor")
 
   (setq rspec-use-spring-when-possible nil)
 
