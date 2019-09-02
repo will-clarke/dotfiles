@@ -126,6 +126,9 @@ source $ZSH/oh-my-zsh.sh
 
 export GO111MODULE=on
 
+alias gomodon="export GO111MODULE=on"
+alias gomodoff="export GO111MODULE=auto"
+
 export PATH=$PATH:$(go env GOPATH)/bin
 export GOPATH=$(go env GOPATH)
 
