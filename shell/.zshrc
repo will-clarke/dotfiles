@@ -128,6 +128,7 @@ export GO111MODULE=on
 
 alias gomodon="export GO111MODULE=on"
 alias gomodoff="export GO111MODULE=auto"
+alias gomod="echo \$GO111MODULE"
 
 export PATH=$PATH:$(go env GOPATH)/bin
 export GOPATH=$(go env GOPATH)
