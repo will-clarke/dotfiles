@@ -33,7 +33,6 @@
 ;; Maybe unblacklist the project ~lsp-workspace-blacklist-remove~
 ;; Maybe install rls https://github.com/rust-lang/rls
 
-
 ;; tramp mode:
 ;; /ssh:will@calzone|sudo:root@calzone:/var/www/goldmine:
 
@@ -792,6 +791,9 @@ before packages are loaded."
     (setq exec-path (append mypaths (list exec-directory) exec-path) )
     )
   (setenv "NIX_PATH" "nixpkgs=/Users/wmmc/.nix-defexpr/channels/nixpkgs:nixpkgs=/Users/wmmc/.nix-defexpr/channels/nixpkgs")
+
+
+  (setenv "GO111MODULE" "on")
 
   ;; Solves error: ls does not support –dired; see `dired-use-ls-dired` for more details.
   (when (string= system-type "darwin")
