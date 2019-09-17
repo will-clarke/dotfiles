@@ -79,6 +79,7 @@ This function should only modify configuration layer settings."
      nixos
      json
      ibuffer
+     treemacs
      games
      (haskell :variables
               ;; haskell-completion-backend 'intero
@@ -611,6 +612,8 @@ before packages are loaded."
   ;;   "Occur function for `ivy-switch-buffer' using `ibuffer'."
   ;;   (ibuffer nil (buffer-name) (list (cons 'name ivy--old-re))))
   ;; (ivy-set-occur 'ivy-switch-buffer 'ivy-switch-buffer-occur)
+
+  (global-company-mode)
 
   (add-to-list 'projectile-globally-ignored-directories "node_modules")
   (add-to-list 'projectile-globally-ignored-directories "vendor")
