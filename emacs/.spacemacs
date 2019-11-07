@@ -36,6 +36,11 @@
 ;; tramp mode:
 ;; /ssh:will@calzone|sudo:root@calzone:/var/www/goldmine:
 
+;; aya - auto-yasnippet
+;; eg: count_of_~red = get_total("~red");
+;; 1. aya-create while highlighting the line above
+;; 2a. auto-yasnippet-expand
+;; 2b. aya-persist-snippet
 
 (defun dotspacemacs/layers ()
   "Layer configuration:
@@ -71,7 +76,7 @@ This function should only modify configuration layer settings."
    '(vimscript
      graphviz
      node
-     php
+     (php :variables php-backend 'lsp)
      ;; gtags
      python
      clojure

@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# contributor: Will
+# name: p
+# key: p
+# --
+console.log("$1 :" + JSON.stringify($1));

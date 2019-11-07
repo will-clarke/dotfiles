@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# contributor: Will
+# name: p
+# key: p
+# --
+echo '<br>$1<br>';
