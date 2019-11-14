@@ -42,6 +42,13 @@
 ;; 2a. auto-yasnippet-expand
 ;; 2b. aya-persist-snippet
 
+;; artist mode:
+;; First, go to emacs-mode: C-z
+;; Then, check out all the options:
+;; C-c ...
+;; C-c C-a p
+;; Profit
+
 (defun dotspacemacs/layers ()
   "Layer configuration:
 This function should only modify configuration layer settings."
