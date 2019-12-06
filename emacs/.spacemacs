@@ -637,6 +637,9 @@ before packages are loaded."
 
   (global-company-mode)
 
+  ;; to prevent lsp always asking to watch large php files..
+  (setq lsp-enable-file-watchers nil)
+
   (add-to-list 'projectile-globally-ignored-directories "node_modules")
   (add-to-list 'projectile-globally-ignored-directories "vendor")
 
