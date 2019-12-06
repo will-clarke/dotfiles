@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 
 eval $(ssh-agent)
-ssh-agent ~/.ssh/id_rsa
+ssh-add ~/.ssh/id_rsa
