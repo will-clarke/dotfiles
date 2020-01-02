@@ -47,7 +47,9 @@
 ;; Then, check out all the options:
 ;; C-c ...
 ;; C-c C-a p
-;; Profit
+
+;; org mode capture templates: C-c c
+;; org mode store link: C-c l
 
 ;; snippet directory = ~/spacemacs.d/snippets
 
