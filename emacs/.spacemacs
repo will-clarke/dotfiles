@@ -49,6 +49,8 @@
 ;; C-c C-a p
 ;; Profit
 
+;; snippet directory = ~/spacemacs.d/snippets
+
 (defun dotspacemacs/layers ()
   "Layer configuration:
 This function should only modify configuration layer settings."
