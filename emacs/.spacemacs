@@ -98,7 +98,7 @@ This function should only modify configuration layer settings."
      treemacs
      games
      (haskell :variables
-              ;; haskell-completion-backend 'intero
+              ;; haskell-completion-backend 'dante
               haskell-enable-hindent-style "johan-tibell"
               haskell-enable-hindent t)
      docker
@@ -625,10 +625,20 @@ before packages are loaded."
   ;; (setq tags-add-tables nil)
 
   ;; (require 'inf-haskell)
-  ;; (require 'haskell-interactive-mode)
+  (require 'haskell-interactive-mode)
   ;; (define-key evil-insert-state-map (kbd "C-n" ) 'nil)
-  ;; (define-key haskell-interactive-mode-map (kbd "C-n") #'haskell-interactive-mode-history-next)
-  ;; (define-key haskell-interactive-mode-map (kbd "C-p") #'haskell-interactive-mode-history-previous)
+
+  (define-key haskell-interactive-mode-map (kbd "C-j") #'haskell-interactive-mode-history-next)
+  (define-key haskell-interactive-mode-map (kbd "C-k") #'haskell-interactive-mode-history-previous)
+
+  (define-key haskell-interactive-mode-map (kbd "C-n") #'haskell-interactive-mode-history-next)
+  (define-key haskell-interactive-mode-map (kbd "C-p") #'haskell-interactive-mode-history-previous)
+
+
+  ;; (define-key map (kbd "M-p") 'haskell-interactive-mode-history-previous)
+  ;; (define-key map (kbd "M-n") 'haskell-interactive-mode-history-next)
+
+
   ;; (setq intero-whitelist '("~/Dropbox/dev/haskell/snake/app/Main.hs"))
 
   ;; How to log into a db server on emacs:
@@ -638,6 +648,12 @@ before packages are loaded."
   ;;   "Occur function for `ivy-switch-buffer' using `ibuffer'."
   ;;   (ibuffer nil (buffer-name) (list (cons 'name ivy--old-re))))
   ;; (ivy-set-occur 'ivy-switch-buffer 'ivy-switch-buffer-occur)
+
+  ;; to prevent emacs from spamming about reloading tags
+  (setq tags-revert-without-query 1)
+
+  ;; to get lsp-haskell working properly - need https://github.com/emacs-lsp/lsp-haskell installed
+  (setq lsp-haskell-process-path-hie "hie-wrapper")
 
   (global-company-mode)
 
@@ -672,7 +688,7 @@ before packages are loaded."
 
 
 
-  (require 'haskell-interactive-mode) (define-key evil-insert-state-map (kbd "C-k" ) 'nil) (define-key haskell-interactive-mode-map (kbd "C-j") #'haskell-interactive-mode-history-next) (define-key haskell-interactive-mode-map (kbd "C-k") #'haskell-interactive-mode-history-previous)
+  ;; (require 'haskell-interactive-mode) (define-key evil-insert-state-map (kbd "C-k" ) 'nil) (define-key haskell-interactive-mode-map (kbd "C-j") #'haskell-interactive-mode-history-next) (define-key haskell-interactive-mode-map (kbd "C-k") #'haskell-interactive-mode-history-previous)
 
   (with-eval-after-load 'org
     (progn
@@ -698,6 +714,8 @@ before packages are loaded."
              "* TODO %? \n %a")
             ("n" "Note" entry (file+headline "~/org/notes.org" "Notes")
              "* %? \n%U" :empty-lines 1)
+            ("b" "Business" entry (file+headline "~/org/todo.org" "Business Ideas")
+             "* %? \n%U")
             ("j" "Journal" entry (file+datetree "~/org/journal.org")
              "* %? \nEntered on %U\n")))
 
