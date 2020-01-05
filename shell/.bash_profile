@@ -1,6 +1,6 @@
 ##### -*- mode:shell-script -*-
 
-if [-e ~/.pathrc]; then
+if [ -e ~/.pathrc ]; then
     source ~/.pathrc
 fi
 

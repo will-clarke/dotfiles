@@ -3,30 +3,33 @@
 ** Super-easy installation
    [[http://curlpipesh.tumblr.com/][(probably shouldn't be piping curl to the shell...)]]
 
-    ~curl https://raw.githubusercontent.com/will-clarke/dotfiles/master/bin/.bin/config | bash -s install~
+   ~curl https://raw.githubusercontent.com/will-clarke/dotfiles/master/bin/.bin/config | bash -s install~
 
 
-To start stuff like redis, you can use homebrew:
-~brew services start redis~
+   To start stuff like redis, you can use homebrew:
+   ~brew services start redis~
 
 *** What this contains:
 
-- [[https://github.com/syl20bnr/spacemacs][Spacemacs]] - Emacs with vim keybindings)
-- Vim
-- Tmux
-- Some db / ruby dotfiles
-- A decent install script to get stuff up and running:
-  dotfiles install
+    - [[https://github.com/syl20bnr/spacemacs][Spacemacs]] - Emacs with vim keybindings)
+    - Vim
+    - Tmux
+    - Some db / ruby dotfiles
+    - A decent install script to get stuff up and running:
+      dotfiles install
 
 *** Other apps that are funky and you should download:
-- Monosnap (from mac store)
-- Astrogif
+    - Monosnap (from mac store)
+    - Astrogif
 
 ** Top secret stuff
-Can be found in a top-secret repo with their own readme
+   Can be found in a top-secret repo with their own readme
 
 ** Stuff to open immediately on a mac
-karabiner-elements, shiftit, Flycut, tenor
+   karabiner-elements, shiftit, Flycut, tenor
 
 ** Todo
-define yasnippet directory properly
+   define yasnippet directory properly
+
+** How do I change shells?
+   Make sure ~/etc/shells~ has the shell you want.. then ~chsh -s <shell path>~
