@@ -1,4 +1,5 @@
 package foreign-env
+package https://github.com/jethrokuan/fzf
 theme bobthefish
 theme default
 theme syl20bnr

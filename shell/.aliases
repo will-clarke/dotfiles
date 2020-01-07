@@ -35,23 +35,6 @@ alias gstash='git stash show -p stash@{0}'
 alias b="bundle"
 alias be='bundle exec'
 
-# Rails
-alias migrate="rake db:migrate db:rollback && rake db:migrate"
-alias ret="RAILS_ENV=test"
-alias rk="rake"
-alias s="rspec"
-alias fr="foreman run"
-alias frc="foreman run rails console"
-alias be="bundle exec"
-alias zr="zeus rake"
-alias zrun="zeus runner"
-alias zc="zeus console"
-alias zs="zeus server"
-alias zg="zeus generate"
-# alias zr="zeus destroy
-alias zd="zeus dbconsole"
-alias zt="zeus test"
-
 # Pretty print the path
 alias path="echo $PATH | tr -s ':' '\n'"
 
@@ -61,12 +44,6 @@ alias p3="python3"
 
 alias markdown='open -a /Applications/Marked\ 2 $1'
 
-# c
-# alias m='make'
-
-# fasd
-# alias v='f -e vim' # quick opening files with vim
-# alias m='f -e mplayer' # quick opening files with mplayer
 alias o='a -e open' # quick opening files with open
 
 fasd_cd() {

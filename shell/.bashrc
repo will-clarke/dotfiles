@@ -29,3 +29,5 @@ export GO111MODULE=on
 alias gomodon="export GO111MODULE=on; gomod"
 alias gomodoff="export GO111MODULE=auto; gomod"
 alias gomod="echo \$GO111MODULE"
+
+export PS1='$(dirs) > '
