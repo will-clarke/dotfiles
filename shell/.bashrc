@@ -25,5 +25,7 @@ export GPG_TTY=$(tty)
 export VISUAL=emacsclient
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-# export GOPATH="$HOME/go:$HOME/code"
 export GO111MODULE=on
+alias gomodon="export GO111MODULE=on; gomod"
+alias gomodoff="export GO111MODULE=auto; gomod"
+alias gomod="echo \$GO111MODULE"
