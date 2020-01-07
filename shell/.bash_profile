@@ -52,3 +52,4 @@ HISTSIZE=
 HISTFILESIZE=
 
 ssh-add ~/.ssh/id_rsa &>/dev/null
+if [ -e /Users/will/.nix-profile/etc/profile.d/nix.sh ]; then . /Users/will/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer

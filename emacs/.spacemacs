@@ -53,6 +53,11 @@
 
 ;; snippet directory = ~/spacemacs.d/snippets
 
+
+;; Search for file names matching something:
+;; rg --files -g "*.dot"
+
+
 (defun dotspacemacs/layers ()
   "Layer configuration:
 This function should only modify configuration layer settings."
