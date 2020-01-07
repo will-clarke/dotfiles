@@ -721,6 +721,8 @@ before packages are loaded."
              "* %? \n%U" :empty-lines 1)
             ("b" "Business" entry (file+headline "~/org/todo.org" "Business Ideas")
              "* %? \n%U")
+            ("S" "Story" entry (file+headline "~/org/stories.org" "Short Stories")
+             "* %? \n%U")
             ("j" "Journal" entry (file+datetree "~/org/journal.org")
              "* %? \nEntered on %U\n")))
 
