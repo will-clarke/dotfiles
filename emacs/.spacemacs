@@ -53,7 +53,6 @@
 
 ;; snippet directory = ~/spacemacs.d/snippets
 
-
 ;; Search for file names matching something:
 ;; rg --files -g "*.dot"
 
@@ -713,18 +712,18 @@ before packages are loaded."
              "* TODO %? \n  DEADLINE: %^t" :empty-lines 1)
             ("w" "Work" entry (file+headline "~/org/work.org" "Work")
              "* TODO %? \n%T")
+            ("b" "Business" entry (file+headline "~/org/todo.org" "business Ideas")
+             "* %? \n%U")
             ("p" "Priority" entry (file+headline "~/org/todo.org" "Todo")
              "* TODO [#A] %? \n  SCHEDULED: %^t")
             ("l" "Link" entry (file+headline "~/org/todo.org" "Todo")
              "* TODO %? \n %a")
             ("n" "Note" entry (file+headline "~/org/notes.org" "Notes")
              "* %? \n%U" :empty-lines 1)
-            ("b" "Business" entry (file+headline "~/org/todo.org" "Business Ideas")
+            ("B" "Blog" entry (file+headline "~/org/blog.org" "Blog Ideas")
              "* %? \n%U")
             ("S" "Story" entry (file+headline "~/org/stories.org" "Short Stories")
-             "* %? \n%U")
-            ("j" "Journal" entry (file+datetree "~/org/journal.org")
-             "* %? \nEntered on %U\n")))
+             "* %? \n%U")))
 
     ;; Needs terminal-notifier (brew install terminal-notifier)
     (defun notify-osx (title message)
