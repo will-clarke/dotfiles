@@ -703,6 +703,8 @@ before packages are loaded."
               (org-agenda-files :maxlevel . 2)))
       )
     (require 'org-tempo)
+    (add-hook 'org-capture-mode-hook 'evil-insert-state)
+
     (setq org-capture-templates
           '(("t" "TODO" entry (file+headline "~/org/todo.org" "Todo")
              "* TODO %? \n  %U" :empty-lines 1)
