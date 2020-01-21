@@ -55,6 +55,9 @@
 
 ;; Search for file names matching something:
 ;; rg --files -g "*.dot"
+;; or another way:
+;; rg --files | rg WHATEVER
+
 
 
 (defun dotspacemacs/layers ()
