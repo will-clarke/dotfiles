@@ -3,4 +3,4 @@
 # name: p
 # key: p
 # --
-echo '<br>$1<br>';
+echo '<br>$1: ' . $1 . '<br>';
